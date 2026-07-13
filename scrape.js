@@ -56,10 +56,16 @@ async function getJSON(url, opts = {}, retries = 2) {
   }
 }
 
+// month-range programs like "Jan to Jun 2027" that aren't summer terms
+const MONTH_RANGE_RE = /\b(jan|feb|mar|apr|sep|oct|nov|dec)[a-z]*\.?\s*(to|through|thru|[-–])\s*(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i;
+// non-English titles (accented/Nordic letters) = almost certainly not a US posting
+const NON_ENGLISH_RE = /[À-ÖØ-öø-ÿĀ-ž]/;
 function isIntern(t) {
   if (!INTERN_RE.test(t) || EXCLUDE_RE.test(t)) return false;
   if (WRONG_YEAR_RE.test(t)) return false;                          // 2020–2026 seasons
   if (OTHER_SEASON_RE.test(t) && !SUMMER_RE.test(t)) return false;  // fall/spring/co-op only
+  if (MONTH_RANGE_RE.test(t)) return false;                         // e.g. "Jan to Jun 2027"
+  if (NON_ENGLISH_RE.test(t)) return false;                         // non-English posting
   return true;
 }
 
