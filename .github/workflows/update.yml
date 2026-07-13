@@ -1,0 +1,33 @@
+name: Update listings
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # Phase 3 (optional): uncomment to enable JobSpy job-board scraping
+      # - uses: actions/setup-python@v5
+      #   with:
+      #     python-version: "3.11"
+      # - run: pip install python-jobspy pandas
+      # - run: python jobspy_scrape.py
+      #   continue-on-error: true
+      - run: node scrape.js
+      - name: Commit updated listings
+        run: |
+          git config user.name "offeraio-bot"
+          git config user.email "bot@offeraio.dev"
+          git add data/
+          git diff --cached --quiet || git commit -m "chore: refresh listings [skip ci]"
+          git push
