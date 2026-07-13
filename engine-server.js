@@ -25,7 +25,9 @@ const { rankListings } = require("./rank");
 const radar = require("./gmail");
 
 const PORT = 7717;
-const DATA = path.join(__dirname, "engine-data");
+// When packaged (Electron), main.js sets OFFERAIO_DATA to a writable user folder,
+// since files inside the app bundle are read-only.
+const DATA = process.env.OFFERAIO_DATA || path.join(__dirname, "engine-data");
 fs.mkdirSync(DATA, { recursive: true });
 const PROFILE_FILE = path.join(DATA, "profile.json");
 

@@ -11,7 +11,7 @@ const { chromium } = require("playwright");
 const path = require("path");
 const fs = require("fs");
 
-const SHOTS = path.join(__dirname, "engine-data", "screenshots");
+const SHOTS = path.join(process.env.OFFERAIO_DATA || path.join(__dirname, "engine-data"), "screenshots");
 fs.mkdirSync(SHOTS, { recursive: true });
 
 function detectATS(url) {
@@ -108,7 +108,10 @@ async function applyToJob({ url, mode, coverLetter, profile }) {
   const ats = detectATS(url);
   if (!ats) throw new Error("Unsupported ATS for v1 (Greenhouse and Lever only). Use the posting's direct apply URL.");
 
-  const browser = await chromium.launch({ headless: false }); // visible on purpose — trust & CAPTCHA
+  // Prefer the user's installed Chrome (no 150MB bundled browser); fall back to Playwright's.
+  let browser;
+  try { browser = await chromium.launch({ headless: false, channel: "chrome" }); }
+  catch (_) { browser = await chromium.launch({ headless: false }); }
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 });
   await page.waitForTimeout(1200 + Math.random() * 1500); // human pacing
