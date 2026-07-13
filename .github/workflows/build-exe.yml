@@ -1,0 +1,41 @@
+name: Build OfferAIO exe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Assemble desktop app from engine files
+        shell: bash
+        run: |
+          cp engine-server.js desktop/server.js
+          cp engine-apply.js  desktop/apply.js
+          cp engine-cover.js  desktop/cover.js
+          cp engine-resume.js desktop/resume.js
+          cp engine-rank.js   desktop/rank.js
+          cp engine-gmail.js  desktop/gmail.js
+
+      - name: Install dependencies
+        working-directory: desktop
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+        run: npm install
+
+      - name: Build installer
+        working-directory: desktop
+        run: npm run dist
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: OfferAIO-Setup
+          path: desktop/dist/*.exe
+          if-no-files-found: error
