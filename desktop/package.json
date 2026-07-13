@@ -1,0 +1,35 @@
+{
+  "name": "offeraio",
+  "version": "1.0.0",
+  "productName": "OfferAIO",
+  "description": "OfferAIO — Summer 2027 internship application bot",
+  "author": "OfferAIO",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis --publish never"
+  },
+  "devDependencies": {
+    "electron": "31.7.6",
+    "electron-builder": "24.13.3"
+  },
+  "dependencies": {
+    "express": "4.19.2",
+    "playwright": "1.45.0",
+    "pdf-parse": "1.1.1",
+    "googleapis": "140.0.0"
+  },
+  "build": {
+    "appId": "com.offeraio.app",
+    "productName": "OfferAIO",
+    "files": ["**/*"],
+    "asarUnpack": ["node_modules/playwright/**", "node_modules/playwright-core/**"],
+    "win": { "target": ["nsis"] },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "allowToChangeInstallationDirectory": false
+    }
+  }
+}
