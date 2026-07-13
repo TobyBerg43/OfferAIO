@@ -1,0 +1,51 @@
+name: Release OfferAIO exe
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Assemble desktop app from engine files
+        shell: bash
+        run: |
+          cp engine-server.js desktop/server.js
+          cp engine-apply.js  desktop/apply.js
+          cp engine-cover.js  desktop/cover.js
+          cp engine-resume.js desktop/resume.js
+          cp engine-rank.js   desktop/rank.js
+          cp engine-gmail.js  desktop/gmail.js
+
+      - name: Install dependencies
+        working-directory: desktop
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+        run: npm install
+
+      - name: Build installer
+        working-directory: desktop
+        run: npm run dist
+
+      - name: Rename to a clean filename
+        shell: bash
+        run: |
+          mkdir -p out
+          cp desktop/dist/*.exe "out/OfferAIO-Setup.exe"
+
+      - name: Publish GitHub Release (direct .exe download, no zip)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.0
+          name: OfferAIO v1.0.0
+          body: "Double-click OfferAIO-Setup.exe to install. First launch on Windows: click More info -> Run anyway (app is unsigned)."
+          files: out/OfferAIO-Setup.exe
