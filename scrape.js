@@ -26,10 +26,16 @@ const COMMUNITY_SOURCES = [
   "https://raw.githubusercontent.com/SimplifyJobs/Summer2027-Internships/dev/.github/scripts/listings.json",
 ];
 
-const INTERN_RE = /\bintern(ship)?\b/i;
+const INTERN_RE = /\bintern(ship)?\b|\bsummer analyst\b/i;
 const EXCLUDE_RE = /\binternal\b/i;
-// drop postings that explicitly target past seasons; keep 2027 or year-less (evergreen)
-const WRONG_YEAR_RE = /\b(2024|2025|2026)\b/;
+// drop postings that target past seasons (2020–2026); keep 2027 or year-less (evergreen)
+const WRONG_YEAR_RE = /\b202[0-6]\b/;
+// drop fall/spring/winter/co-op roles unless they also mention summer
+const OTHER_SEASON_RE = /\b(fall|autumn|spring|winter|off.?cycle|co-?op)\b/i;
+const SUMMER_RE = /\bsummer\b/i;
+// US-only: reject listings whose title or location mentions a non-US country/city
+const NON_US_RE = /\b(Canada|Toronto|Vancouver|Montreal|Ottawa|Calgary|United Kingdom|UK|London|Dublin|Ireland|Germany|Berlin|Munich|France|Paris|Netherlands|Amsterdam|Spain|Madrid|Barcelona|Poland|Warsaw|Krakow|India|Bangalore|Bengaluru|Hyderabad|Mumbai|Pune|Gurgaon|Noida|Chennai|Singapore|Japan|Tokyo|China|Shanghai|Beijing|Shenzhen|Hong Kong|Taiwan|Taipei|Korea|Seoul|Australia|Sydney|Melbourne|Brazil|S[ãa]o Paulo|Mexico|Chile|Santiago|Argentina|Buenos Aires|Colombia|Bogot[áa]|Peru|Lima|Costa Rica|Israel|Tel Aviv|Dubai|UAE|Switzerland|Zurich|Geneva|Sweden|Stockholm|Finland|Helsinki|Norway|Oslo|Denmark|Copenhagen|Italy|Milan|Rome|Portugal|Lisbon|Belgium|Brussels|Austria|Vienna|Prague|Budapest|Bucharest|Luxembourg|LATAM|EMEA|APAC|FIN|GBR|DEU|CAN|MEX|BRA|IND|CHN|JPN|SGP|AUS|POL|ESP|FRA|NLD|CHE|ITA)\b/;
+const isUS = (l) => !NON_US_RE.test(`${l.title} ${(l.locations || []).join(" ")}`);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -50,7 +56,12 @@ async function getJSON(url, opts = {}, retries = 2) {
   }
 }
 
-const isIntern = (t) => INTERN_RE.test(t) && !EXCLUDE_RE.test(t) && !WRONG_YEAR_RE.test(t);
+function isIntern(t) {
+  if (!INTERN_RE.test(t) || EXCLUDE_RE.test(t)) return false;
+  if (WRONG_YEAR_RE.test(t)) return false;                          // 2020–2026 seasons
+  if (OTHER_SEASON_RE.test(t) && !SUMMER_RE.test(t)) return false;  // fall/spring/co-op only
+  return true;
+}
 
 function listing({ company, title, url, locations = [], source, posted = null }) {
   return {
@@ -140,6 +151,10 @@ async function communityListings() {
       console.log(`Phase 1: ${data.length} listings from ${url.split("/")[3]}`);
       return data
         .filter((l) => l.active !== false && l.is_visible !== false && l.url && l.title && l.company_name)
+        // Summer 2027 double-check: title must pass season rules AND, when the
+        // entry carries explicit terms, at least one must mention 2027
+        .filter((l) => isIntern(l.title) &&
+          (!Array.isArray(l.terms) || !l.terms.length || l.terms.some((t) => /2027/.test(t))))
         .map((l) => ({ ...l, source: l.source || "community" }));
     }
   }
@@ -187,6 +202,7 @@ async function communityListings() {
   const seen = new Set();
   const deduped = [];
   for (const l of all) {
+    if (!isUS(l)) continue; // US-only
     const key1 = (l.url || "").replace(/[?#].*$/, "").toLowerCase();
     const key2 = l.id || `${l.company_name}::${l.title}`.toLowerCase();
     if (seen.has(key1) || seen.has(key2)) continue;
