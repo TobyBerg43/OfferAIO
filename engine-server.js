@@ -43,6 +43,19 @@ app.use((req, res, next) => {
 const loadProfile = () => (fs.existsSync(PROFILE_FILE) ? JSON.parse(fs.readFileSync(PROFILE_FILE, "utf8")) : {});
 const saveProfile = (p) => fs.writeFileSync(PROFILE_FILE, JSON.stringify(p, null, 2));
 
+// Serve the dashboard itself at http://127.0.0.1:7717/ — pulls the latest from the
+// repo each start (so product updates ship via git), caches to disk for offline use.
+const DASH_FILE = path.join(DATA, "dashboard.html");
+const DASH_URL = "https://raw.githubusercontent.com/TobyBerg43/OfferAIO/main/OfferAIO.html";
+app.get("/", async (_req, res) => {
+  try {
+    const html = await fetch(DASH_URL, { signal: AbortSignal.timeout(4000) }).then((r) => r.text());
+    if (html && html.includes("OfferAIO")) fs.writeFileSync(DASH_FILE, html);
+  } catch (_) { /* offline — fall back to cache below */ }
+  if (fs.existsSync(DASH_FILE)) return res.type("html").send(fs.readFileSync(DASH_FILE, "utf8"));
+  res.status(503).send("Dashboard not cached yet and repo unreachable. Check your connection and reload.");
+});
+
 app.get("/health", (_req, res) => {
   const hasLLM = !!(process.env.ANTHROPIC_API_KEY || process.env.OPENAI_API_KEY);
   res.json({
@@ -106,4 +119,4 @@ app.post("/radar/start", async (_req, res) => {
 app.get("/radar/events", (_req, res) => res.json({ ok: true, events: radar.drainEvents() }));
 
 app.listen(PORT, "127.0.0.1", () =>
-  console.log(`OfferAIO Engine ready → http://127.0.0.1:${PORT}  (open OfferAIO.html; it will auto-connect)`));
+  console.log(`\n  OfferAIO Engine ready.\n  >>> Open your dashboard here:  http://127.0.0.1:${PORT}  <<<\n  (leave this window open)\n`));
