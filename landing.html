@@ -3,8 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OfferAIO · Apply to 50 internships while you're in class</title>
-<meta name="description" content="OfferAIO watches every live Summer 2027 internship posting, fills each application in your own browser, and writes cover letters that sound like you. You review each one and click send.">
+<title>Auto Apply to Summer 2027 Internships | OfferAIO</title>
+<meta name="description" content="OfferAIO watches every live Summer 2027 internship posting, fills applications in your browser, and writes cover letters in your voice. Start free.">
+<link rel="canonical" href="https://offeraio.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://offeraio.com/">
+<meta property="og:site_name" content="OfferAIO">
+<meta property="og:title" content="Auto Apply to Summer 2027 Internships | OfferAIO">
+<meta property="og:description" content="The internship application tool that watches every live Summer 2027 posting, fills applications in your browser, and writes cover letters in your voice.">
+<meta property="og:image" content="https://offeraio.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Auto Apply to Summer 2027 Internships | OfferAIO">
+<meta name="twitter:description" content="Watches every live Summer 2027 posting, fills applications in your browser, writes cover letters in your voice. Start free.">
+<meta name="twitter:image" content="https://offeraio.com/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://offeraio.com/#org","name":"OfferAIO","url":"https://offeraio.com/","logo":"https://offeraio.com/logo.png"},
+{"@type":"SoftwareApplication","name":"OfferAIO","operatingSystem":"Web","applicationCategory":"BusinessApplication","url":"https://offeraio.com/","description":"Internship application tool for Summer 2027. Watches live postings, fills applications in your browser, and writes cover letters in your voice.","offers":[{"@type":"Offer","name":"Free","price":"0","priceCurrency":"USD","description":"100 submissions per month"},{"@type":"Offer","name":"Pro","price":"30","priceCurrency":"USD","description":"Monthly subscription"},{"@type":"Offer","name":"Season","price":"199","priceCurrency":"USD","description":"One payment through August 2027"}],"publisher":{"@id":"https://offeraio.com/#org"}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is this even allowed?","acceptedAnswer":{"@type":"Answer","text":"You authorize every send. OfferAIO fills applications, then waits for you to review and click send, in your own browser, logged in as you. Full-auto mode exists, but it is opt-in, clearly labeled, and off by default."}},
+{"@type":"Question","name":"Does it bypass CAPTCHAs?","acceptedAnswer":{"@type":"Answer","text":"Never. When a CAPTCHA appears, OfferAIO hands control back to you. Resume upload is also manual for browser security reasons; the field is highlighted so you can drop the file in two seconds."}},
+{"@type":"Question","name":"Won't companies flag my applications as automated?","acceptedAnswer":{"@type":"Answer","text":"Everything goes out on your IP and your logged-in sessions, with randomized human pacing, a daily cap, quiet hours, and a match-quality floor. To an employer it looks like what it is: a real applicant who reviewed and sent an application."}},
+{"@type":"Question","name":"Where do the listings come from?","acceptedAnswer":{"@type":"Answer","text":"A pipeline runs every 6 hours: it aggregates community Summer 2027 lists and about 180 public company job boards via Greenhouse, Lever, Ashby, and Workday, then filters to US-only internship roles and dedupes. The database grows through fall 2026 as postings open."}},
+{"@type":"Question","name":"What happens to my data?","acceptedAnswer":{"@type":"Answer","text":"Your profile and resume stay in your browser and the extension. The cover-letter API processes requests without storing your documents."}}
+]}]}
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%2333528c'/%3E%3Cpath d='M33.5 20.5 A11 11 0 1 1 26.9 15.4' fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round'/%3E%3Cpath d='M29 19 L35 13' fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round'/%3E%3Cpath d='M29.5 12 H36 V18.5' fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -141,6 +166,10 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
   color:var(--green);font-weight:600;font-size:15.5px;margin:0 auto 14px;max-width:470px;
 }
 .wait-err{color:var(--red);font-weight:600;font-size:14px;margin:0 auto 14px;max-width:470px}
+.hero-cta{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:26px}
+.hero-cta .btn{padding:14px 34px;font-size:16px}
+.cta-note{font:12px var(--mono);color:var(--dim)}
+.wait .btn{font-size:14px;padding:12px 16px}
 .hero-alt{margin-bottom:26px}
 .live-pill{
   display:inline-flex;align-items:center;gap:9px;
@@ -572,9 +601,10 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
     <div class="nav-links">
       <a href="#features">Features</a>
       <a href="#how">How it works</a>
-      <a href="#pricing">Pricing</a>
+      <a href="/pricing/">Pricing</a>
       <a href="#faq">FAQ</a>
-      <a class="btn btn-blue" href="https://offeraio.com/OfferAIO.html" target="_blank" rel="noopener">Open the dashboard</a>
+      <a href="/employers/">For Employers</a>
+      <a class="btn btn-blue" href="https://offeraio.com/dashboard/" target="_blank" rel="noopener">Open the dashboard</a>
     </div>
   </div>
 </nav>
@@ -584,15 +614,18 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
   <h1>Apply to <span class="acc">50 internships</span> while you're in class.</h1>
   <p class="hero-sub">OfferAIO watches every live Summer 2027 posting, fills each application <strong>in your own browser</strong>, and writes cover letters that sound like you wrote them. You review each one and click send.</p>
 
+  <p class="hero-cta">
+    <a class="btn btn-gold" href="/dashboard/">Start free</a>
+    <span class="cta-note">No credit card. 100 submissions a month, free forever.</span>
+  </p>
+
   <form class="wait" id="waitForm" novalidate="">
     <label class="sr-only" for="waitEmail">Email address</label>
     <input id="waitEmail" type="email" required placeholder="you@email.com" autocomplete="email">
-    <button class="btn btn-gold" type="submit" id="waitBtn">Join the waitlist</button>
+    <button class="btn btn-ghost" type="submit" id="waitBtn">Join the Season waitlist</button>
   </form>
   <p class="wait-done" id="waitDone" hidden>You're on the list. We'll email you when access opens.</p>
   <p class="wait-err" id="waitErr" hidden>Something went wrong. Please try again.</p>
-
-  <p class="hero-alt"><a class="btn btn-ghost" href="https://offeraio.com/OfferAIO.html" target="_blank" rel="noopener">Open the live dashboard</a></p>
 
   <span class="live-pill"><span class="live-dot" aria-hidden="true"></span><span id="livePillText">240+ live Summer 2027 listings</span></span>
 </header>
@@ -829,12 +862,12 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
       <div class="price m">$0</div>
       <div class="per">forever</div>
       <ul>
+        <li>100 submissions per month</li>
         <li>Browse the full live database</li>
-        <li>5 tasks per day</li>
         <li>Paste any link as a task</li>
         <li>CSV export</li>
       </ul>
-      <a class="btn btn-ghost" href="https://offeraio.com/OfferAIO.html" target="_blank" rel="noopener">Start free</a>
+      <a class="btn btn-gold" href="/dashboard/">Start free</a>
     </div>
     <div class="plan-hi reveal">
       <span class="plan-tag">Most popular</span>
@@ -849,7 +882,7 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
           <li>Gmail Response Radar</li>
           <li>Resume-ranked matching</li>
         </ul>
-        <button class="btn btn-gold" data-waitlist>Get access</button>
+        <button class="btn btn-ghost" data-waitlist>Get access</button>
       </div>
     </div>
     <div class="plan reveal">
@@ -903,8 +936,8 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
     <h2>Most students send five applications a week. You can review fifty in an afternoon.</h2>
     <p>Summer 2027 postings are already going live. Have your pipeline running before the season peaks.</p>
     <div class="cta-row">
-      <button class="btn btn-gold" data-waitlist>Join the waitlist</button>
-      <a class="btn btn-ghost" href="https://offeraio.com/OfferAIO.html" target="_blank" rel="noopener">Open the live dashboard</a>
+      <a class="btn btn-gold" href="/dashboard/">Start free</a>
+      <button class="btn btn-ghost" data-waitlist>Join the Season waitlist</button>
     </div>
   </div>
 </section>
@@ -924,10 +957,11 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
         <span>Offer<span class="acc">AIO</span></span>
       </a>
       <div class="foot-links">
-        <a href="https://offeraio.com/OfferAIO.html" target="_blank" rel="noopener">Live dashboard</a>
+        <a href="/dashboard/">Live dashboard</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/employers/">For Employers</a>
         <a href="https://github.com/TobyBerg43/OfferAIO" target="_blank" rel="noopener">GitHub repo</a>
         <a href="https://github.com/TobyBerg43/OfferAIO/releases/download/extension-latest/offeraio-extension.zip">Browser extension zip</a>
-        <a href="#pricing">Pricing</a>
       </div>
     </div>
     <p class="compliance">OfferAIO is not affiliated with any employer, university, or applicant tracking system. Applications are always reviewed and authorized by you before submission; CAPTCHAs are never bypassed. Auto-submission may conflict with some employers' terms of service, so review mode is the default. No outcomes are guaranteed. © 2026 OfferAIO.</p>
@@ -1018,9 +1052,20 @@ go('tasks');
 
 /* keys 1-6 switch pages when the demo is in view and nothing is focused */
 var demoVisible = false;
+var simStarted = false;
+function startSim(){
+  if (simStarted || REDUCED) return;
+  simStarted = true;
+  setInterval(tick, 1900);
+}
 var appWindow = $('appWindow');
 if ('IntersectionObserver' in window) {
-  new IntersectionObserver(function(es){ demoVisible = es[0].isIntersecting; }, {threshold:.15}).observe(appWindow);
+  new IntersectionObserver(function(es){
+    demoVisible = es[0].isIntersecting;
+    if (demoVisible) startSim();
+  }, {threshold:.15}).observe(appWindow);
+} else {
+  startSim();
 }
 document.addEventListener('keydown', function(e){
   if (!demoVisible || e.metaKey || e.ctrlKey || e.altKey) return;
@@ -1162,7 +1207,7 @@ function tick(){
   }
   renderAll();
 }
-if (!REDUCED) setInterval(tick, 1900);
+/* sim starts on first scroll into view (startSim above) */
 
 /* ============ review queue sends ============ */
 $('queueBody').addEventListener('click', function(e){
