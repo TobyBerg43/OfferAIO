@@ -1104,14 +1104,28 @@ function renderChart(){
     const c2x=p2[0]-(p3[0]-p1[0])/6, c2y=p2[1]-(p3[1]-p1[1])/6;
     line+=` C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
   }
-  const area=line+` L${pts[pts.length-1][0]},${h-14} L${pts[0][0]},${h-14} Z`;
+  // green above the average line, red below — fill + line + dots colored by side
+  const avg=dayData.reduce((a,b)=>a+b,0)/dayData.length;
+  const avgY=+(h-18-(avg/max)*(h-45)).toFixed(1);
+  const fx=pts[0][0], lx=pts[pts.length-1][0];
+  const areaAvg=line+` L${lx},${avgY} L${fx},${avgY} Z`;
+  const dots=pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="3.2" fill="#fff" stroke="${dayData[i]>=avg?'#2e9d68':'#c14a3c'}" stroke-width="2.2"/>`).join('');
   $('chart').innerHTML=`
-    <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#33528c" stop-opacity=".35"/><stop offset="100%" stop-color="#4a72b8" stop-opacity="0"/>
-    </linearGradient><linearGradient id="lg" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#33528c"/><stop offset="100%" stop-color="#4a72b8"/></linearGradient></defs>
-    <path d="${area}" fill="url(#ag)"/><path d="${line}" fill="none" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round"/>
-    ${pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#0c0c16" stroke="#33528c" stroke-width="2"/>`).join('')}`;
+    <defs>
+      <linearGradient id="gg" gradientUnits="userSpaceOnUse" x1="0" y1="8" x2="0" y2="${avgY}">
+        <stop offset="0%" stop-color="#2e9d68" stop-opacity=".34"/><stop offset="100%" stop-color="#2e9d68" stop-opacity="0"/></linearGradient>
+      <linearGradient id="rg" gradientUnits="userSpaceOnUse" x1="0" y1="${avgY}" x2="0" y2="${h-6}">
+        <stop offset="0%" stop-color="#c14a3c" stop-opacity="0"/><stop offset="100%" stop-color="#c14a3c" stop-opacity=".34"/></linearGradient>
+      <clipPath id="oaAbove"><rect x="0" y="0" width="${w}" height="${avgY}"/></clipPath>
+      <clipPath id="oaBelow"><rect x="0" y="${avgY}" width="${w}" height="${h-avgY}"/></clipPath>
+    </defs>
+    <path d="${areaAvg}" fill="url(#gg)" clip-path="url(#oaAbove)"/>
+    <path d="${areaAvg}" fill="url(#rg)" clip-path="url(#oaBelow)"/>
+    <line x1="${fx}" y1="${avgY}" x2="${lx}" y2="${avgY}" stroke="#4a72b8" stroke-width="1.3" stroke-dasharray="5 4" opacity=".85"/>
+    <text x="${fx}" y="${avgY-6}" fill="#4a72b8" font-size="10" font-weight="700">Average</text>
+    <path d="${line}" fill="none" stroke="#2e9d68" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" clip-path="url(#oaAbove)"/>
+    <path d="${line}" fill="none" stroke="#c14a3c" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" clip-path="url(#oaBelow)"/>
+    ${dots}`;
 }
 function renderCats(){
   const el=$('catBars');el.innerHTML='';
