@@ -343,6 +343,11 @@ section.demo-wrap{padding:40px 20px 84px}
   font:10.5px var(--mono);color:var(--w-dim);
 }
 .statbar b{color:var(--w-ink);font-weight:600}
+.subtabs{display:flex;gap:8px;margin-bottom:12px}
+.stab{border:1px solid var(--w-line2);background:var(--w-panel);border-radius:999px;padding:5px 13px;font:600 11px var(--mono);color:var(--w-dim);cursor:pointer;transition:color .15s var(--ease),border-color .15s var(--ease)}
+.stab span{color:var(--w-dim2);margin-left:4px}
+.stab.active{color:var(--blue);border-color:rgba(51,82,140,.45);background:rgba(51,82,140,.06)}
+.stab.active span{color:var(--blue)}
 
 /* listings */
 .lrow{
@@ -734,6 +739,10 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
         <!-- Tasks -->
         <div class="page active" data-page="tasks">
           <div class="pg-head"><h3>Tasks</h3><small>one task = one internship</small></div>
+          <div class="subtabs" role="tablist" aria-label="Task views">
+            <button class="stab active" data-st="active" role="tab">Active <span id="stActiveN">4</span></button>
+            <button class="stab" data-st="done" role="tab">Submitted <span id="stDoneN">2</span></button>
+          </div>
           <table class="ttable">
             <thead><tr><th>COMPANY</th><th>ROLE</th><th>STATUS</th></tr></thead>
             <tbody id="taskBody"></tbody>
@@ -1059,10 +1068,22 @@ var S = {
   tasks: [
     {c:'Stripe',        r:'SWE Intern',         stage:2},
     {c:'Jane Street',   r:'Quant Trading',      stage:0},
-    {c:'Goldman Sachs', r:'IB Summer Analyst',  stage:4},
     {c:'Anthropic',     r:'AI/ML Intern',       stage:3},
-    {c:'Bain & Co',     r:'Consulting Intern',  stage:1},
-    {c:'Databricks',    r:'Data Science',       stage:4}
+    {c:'Bain & Co',     r:'Consulting Intern',  stage:1}
+  ],
+  done: [
+    {c:'Goldman Sachs', r:'IB Summer Analyst',  interview:false},
+    {c:'Databricks',    r:'Data Science',       interview:false}
+  ],
+  pool: [
+    {c:'Citi',       r:'Markets Quant Analysis'},
+    {c:'Two Sigma',  r:'Quant Research'},
+    {c:'Figma',      r:'Product Intern'},
+    {c:'Meta',       r:'SWE Intern'},
+    {c:'McKinsey',   r:'Business Analyst Intern'},
+    {c:'Palantir',   r:'Forward Deployed SWE'},
+    {c:'Ramp',       r:'SWE Intern'},
+    {c:'Blackstone', r:'PE Summer Analyst'}
   ],
   queue: [
     {c:'Two Sigma',  r:'Quant Research',    f:24, sent:false},
@@ -1090,9 +1111,14 @@ var STAGES = [
 
 /* static representative snapshot when motion is reduced */
 if (REDUCED) {
-  S.tasks[5].stage = 5;
+  S.done[1].interview = true;
   S.interviews = 1;
   S.radar.unshift({from:'Databricks Recruiting', sub:'Interview availability', kind:'INTERVIEW'});
+}
+var curSub = 'active';
+function exists(c, r) {
+  return S.tasks.some(function(t){ return t.c === c && t.r === r; }) ||
+         S.done.some(function(t){ return t.c === c && t.r === r; });
 }
 
 /* ============ page switching ============ */
@@ -1121,6 +1147,8 @@ function go(page){
 document.addEventListener('click', function(e){
   var b = e.target.closest('.nav-item');
   if (b) go(b.getAttribute('data-page'));
+  var st = e.target.closest('.stab');
+  if (st){ curSub = st.getAttribute('data-st'); renderTasks(); }
 });
 go('tasks');
 
@@ -1162,16 +1190,30 @@ function toast(msg, interview){
 
 /* ============ renderers ============ */
 function renderTasks(){
-  $('taskBody').innerHTML = S.tasks.map(function(t){
-    var st = STAGES[t.stage];
-    var pulse = st.pulse && !REDUCED ? ' pulse' : '';
-    return '<tr><td class="co">' + esc(t.c) + '</td><td class="role">' + esc(t.r) + '</td>' +
-           '<td class="st-' + st.c + (st.glow ? ' st-glow' : '') + '"><span class="dot' + pulse + '"></span>' + st.t + '</td></tr>';
-  }).join('');
+  $('stActiveN').textContent = S.tasks.length;
+  $('stDoneN').textContent = S.done.length;
+  document.querySelectorAll('.stab').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-st') === curSub);
+  });
+  if (curSub === 'active') {
+    $('taskBody').innerHTML = S.tasks.map(function(t){
+      var st = STAGES[t.stage];
+      var pulse = st.pulse && !REDUCED ? ' pulse' : '';
+      return '<tr><td class="co">' + esc(t.c) + '</td><td class="role">' + esc(t.r) + '</td>' +
+             '<td class="st-' + st.c + '"><span class="dot' + pulse + '"></span>' + st.t + '</td></tr>';
+    }).join('') || '<tr><td colspan="3" style="color:var(--w-dim2)">No active tasks. Add one from Listings.</td></tr>';
+  } else {
+    $('taskBody').innerHTML = S.done.map(function(t){
+      return '<tr><td class="co">' + esc(t.c) + '</td><td class="role">' + esc(t.r) + '</td>' +
+             (t.interview
+               ? '<td class="st-green st-glow"><span class="dot"></span>★ Interview request</td>'
+               : '<td class="st-green"><span class="dot"></span>Submitted ✓</td>') + '</tr>';
+    }).join('') || '<tr><td colspan="3" style="color:var(--w-dim2)">Nothing submitted yet.</td></tr>';
+  }
 }
 function renderStatbar(){
   $('statbar').innerHTML =
-    'TASKS <b>' + S.tasks.length + '</b><span>·</span>' +
+    'ACTIVE <b>' + S.tasks.length + '</b><span>·</span>' +
     'SUBMITTED <b>' + S.submitted + '</b><span>·</span>' +
     'INTERVIEWS <b>' + S.interviews + '</b><span>·</span>' +
     'MODE <b>' + S.mode + '</b>';
@@ -1182,7 +1224,7 @@ function renderKPIs(){
   $('kInt').textContent = S.interviews;
 }
 function renderBadges(){
-  $('bTasks').textContent = S.tasks.filter(function(t){ return t.stage < 4; }).length;
+  $('bTasks').textContent = S.tasks.length;
   $('bReview').textContent = S.queue.filter(function(q){ return !q.sent; }).length;
   $('bRadar').textContent = S.radar.length;
 }
@@ -1255,29 +1297,29 @@ function bumpChart(){
 
 /* ============ simulation ============ */
 function tick(){
-  var submittedTasks = S.tasks.filter(function(t){ return t.stage === 4; });
-  if (submittedTasks.length && Math.random() < .05){
-    var ti = pick(submittedTasks);
-    ti.stage = 5;
+  var noInterview = S.done.filter(function(t){ return !t.interview; });
+  if (noInterview.length && Math.random() < .05){
+    var ti = pick(noInterview);
+    ti.interview = true;
     S.interviews++;
     S.radar.unshift({from: ti.c + ' Recruiting', sub:'Interview availability', kind:'INTERVIEW'});
     toast('★ Interview request · ' + ti.c, true);
-  } else {
-    var live = S.tasks.filter(function(t){ return t.stage < 4; });
-    if (live.length){
-      var t = pick(live);
-      t.stage++;
-      if (t.stage === 4){
-        S.submitted++;
-        bumpChart();
-        toast('Submitted ✓ · ' + t.c);
-      }
+  } else if (S.tasks.length){
+    var t = pick(S.tasks);
+    t.stage++;
+    if (t.stage === 4){
+      S.tasks.splice(S.tasks.indexOf(t), 1);
+      S.done.unshift({c: t.c, r: t.r, interview: false});
+      if (S.done.length > 8) S.done.pop();
+      S.submitted++;
+      bumpChart();
+      toast('Submitted ✓ · ' + t.c);
     }
   }
-  var liveNow = S.tasks.filter(function(t){ return t.stage < 4; });
-  var done = S.tasks.filter(function(t){ return t.stage >= 4; });
-  if (done.length && (liveNow.length === 0 || Math.random() < .3)){
-    pick(done).stage = 0;
+  /* new matches spawn into Active as slots open up */
+  if (S.tasks.length < 8 && (S.tasks.length < 4 || Math.random() < .25)){
+    var fresh = S.pool.filter(function(p){ return !exists(p.c, p.r); });
+    if (fresh.length) S.tasks.push({c: fresh[0].c, r: fresh[0].r, stage: 0});
   }
   renderAll();
 }
@@ -1291,6 +1333,8 @@ $('queueBody').addEventListener('click', function(e){
   if (!q || q.sent) return;
   q.sent = true;
   S.submitted++;
+  S.done.unshift({c: q.c, r: q.r, interview: false});
+  if (S.done.length > 8) S.done.pop();
   bumpChart();
   renderAll(); renderQueue();
   toast('Sent ✓ · ' + q.c);
@@ -1325,13 +1369,10 @@ $('listBody').addEventListener('click', function(e){
   if (!b) return;
   var it = LST[Number(b.getAttribute('data-l'))];
   if (!it) return;
-  if (S.tasks.length >= 8){
-    var idx = -1;
-    for (var i = 0; i < S.tasks.length; i++){ if (S.tasks[i].stage >= 4){ idx = i; break; } }
-    if (idx >= 0) S.tasks.splice(idx, 1);
-    else { toast('All 8 task slots are live'); return; }
-  }
-  S.tasks.push({c: it.c, r: shortRole(it.t), stage: 0});
+  var role = shortRole(it.t);
+  if (exists(it.c, role)){ toast('Task already exists · ' + it.c); return; }
+  if (S.tasks.length >= 8){ toast('All 8 active slots are full'); return; }
+  S.tasks.push({c: it.c, r: role, stage: 0});
   renderAll();
   toast('Task created · ' + it.c);
 });
