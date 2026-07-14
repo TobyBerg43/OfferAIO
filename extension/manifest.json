@@ -12,7 +12,8 @@
     "https://*.greenhouse.io/*",
     "https://boards.greenhouse.io/*",
     "https://job-boards.greenhouse.io/*",
-    "https://jobs.lever.co/*"
+    "https://jobs.lever.co/*",
+    "https://tobyberg43.github.io/*"
   ],
   "content_scripts": [
     {
@@ -23,6 +24,11 @@
         "https://jobs.lever.co/*"
       ],
       "js": ["content.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://tobyberg43.github.io/OfferAIO/*"],
+      "js": ["bridge.js"],
       "run_at": "document_idle"
     }
   ]
