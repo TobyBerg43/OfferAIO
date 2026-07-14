@@ -1,24 +1,32 @@
-/* OfferAIO content script — fills Greenhouse & Lever applications in the user's own browser.
- * Runs in YOUR browser (your IP, your session), so it behaves like a normal applicant — no
- * datacenter-IP bot flags. It never bypasses CAPTCHAs. Resume upload stays manual (browsers
- * forbid scripts from attaching files), so we highlight that field for you. */
+/* OfferAIO content script — fills internship applications in the user's own browser.
+ * Works across the major applicant tracking systems (Greenhouse, Lever, Ashby, Workday,
+ * SmartRecruiters, iCIMS, Workable, Handshake, LinkedIn, ZipRecruiter, Indeed and more)
+ * by matching fields on standard autocomplete/name/label attributes rather than
+ * hardcoding one site. Runs in YOUR browser (your IP, your session). Never bypasses
+ * CAPTCHAs. Resume upload stays manual (browsers forbid scripts from attaching files) —
+ * the field is highlighted for you. */
 (() => {
   const HOST = location.hostname;
   const isLever = /lever\.co$/.test(HOST);
-  const isGH = /greenhouse\.io$/.test(HOST);
-  if (!isLever && !isGH) return;
 
-  const q = (s, r = document) => r.querySelector(s);
-  const qa = (s, r = document) => [...r.querySelectorAll(s)];
+  const q = (s, r) => { try { return (r || document).querySelector(s); } catch (e) { return null; } };
+  const qa = (s, r) => { try { return [...(r || document).querySelectorAll(s)]; } catch (e) { return []; } };
 
   function setValue(el, value) {
-    if (!el || value == null || value === "") return 0;
+    if (!el || value == null || value === "" || el.offsetParent === null) return 0;
     const proto = el.tagName === "TEXTAREA" ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
     const setter = Object.getOwnPropertyDescriptor(proto, "value").set;
     setter.call(el, String(value));
     el.dispatchEvent(new Event("input", { bubbles: true }));
     el.dispatchEvent(new Event("change", { bubbles: true }));
     return 1;
+  }
+  function fillFirst(selectors, value) {
+    for (const sel of selectors) {
+      const el = qa(sel).find((e) => e.offsetParent !== null && !e.value);
+      if (el) return setValue(el, value);
+    }
+    return 0;
   }
 
   function answerFor(label, p) {
@@ -27,89 +35,97 @@
     if (/authoriz|eligible to work|work authorization|legally/.test(l)) return "Yes";
     if (/\blinkedin\b/.test(l)) return p.linkedin;
     if (/graduat/.test(l)) return p.gradDate;
-    if (/gpa/.test(l)) return p.gpa;
+    if (/\bgpa\b/.test(l)) return p.gpa;
     if (/school|university|college/.test(l)) return p.school;
     if (/\bmajor\b|field of study/.test(l)) return p.major;
+    if (/\bminor\b/.test(l)) return p.minor;
     if (/hear about|how did you find/.test(l)) return "Company website";
     return null;
   }
 
   const companyName = () => {
     if (isLever) return (location.pathname.split("/")[1] || "your team").trim();
-    const c = q(".company-name");
-    return ((c && c.textContent) || document.title.split(/[-|@]/).pop() || "your team").trim();
+    const c = q(".company-name") || q('[class*="company" i]');
+    return ((c && c.textContent) || document.title.split(/[-|@]/).pop() || "your team").trim().slice(0, 60);
   };
   const roleName = () => {
     const h = q(".app-title") || q(".posting-headline h2") || q("h1") || q("h2");
-    return (h ? h.textContent : "the role").trim();
+    return (h ? h.textContent : "the role").trim().slice(0, 80);
   };
 
-  function fillGreenhouse(p) {
+  // Cross-ATS field selectors
+  const SEL = {
+    first: ['#first_name', 'input[autocomplete="given-name"]', 'input[name*="first" i]', 'input[id*="first" i]', 'input[data-automation-id*="first" i]'],
+    last: ['#last_name', 'input[autocomplete="family-name"]', 'input[name*="last" i]', 'input[id*="last" i]', 'input[data-automation-id*="last" i]'],
+    full: ['input[name="name"]', 'input[autocomplete="name"]', 'input[id*="fullname" i]', 'input[name*="fullname" i]', 'input[aria-label*="full name" i]'],
+    email: ['#email', 'input[type="email"]', 'input[autocomplete="email"]', 'input[name*="email" i]', 'input[id*="email" i]', 'input[data-automation-id*="email" i]'],
+    phone: ['#phone', 'input[type="tel"]', 'input[autocomplete="tel"]', 'input[name*="phone" i]', 'input[id*="phone" i]', 'input[data-automation-id*="phone" i]'],
+    linkedin: ['input[name*="linkedin" i]', 'input[id*="linkedin" i]', 'input[aria-label*="linkedin" i]', 'input[name="urls[LinkedIn]"]'],
+    school: ['input[name*="school" i]', 'input[id*="school" i]', 'input[name="org"]', 'input[name*="university" i]'],
+    minor: ['input[name*="minor" i]', 'input[id*="minor" i]', 'input[aria-label*="minor" i]'],
+  };
+
+  function selectOption(sel, val) {
+    const opt = [...sel.options].find((o) => o.text.trim().toLowerCase() === String(val).toLowerCase());
+    if (opt) { sel.value = opt.value; sel.dispatchEvent(new Event("change", { bubbles: true })); return 1; }
+    return 0;
+  }
+
+  function fill(p) {
     let n = 0;
     const parts = (p.name || "").split(" ");
-    n += setValue(q('#first_name, input[autocomplete="given-name"], input[name*="first_name"]'), parts[0]);
-    n += setValue(q('#last_name, input[autocomplete="family-name"], input[name*="last_name"]'), parts.slice(1).join(" "));
-    n += setValue(q('#email, input[type="email"], input[name*="email"]'), p.email);
-    n += setValue(q('#phone, input[type="tel"], input[name*="phone"]'), p.phone);
+    const gotFirst = fillFirst(SEL.first, parts[0]);
+    const gotLast = fillFirst(SEL.last, parts.slice(1).join(" "));
+    n += gotFirst + gotLast;
+    if (!gotFirst && !gotLast) n += fillFirst(SEL.full, p.name);
+    n += fillFirst(SEL.email, p.email);
+    n += fillFirst(SEL.phone, p.phone);
+    n += fillFirst(SEL.linkedin, p.linkedin);
+    n += fillFirst(SEL.school, p.school);
+    n += fillFirst(SEL.minor, p.minor);
     qa("label").forEach((lab) => {
       const ans = answerFor(lab.textContent, p);
       if (!ans) return;
       const id = lab.getAttribute("for");
-      const inp = id && document.getElementById(id);
+      let inp = id && document.getElementById(id);
+      if (!inp) inp = q("input, textarea, select", lab.parentElement || document);
+      if (inp && inp.tagName === "SELECT") { n += selectOption(inp, ans); return; }
       if (inp && (inp.tagName === "INPUT" || inp.tagName === "TEXTAREA")) n += setValue(inp, ans);
     });
     return n;
   }
 
-  function fillLever(p) {
-    let n = 0;
-    n += setValue(q('input[name="name"]'), p.name);
-    n += setValue(q('input[name="email"]'), p.email);
-    n += setValue(q('input[name="phone"]'), p.phone);
-    n += setValue(q('input[name="org"]'), p.school);
-    n += setValue(q('input[name="urls[LinkedIn]"], input[name="urls[Linkedin]"]'), p.linkedin);
-    qa(".application-question, .application-field").forEach((card) => {
-      const lab = q(".application-label, label", card);
-      const ans = answerFor(lab && lab.textContent, p);
-      if (!ans) return;
-      const inp = q('input[type="text"], textarea', card);
-      if (inp) n += setValue(inp, ans);
-    });
-    return n;
-  }
-
-  const findCover = () => q('#cover_letter_text, textarea[name*="cover"], textarea[name="comments"]');
+  const findCover = () => q('#cover_letter_text, textarea[name*="cover" i], textarea[name="comments"], textarea[id*="cover" i]');
   const findResume = () => q('input[type="file"]');
   const findSubmit = () =>
     q("#submit_app") || q("#btn-submit") ||
-    qa('button, input[type="submit"]').find((b) => /submit application|submit|apply now/i.test((b.textContent || b.value || "")));
+    qa('button, input[type="submit"], [role="button"]').find((b) => /submit application|submit|apply now|send application/i.test((b.textContent || b.value || "")));
 
-  const CSS =
-    "#offeraio-bar{position:fixed;left:0;right:0;bottom:0;z-index:2147483647;display:flex;align-items:center;" +
-    "justify-content:space-between;padding:10px 18px;background:linear-gradient(90deg,#0c0c16,#11111f);" +
-    "border-top:1px solid #2e2e4d;color:#e8e8f4;font:14px/1.4 -apple-system,'Segoe UI',sans-serif;box-shadow:0 -8px 30px rgba(0,0,0,.5)}" +
-    "#offeraio-bar .oa-left{display:flex;align-items:center;gap:10px}" +
-    "#offeraio-bar .oa-logo{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#4c8dff);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}" +
-    "#offeraio-bar .oa-title{font-weight:700}#offeraio-bar .oa-status{color:#8b8ba8;font-size:12.5px;margin-left:6px}" +
-    "#offeraio-bar .oa-right{display:flex;gap:8px}" +
-    "#offeraio-bar button{border:1px solid #2e2e4d;background:#161628;color:#e8e8f4;padding:8px 16px;border-radius:9px;font-weight:600;font-size:13px;cursor:pointer}" +
-    "#offeraio-bar button:hover{border-color:#7c5cff}" +
-    "#offeraio-bar button.oa-primary{background:linear-gradient(135deg,#7c5cff,#4c8dff);border:none}" +
-    "#offeraio-bar button.oa-green{background:linear-gradient(135deg,#1eb873,#2fe08d);border:none;color:#04150c}";
+  const CSS = [
+    "#offeraio-bar{position:fixed;left:0;right:0;bottom:0;z-index:2147483647;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;background:linear-gradient(90deg,#0c0c16,#11111f);border-top:1px solid #2e2e4d;color:#e8e8f4;font:14px/1.4 -apple-system,'Segoe UI',sans-serif;box-shadow:0 -8px 30px rgba(0,0,0,.5)}",
+    "#offeraio-bar .oa-left{display:flex;align-items:center;gap:10px}",
+    "#offeraio-bar .oa-logo{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#4c8dff);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}",
+    "#offeraio-bar .oa-title{font-weight:700}",
+    "#offeraio-bar .oa-status{color:#8b8ba8;font-size:12.5px;margin-left:6px}",
+    "#offeraio-bar .oa-right{display:flex;gap:8px}",
+    "#offeraio-bar button{border:1px solid #2e2e4d;background:#161628;color:#e8e8f4;padding:8px 16px;border-radius:9px;font-weight:600;font-size:13px;cursor:pointer}",
+    "#offeraio-bar button:hover{border-color:#7c5cff}",
+    "#offeraio-bar button.oa-primary{background:linear-gradient(135deg,#7c5cff,#4c8dff);border:none}",
+    "#offeraio-bar button.oa-green{background:linear-gradient(135deg,#1eb873,#2fe08d);border:none;color:#04150c}"
+  ].join("");
 
   let bar;
   function buildBar() {
     if (document.getElementById("offeraio-bar")) return;
+    if (!q('input[type="email"], input[name*="email" i], input[type="file"], input[name="name"]')) return;
     const style = document.createElement("style");
     style.textContent = CSS;
     document.head.appendChild(style);
     bar = document.createElement("div");
     bar.id = "offeraio-bar";
-    bar.innerHTML =
-      '<div class="oa-left"><span class="oa-logo">O</span><span class="oa-title">OfferAIO</span>' +
-      '<span class="oa-status" id="oa-status">Ready - click Fill</span></div>' +
-      '<div class="oa-right"><button id="oa-fill" class="oa-primary">Fill application</button>' +
-      '<button id="oa-submit" class="oa-green" style="display:none">Submit</button></div>';
+    const left = '<div class="oa-left"><span class="oa-logo">O</span><span class="oa-title">OfferAIO</span><span class="oa-status" id="oa-status">Ready - click Fill</span></div>';
+    const right = '<div class="oa-right"><button id="oa-fill" class="oa-primary">Fill application</button><button id="oa-submit" class="oa-green" style="display:none">Submit</button></div>';
+    bar.innerHTML = left + right;
     document.body.appendChild(bar);
     q("#oa-fill", bar).onclick = run;
     q("#oa-submit", bar).onclick = doSubmit;
@@ -123,7 +139,7 @@
     const profile = d.profile || {};
     const mode = d.mode || "semi";
     if (!profile.email) { status("Open the OfferAIO extension and save your profile first"); return; }
-    const n = isLever ? fillLever(profile) : fillGreenhouse(profile);
+    const n = fill(profile);
     const cl = findCover();
     if (cl && profile.coverLetter)
       setValue(cl, profile.coverLetter.split("{company}").join(companyName()).split("{role}").join(roleName()));
@@ -149,6 +165,9 @@
     status("Submitted via OfferAIO");
   }
 
-  if (document.body) buildBar();
-  else window.addEventListener("DOMContentLoaded", buildBar);
+  // SPA forms can render late — retry building the bar for a few seconds.
+  let tries = 0;
+  const boot = () => { buildBar(); if (!document.getElementById("offeraio-bar") && tries++ < 20) setTimeout(boot, 700); };
+  if (document.body) boot();
+  else window.addEventListener("DOMContentLoaded", boot);
 })();
