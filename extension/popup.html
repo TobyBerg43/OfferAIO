@@ -3,24 +3,24 @@
 <head>
 <meta charset="utf-8">
 <style>
-  :root{--bg:#0c0c16;--panel:#161628;--border:#2e2e4d;--txt:#e8e8f4;--dim:#8b8ba8;--dim2:#5c5c78;--purple:#7c5cff;--blue:#4c8dff;--green:#2fe08d}
+  :root{--bg:#fbf8f2;--panel:#f4eee2;--border:#e0d7c5;--border2:#d7cbb4;--txt:#2b2823;--dim:#726a5c;--dim2:#a89d89;--blue1:#33528c;--blue2:#4a72b8;--gold1:#c8862f;--gold2:#e0a548;--green:#2e9d68}
   *{box-sizing:border-box}
   body{width:330px;margin:0;background:var(--bg);color:var(--txt);font:13px/1.4 -apple-system,'Segoe UI',sans-serif;padding:14px}
   .head{display:flex;align-items:center;gap:9px;margin-bottom:10px}
-  .logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--purple),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:800}
-  .head b{font-size:15px}.head b span{background:linear-gradient(135deg,var(--purple),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--blue1),var(--blue2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}
+  .head b{font-size:15px}.head b span{background:linear-gradient(135deg,var(--blue1),var(--blue2));-webkit-background-clip:text;background-clip:text;color:transparent}
   label{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);margin:9px 0 4px;font-weight:600}
-  input,select,textarea{width:100%;background:var(--panel);border:1px solid var(--border);border-radius:8px;color:var(--txt);padding:7px 9px;font-size:12.5px;outline:none;font-family:inherit}
-  input:focus,textarea:focus,select:focus{border-color:var(--purple)}
+  input,select,textarea{width:100%;background:var(--panel);border:1px solid var(--border2);border-radius:8px;color:var(--txt);padding:7px 9px;font-size:12.5px;outline:none;font-family:inherit}
+  input:focus,textarea:focus,select:focus{border-color:var(--blue1);box-shadow:0 0 0 3px rgba(51,82,140,.12)}
   textarea{resize:vertical;min-height:48px}
   .row{display:flex;gap:8px}.row>*{flex:1}
-  .seg{display:flex;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:3px;gap:3px;margin-top:4px}
+  .seg{display:flex;background:var(--panel);border:1px solid var(--border2);border-radius:8px;padding:3px;gap:3px;margin-top:4px}
   .seg button{flex:1;border:none;background:transparent;color:var(--dim);padding:6px;border-radius:6px;font-size:11.5px;font-weight:600;cursor:pointer}
-  .seg button.on{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff}
-  .fillnow{width:100%;margin-top:10px;border:none;border-radius:9px;padding:10px;font-weight:700;font-size:13px;cursor:pointer;background:linear-gradient(135deg,#1eb873,#2fe08d);color:#04150c}
-  .save{width:100%;margin-top:8px;border:none;border-radius:9px;padding:10px;font-weight:700;font-size:13px;cursor:pointer;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff}
+  .seg button.on{background:linear-gradient(135deg,var(--blue1),var(--blue2));color:#fff}
+  .fillnow{width:100%;margin-top:10px;border:none;border-radius:9px;padding:10px;font-weight:700;font-size:13px;cursor:pointer;background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#3a2a10;box-shadow:0 4px 14px rgba(200,134,47,.3)}
+  .save{width:100%;margin-top:8px;border:none;border-radius:9px;padding:10px;font-weight:700;font-size:13px;cursor:pointer;background:linear-gradient(135deg,var(--blue1),var(--blue2));color:#fff}
   .note{font-size:10.5px;color:var(--dim2);margin-top:8px;text-align:center;line-height:1.5}
-  .note a{color:var(--purple);text-decoration:none}
+  .note a{color:var(--blue1);text-decoration:none;font-weight:600}
   .ok{color:var(--green);font-size:11.5px;text-align:center;margin-top:8px;opacity:0;transition:.3s}
   .ok.show{opacity:1}
   details summary{cursor:pointer;color:var(--dim);font-size:11px;font-weight:600;margin-top:10px;list-style:none}
@@ -91,7 +91,6 @@
       setTimeout(() => ok.classList.remove("show"), 2500);
     });
   };
-  // Fill the current tab — works on ANY page, including direct employer links.
   document.getElementById("fillPage").onclick = async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     try { await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["content.js"] }); } catch (e) {}

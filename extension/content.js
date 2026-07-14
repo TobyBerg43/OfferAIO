@@ -102,16 +102,16 @@
     qa('button, input[type="submit"], [role="button"]').find((b) => /submit application|submit|apply now|send application/i.test((b.textContent || b.value || "")));
 
   const CSS = [
-    "#offeraio-bar{position:fixed;left:0;right:0;bottom:0;z-index:2147483647;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;background:linear-gradient(90deg,#0c0c16,#11111f);border-top:1px solid #2e2e4d;color:#e8e8f4;font:14px/1.4 -apple-system,'Segoe UI',sans-serif;box-shadow:0 -8px 30px rgba(0,0,0,.5)}",
+    "#offeraio-bar{position:fixed;left:0;right:0;bottom:0;z-index:2147483647;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;background:linear-gradient(90deg,#fbf8f2,#f4eee2);border-top:1px solid #d7cbb4;color:#2b2823;font:14px/1.4 -apple-system,'Segoe UI',sans-serif;box-shadow:0 -8px 30px rgba(70,55,35,.16)}",
     "#offeraio-bar .oa-left{display:flex;align-items:center;gap:10px}",
-    "#offeraio-bar .oa-logo{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#7c5cff,#4c8dff);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}",
+    "#offeraio-bar .oa-logo{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#33528c,#4a72b8);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}",
     "#offeraio-bar .oa-title{font-weight:700}",
-    "#offeraio-bar .oa-status{color:#8b8ba8;font-size:12.5px;margin-left:6px}",
+    "#offeraio-bar .oa-status{color:#726a5c;font-size:12.5px;margin-left:6px}",
     "#offeraio-bar .oa-right{display:flex;gap:8px}",
-    "#offeraio-bar button{border:1px solid #2e2e4d;background:#161628;color:#e8e8f4;padding:8px 16px;border-radius:9px;font-weight:600;font-size:13px;cursor:pointer}",
-    "#offeraio-bar button:hover{border-color:#7c5cff}",
-    "#offeraio-bar button.oa-primary{background:linear-gradient(135deg,#7c5cff,#4c8dff);border:none}",
-    "#offeraio-bar button.oa-green{background:linear-gradient(135deg,#1eb873,#2fe08d);border:none;color:#04150c}"
+    "#offeraio-bar button{border:1px solid #d7cbb4;background:#ffffff;color:#2b2823;padding:8px 16px;border-radius:9px;font-weight:600;font-size:13px;cursor:pointer}",
+    "#offeraio-bar button:hover{border-color:#33528c}",
+    "#offeraio-bar button.oa-primary{background:linear-gradient(135deg,#c8862f,#e0a548);border:none;color:#3a2a10}",
+    "#offeraio-bar button.oa-green{background:linear-gradient(135deg,#2e9d68,#3cbd7f);border:none;color:#fff}"
   ].join("");
 
   let bar;
@@ -145,7 +145,7 @@
       setValue(cl, profile.coverLetter.split("{company}").join(companyName()).split("{role}").join(roleName()));
     const rf = findResume();
     if (rf) {
-      rf.style.outline = "3px solid #7c5cff";
+      rf.style.outline = "3px solid #33528c";
       (rf.closest("div,section,fieldset") || rf).scrollIntoView({ behavior: "smooth", block: "center" });
     }
     status("Filled " + n + " fields" + (rf ? " - attach your resume (highlighted), then Submit" : " - review, then Submit"));
