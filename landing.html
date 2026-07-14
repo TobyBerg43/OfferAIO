@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OfferAIO · Apply to 50 internships while you're in class</title>
+<meta name="description" content="OfferAIO watches every live Summer 2027 internship posting, fills each application in your own browser, and writes cover letters that sound like you. You review each one and click send.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2333528c'/%3E%3Ctext x='16' y='22' font-size='17' font-weight='700' font-family='sans-serif' fill='%23fff' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#efe8d9;
+  --ink:#2b2823;
+  --soft:#5c5546;
+  --dim:#786f5e;
+  --card:#fffdf8;
+  --line:rgba(88,74,52,.15);
+  --line2:rgba(88,74,52,.28);
+  --blue:#33528c;
+  --blue2:#4a72b8;
+  --green:#2e9d68;
+  --amber:#b9822b;
+  --red:#c14a3c;
+  --cyan:#2f7d9e;
+  --violet:#6f5fa8;
+  --w-bg:#fbf8f2;
+  --w-panel:#ffffff;
+  --w-inset:#f4eee2;
+  --w-line:#e7dece;
+  --w-line2:#d7cbb4;
+  --w-ink:#2b2823;
+  --w-dim:#726a5c;
+  --w-dim2:#a89d89;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --mono:"SF Mono","Cascadia Code",Consolas,ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* ---- fixed marble texture: layered CSS gradients only ---- */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(1100px 520px at 50% -80px, rgba(255,250,238,.75), transparent 65%),
+    radial-gradient(760px 560px at 4% 104%, rgba(214,196,164,.30), transparent 62%),
+    radial-gradient(820px 600px at 98% 102%, rgba(219,203,172,.26), transparent 64%),
+    linear-gradient(85deg,  transparent 0 21%, rgba(146,128,100,.05) 21.4%, transparent 21.9%),
+    linear-gradient(96deg,  transparent 0 38%, rgba(146,128,100,.08) 38.3%, transparent 38.9%),
+    linear-gradient(104deg, transparent 0 55%, rgba(146,128,100,.04) 55.5%, transparent 56.2%),
+    linear-gradient(113deg, transparent 0 69%, rgba(146,128,100,.09) 69.3%, transparent 69.8%),
+    linear-gradient(118deg, transparent 0 83%, rgba(146,128,100,.05) 83.4%, transparent 84.1%),
+    linear-gradient(124deg, transparent 0 93%, rgba(146,128,100,.07) 93.3%, transparent 93.8%);
+}
+img,svg{display:block;max-width:100%}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.m{font-family:var(--mono)}
+.container{max-width:1080px;margin:0 auto;padding:0 20px}
+section{padding:74px 0}
+h1,h2,h3{line-height:1.15;letter-spacing:-.018em;font-weight:700}
+h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
+.sec-sub{color:var(--dim);font-size:17px;max-width:620px}
+.sec-head{text-align:center;margin-bottom:40px}
+.sec-head .sec-sub{margin:0 auto}
+:focus-visible{outline:2px solid var(--blue2);outline-offset:2px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---- buttons ---- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:10px;padding:12px 22px;font:600 15px var(--sans);
+  cursor:pointer;border:1px solid transparent;text-decoration:none;
+  transition:transform .18s var(--ease),filter .18s var(--ease),background-color .18s var(--ease);
+  white-space:nowrap;
+}
+.btn:hover{text-decoration:none;transform:translateY(-1px);filter:brightness(1.03)}
+.btn-gold{background:linear-gradient(135deg,#c8862f,#e0a548);color:#3a2a10}
+.btn-blue{background:#33528c;color:#fff}
+.btn-ghost{background:transparent;border-color:var(--line2);color:var(--ink)}
+.btn-ghost:hover{background:rgba(255,253,248,.7)}
+
+/* ---- nav ---- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(239,232,217,.88);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-in{display:flex;align-items:center;gap:26px;height:62px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none}
+.logo:hover{text-decoration:none}
+.logo-mark{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,#33528c,#4a72b8);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font:700 16px var(--sans);
+}
+.logo .acc{color:var(--blue)}
+.nav-links{display:flex;gap:22px;margin-left:auto;align-items:center}
+.nav-links a{color:var(--soft);font-size:14.5px;font-weight:500}
+.nav-links a:hover{color:var(--ink);text-decoration:none}
+.nav-links a.btn-blue{color:#fff}
+.nav-links a.btn-blue:hover{color:#fff}
+.nav .btn{padding:9px 16px;font-size:14px}
+@media(max-width:700px){.nav-links a:not(.btn){display:none}}
+
+/* ---- hero ---- */
+.hero{padding:88px 0 46px;text-align:center}
+.hero h1{
+  font-size:clamp(36px,6.4vw,62px);
+  letter-spacing:-.022em;
+  text-wrap:balance;
+  max-width:880px;margin:0 auto 20px;
+}
+.hero h1 .acc{color:var(--blue)}
+.hero-sub{
+  color:var(--soft);font-size:18.5px;max-width:640px;margin:0 auto 30px;text-wrap:pretty;
+}
+.wait{
+  display:flex;gap:10px;justify-content:center;align-items:stretch;
+  max-width:470px;margin:0 auto 14px;
+}
+.wait input{
+  flex:1;min-width:0;
+  border:1px solid var(--line2);border-radius:10px;
+  background:var(--card);color:var(--ink);
+  padding:12px 15px;font:15px var(--sans);
+}
+.wait input::placeholder{color:var(--w-dim2)}
+.wait-done{
+  color:var(--green);font-weight:600;font-size:15.5px;margin:0 auto 14px;max-width:470px;
+}
+.hero-alt{margin-bottom:26px}
+.live-pill{
+  display:inline-flex;align-items:center;gap:9px;
+  border:1px solid var(--line2);border-radius:999px;
+  background:var(--card);padding:7px 15px;
+  font:12px var(--mono);color:var(--soft);
+}
+.live-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 0 3px rgba(46,157,104,.18);
+  animation:pulse 1.8s var(--ease) infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ---- demo window ---- */
+.demo-wrap{padding:36px 0 70px}
+.window{
+  max-width:960px;margin:0 auto;position:relative;
+  background:var(--w-bg);
+  border:1px solid var(--w-line2);
+  border-radius:14px;
+  box-shadow:0 30px 70px -22px rgba(96,78,50,.24),0 8px 22px -8px rgba(96,78,50,.16);
+  overflow:hidden;
+  font-family:var(--sans);
+}
+.titlebar{
+  display:flex;align-items:center;gap:12px;
+  padding:9px 14px;border-bottom:1px solid var(--w-line);
+  background:#f6f1e6;
+}
+.tb-dots{display:flex;gap:6px;flex:0 0 auto}
+.tb-dots i{width:11px;height:11px;border-radius:50%;display:block}
+.tb-dots i:nth-child(1){background:#e2685c}
+.tb-dots i:nth-child(2){background:#e5b04a}
+.tb-dots i:nth-child(3){background:#79c26e}
+.tb-title{
+  flex:1;text-align:center;
+  font:11px var(--mono);color:var(--w-dim);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.tb-stats{display:flex;gap:12px;flex:0 0 auto;font:10px var(--mono)}
+.tb-stats .ok{color:var(--green)}
+.tb-stats .db{color:var(--w-dim)}
+.tb-conn{color:var(--green);animation:pulse 2s var(--ease) infinite}
+@media(max-width:640px){.tb-stats .db{display:none}}
+@media(max-width:480px){.tb-stats .ok{display:none}}
+
+.app-body{display:flex;min-height:442px;align-items:stretch}
+.sidebar{
+  width:196px;flex:0 0 auto;
+  border-right:1px solid var(--w-line);
+  padding:14px 10px 12px;
+  display:flex;flex-direction:column;gap:2px;
+}
+.sb-logo{padding:2px 10px 12px}
+.sb-logo b{font-size:14.5px}
+.sb-logo b span{color:var(--blue)}
+.sb-logo small{display:block;font:9.5px var(--mono);color:var(--w-dim2);margin-top:1px}
+.nav-item{
+  display:flex;align-items:center;gap:9px;width:100%;
+  padding:8px 10px;border-radius:9px;border:0;background:none;
+  font:600 12.5px var(--sans);color:var(--w-dim);cursor:pointer;text-align:left;
+  transition:background-color .15s var(--ease),color .15s var(--ease);
+}
+.nav-item svg{width:14px;height:14px;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-item:hover{background:rgba(51,82,140,.06);color:var(--w-ink)}
+.nav-item.active{
+  background:linear-gradient(135deg,rgba(51,82,140,.13),rgba(74,114,184,.09));
+  color:var(--blue);
+  box-shadow:inset 0 0 0 1px rgba(51,82,140,.30);
+}
+.nb{
+  margin-left:auto;font:600 9.5px var(--mono);
+  background:var(--w-inset);border:1px solid var(--w-line2);
+  border-radius:999px;padding:1px 7px;color:var(--w-dim);
+}
+.nb.green{color:var(--green);border-color:rgba(46,157,104,.45)}
+.sb-user{
+  margin-top:auto;padding:9px 10px;border-top:1px solid var(--w-line);
+  font:10.5px var(--mono);color:var(--w-dim2);
+}
+.tabstrip{
+  display:none;gap:6px;overflow-x:auto;
+  padding:10px 12px 2px;scrollbar-width:none;
+}
+.tabstrip::-webkit-scrollbar{display:none}
+.tabstrip .nav-item{width:auto;flex:0 0 auto;border:1px solid var(--w-line);border-radius:999px;padding:6px 12px}
+.tabstrip .nav-item.active{border-color:transparent}
+@media(max-width:760px){
+  .sidebar{display:none}
+  .app-body{flex-direction:column;min-height:0}
+  .tabstrip{display:flex}
+}
+
+.pages{flex:1;min-width:0;padding:16px;position:relative}
+.page{display:none}
+.page.active{display:block}
+.pg-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.pg-head h3{font-size:14.5px;letter-spacing:-.01em}
+.pg-head small{font:10px var(--mono);color:var(--w-dim2)}
+
+/* dashboard */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+@media(max-width:560px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--w-panel);border:1px solid var(--w-line);border-radius:11px;padding:10px 13px}
+.kpi .lbl{font:9.5px var(--mono);letter-spacing:.09em;color:var(--w-dim2)}
+.kpi .val{font:600 23px var(--mono);margin-top:2px}
+.kpi .val.green{color:var(--green)}
+.kpi .val.violet{color:var(--violet)}
+.kpi .val.cyan{color:var(--cyan)}
+.panel{background:var(--w-panel);border:1px solid var(--w-line);border-radius:11px;padding:13px 14px}
+.panel .plbl{font:9.5px var(--mono);letter-spacing:.09em;color:var(--w-dim2);margin-bottom:8px}
+#chartSvg{width:100%;height:auto}
+
+/* tasks */
+.ttable{width:100%;border-collapse:collapse;font:11.5px var(--mono);table-layout:fixed}
+.ttable th{
+  text-align:left;font:600 9.5px var(--mono);letter-spacing:.1em;
+  color:var(--w-dim2);padding:0 8px 7px;border-bottom:1px solid var(--w-line);
+}
+.ttable th:nth-child(1){width:27%}
+.ttable th:nth-child(2){width:34%}
+.ttable td{
+  padding:8.5px 8px;border-bottom:1px solid var(--w-line);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.ttable tr:last-child td{border-bottom:0}
+.ttable .co{font-weight:600}
+.ttable .role{color:var(--w-dim)}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:7px;vertical-align:1px;background:currentColor}
+.dot.pulse{animation:pulse 1.5s var(--ease) infinite}
+.st-cyan{color:var(--cyan)}
+.st-amber{color:var(--amber)}
+.st-violet{color:var(--violet)}
+.st-blue{color:var(--blue2)}
+.st-green{color:var(--green)}
+.st-glow .dot{box-shadow:0 0 9px rgba(46,157,104,.75)}
+.statbar{
+  display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;
+  padding:9px 12px;border:1px solid var(--w-line);border-radius:9px;
+  background:var(--w-inset);
+  font:10.5px var(--mono);color:var(--w-dim);
+}
+.statbar b{color:var(--w-ink);font-weight:600}
+
+/* listings */
+.lrow{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 11px;margin-bottom:7px;
+  background:var(--w-panel);border:1px solid var(--w-line);border-radius:9px;
+  min-width:0;
+}
+.lrow .lco{font:600 12px var(--sans);flex:0 0 auto;max-width:34%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow .lti{font:10.5px var(--mono);color:var(--w-dim);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow .lloc{font:10px var(--mono);color:var(--w-dim2);flex:0 0 auto;max-width:20%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:560px){.lrow .lloc{display:none}}
+.mini-gold{
+  flex:0 0 auto;border:0;border-radius:7px;cursor:pointer;
+  background:linear-gradient(135deg,#c8862f,#e0a548);color:#3a2a10;
+  font:600 10.5px var(--mono);padding:5px 9px;
+  transition:filter .15s var(--ease);
+}
+.mini-gold:hover{filter:brightness(1.05)}
+
+/* review queue */
+.qcard{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  background:var(--w-panel);border:1px solid var(--w-line);border-radius:10px;
+  padding:11px 13px;margin-bottom:9px;
+}
+.qcard .qco{font:600 12.5px var(--sans)}
+.qcard .qrole{font:10.5px var(--mono);color:var(--w-dim)}
+.qcard .qmeta{font:10px var(--mono);color:var(--w-dim2);flex:1;min-width:130px}
+.qbtn{
+  border:0;border-radius:8px;cursor:pointer;
+  background:linear-gradient(135deg,#c8862f,#e0a548);color:#3a2a10;
+  font:600 11px var(--mono);padding:7px 12px;
+  transition:filter .15s var(--ease);
+}
+.qbtn:hover{filter:brightness(1.05)}
+.qbtn.sent{background:none;color:var(--green);border:1px solid rgba(46,157,104,.45);cursor:default}
+
+/* radar */
+.rrow{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 11px;margin-bottom:7px;
+  background:var(--w-panel);border:1px solid var(--w-line);border-radius:9px;
+}
+.rrow .rfrom{font:600 11.5px var(--sans);flex:0 0 auto}
+.rrow .rsub{font:10.5px var(--mono);color:var(--w-dim);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag{font:600 9px var(--mono);letter-spacing:.07em;padding:2.5px 8px;border-radius:999px;border:1px solid;flex:0 0 auto}
+.tag-resp{color:var(--violet);border-color:rgba(111,95,168,.45)}
+.tag-int{color:var(--green);border-color:rgba(46,157,104,.5)}
+
+/* settings */
+.srow{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 13px;margin-bottom:8px;
+  background:var(--w-panel);border:1px solid var(--w-line);border-radius:10px;
+}
+.srow .sl{flex:1;min-width:0}
+.srow .sl b{font-size:12.5px;display:block}
+.srow .sl small{font:10px var(--mono);color:var(--w-dim2)}
+.switch{
+  flex:0 0 auto;width:36px;height:21px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--w-line2);background:var(--w-inset);position:relative;
+  transition:background-color .18s var(--ease),border-color .18s var(--ease);
+}
+.switch::after{
+  content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;
+  background:#fff;border:1px solid var(--w-line2);
+  transition:transform .18s var(--ease);
+}
+.switch[aria-checked="true"]{background:var(--green);border-color:var(--green)}
+.switch[aria-checked="true"]::after{transform:translateX(15px);border-color:rgba(0,0,0,.08)}
+
+/* toasts */
+.toasts{
+  position:absolute;right:12px;bottom:12px;z-index:6;
+  display:flex;flex-direction:column;gap:8px;align-items:flex-end;
+  pointer-events:none;max-width:calc(100% - 24px);
+}
+.toast{
+  background:#fff;border:1px solid rgba(46,157,104,.5);
+  border-radius:9px;padding:8px 13px;
+  font:11px var(--mono);color:var(--w-ink);
+  box-shadow:0 10px 24px -6px rgba(96,78,50,.24);
+  animation:toastIn .26s var(--ease);
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.toast.interview{border-color:rgba(185,130,43,.6)}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.demo-hint{
+  text-align:center;margin:18px auto 0;color:var(--dim);font-size:13.5px;max-width:560px;
+}
+.demo-hint kbd{
+  font:600 11px var(--mono);color:var(--soft);
+  border:1px solid var(--line2);border-bottom-width:2px;border-radius:6px;
+  padding:1.5px 7px;background:var(--card);white-space:nowrap;
+}
+
+/* ---- marquee ---- */
+.mq-sec{padding:30px 0 26px}
+.mq-label{text-align:center;color:var(--dim);font-size:14.5px;margin-bottom:20px}
+.mq-label b{color:var(--ink)}
+.marquee{
+  overflow:hidden;
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
+.mq-track{display:flex;width:max-content;animation:mq 40s linear infinite}
+.mq-group{display:flex;gap:36px;padding-right:36px;flex:0 0 auto}
+.mq-item{font:13px var(--mono);color:var(--dim);white-space:nowrap}
+.mq-item.green{color:var(--green);font-weight:600}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---- bento ---- */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.bcard{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:24px;min-width:0;
+}
+.b3{grid-column:span 3}
+.b2{grid-column:span 2}
+@media(max-width:920px){.b3,.b2{grid-column:span 6}}
+.bcard h3{font-size:17.5px;margin-bottom:8px}
+.bcard p{color:var(--soft);font-size:14.5px}
+.bmini{
+  margin-top:16px;background:var(--w-inset);border:1px solid var(--w-line2);
+  border-radius:9px;padding:11px 13px;
+  font:11.5px var(--mono);color:var(--w-dim);
+}
+.bmini .row1{color:var(--w-ink);margin-bottom:4px}
+.bmini .g{color:var(--green)}
+.bmini .v{color:var(--violet)}
+
+/* ---- trust band ---- */
+.trust{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:44px 30px;text-align:center;
+}
+.trust h2{margin-bottom:10px}
+.trust p{color:var(--soft);font-size:16.5px;max-width:660px;margin:0 auto}
+
+/* ---- steps ---- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:step}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.step{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;
+}
+.step::before{
+  counter-increment:step;content:counter(step);
+  display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:9px;margin-bottom:14px;
+  background:linear-gradient(135deg,#33528c,#4a72b8);
+  color:#fff;font:600 15px var(--mono);
+}
+.step h3{font-size:16.5px;margin-bottom:7px}
+.step p{color:var(--soft);font-size:14.5px}
+
+/* ---- pricing ---- */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+@media(max-width:920px){.plans{grid-template-columns:1fr;max-width:440px;margin:0 auto}}
+.plan{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:26px 24px;display:flex;flex-direction:column;min-width:0;height:100%;
+}
+.plan-hi{
+  position:relative;border-radius:15.5px;padding:1.5px;
+  background:linear-gradient(135deg,#33528c,#4a72b8);
+}
+.plan-hi .plan{border:0;border-radius:14px}
+.plan-tag{
+  position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,#c8862f,#e0a548);color:#3a2a10;
+  font:600 10.5px var(--mono);letter-spacing:.05em;
+  border-radius:999px;padding:3.5px 12px;white-space:nowrap;
+}
+.plan h3{font-size:16px;margin-bottom:8px}
+.price{font:600 30px var(--mono);letter-spacing:-.02em}
+.price small{font:12px var(--mono);color:var(--dim);font-weight:400}
+.plan .per{font:11.5px var(--mono);color:var(--dim);margin-bottom:16px}
+.plan ul{list-style:none;margin-bottom:22px;flex:1}
+.plan li{
+  font-size:14px;color:var(--soft);padding:5px 0 5px 22px;position:relative;
+}
+.plan li::before{content:"✓";position:absolute;left:2px;color:var(--green);font:600 12px var(--mono)}
+.plan .btn{width:100%}
+.plans-note{text-align:center;color:var(--dim);font-size:13.5px;margin-top:22px}
+
+/* ---- faq ---- */
+.faq{max-width:720px;margin:0 auto}
+.faq details{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:0 20px;margin-bottom:10px;
+}
+.faq summary{
+  list-style:none;cursor:pointer;padding:16px 0;
+  font-weight:600;font-size:15.5px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:400 19px var(--mono);color:var(--dim);flex:0 0 auto}
+.faq details[open] summary::after{content:"–"}
+.faq details p{color:var(--soft);font-size:14.5px;padding-bottom:18px}
+
+/* ---- final cta ---- */
+.cta-panel{
+  position:relative;overflow:hidden;text-align:center;
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:60px 28px;
+}
+.cta-panel::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(560px 260px at 50% -60px, rgba(255,250,238,.8), transparent 65%),
+    linear-gradient(93deg,  transparent 0 30%, rgba(146,128,100,.05) 30.4%, transparent 31%),
+    linear-gradient(107deg, transparent 0 58%, rgba(146,128,100,.07) 58.4%, transparent 59%),
+    linear-gradient(119deg, transparent 0 82%, rgba(146,128,100,.04) 82.4%, transparent 83.1%);
+}
+.cta-panel>*{position:relative}
+.cta-panel h2{max-width:640px;margin:0 auto 14px}
+.cta-panel p{color:var(--soft);font-size:16.5px;max-width:560px;margin:0 auto 28px}
+.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ---- footer ---- */
+footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
+.foot-top{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-bottom:22px}
+.foot-links{display:flex;gap:20px;flex-wrap:wrap;margin-left:auto}
+.foot-links a{color:var(--soft);font-size:13.5px}
+.compliance{color:var(--dim);font-size:12.5px;max-width:760px;line-height:1.6}
+
+/* ---- reveal on scroll (enhance-only) ---- */
+.js-reveal .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.js-reveal .reveal.in{opacity:1;transform:none}
+
+/* ---- reduced motion ---- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+  .js-reveal .reveal{opacity:1;transform:none}
+  .mq-track{animation:none !important}
+}
+</style>
+</head>
+<body>
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="container nav-in">
+    <a class="logo" href="#top" aria-label="OfferAIO home">
+      <span class="logo-mark">O</span>
+      <span>Offer<span class="acc">AIO</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-blue" href="https://tobyberg43.github.io/OfferAIO/OfferAIO.html" target="_blank" rel="noopener">Open the dashboard</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero container" id="top">
+  <h1>Apply to <span class="acc">50 internships</span> while you're in class.</h1>
+  <p class="hero-sub">OfferAIO watches every live Summer 2027 posting, fills each application <strong>in your own browser</strong>, and writes cover letters that sound like you wrote them. You review each one and click send.</p>
+
+  <!-- TODO: wire to Formspree, e.g. action="https://formspree.io/f/YOUR_ID" method="POST" and remove the JS stub -->
+  <form class="wait" id="waitForm" novalidate="">
+    <label class="sr-only" for="waitEmail">Email address</label>
+    <input id="waitEmail" type="email" required placeholder="you@school.edu" autocomplete="email">
+    <button class="btn btn-gold" type="submit">Join the waitlist</button>
+  </form>
+  <p class="wait-done" id="waitDone" hidden>You're on the list. We'll email you when access opens.</p>
+
+  <p class="hero-alt"><a class="btn btn-ghost" href="https://tobyberg43.github.io/OfferAIO/OfferAIO.html" target="_blank" rel="noopener">Open the live dashboard</a></p>
+
+  <span class="live-pill"><span class="live-dot" aria-hidden="true"></span><span id="livePillText">240+ live Summer 2027 listings</span></span>
+</header>
+
+<!-- ============ INTERACTIVE DEMO ============ -->
+<section class="demo-wrap container" aria-label="Interactive demo of the OfferAIO dashboard">
+  <div class="window" id="appWindow">
+    <div class="titlebar">
+      <span class="tb-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="tb-title">OfferAIO v3.1.0 — Summer 2027 Internship Suite</span>
+      <span class="tb-stats">
+        <span class="ok">ENGINE: LIVE</span>
+        <span class="db" id="dbStat">DB: 240+ LIVE</span>
+        <span class="tb-conn">● CONNECTED</span>
+      </span>
+    </div>
+
+    <div class="tabstrip" id="tabstrip" role="tablist" aria-label="Demo pages"></div>
+
+    <div class="app-body">
+      <aside class="sidebar">
+        <div class="sb-logo"><b>Offer<span>AIO</span></b><small>build 2027.1</small></div>
+        <button class="nav-item" data-page="dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          Dashboard
+        </button>
+        <button class="nav-item" data-page="tasks">
+          <svg viewBox="0 0 24 24"><path d="M9 6h12M9 12h12M9 18h12"/><path d="M4 5l1.5 1.5L8 4"/><path d="M4 11l1.5 1.5L8 10"/><path d="M4 17l1.5 1.5L8 16"/></svg>
+          Tasks <span class="nb" id="bTasks">6</span>
+        </button>
+        <button class="nav-item" data-page="listings">
+          <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          Listings <span class="nb green" id="bListings">240+</span>
+        </button>
+        <button class="nav-item" data-page="review">
+          <svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 15l2 2 4-4"/></svg>
+          Review Queue <span class="nb" id="bReview">3</span>
+        </button>
+        <button class="nav-item" data-page="radar">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l6-6"/></svg>
+          Response Radar <span class="nb" id="bRadar">1</span>
+        </button>
+        <button class="nav-item" data-page="settings">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3h-4l-.4 2.5a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.5h4l.4-2.5a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg>
+          Settings
+        </button>
+        <div class="sb-user">toby · Pro · 1 profile</div>
+      </aside>
+
+      <main class="pages">
+        <!-- Dashboard -->
+        <div class="page" data-page="dashboard">
+          <div class="pg-head"><h3>Dashboard</h3><small>season overview</small></div>
+          <div class="kpis">
+            <div class="kpi"><div class="lbl">SUBMITTED</div><div class="val green" id="kSub">2</div></div>
+            <div class="kpi"><div class="lbl">RESPONSES</div><div class="val violet" id="kResp">1</div></div>
+            <div class="kpi"><div class="lbl">INTERVIEWS</div><div class="val cyan" id="kInt">0</div></div>
+            <div class="kpi"><div class="lbl">AVG MATCH</div><div class="val">87%</div></div>
+          </div>
+          <div class="panel">
+            <div class="plbl">APPLICATIONS · LAST 14 DAYS</div>
+            <svg id="chartSvg" viewBox="0 0 760 200" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Applications per day for the last 14 days, colored green above the running average and red below"></svg>
+          </div>
+        </div>
+
+        <!-- Tasks -->
+        <div class="page active" data-page="tasks">
+          <div class="pg-head"><h3>Tasks</h3><small>one task = one internship</small></div>
+          <table class="ttable">
+            <thead><tr><th>COMPANY</th><th>ROLE</th><th>STATUS</th></tr></thead>
+            <tbody id="taskBody"></tbody>
+          </table>
+          <div class="statbar" id="statbar"></div>
+        </div>
+
+        <!-- Listings -->
+        <div class="page" data-page="listings">
+          <div class="pg-head"><h3>Listings</h3><small id="listSub">live database · updated every 6h</small></div>
+          <div id="listBody"></div>
+        </div>
+
+        <!-- Review Queue -->
+        <div class="page" data-page="review">
+          <div class="pg-head"><h3>Review Queue</h3><small>filled and waiting on you</small></div>
+          <div id="queueBody"></div>
+        </div>
+
+        <!-- Response Radar -->
+        <div class="page" data-page="radar">
+          <div class="pg-head"><h3>Response Radar</h3><small>watching Gmail · Handshake · LinkedIn</small></div>
+          <div id="radarBody"></div>
+        </div>
+
+        <!-- Settings -->
+        <div class="page" data-page="settings">
+          <div class="pg-head"><h3>Settings</h3><small>profile and pacing</small></div>
+          <div class="srow"><div class="sl"><b>Profile</b><small>toby · resume.pdf · CS + Finance</small></div></div>
+          <div class="srow"><div class="sl"><b>Full-auto mode</b><small>submit on match without review</small></div><button class="switch" role="switch" aria-checked="false" aria-label="Full-auto mode" data-set="fullauto"></button></div>
+          <div class="srow"><div class="sl"><b>Quiet hours</b><small>no sends 11pm to 7am</small></div><button class="switch" role="switch" aria-checked="true" aria-label="Quiet hours" data-set="quiet"></button></div>
+          <div class="srow"><div class="sl"><b>Success sounds</b><small>chime on submit, bigger on interview</small></div><button class="switch" role="switch" aria-checked="true" aria-label="Success sounds" data-set="sounds"></button></div>
+          <div class="srow"><div class="sl"><b>Daily cap</b><small>12/day · human pacing, randomized timing</small></div></div>
+        </div>
+      </main>
+    </div>
+
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+  </div>
+
+  <p class="demo-hint">This is a live demo, click around. Try <kbd>Listings</kbd> → <kbd>+ Task</kbd>, or send something from the <kbd>Review Queue</kbd>.</p>
+</section>
+<!-- ============ PLATFORM MARQUEE ============ -->
+<section class="mq-sec" aria-label="Supported application platforms">
+  <p class="mq-label">Fills applications on <b>16 platforms</b>, plus any link you paste</p>
+  <div class="marquee">
+    <div class="mq-track" id="mqTrack">
+      <div class="mq-group">
+        <span class="mq-item">Greenhouse</span><span class="mq-item">Lever</span><span class="mq-item">Ashby</span><span class="mq-item">Workday</span><span class="mq-item">SmartRecruiters</span><span class="mq-item">iCIMS</span><span class="mq-item">Workable</span><span class="mq-item">Jobvite</span><span class="mq-item">BambooHR</span><span class="mq-item">Breezy</span><span class="mq-item">Taleo</span><span class="mq-item">Handshake</span><span class="mq-item">LinkedIn</span><span class="mq-item">ZipRecruiter</span><span class="mq-item">Indeed</span><span class="mq-item">Wellfound</span><span class="mq-item green">+ any link</span>
+      </div>
+      <div class="mq-group" aria-hidden="true">
+        <span class="mq-item">Greenhouse</span><span class="mq-item">Lever</span><span class="mq-item">Ashby</span><span class="mq-item">Workday</span><span class="mq-item">SmartRecruiters</span><span class="mq-item">iCIMS</span><span class="mq-item">Workable</span><span class="mq-item">Jobvite</span><span class="mq-item">BambooHR</span><span class="mq-item">Breezy</span><span class="mq-item">Taleo</span><span class="mq-item">Handshake</span><span class="mq-item">LinkedIn</span><span class="mq-item">ZipRecruiter</span><span class="mq-item">Indeed</span><span class="mq-item">Wellfound</span><span class="mq-item green">+ any link</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES BENTO ============ -->
+<section class="container" id="features">
+  <div class="sec-head reveal">
+    <h2>Set your filters once. It handles the rest.</h2>
+    <p class="sec-sub">One profile. Up to 50 tasks. Zero copy-pasting.</p>
+  </div>
+  <div class="bento">
+    <div class="bcard b3 reveal">
+      <h3>Tasks that watch the market</h3>
+      <p>Fresh postings every 6 hours from ~180 company job boards. Tasks fire the moment a match appears.</p>
+      <div class="bmini">
+        <div class="row1">stripe.com/jobs · SWE Intern · <span class="g">match 94%</span></div>
+        <div class="v">→ filling application… 14 of 22 fields</div>
+      </div>
+    </div>
+    <div class="bcard b3 reveal">
+      <h3>You approve every send</h3>
+      <p>Filled applications wait in your <strong>Review Queue</strong>. One click sends. Nothing goes out without you.</p>
+      <div class="bmini">
+        <div class="row1">Review Queue · 3 ready</div>
+        <div>Jane Street · Quant Trading · <span class="g">✓ reviewed → sent</span></div>
+      </div>
+    </div>
+    <div class="bcard b2 reveal">
+      <h3>Cover letters in your voice</h3>
+      <p>Written from your real details, so they don't read as generated. Or bring your own template.</p>
+    </div>
+    <div class="bcard b2 reveal">
+      <h3>Response Radar</h3>
+      <p>Watches Gmail, Handshake, and LinkedIn. Callbacks reach you the minute they land.</p>
+    </div>
+    <div class="bcard b2 reveal">
+      <h3>Resume-ranked matching</h3>
+      <p>Tasks fire on the roles your resume scores highest on. Weak matches never go out.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST BAND ============ -->
+<section class="container">
+  <div class="trust reveal">
+    <h2>It runs in your browser, as you</h2>
+    <p>Applications go out on <strong>your IP and your logged-in sessions</strong>, with human pacing, a daily cap, and quiet hours. CAPTCHAs are never bypassed: you take over.</p>
+  </div>
+</section>
+
+<!-- ============ THREE STEPS ============ -->
+<section class="container" id="how">
+  <div class="sec-head reveal">
+    <h2>Three steps to a full pipeline</h2>
+    <p class="sec-sub">Set it up in an afternoon. It works the season for you.</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <h3>Build your profile</h3>
+      <p>Resume, school, major, work auth. Saved once, synced to the extension.</p>
+    </div>
+    <div class="step reveal">
+      <h3>Set your filters</h3>
+      <p>SWE, quant, IB, consulting, product, data. Pick your lanes, create your tasks.</p>
+    </div>
+    <div class="step reveal">
+      <h3>Review and send</h3>
+      <p>One click per filled application. Radar pings you when callbacks arrive.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="container" id="pricing">
+  <div class="sec-head reveal">
+    <h2>Pricing</h2>
+    <p class="sec-sub">Start free. Upgrade when the season heats up.</p>
+  </div>
+  <div class="plans">
+    <div class="plan reveal">
+      <h3>Free</h3>
+      <div class="price m">$0</div>
+      <div class="per">forever</div>
+      <ul>
+        <li>Browse the full live database</li>
+        <li>5 tasks per day</li>
+        <li>Paste any link as a task</li>
+        <li>CSV export</li>
+      </ul>
+      <a class="btn btn-ghost" href="https://tobyberg43.github.io/OfferAIO/OfferAIO.html" target="_blank" rel="noopener">Start free</a>
+    </div>
+    <div class="plan-hi reveal">
+      <span class="plan-tag">Most popular</span>
+      <div class="plan">
+        <h3>Pro</h3>
+        <div class="price m">$30<small>/mo</small></div>
+        <div class="per">cancel anytime</div>
+        <ul>
+          <li>Unlimited tasks, created 50 at a time</li>
+          <li>Review Queue with one-click send</li>
+          <li>Cover letters in your voice</li>
+          <li>Gmail Response Radar</li>
+          <li>Resume-ranked matching</li>
+        </ul>
+        <button class="btn btn-gold" data-waitlist>Get access</button>
+      </div>
+    </div>
+    <div class="plan reveal">
+      <h3>Season</h3>
+      <div class="price m">$199</div>
+      <div class="per">one payment · through August 2027</div>
+      <ul>
+        <li>Everything in Pro</li>
+        <li>Full-auto mode: submits on match</li>
+        <li>Listings refresh every 2 hours</li>
+        <li>Discord notifications</li>
+      </ul>
+      <button class="btn btn-ghost" data-waitlist>Join the waitlist</button>
+    </div>
+  </div>
+  <p class="plans-note">Season access opens as Summer 2027 postings ramp up this fall.</p>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="container" id="faq">
+  <div class="sec-head reveal">
+    <h2>Questions, answered</h2>
+  </div>
+  <div class="faq reveal">
+    <details>
+      <summary>Is this even allowed?</summary>
+      <p>You authorize every send. OfferAIO fills applications, then waits for you to review and click send, in your own browser, logged in as you. Full-auto mode exists, but it's opt-in, clearly labeled, and off by default.</p>
+    </details>
+    <details>
+      <summary>Does it bypass CAPTCHAs?</summary>
+      <p>Never. When a CAPTCHA appears, OfferAIO hands control back to you. Resume upload is also manual for browser security reasons; the field is highlighted so you can drop the file in two seconds.</p>
+    </details>
+    <details>
+      <summary>Won't companies flag my applications as automated?</summary>
+      <p>Everything goes out on your IP and your logged-in sessions, with randomized human pacing, a daily cap, quiet hours, and a match-quality floor. To an employer it looks like what it is: a real applicant who reviewed and sent an application.</p>
+    </details>
+    <details>
+      <summary>Where do the listings come from?</summary>
+      <p>A pipeline runs every 6 hours: it aggregates community Summer 2027 lists and ~180 public company job boards via Greenhouse, Lever, Ashby, and Workday, then filters to US-only internship roles and dedupes. The database grows through fall 2026 as postings open.</p>
+    </details>
+    <details>
+      <summary>What happens to my data?</summary>
+      <p>Your profile and resume stay in your browser and the extension. The cover-letter API processes requests without storing your documents.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="container">
+  <div class="cta-panel reveal">
+    <h2>Most students send five applications a week. You can review fifty in an afternoon.</h2>
+    <p>Summer 2027 postings are already going live. Have your pipeline running before the season peaks.</p>
+    <div class="cta-row">
+      <button class="btn btn-gold" data-waitlist>Join the waitlist</button>
+      <a class="btn btn-ghost" href="https://tobyberg43.github.io/OfferAIO/OfferAIO.html" target="_blank" rel="noopener">Open the live dashboard</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="foot-top">
+      <a class="logo" href="#top" aria-label="OfferAIO home">
+        <span class="logo-mark">O</span>
+        <span>Offer<span class="acc">AIO</span></span>
+      </a>
+      <div class="foot-links">
+        <a href="https://tobyberg43.github.io/OfferAIO/OfferAIO.html" target="_blank" rel="noopener">Live dashboard</a>
+        <a href="https://github.com/TobyBerg43/OfferAIO" target="_blank" rel="noopener">GitHub repo</a>
+        <a href="https://github.com/TobyBerg43/OfferAIO/releases/download/extension-latest/offeraio-extension.zip">Browser extension zip</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+    </div>
+    <p class="compliance">OfferAIO is not affiliated with any employer, university, or applicant tracking system. Applications are always reviewed and authorized by you before submission; CAPTCHAs are never bypassed. Auto-submission may conflict with some employers' terms of service, so review mode is the default. No outcomes are guaranteed. © 2026 OfferAIO.</p>
+  </div>
+</footer>
+<script>
+(function(){
+"use strict";
+var $ = function(id){ return document.getElementById(id); };
+var esc = function(s){ return String(s).replace(/[&<>"']/g, function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+});};
+var pick = function(a){ return a[Math.floor(Math.random()*a.length)]; };
+var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+var META_URL = 'https://raw.githubusercontent.com/TobyBerg43/OfferAIO/main/data/meta.json';
+var LIST_URL = 'https://raw.githubusercontent.com/TobyBerg43/OfferAIO/main/data/listings.json';
+
+/* ============ state ============ */
+var S = {
+  tasks: [
+    {c:'Stripe',        r:'SWE Intern',         stage:2},
+    {c:'Jane Street',   r:'Quant Trading',      stage:0},
+    {c:'Goldman Sachs', r:'IB Summer Analyst',  stage:4},
+    {c:'Anthropic',     r:'AI/ML Intern',       stage:3},
+    {c:'Bain & Co',     r:'Consulting Intern',  stage:1},
+    {c:'Databricks',    r:'Data Science',       stage:4}
+  ],
+  queue: [
+    {c:'Two Sigma',  r:'Quant Research',    f:24, sent:false},
+    {c:'Figma',      r:'Product Intern',    f:19, sent:false},
+    {c:'Blackstone', r:'PE Summer Analyst', f:27, sent:false}
+  ],
+  radar: [
+    {from:'Databricks Recruiting', sub:'Application received', kind:'RESPONSE'}
+  ],
+  chart: [4,6,5,8,10,7,5,9,12,8,6,10,13,11],
+  submitted: 2,
+  responses: 1,
+  interviews: 0,
+  mode: 'SEMI-AUTO'
+};
+
+var STAGES = [
+  {t:'Monitoring',             c:'cyan',   pulse:true},
+  {t:'Match found',            c:'amber'},
+  {t:'Filling application…',  c:'violet', pulse:true},
+  {t:'Writing cover letter…', c:'blue',   pulse:true},
+  {t:'Submitted ✓',           c:'green'},
+  {t:'★ Interview request',   c:'green',  glow:true}
+];
+
+/* static representative snapshot when motion is reduced */
+if (REDUCED) {
+  S.tasks[5].stage = 5;
+  S.interviews = 1;
+  S.radar.unshift({from:'Databricks Recruiting', sub:'Interview availability', kind:'INTERVIEW'});
+}
+
+/* ============ page switching ============ */
+var PAGES = ['dashboard','tasks','listings','review','radar','settings'];
+var TAB_LABELS = {dashboard:'Dashboard', tasks:'Tasks', listings:'Listings', review:'Review', radar:'Radar', settings:'Settings'};
+var tabstrip = $('tabstrip');
+PAGES.forEach(function(p){
+  var b = document.createElement('button');
+  b.className = 'nav-item';
+  b.setAttribute('data-page', p);
+  b.setAttribute('role', 'tab');
+  b.textContent = TAB_LABELS[p];
+  tabstrip.appendChild(b);
+});
+
+function go(page){
+  document.querySelectorAll('.nav-item').forEach(function(b){
+    var on = b.getAttribute('data-page') === page;
+    b.classList.toggle('active', on);
+    if (b.getAttribute('role') === 'tab') b.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  document.querySelectorAll('.page').forEach(function(pg){
+    pg.classList.toggle('active', pg.getAttribute('data-page') === page);
+  });
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest('.nav-item');
+  if (b) go(b.getAttribute('data-page'));
+});
+go('tasks');
+
+/* keys 1-6 switch pages when the demo is in view and nothing is focused */
+var demoVisible = false;
+var appWindow = $('appWindow');
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver(function(es){ demoVisible = es[0].isIntersecting; }, {threshold:.15}).observe(appWindow);
+}
+document.addEventListener('keydown', function(e){
+  if (!demoVisible || e.metaKey || e.ctrlKey || e.altKey) return;
+  var a = document.activeElement;
+  if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.tagName === 'SELECT' || a.isContentEditable)) return;
+  var i = '123456'.indexOf(e.key);
+  if (i >= 0) go(PAGES[i]);
+});
+
+/* ============ toasts ============ */
+var toasts = $('toasts');
+function toast(msg, interview){
+  var el = document.createElement('div');
+  el.className = 'toast' + (interview ? ' interview' : '');
+  el.textContent = msg;
+  toasts.appendChild(el);
+  while (toasts.children.length > 3) toasts.removeChild(toasts.firstChild);
+  setTimeout(function(){ if (el.parentNode) el.parentNode.removeChild(el); }, 3400);
+}
+
+/* ============ renderers ============ */
+function renderTasks(){
+  $('taskBody').innerHTML = S.tasks.map(function(t){
+    var st = STAGES[t.stage];
+    var pulse = st.pulse && !REDUCED ? ' pulse' : '';
+    return '<tr><td class="co">' + esc(t.c) + '</td><td class="role">' + esc(t.r) + '</td>' +
+           '<td class="st-' + st.c + (st.glow ? ' st-glow' : '') + '"><span class="dot' + pulse + '"></span>' + st.t + '</td></tr>';
+  }).join('');
+}
+function renderStatbar(){
+  $('statbar').innerHTML =
+    'TASKS <b>' + S.tasks.length + '</b><span>·</span>' +
+    'SUBMITTED <b>' + S.submitted + '</b><span>·</span>' +
+    'INTERVIEWS <b>' + S.interviews + '</b><span>·</span>' +
+    'MODE <b>' + S.mode + '</b>';
+}
+function renderKPIs(){
+  $('kSub').textContent = S.submitted;
+  $('kResp').textContent = S.responses;
+  $('kInt').textContent = S.interviews;
+}
+function renderBadges(){
+  $('bTasks').textContent = S.tasks.filter(function(t){ return t.stage < 4; }).length;
+  $('bReview').textContent = S.queue.filter(function(q){ return !q.sent; }).length;
+  $('bRadar').textContent = S.radar.length;
+}
+function renderRadar(){
+  $('radarBody').innerHTML = S.radar.map(function(r){
+    var tag = r.kind === 'INTERVIEW' ? 'tag-int' : 'tag-resp';
+    var star = r.kind === 'INTERVIEW' ? '★ ' : '';
+    return '<div class="rrow"><span class="rfrom">' + star + esc(r.from) + '</span>' +
+           '<span class="rsub">' + esc(r.sub) + '</span>' +
+           '<span class="tag ' + tag + '">' + r.kind + '</span></div>';
+  }).join('');
+}
+function renderQueue(){
+  $('queueBody').innerHTML = S.queue.map(function(q, i){
+    var btn = q.sent
+      ? '<button class="qbtn sent" disabled>Sent ✓</button>'
+      : '<button class="qbtn" data-q="' + i + '">Review &amp; send</button>';
+    return '<div class="qcard"><div><div class="qco">' + esc(q.c) + '</div>' +
+           '<div class="qrole">' + esc(q.r) + '</div></div>' +
+           '<div class="qmeta">' + q.f + ' fields filled · cover letter ready</div>' + btn + '</div>';
+  }).join('');
+}
+function renderAll(){
+  renderTasks(); renderStatbar(); renderKPIs(); renderBadges(); renderRadar();
+}
+
+/* ============ chart ============ */
+function renderChart(){
+  var svg = $('chartSvg');
+  var vals = S.chart, n = vals.length;
+  var W = 760, H = 200, P = 20;
+  var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+  var avg = vals.reduce(function(a,b){ return a+b; }, 0) / n;
+  var x = function(i){ return P + i * (W - 2*P) / (n - 1); };
+  var y = function(v){ return H - P - ((v - min) / ((max - min) || 1)) * (H - 2*P); };
+  var pts = vals.map(function(v,i){ return [x(i), y(v)]; });
+
+  /* catmull-rom to cubic bezier */
+  var d = 'M' + pts[0][0].toFixed(1) + ',' + pts[0][1].toFixed(1);
+  for (var i = 0; i < n - 1; i++){
+    var p0 = pts[i-1] || pts[i], p1 = pts[i], p2 = pts[i+1], p3 = pts[i+2] || p2;
+    var c1x = p1[0] + (p2[0]-p0[0])/6, c1y = p1[1] + (p2[1]-p0[1])/6;
+    var c2x = p2[0] - (p3[0]-p1[0])/6, c2y = p2[1] - (p3[1]-p1[1])/6;
+    d += 'C' + c1x.toFixed(1) + ',' + c1y.toFixed(1) + ' ' + c2x.toFixed(1) + ',' + c2y.toFixed(1) + ' ' + p2[0].toFixed(1) + ',' + p2[1].toFixed(1);
+  }
+  var ay = y(avg);
+  var area = d + 'L' + pts[n-1][0].toFixed(1) + ',' + ay.toFixed(1) + 'L' + pts[0][0].toFixed(1) + ',' + ay.toFixed(1) + 'Z';
+  var dots = pts.map(function(p,i){
+    var col = vals[i] >= avg ? '#2e9d68' : '#c14a3c';
+    return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3.4" fill="' + col + '" stroke="#ffffff" stroke-width="1"/>';
+  }).join('');
+
+  svg.innerHTML =
+    '<defs>' +
+      '<clipPath id="clipUp"><rect x="0" y="0" width="' + W + '" height="' + ay.toFixed(1) + '"/></clipPath>' +
+      '<clipPath id="clipDn"><rect x="0" y="' + ay.toFixed(1) + '" width="' + W + '" height="' + (H - ay).toFixed(1) + '"/></clipPath>' +
+    '</defs>' +
+    '<path d="' + area + '" fill="rgba(46,157,104,.15)" clip-path="url(#clipUp)"/>' +
+    '<path d="' + area + '" fill="rgba(193,74,60,.13)" clip-path="url(#clipDn)"/>' +
+    '<path d="' + d + '" fill="none" stroke="#2e9d68" stroke-width="2.2" clip-path="url(#clipUp)"/>' +
+    '<path d="' + d + '" fill="none" stroke="#c14a3c" stroke-width="2.2" clip-path="url(#clipDn)"/>' +
+    '<line x1="' + P + '" x2="' + (W-P) + '" y1="' + ay.toFixed(1) + '" y2="' + ay.toFixed(1) + '" stroke="#4a72b8" stroke-width="1.4" stroke-dasharray="5 4"/>' +
+    '<text x="' + (W-P) + '" y="' + (ay - 7).toFixed(1) + '" text-anchor="end" font-size="9.5" letter-spacing="1" fill="#4a72b8" style="font-family:var(--mono)">AVERAGE</text>' +
+    dots;
+}
+function bumpChart(){
+  S.chart[S.chart.length - 1] += 1;
+  renderChart();
+}
+
+/* ============ simulation ============ */
+function tick(){
+  var submittedTasks = S.tasks.filter(function(t){ return t.stage === 4; });
+  if (submittedTasks.length && Math.random() < .05){
+    var ti = pick(submittedTasks);
+    ti.stage = 5;
+    S.interviews++;
+    S.radar.unshift({from: ti.c + ' Recruiting', sub:'Interview availability', kind:'INTERVIEW'});
+    toast('★ Interview request · ' + ti.c, true);
+  } else {
+    var live = S.tasks.filter(function(t){ return t.stage < 4; });
+    if (live.length){
+      var t = pick(live);
+      t.stage++;
+      if (t.stage === 4){
+        S.submitted++;
+        bumpChart();
+        toast('Submitted ✓ · ' + t.c);
+      }
+    }
+  }
+  var liveNow = S.tasks.filter(function(t){ return t.stage < 4; });
+  var done = S.tasks.filter(function(t){ return t.stage >= 4; });
+  if (done.length && (liveNow.length === 0 || Math.random() < .3)){
+    pick(done).stage = 0;
+  }
+  renderAll();
+}
+if (!REDUCED) setInterval(tick, 1900);
+
+/* ============ review queue sends ============ */
+$('queueBody').addEventListener('click', function(e){
+  var b = e.target.closest('[data-q]');
+  if (!b) return;
+  var q = S.queue[Number(b.getAttribute('data-q'))];
+  if (!q || q.sent) return;
+  q.sent = true;
+  S.submitted++;
+  bumpChart();
+  renderAll(); renderQueue();
+  toast('Sent ✓ · ' + q.c);
+});
+
+/* ============ listings ============ */
+var LST = [];
+var FALLBACK = [
+  {c:'Stripe',         t:'Software Engineering Intern, Summer 2027',  l:'San Francisco, CA'},
+  {c:'Jane Street',    t:'Quantitative Trading Intern, Summer 2027',  l:'New York, NY'},
+  {c:'Anthropic',      t:'AI/ML Research Intern, Summer 2027',        l:'San Francisco, CA'},
+  {c:'Goldman Sachs',  t:'Investment Banking Summer Analyst 2027',    l:'New York, NY'},
+  {c:'Databricks',     t:'Data Science Intern, Summer 2027',          l:'San Francisco, CA'},
+  {c:'Figma',          t:'Product Management Intern, Summer 2027',    l:'San Francisco, CA'},
+  {c:'Two Sigma',      t:'Quantitative Research Intern, Summer 2027', l:'New York, NY'},
+  {c:'Bain & Company', t:'Associate Consultant Intern, Summer 2027',  l:'Chicago, IL'}
+];
+function shortRole(title){
+  var s = String(title).split(',')[0].trim();
+  return s.length > 30 ? s.slice(0, 29) + '…' : s;
+}
+function renderListings(){
+  $('listBody').innerHTML = LST.map(function(it, i){
+    return '<div class="lrow"><span class="lco">' + esc(it.c) + '</span>' +
+           '<span class="lti">' + esc(it.t) + '</span>' +
+           '<span class="lloc">' + esc(it.l) + '</span>' +
+           '<button class="mini-gold" data-l="' + i + '">+ Task</button></div>';
+  }).join('');
+}
+$('listBody').addEventListener('click', function(e){
+  var b = e.target.closest('[data-l]');
+  if (!b) return;
+  var it = LST[Number(b.getAttribute('data-l'))];
+  if (!it) return;
+  if (S.tasks.length >= 8){
+    var idx = -1;
+    for (var i = 0; i < S.tasks.length; i++){ if (S.tasks[i].stage >= 4){ idx = i; break; } }
+    if (idx >= 0) S.tasks.splice(idx, 1);
+    else { toast('All 8 task slots are live'); return; }
+  }
+  S.tasks.push({c: it.c, r: shortRole(it.t), stage: 0});
+  renderAll();
+  toast('Task created · ' + it.c);
+});
+fetch(LIST_URL)
+  .then(function(r){ if (!r.ok) throw new Error('bad status'); return r.json(); })
+  .then(function(arr){
+    if (!Array.isArray(arr) || !arr.length) throw new Error('empty');
+    LST = arr.slice()
+      .sort(function(a,b){ return (b.date_posted || 0) - (a.date_posted || 0); })
+      .slice(0, 8)
+      .map(function(x){
+        return {
+          c: x.company_name || '',
+          t: x.title || '',
+          l: (x.locations && x.locations[0]) || ''
+        };
+      });
+    renderListings();
+  })
+  .catch(function(){
+    LST = FALLBACK;
+    $('listSub').textContent = 'sample · full database in the app';
+    renderListings();
+  });
+
+/* ============ live meta ============ */
+fetch(META_URL)
+  .then(function(r){ if (!r.ok) throw new Error('bad status'); return r.json(); })
+  .then(function(m){
+    if (typeof m.total !== 'number') return;
+    var h = Math.max(1, Math.round((Date.now() - Date.parse(m.updated)) / 36e5));
+    $('livePillText').textContent = m.total + ' live Summer 2027 listings · updated ' + h + 'h ago';
+    $('dbStat').textContent = 'DB: ' + m.total + ' LIVE';
+    $('bListings').textContent = m.total;
+  })
+  .catch(function(){ /* keep the 240+ fallback */ });
+
+/* ============ settings toggles ============ */
+document.querySelectorAll('.switch').forEach(function(sw){
+  sw.addEventListener('click', function(){
+    var on = sw.getAttribute('aria-checked') !== 'true';
+    sw.setAttribute('aria-checked', on ? 'true' : 'false');
+    if (sw.getAttribute('data-set') === 'fullauto'){
+      S.mode = on ? 'FULL-AUTO' : 'SEMI-AUTO';
+      renderStatbar();
+      toast(on ? 'Full-auto mode on · submits on match' : 'Full-auto mode off · review before send');
+    }
+  });
+});
+
+/* ============ waitlist stub ============ */
+/* TODO: replace this stub with a real Formspree POST, e.g.
+   fetch('https://formspree.io/f/YOUR_ID', {method:'POST', body:new FormData(waitForm), headers:{Accept:'application/json'}}) */
+var waitForm = $('waitForm');
+var waitEmail = $('waitEmail');
+waitForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  if (!waitEmail.checkValidity()){ waitEmail.reportValidity(); return; }
+  waitForm.hidden = true;
+  $('waitDone').hidden = false;
+});
+document.querySelectorAll('[data-waitlist]').forEach(function(b){
+  b.addEventListener('click', function(){
+    document.getElementById('top').scrollIntoView({behavior: REDUCED ? 'auto' : 'smooth'});
+    if (!waitForm.hidden) setTimeout(function(){ waitEmail.focus({preventScroll:true}); }, REDUCED ? 0 : 450);
+  });
+});
+
+/* ============ reveal on scroll (enhance-only) ============ */
+if ('IntersectionObserver' in window && !REDUCED){
+  document.documentElement.classList.add('js-reveal');
+  var rio = new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if (en.isIntersecting){ en.target.classList.add('in'); rio.unobserve(en.target); }
+    });
+  }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ rio.observe(el); });
+}
+
+/* ============ boot ============ */
+renderAll();
+renderQueue();
+renderChart();
+})();
+</script>
+
+
+</body>
+</html>
