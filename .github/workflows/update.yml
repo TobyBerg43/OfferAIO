@@ -24,10 +24,12 @@ jobs:
       # - run: python jobspy_scrape.py
       #   continue-on-error: true
       - run: node scrape.js
-      - name: Commit updated listings
+      - name: Generate SEO pages and sitemap
+        run: node generate_pages.js
+      - name: Commit updated listings and pages
         run: |
           git config user.name "offeraio-bot"
           git config user.email "bot@offeraio.dev"
-          git add data/
-          git diff --cached --quiet || git commit -m "chore: refresh listings [skip ci]"
+          git add data/ internships/ sitemap.xml
+          git diff --cached --quiet || git commit -m "chore: refresh listings and SEO pages [skip ci]"
           git push
