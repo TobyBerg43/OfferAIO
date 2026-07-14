@@ -140,6 +140,7 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
 .wait-done{
   color:var(--green);font-weight:600;font-size:15.5px;margin:0 auto 14px;max-width:470px;
 }
+.wait-err{color:var(--red);font-weight:600;font-size:14px;margin:0 auto 14px;max-width:470px}
 .hero-alt{margin-bottom:26px}
 .live-pill{
   display:inline-flex;align-items:center;gap:9px;
@@ -583,13 +584,13 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
   <h1>Apply to <span class="acc">50 internships</span> while you're in class.</h1>
   <p class="hero-sub">OfferAIO watches every live Summer 2027 posting, fills each application <strong>in your own browser</strong>, and writes cover letters that sound like you wrote them. You review each one and click send.</p>
 
-  <!-- TODO: wire to Formspree, e.g. action="https://formspree.io/f/YOUR_ID" method="POST" and remove the JS stub -->
   <form class="wait" id="waitForm" novalidate="">
     <label class="sr-only" for="waitEmail">Email address</label>
     <input id="waitEmail" type="email" required placeholder="you@school.edu" autocomplete="email">
-    <button class="btn btn-gold" type="submit">Join the waitlist</button>
+    <button class="btn btn-gold" type="submit" id="waitBtn">Join the waitlist</button>
   </form>
   <p class="wait-done" id="waitDone" hidden>You're on the list. We'll email you when access opens.</p>
+  <p class="wait-err" id="waitErr" hidden>Something went wrong. Please try again.</p>
 
   <p class="hero-alt"><a class="btn btn-ghost" href="https://offeraio.com/OfferAIO.html" target="_blank" rel="noopener">Open the live dashboard</a></p>
 
@@ -1262,16 +1263,37 @@ document.querySelectorAll('.switch').forEach(function(sw){
   });
 });
 
-/* ============ waitlist stub ============ */
-/* TODO: replace this stub with a real Formspree POST, e.g.
-   fetch('https://formspree.io/f/YOUR_ID', {method:'POST', body:new FormData(waitForm), headers:{Accept:'application/json'}}) */
+/* ============ waitlist (Web3Forms) ============ */
 var waitForm = $('waitForm');
 var waitEmail = $('waitEmail');
 waitForm.addEventListener('submit', function(e){
   e.preventDefault();
   if (!waitEmail.checkValidity()){ waitEmail.reportValidity(); return; }
-  waitForm.hidden = true;
-  $('waitDone').hidden = false;
+  var btn = $('waitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Joining…';
+  $('waitErr').hidden = true;
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    body: JSON.stringify({
+      access_key: '1eb960ff-f4c3-4459-82e0-33b0649d1e1c',
+      subject: 'New OfferAIO waitlist signup',
+      from_name: 'OfferAIO Waitlist',
+      email: waitEmail.value
+    })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(res){
+    if (!res.success) throw new Error('rejected');
+    waitForm.hidden = true;
+    $('waitDone').hidden = false;
+  })
+  .catch(function(){
+    btn.disabled = false;
+    btn.textContent = 'Join the waitlist';
+    $('waitErr').hidden = false;
+  });
 });
 document.querySelectorAll('[data-waitlist]').forEach(function(b){
   b.addEventListener('click', function(){
