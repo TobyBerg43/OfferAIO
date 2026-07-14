@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Auto Apply to Summer 2027 Internships | OfferAIO</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZMYY8SFRMF"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-ZMYY8SFRMF');
+</script>
 <meta name="description" content="OfferAIO watches every live Summer 2027 internship posting, fills applications in your browser, and writes cover letters in your voice. Start free.">
 <link rel="canonical" href="https://offeraio.com/">
 <meta property="og:type" content="website">
@@ -1333,6 +1338,7 @@ waitForm.addEventListener('submit', function(e){
     if (!res.success) throw new Error('rejected');
     waitForm.hidden = true;
     $('waitDone').hidden = false;
+    if (window.gtag) gtag('event', 'waitlist_join');
   })
   .catch(function(){
     btn.disabled = false;
@@ -1357,6 +1363,14 @@ if ('IntersectionObserver' in window && !REDUCED){
   }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){ rio.observe(el); });
 }
+
+/* ============ conversion events ============ */
+document.addEventListener('click', function(e){
+  var a = e.target.closest('a');
+  if (a && /\/dashboard\/?$/.test(a.getAttribute('href') || '') && window.gtag){
+    gtag('event', 'start_free_click');
+  }
+});
 
 /* ============ boot ============ */
 renderAll();
