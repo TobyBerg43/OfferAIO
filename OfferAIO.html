@@ -186,6 +186,10 @@
   .list-row .lr-main{flex:1;min-width:0}
   .list-row .lr-role{color:var(--dim);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .list-row .lr-loc{color:var(--dim2);font-size:10.5px;font-family:var(--mono)}
+  .list-row .lr-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  .list-row .lr-meta span{font-size:10px;font-family:var(--mono);color:var(--dim2);background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:5px;padding:1px 6px}
+  .list-row .lr-meta span.lr-pay{color:var(--green);border-color:rgba(47,224,141,.25);background:rgba(47,224,141,.07)}
+  .list-row .lr-meta span.lr-new{color:var(--violet);border-color:rgba(124,92,255,.3)}
   .save-note{color:var(--green);font-size:12px;font-family:var(--mono);opacity:0;transition:.3s}
   .save-note.show{opacity:1}
 </style>
@@ -355,11 +359,15 @@
               </div>
               <div class="row2">
                 <div><label class="f-lbl">Major</label><input type="text" placeholder="e.g. Finance / CS" id="setMajor"></div>
-                <div><label class="f-lbl">Grad year</label><select id="setGrad"><option>2028</option><option>2027</option><option>2029</option></select></div>
+                <div><label class="f-lbl">Minor <span class="opt">· optional</span></label><input type="text" placeholder="e.g. Statistics" id="setMinor"></div>
               </div>
               <div class="row2">
+                <div><label class="f-lbl">Grad year</label><select id="setGrad"><option>2026</option><option>2027</option><option selected>2028</option><option>2029</option><option>2030</option></select></div>
                 <div><label class="f-lbl">Work authorization</label><select id="setWorkAuth"><option>US Citizen</option><option>Permanent Resident</option><option>F-1 (CPT/OPT)</option><option>Requires sponsorship</option></select></div>
+              </div>
+              <div class="row2">
                 <div><label class="f-lbl">Extension</label><div id="extStatus" style="font-family:var(--mono);font-size:11.5px;color:var(--dim2);padding:9px 0">◌ not detected</div></div>
+                <div></div>
               </div>
               <label class="f-lbl">Resume (PDF)</label>
               <div class="drop" id="resumeDrop" onclick="fakeUpload()">Drop your resume here or click to upload</div>
@@ -384,10 +392,16 @@
           </div>
           <div>
             <div class="card">
-              <h3>Listings DB</h3>
-              <label class="f-lbl">Custom DB URL <span class="opt">— your own pipeline's raw listings.json (see backend README)</span></label>
-              <input type="url" id="customDb" placeholder="https://raw.githubusercontent.com/you/offeraio-listings/main/data/listings.json" onchange="saveCustomDb()">
-              <div class="page-sub" id="dbMeta" style="margin-top:8px">No sync yet</div>
+              <h3>Job Database</h3>
+              <div style="display:flex;align-items:center;gap:10px;padding:4px 0 10px">
+                <div style="width:36px;height:36px;border-radius:9px;background:rgba(47,224,141,.12);display:flex;align-items:center;justify-content:center;font-size:16px">🗂️</div>
+                <div><div style="font-weight:600;font-size:13px">Live &amp; auto-updating</div><div class="page-sub" id="dbMeta" style="margin-top:1px">Refreshing…</div></div>
+                <button class="btn sm" style="margin-left:auto" onclick="loadListings(true)">⟳ Refresh</button>
+              </div>
+              <details style="margin-top:2px">
+                <summary style="cursor:pointer;color:var(--dim2);font-size:11px;font-family:var(--mono)">Advanced: use a custom source</summary>
+                <input type="url" id="customDb" placeholder="https://…/listings.json" onchange="saveCustomDb()" style="margin-top:8px">
+              </details>
             </div>
             <div class="card">
               <h3>Connections — Response Radar</h3>
@@ -417,7 +431,6 @@
               <label class="f-lbl">Writing samples <span class="opt">— essays, emails, anything you actually wrote</span></label>
               <div class="drop" id="voiceDrop" onclick="addSample()">Drop writing samples here (3+ recommended)</div>
               <div class="toggle-row" style="margin-top:4px"><div><div class="t-title">Edit-and-learn</div><div class="t-sub">Learns from every letter you edit in the Review Queue</div></div><div class="switch on" onclick="this.classList.toggle('on')"></div></div>
-              <div class="toggle-row"><div><div class="t-title">Voice interview</div><div class="t-sub">7-min Q&amp;A about your real stories — letters cite specifics</div></div><button class="btn sm" onclick="voiceInterview(this)">Start</button></div>
               <div class="bar-row" style="margin-top:6px"><div class="bl">Voice match</div><div class="bar-track"><div class="bar-fill" id="voiceBar" style="width:34%"></div></div><div class="bv" id="voiceVal" style="width:38px">34%</div></div>
             </div>
             <div class="card">
@@ -606,14 +619,15 @@ function ingest(data,srcName){
   if(rows.length<10)return false;
   LIVE=rows.map(l=>({company:l.company_name,role:l.title,url:l.url,
     loc:(l.locations&&l.locations[0])||'',src:l.source==='workday'?'Workday':l.source==='greenhouse'?'Greenhouse':l.source==='lever'?'Lever':l.source==='ashby'?'Ashby':'Simplify DB',
-    cat:catForTitle(l.title),posted:l.date_posted||0}));
+    cat:catForTitle(l.title),posted:l.date_posted||0,
+    pay:l.salary||l.compensation||l.pay||l.salary_range||''}));
   LIVE.sort((a,b)=>b.posted-a.posted);
   const db=$('dbStatus');
   db.innerHTML=`<div class="pulse"></div>DB: ${LIVE.length.toLocaleString()} LIVE`;
   db.style.color='var(--green)';
   $('listCount').textContent=LIVE.length>999?(LIVE.length/1000).toFixed(1)+'k':LIVE.length;
-  $('dbMeta').textContent=`Synced ${now()} — ${LIVE.length.toLocaleString()} listings from ${srcName}`;
-  $('listSub').textContent=`${LIVE.length.toLocaleString()} live Summer 2027 postings · re-syncs every launch`;
+  $('dbMeta').textContent=`${LIVE.length.toLocaleString()} jobs · updated ${now()}`;
+  $('listSub').textContent=`${LIVE.length.toLocaleString()} live Summer 2027 postings · updates automatically`;
   addFeed(`Listings DB synced — <b>${LIVE.length.toLocaleString()}</b> live postings from ${srcName}`,'var(--green)');
   try{localStorage.setItem('oa_dbcache',JSON.stringify({ts:Date.now(),rows:LIVE.slice(0,1500)}))}catch(e){}
   render();renderListings();
@@ -655,6 +669,17 @@ function saveCustomDb(){
 }
 /* ---- listings browser ---- */
 let listPage=1,lastFiltered=[];
+function fmtAgo(ts){
+  if(!ts)return {txt:'',new:false};
+  const ms=(ts>1e12?ts:ts*1000);
+  const days=Math.floor((Date.now()-ms)/86400000);
+  if(days<=0)return {txt:'Today',new:true};
+  if(days===1)return {txt:'1d ago',new:true};
+  if(days<=3)return {txt:days+'d ago',new:true};
+  if(days<7)return {txt:days+'d ago',new:false};
+  if(days<30)return {txt:Math.floor(days/7)+'w ago',new:false};
+  return {txt:Math.floor(days/30)+'mo ago',new:false};
+}
 function renderListings(){
   const q=(($('listSearch')||{}).value||'').toLowerCase();
   const cat=($('listCat')||{}).value||'';
@@ -667,7 +692,11 @@ function renderListings(){
       <div class="lr-main">
         <b>${l.company}</b> <span class="chip">${(CATS[l.cat]||{}).label||l.cat}</span>
         <div class="lr-role">${l.role}</div>
-        ${l.loc?`<div class="lr-loc">${l.loc}</div>`:''}
+        <div class="lr-meta">
+          ${l.loc?`<span>📍 ${l.loc}</span>`:''}
+          ${l.posted?`<span${fmtAgo(l.posted).new?' class="lr-new"':''}>🗓 ${fmtAgo(l.posted).txt}</span>`:''}
+          ${l.pay?`<span class="lr-pay">💰 ${l.pay}</span>`:''}
+        </div>
       </div>
       <a class="icon-btn" style="text-decoration:none" title="Open posting" href="${l.url}" target="_blank" rel="noopener">↗</a>
       <button class="btn sm primary" onclick="addTaskFromListing(${i})">＋ Task</button>
@@ -1065,7 +1094,14 @@ function renderChart(){
   const max=Math.max(...dayData,1),w=600,h=170,pad=10;
   const step=(w-pad*2)/(dayData.length-1);
   const pts=dayData.map((v,i)=>[pad+i*step, h-18-(v/max)*(h-45)]);
-  const line=pts.map((p,i)=>(i?'L':'M')+p[0]+','+p[1]).join(' ');
+  // smooth Catmull-Rom → cubic bezier for a curved line
+  let line='M'+pts[0][0]+','+pts[0][1];
+  for(let i=0;i<pts.length-1;i++){
+    const p0=pts[i-1]||pts[i], p1=pts[i], p2=pts[i+1], p3=pts[i+2]||p2;
+    const c1x=p1[0]+(p2[0]-p0[0])/6, c1y=p1[1]+(p2[1]-p0[1])/6;
+    const c2x=p2[0]-(p3[0]-p1[0])/6, c2y=p2[1]-(p3[1]-p1[1])/6;
+    line+=` C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+  }
   const area=line+` L${pts[pts.length-1][0]},${h-14} L${pts[0][0]},${h-14} Z`;
   $('chart').innerHTML=`
     <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
@@ -1137,7 +1173,7 @@ function collectProfile(){
   const v=id=>{const e=$(id);return e?(e.value||'').trim():'';};
   return {
     name:v('setName'), email:v('setEmail'), phone:v('setPhone'),
-    school:v('setSchool'), major:v('setMajor'),
+    school:v('setSchool'), major:v('setMajor'), minor:v('setMinor'),
     gradDate:(($('setGrad')||{}).value)||'',
     needsSponsorship:((($('setWorkAuth')||{}).value)||'')==='Requires sponsorship',
     linkedin:v('liUrl')
