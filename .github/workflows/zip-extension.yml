@@ -1,0 +1,24 @@
+name: Package extension
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Zip the extension folder
+        run: |
+          cd extension
+          zip -r ../offeraio-extension.zip .
+      - name: Publish to a release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: extension-latest
+          name: OfferAIO Extension (latest)
+          body: "Chrome extension package. Unzip then load unpacked, or upload the zip to the Chrome Web Store."
+          files: offeraio-extension.zip
