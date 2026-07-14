@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OfferAIO · Apply to 50 internships while you're in class</title>
 <meta name="description" content="OfferAIO watches every live Summer 2027 internship posting, fills each application in your own browser, and writes cover letters that sound like you. You review each one and click send.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2333528c'/%3E%3Ctext x='16' y='22' font-size='17' font-weight='700' font-family='sans-serif' fill='%23fff' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%2333528c'/%3E%3Cpath d='M33.5 20.5 A11 11 0 1 1 26.9 15.4' fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round'/%3E%3Cpath d='M29 19 L35 13' fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round'/%3E%3Cpath d='M29.5 12 H36 V18.5' fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
 :root{
   --bg:#efe8d9;
@@ -68,11 +68,12 @@ a{color:var(--blue);text-decoration:none}
 a:hover{text-decoration:underline}
 .m{font-family:var(--mono)}
 .container{max-width:1080px;margin:0 auto;padding:0 20px}
-section{padding:74px 0}
+section{padding:96px 0}
+[id]{scroll-margin-top:88px}
 h1,h2,h3{line-height:1.15;letter-spacing:-.018em;font-weight:700}
 h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
 .sec-sub{color:var(--dim);font-size:17px;max-width:620px}
-.sec-head{text-align:center;margin-bottom:40px}
+.sec-head{text-align:center;margin-bottom:56px}
 .sec-head .sec-sub{margin:0 auto}
 :focus-visible{outline:2px solid var(--blue2);outline-offset:2px;border-radius:4px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -102,12 +103,7 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
 .nav-in{display:flex;align-items:center;gap:26px;height:62px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none}
 .logo:hover{text-decoration:none}
-.logo-mark{
-  width:30px;height:30px;border-radius:8px;
-  background:linear-gradient(135deg,#33528c,#4a72b8);
-  color:#fff;display:flex;align-items:center;justify-content:center;
-  font:700 16px var(--sans);
-}
+.logo-mark{width:30px;height:30px;flex:0 0 auto;display:block}
 .logo .acc{color:var(--blue)}
 .nav-links{display:flex;gap:22px;margin-left:auto;align-items:center}
 .nav-links a{color:var(--soft);font-size:14.5px;font-weight:500}
@@ -386,8 +382,8 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
 }
 
 /* ---- marquee ---- */
-.mq-sec{padding:30px 0 26px}
-.mq-label{text-align:center;color:var(--dim);font-size:14.5px;margin-bottom:20px}
+.mq-sec{padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,253,248,.5)}
+.mq-label{text-align:center;color:var(--dim);font-size:14.5px;margin-bottom:22px}
 .mq-label b{color:var(--ink)}
 .marquee{
   overflow:hidden;
@@ -404,8 +400,10 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
 .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
 .bcard{
   background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:24px;min-width:0;
+  padding:26px;min-width:0;
+  transition:border-color .2s var(--ease),transform .2s var(--ease);
 }
+.bcard:hover{border-color:var(--line2);transform:translateY(-2px)}
 .b3{grid-column:span 3}
 .b2{grid-column:span 2}
 @media(max-width:920px){.b3,.b2{grid-column:span 6}}
@@ -420,13 +418,36 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
 .bmini .g{color:var(--green)}
 .bmini .v{color:var(--violet)}
 
+/* ---- bento mini visuals ---- */
+.bviz{margin-top:18px;background:#fff;border:1px solid var(--w-line);border-radius:9px;padding:13px 15px}
+.ln{height:7px;border-radius:4px;background:rgba(88,74,52,.11);margin:8px 0}
+.ln.ink{background:rgba(88,74,52,.24)}
+.bviz-foot{display:flex;justify-content:space-between;gap:10px;margin-top:11px;font:10.5px var(--mono);color:var(--w-dim2)}
+.bviz-foot .g{color:var(--green)}
+.mrow{display:flex;align-items:center;gap:9px;font:10.5px var(--mono);color:var(--w-dim);padding:7px 0}
+.mrow+.mrow{border-top:1px dashed var(--w-line)}
+.mrow .mdot{width:6px;height:6px;border-radius:50%;flex:0 0 auto}
+.mrow .grow{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar{display:grid;grid-template-columns:48px 1fr 36px;align-items:center;gap:10px;font:10px var(--mono);color:var(--w-dim);padding:6px 0}
+.bar .track{display:block;height:6px;border-radius:999px;background:var(--w-inset);border:1px solid var(--w-line);overflow:hidden}
+.bar .fill{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#33528c,#4a72b8)}
+.bar .pct{text-align:right;color:var(--w-ink)}
+
 /* ---- trust band ---- */
 .trust{
   background:var(--card);border:1px solid var(--line);border-radius:16px;
-  padding:44px 30px;text-align:center;
+  padding:52px 48px;
+  display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;
 }
-.trust h2{margin-bottom:10px}
-.trust p{color:var(--soft);font-size:16.5px;max-width:660px;margin:0 auto}
+.trust h2{margin-bottom:12px}
+.trust p{color:var(--soft);font-size:16.5px}
+.t-panel{background:var(--w-bg);border:1px solid var(--w-line2);border-radius:12px;padding:8px 18px}
+.t-row{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px dashed var(--w-line2);font:12px var(--mono)}
+.t-row:last-child{border-bottom:0}
+.t-row .k{color:var(--w-dim2);letter-spacing:.06em}
+.t-row .v{color:var(--w-ink);text-align:right}
+.t-row .v.g{color:var(--green)}
+@media(max-width:820px){.trust{grid-template-columns:1fr;padding:36px 24px;gap:28px}}
 
 /* ---- steps ---- */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:step}
@@ -434,13 +455,16 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
 .step{
   background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;
 }
-.step::before{
+.step-top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.step-top::before{
   counter-increment:step;content:counter(step);
   display:flex;align-items:center;justify-content:center;
-  width:34px;height:34px;border-radius:9px;margin-bottom:14px;
+  width:34px;height:34px;border-radius:9px;flex:0 0 auto;
   background:linear-gradient(135deg,#33528c,#4a72b8);
   color:#fff;font:600 15px var(--mono);
 }
+.step-top::after{content:"";flex:1;border-top:1px dashed var(--line2)}
+.st-note{display:block;margin-top:14px;font:10.5px var(--mono);color:var(--dim)}
 .step h3{font-size:16.5px;margin-bottom:7px}
 .step p{color:var(--soft);font-size:14.5px}
 
@@ -534,7 +558,13 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
 <nav class="nav">
   <div class="container nav-in">
     <a class="logo" href="#top" aria-label="OfferAIO home">
-      <span class="logo-mark">O</span>
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <defs><linearGradient id="lgA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#33528c"/><stop offset="1" stop-color="#4a72b8"/></linearGradient></defs>
+        <rect width="48" height="48" rx="12" fill="url(#lgA)"/>
+        <path d="M33.5 20.5 A11 11 0 1 1 26.9 15.4" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M29 19 L35 13" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M29.5 12 H36 V18.5" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
       <span>Offer<span class="acc">AIO</span></span>
     </a>
     <div class="nav-links">
@@ -542,7 +572,7 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
-      <a class="btn btn-blue" href="https://tobyberg43.github.io/OfferAIO/OfferAIO.html" target="_blank" rel="noopener">Open the dashboard</a>
+      <a class="btn btn-blue" href="https://offeraio.com/OfferAIO.html" target="_blank" rel="noopener">Open the dashboard</a>
     </div>
   </div>
 </nav>
@@ -560,7 +590,7 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
   </form>
   <p class="wait-done" id="waitDone" hidden>You're on the list. We'll email you when access opens.</p>
 
-  <p class="hero-alt"><a class="btn btn-ghost" href="https://tobyberg43.github.io/OfferAIO/OfferAIO.html" target="_blank" rel="noopener">Open the live dashboard</a></p>
+  <p class="hero-alt"><a class="btn btn-ghost" href="https://offeraio.com/OfferAIO.html" target="_blank" rel="noopener">Open the live dashboard</a></p>
 
   <span class="live-pill"><span class="live-dot" aria-hidden="true"></span><span id="livePillText">240+ live Summer 2027 listings</span></span>
 </header>
@@ -712,14 +742,30 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
     <div class="bcard b2 reveal">
       <h3>Cover letters in your voice</h3>
       <p>Written from your real details, so they don't read as generated. Or bring your own template.</p>
+      <div class="bviz" aria-hidden="true">
+        <div class="ln ink" style="width:86%"></div>
+        <div class="ln" style="width:97%"></div>
+        <div class="ln" style="width:70%"></div>
+        <div class="ln ink" style="width:38%"></div>
+        <div class="bviz-foot"><span>draft · your voice</span><span class="g">reads human ✓</span></div>
+      </div>
     </div>
     <div class="bcard b2 reveal">
       <h3>Response Radar</h3>
       <p>Watches Gmail, Handshake, and LinkedIn. Callbacks reach you the minute they land.</p>
+      <div class="bviz" aria-hidden="true">
+        <div class="mrow"><span class="mdot" style="background:var(--green)"></span><span class="grow">Figma · Interview availability</span><span>2m</span></div>
+        <div class="mrow"><span class="mdot" style="background:var(--violet)"></span><span class="grow">Two Sigma · Application received</span><span>1h</span></div>
+      </div>
     </div>
     <div class="bcard b2 reveal">
       <h3>Resume-ranked matching</h3>
       <p>Tasks fire on the roles your resume scores highest on. Weak matches never go out.</p>
+      <div class="bviz" aria-hidden="true">
+        <div class="bar"><span>QUANT</span><span class="track"><span class="fill" style="width:94%"></span></span><span class="pct">94%</span></div>
+        <div class="bar"><span>SWE</span><span class="track"><span class="fill" style="width:91%"></span></span><span class="pct">91%</span></div>
+        <div class="bar"><span>IB</span><span class="track"><span class="fill" style="width:82%"></span></span><span class="pct">82%</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -727,8 +773,17 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
 <!-- ============ TRUST BAND ============ -->
 <section class="container">
   <div class="trust reveal">
-    <h2>It runs in your browser, as you</h2>
-    <p>Applications go out on <strong>your IP and your logged-in sessions</strong>, with human pacing, a daily cap, and quiet hours. CAPTCHAs are never bypassed: you take over.</p>
+    <div>
+      <h2>It runs in your browser, as you</h2>
+      <p>Applications go out on <strong>your IP and your logged-in sessions</strong>, with human pacing, a daily cap, and quiet hours. CAPTCHAs are never bypassed: you take over.</p>
+    </div>
+    <div class="t-panel" aria-hidden="true">
+      <div class="t-row"><span class="k">SESSION</span><span class="v g">yours · logged in ✓</span></div>
+      <div class="t-row"><span class="k">PACING</span><span class="v">humanized · randomized</span></div>
+      <div class="t-row"><span class="k">DAILY CAP</span><span class="v">12 applications</span></div>
+      <div class="t-row"><span class="k">QUIET HOURS</span><span class="v">11pm to 7am</span></div>
+      <div class="t-row"><span class="k">CAPTCHA</span><span class="v">handed to you</span></div>
+    </div>
   </div>
 </section>
 
@@ -740,16 +795,22 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
   </div>
   <div class="steps">
     <div class="step reveal">
+      <div class="step-top"></div>
       <h3>Build your profile</h3>
       <p>Resume, school, major, work auth. Saved once, synced to the extension.</p>
+      <small class="st-note">about 10 minutes, once</small>
     </div>
     <div class="step reveal">
+      <div class="step-top"></div>
       <h3>Set your filters</h3>
       <p>SWE, quant, IB, consulting, product, data. Pick your lanes, create your tasks.</p>
+      <small class="st-note">50 tasks from one filter set</small>
     </div>
     <div class="step reveal">
+      <div class="step-top"></div>
       <h3>Review and send</h3>
       <p>One click per filled application. Radar pings you when callbacks arrive.</p>
+      <small class="st-note">1 click per send</small>
     </div>
   </div>
 </section>
@@ -771,7 +832,7 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
         <li>Paste any link as a task</li>
         <li>CSV export</li>
       </ul>
-      <a class="btn btn-ghost" href="https://tobyberg43.github.io/OfferAIO/OfferAIO.html" target="_blank" rel="noopener">Start free</a>
+      <a class="btn btn-ghost" href="https://offeraio.com/OfferAIO.html" target="_blank" rel="noopener">Start free</a>
     </div>
     <div class="plan-hi reveal">
       <span class="plan-tag">Most popular</span>
@@ -841,7 +902,7 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
     <p>Summer 2027 postings are already going live. Have your pipeline running before the season peaks.</p>
     <div class="cta-row">
       <button class="btn btn-gold" data-waitlist>Join the waitlist</button>
-      <a class="btn btn-ghost" href="https://tobyberg43.github.io/OfferAIO/OfferAIO.html" target="_blank" rel="noopener">Open the live dashboard</a>
+      <a class="btn btn-ghost" href="https://offeraio.com/OfferAIO.html" target="_blank" rel="noopener">Open the live dashboard</a>
     </div>
   </div>
 </section>
@@ -851,11 +912,17 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
   <div class="container">
     <div class="foot-top">
       <a class="logo" href="#top" aria-label="OfferAIO home">
-        <span class="logo-mark">O</span>
+        <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+          <defs><linearGradient id="lgB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#33528c"/><stop offset="1" stop-color="#4a72b8"/></linearGradient></defs>
+          <rect width="48" height="48" rx="12" fill="url(#lgB)"/>
+          <path d="M33.5 20.5 A11 11 0 1 1 26.9 15.4" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M29 19 L35 13" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M29.5 12 H36 V18.5" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
         <span>Offer<span class="acc">AIO</span></span>
       </a>
       <div class="foot-links">
-        <a href="https://tobyberg43.github.io/OfferAIO/OfferAIO.html" target="_blank" rel="noopener">Live dashboard</a>
+        <a href="https://offeraio.com/OfferAIO.html" target="_blank" rel="noopener">Live dashboard</a>
         <a href="https://github.com/TobyBerg43/OfferAIO" target="_blank" rel="noopener">GitHub repo</a>
         <a href="https://github.com/TobyBerg43/OfferAIO/releases/download/extension-latest/offeraio-extension.zip">Browser extension zip</a>
         <a href="#pricing">Pricing</a>
