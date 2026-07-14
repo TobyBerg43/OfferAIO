@@ -346,16 +346,20 @@
             <div class="card">
               <h3>Profile</h3>
               <div class="row2">
-                <div><label class="f-lbl">Full name</label><input type="text" value="Toby B."></div>
-                <div><label class="f-lbl">Email</label><input type="email" value="tobysneaker6@gmail.com"></div>
+                <div><label class="f-lbl">Full name</label><input type="text" value="Toby B." id="setName"></div>
+                <div><label class="f-lbl">Email</label><input type="email" value="tobysneaker6@gmail.com" id="setEmail"></div>
               </div>
               <div class="row2">
-                <div><label class="f-lbl">School</label><input type="text" placeholder="e.g. UC Berkeley"></div>
-                <div><label class="f-lbl">Major</label><input type="text" placeholder="e.g. Finance / CS"></div>
+                <div><label class="f-lbl">Phone</label><input type="text" placeholder="555-555-5555" id="setPhone"></div>
+                <div><label class="f-lbl">School</label><input type="text" placeholder="e.g. UC Berkeley" id="setSchool"></div>
               </div>
               <div class="row2">
-                <div><label class="f-lbl">Grad year</label><select><option>2028</option><option>2027</option><option>2029</option></select></div>
-                <div><label class="f-lbl">Work authorization</label><select><option>US Citizen</option><option>Permanent Resident</option><option>F-1 (CPT/OPT)</option><option>Requires sponsorship</option></select></div>
+                <div><label class="f-lbl">Major</label><input type="text" placeholder="e.g. Finance / CS" id="setMajor"></div>
+                <div><label class="f-lbl">Grad year</label><select id="setGrad"><option>2028</option><option>2027</option><option>2029</option></select></div>
+              </div>
+              <div class="row2">
+                <div><label class="f-lbl">Work authorization</label><select id="setWorkAuth"><option>US Citizen</option><option>Permanent Resident</option><option>F-1 (CPT/OPT)</option><option>Requires sponsorship</option></select></div>
+                <div><label class="f-lbl">Extension</label><div id="extStatus" style="font-family:var(--mono);font-size:11.5px;color:var(--dim2);padding:9px 0">◌ not detected</div></div>
               </div>
               <label class="f-lbl">Resume (PDF)</label>
               <div class="drop" id="resumeDrop" onclick="fakeUpload()">Drop your resume here or click to upload</div>
@@ -1129,7 +1133,33 @@ function connectLi(btn){
   btn.textContent='Connecting…';
   setTimeout(()=>{const wrap=btn.parentElement;wrap.innerHTML='<span class="conn-tag ok">CONNECTED</span>';toast('','Connection authorized — radar coverage extended','info');},900);
 }
-function saveSettings(){const n=$('saveNote');n.classList.add('show');setTimeout(()=>n.classList.remove('show'),1800);}
+function collectProfile(){
+  const v=id=>{const e=$(id);return e?(e.value||'').trim():'';};
+  return {
+    name:v('setName'), email:v('setEmail'), phone:v('setPhone'),
+    school:v('setSchool'), major:v('setMajor'),
+    gradDate:(($('setGrad')||{}).value)||'',
+    needsSponsorship:((($('setWorkAuth')||{}).value)||'')==='Requires sponsorship',
+    linkedin:v('liUrl')
+  };
+}
+function pushToExtension(){
+  const mode=(($('defModeSeg')&&$('defModeSeg').querySelector('button.on'))||{}).dataset?
+    $('defModeSeg').querySelector('button.on').dataset.v:'semi';
+  window.postMessage({source:'offeraio-site',type:'profile',profile:collectProfile(),mode:mode==='auto'?'auto':'semi'},'*');
+}
+function saveSettings(){
+  const n=$('saveNote');n.classList.add('show');setTimeout(()=>n.classList.remove('show'),1800);
+  pushToExtension();
+}
+// site <-> extension bridge
+window.addEventListener('message',e=>{
+  const d=e.data; if(!d||d.source!=='offeraio-ext')return;
+  const s=$('extStatus');
+  if((d.type==='ready'||d.type==='pong')&&s){s.textContent='● connected';s.style.color='var(--green)';}
+  if(d.type==='saved')toast('','Profile pushed to the OfferAIO extension','info');
+});
+setTimeout(()=>window.postMessage({source:'offeraio-site',type:'ping'},'*'),1200);
 let samples=0;
 function addSample(){
   samples++;
