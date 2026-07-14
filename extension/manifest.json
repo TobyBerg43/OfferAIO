@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "OfferAIO — Auto Apply",
+  "version": "1.0.0",
+  "description": "Auto-fills Summer 2027 internship applications on Greenhouse & Lever, in your own browser.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "OfferAIO"
+  },
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": [
+    "https://*.greenhouse.io/*",
+    "https://boards.greenhouse.io/*",
+    "https://job-boards.greenhouse.io/*",
+    "https://jobs.lever.co/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.greenhouse.io/*",
+        "https://boards.greenhouse.io/*",
+        "https://job-boards.greenhouse.io/*",
+        "https://jobs.lever.co/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

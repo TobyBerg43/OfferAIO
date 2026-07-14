@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root{--bg:#0c0c16;--panel:#161628;--border:#2e2e4d;--txt:#e8e8f4;--dim:#8b8ba8;--purple:#7c5cff;--blue:#4c8dff;--green:#2fe08d}
+  *{box-sizing:border-box}
+  body{width:320px;margin:0;background:var(--bg);color:var(--txt);font:13px/1.4 -apple-system,'Segoe UI',sans-serif;padding:14px}
+  .head{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+  .logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--purple),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:800}
+  .head b{font-size:15px}.head b span{background:linear-gradient(135deg,var(--purple),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+  label{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);margin:9px 0 4px;font-weight:600}
+  input,select,textarea{width:100%;background:var(--panel);border:1px solid var(--border);border-radius:8px;color:var(--txt);padding:7px 9px;font-size:12.5px;outline:none;font-family:inherit}
+  input:focus,textarea:focus,select:focus{border-color:var(--purple)}
+  textarea{resize:vertical;min-height:52px}
+  .row{display:flex;gap:8px}.row>*{flex:1}
+  .seg{display:flex;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:3px;gap:3px;margin-top:4px}
+  .seg button{flex:1;border:none;background:transparent;color:var(--dim);padding:6px;border-radius:6px;font-size:11.5px;font-weight:600;cursor:pointer}
+  .seg button.on{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff}
+  .save{width:100%;margin-top:13px;border:none;border-radius:9px;padding:10px;font-weight:700;font-size:13px;cursor:pointer;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff}
+  .note{font-size:11px;color:var(--dim);margin-top:9px;text-align:center}
+  .note a{color:var(--purple);text-decoration:none}
+  .ok{color:var(--green);font-size:11.5px;text-align:center;margin-top:8px;opacity:0;transition:.3s}
+  .ok.show{opacity:1}
+</style>
+</head>
+<body>
+  <div class="head"><div class="logo">O</div><b>Offer<span>AIO</span></b></div>
+  <label>Apply mode</label>
+  <div class="seg" id="modeSeg">
+    <button data-v="semi" class="on">Semi-auto</button>
+    <button data-v="auto">Full-auto</button>
+  </div>
+  <div class="row"><div><label>Full name</label><input id="name" placeholder="Toby B."></div></div>
+  <div class="row">
+    <div><label>Email</label><input id="email" type="email" placeholder="you@school.edu"></div>
+    <div><label>Phone</label><input id="phone" placeholder="555-555-5555"></div>
+  </div>
+  <div class="row">
+    <div><label>School</label><input id="school" placeholder="University"></div>
+    <div><label>Major</label><input id="major" placeholder="Finance / CS"></div>
+  </div>
+  <div class="row">
+    <div><label>Grad date</label><input id="gradDate" placeholder="May 2028"></div>
+    <div><label>GPA</label><input id="gpa" placeholder="3.8"></div>
+  </div>
+  <label>LinkedIn</label><input id="linkedin" placeholder="linkedin.com/in/you">
+  <label>Needs visa sponsorship?</label>
+  <select id="needsSponsorship"><option value="false">No</option><option value="true">Yes</option></select>
+  <label>Cover letter template</label>
+  <textarea id="coverLetter" placeholder="Hi {company} team, I am applying for {role}..."></textarea>
+  <button class="save" id="save">Save profile</button>
+  <div class="ok" id="ok">Saved - go to a Greenhouse or Lever application and click Fill</div>
+  <div class="note">Runs in your browser. <a href="https://tobyberg43.github.io/OfferAIO/" target="_blank">Open dashboard</a></div>
+<script>
+  const F = ["name","email","phone","school","major","gradDate","gpa","linkedin","needsSponsorship","coverLetter"];
+  const seg = document.getElementById("modeSeg");
+  seg.querySelectorAll("button").forEach(b => b.onclick = () => {
+    seg.querySelectorAll("button").forEach(x => x.classList.remove("on"));
+    b.classList.add("on");
+  });
+  chrome.storage.local.get(["profile","mode"], d => {
+    const p = d.profile || {};
+    F.forEach(k => { if (p[k] != null) document.getElementById(k).value = p[k]; });
+    const mode = d.mode || "semi";
+    seg.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.v === mode));
+  });
+  document.getElementById("save").onclick = () => {
+    const profile = {};
+    F.forEach(k => profile[k] = document.getElementById(k).value.trim());
+    profile.needsSponsorship = document.getElementById("needsSponsorship").value === "true";
+    const mode = seg.querySelector("button.on").dataset.v;
+    chrome.storage.local.set({ profile, mode }, () => {
+      const ok = document.getElementById("ok"); ok.classList.add("show");
+      setTimeout(() => ok.classList.remove("show"), 2500);
+    });
+  };
+</script>
+</body>
+</html>
