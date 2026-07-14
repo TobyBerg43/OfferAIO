@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QP59EKE1BS"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag("js",new Date());gtag("config","G-QP59EKE1BS");
+</script>
 <title>Apply to Partner with OfferAIO | Employer Application</title>
 <meta name="description" content="Apply to hire interns through OfferAIO. Tell us your roles, locations, and timeline. No upfront cost, pay per successful placement. Replies in two business days.">
 <link rel="canonical" href="https://offeraio.com/employers/apply/">
@@ -162,6 +167,7 @@ form.addEventListener('submit', function(e){
     if (!res.success) throw new Error('rejected');
     form.hidden = true;
     document.getElementById('empDone').hidden = false;
+    if (window.gtag) gtag('event', 'employer_apply');
   }).catch(function(){
     btn.disabled = false; btn.textContent = 'Submit application';
     document.getElementById('empErr').hidden = false;
