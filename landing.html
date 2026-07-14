@@ -171,9 +171,33 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
   color:var(--green);font-weight:600;font-size:15.5px;margin:0 auto 14px;max-width:470px;
 }
 .wait-err{color:var(--red);font-weight:600;font-size:14px;margin:0 auto 14px;max-width:470px}
-.hero-cta{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:26px}
+.hero-cta{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:16px}
 .hero-cta .btn{padding:14px 34px;font-size:16px}
-.cta-note{font:12px var(--mono);color:var(--dim)}
+.cta-perks{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:26px}
+.perk{display:inline-flex;align-items:center;border:1px solid rgba(46,157,104,.35);background:var(--card);border-radius:999px;padding:6px 14px;font:600 13px var(--sans);color:var(--soft)}
+.applied-stack{max-width:430px;margin:48px auto 0;display:flex;flex-direction:column;gap:12px}
+.acard{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--w-line2);border-radius:12px;padding:12px 16px;text-align:left}
+.a1{transform:translateX(-36px)}
+.a2{transform:translateX(30px)}
+.a3{transform:translateX(-20px)}
+.a4{transform:translateX(42px)}
+@media(max-width:560px){.a1,.a2,.a3,.a4{transform:none}}
+.atile{width:34px;height:34px;border-radius:9px;color:#fff;display:flex;align-items:center;justify-content:center;font:700 15px var(--sans);flex:0 0 auto}
+.acard>div{flex:1;min-width:0}
+.acard b{display:block;font-size:13.5px}
+.acard small{font:10.5px var(--mono);color:var(--w-dim)}
+.applied{font:600 10.5px var(--mono);color:var(--green);border:1px solid rgba(46,157,104,.4);border-radius:999px;padding:3px 10px;flex:0 0 auto}
+.voice-grid{display:grid;grid-template-columns:1fr 44px 1fr;gap:14px;align-items:center;max-width:920px;margin:0 auto}
+@media(max-width:820px){.voice-grid{grid-template-columns:1fr}.varrow{transform:rotate(90deg);justify-self:center}}
+.vcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;min-width:0}
+.vlbl{font:9.5px var(--mono);letter-spacing:.09em;color:var(--w-dim2);margin-bottom:12px}
+.vquote{font-size:15.5px;color:var(--soft);font-style:italic}
+.vletter{font-size:14.5px;color:var(--soft)}
+.vletter mark{background:rgba(74,114,184,.14);color:var(--blue);border-radius:3px;padding:0 3px}
+.vmeta{margin-top:14px;font:10.5px var(--mono);color:var(--dim)}
+.vfoot{display:flex;justify-content:space-between;gap:10px;margin-top:14px;font:10.5px var(--mono);color:var(--dim)}
+.vfoot .g{color:var(--green)}
+.varrow{font-size:22px;color:var(--dim);text-align:center}
 .wait .btn{font-size:14px;padding:12px 16px}
 .hero-alt{margin-bottom:26px}
 .live-pill{
@@ -616,12 +640,16 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
 
 <!-- ============ HERO ============ -->
 <header class="hero container" id="top">
-  <h1>Apply to <span class="acc">50 internships</span> while you're in class.</h1>
-  <p class="hero-sub">OfferAIO watches every live Summer 2027 posting, fills each application <strong>in your own browser</strong>, and writes cover letters that sound like you wrote them. You review each one and click send.</p>
+  <h1>Auto apply to <span class="acc">50 internships</span> while you're in class.</h1>
+  <p class="hero-sub">OfferAIO watches every live Summer 2027 posting and applies for you, <strong>in your own browser</strong>. You review each application and click send.</p>
 
   <p class="hero-cta">
     <a class="btn btn-gold" href="/dashboard/">Start free</a>
-    <span class="cta-note">No credit card. 100 submissions a month, free forever.</span>
+  </p>
+  <p class="cta-perks">
+    <span class="perk">✓ No credit card</span>
+    <span class="perk">✓ 100 submissions a month</span>
+    <span class="perk">✓ Free forever</span>
   </p>
 
   <form class="wait" id="waitForm" novalidate="">
@@ -633,6 +661,13 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
   <p class="wait-err" id="waitErr" hidden>Something went wrong. Please try again.</p>
 
   <span class="live-pill"><span class="live-dot" aria-hidden="true"></span><span id="livePillText">240+ live Summer 2027 listings</span></span>
+
+  <div class="applied-stack" aria-hidden="true">
+    <div class="acard a1"><span class="atile" style="background:linear-gradient(135deg,#33528c,#4a72b8)">S</span><div><b>SWE Intern</b><small>Stripe · Summer 2027</small></div><span class="applied">✓ Applied</span></div>
+    <div class="acard a2"><span class="atile" style="background:var(--violet)">G</span><div><b>IB Summer Analyst</b><small>Goldman Sachs · Summer 2027</small></div><span class="applied">✓ Applied</span></div>
+    <div class="acard a3"><span class="atile" style="background:var(--cyan)">A</span><div><b>AI/ML Intern</b><small>Anthropic · Summer 2027</small></div><span class="applied">✓ Applied</span></div>
+    <div class="acard a4"><span class="atile" style="background:var(--amber)">D</span><div><b>Data Science Intern</b><small>Databricks · Summer 2027</small></div><span class="applied">✓ Applied</span></div>
+  </div>
 </header>
 
 <!-- ============ INTERACTIVE DEMO ============ -->
@@ -729,7 +764,6 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
           <div class="pg-head"><h3>Settings</h3><small>profile and pacing</small></div>
           <div class="srow"><div class="sl"><b>Profile</b><small>toby · resume.pdf · CS + Finance</small></div></div>
           <div class="srow"><div class="sl"><b>Full-auto mode</b><small>submit on match without review</small></div><button class="switch" role="switch" aria-checked="false" aria-label="Full-auto mode" data-set="fullauto"></button></div>
-          <div class="srow"><div class="sl"><b>Quiet hours</b><small>no sends 11pm to 7am</small></div><button class="switch" role="switch" aria-checked="true" aria-label="Quiet hours" data-set="quiet"></button></div>
           <div class="srow"><div class="sl"><b>Success sounds</b><small>chime on submit, bigger on interview</small></div><button class="switch" role="switch" aria-checked="true" aria-label="Success sounds" data-set="sounds"></button></div>
           <div class="srow"><div class="sl"><b>Daily cap</b><small>12/day · human pacing, randomized timing</small></div></div>
         </div>
@@ -741,6 +775,27 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
 
   <p class="demo-hint">This is a live demo, click around. Try <kbd>Listings</kbd> → <kbd>+ Task</kbd>, or send something from the <kbd>Review Queue</kbd>.</p>
 </section>
+<!-- ============ COVER LETTER VOICE ============ -->
+<section class="container" id="voice">
+  <div class="sec-head reveal">
+    <h2>Cover letters that sound like you</h2>
+    <p class="sec-sub">Each letter is built from your profile and your phrasing, not a template. You approve every word before it goes anywhere.</p>
+  </div>
+  <div class="voice-grid">
+    <div class="vcard reveal">
+      <div class="vlbl">YOUR VOICE</div>
+      <p class="vquote">"I built a paper-trading bot in Python junior year and got hooked on markets. I like fast feedback loops."</p>
+      <div class="vmeta">from your profile · resume.pdf</div>
+    </div>
+    <div class="varrow" aria-hidden="true">→</div>
+    <div class="vcard reveal">
+      <div class="vlbl">YOUR LETTER · JANE STREET</div>
+      <p class="vletter">...I got hooked on markets after building a <mark>paper-trading bot in Python</mark>, and a trading floor is exactly the kind of <mark>fast feedback loop</mark> I do my best work in...</p>
+      <div class="vfoot"><span>drafted from your words</span><span class="g">reads human ✓</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ PLATFORM MARQUEE ============ -->
 <section class="mq-sec" aria-label="Supported application platforms">
   <p class="mq-label">Fills applications on <b>16 platforms</b>, plus any link you paste</p>
@@ -815,13 +870,13 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
   <div class="trust reveal">
     <div>
       <h2>It runs in your browser, as you</h2>
-      <p>Applications go out on <strong>your IP and your logged-in sessions</strong>, with human pacing, a daily cap, and quiet hours. CAPTCHAs are never bypassed: you take over.</p>
+      <p>Applications go out on <strong>your IP and your logged-in sessions</strong>, with human pacing and a daily cap. CAPTCHAs are never bypassed: you take over.</p>
     </div>
     <div class="t-panel" aria-hidden="true">
       <div class="t-row"><span class="k">SESSION</span><span class="v g">yours · logged in ✓</span></div>
       <div class="t-row"><span class="k">PACING</span><span class="v">humanized · randomized</span></div>
       <div class="t-row"><span class="k">DAILY CAP</span><span class="v">12 applications</span></div>
-      <div class="t-row"><span class="k">QUIET HOURS</span><span class="v">11pm to 7am</span></div>
+      <div class="t-row"><span class="k">REVIEW</span><span class="v">every send needs you</span></div>
       <div class="t-row"><span class="k">CAPTCHA</span><span class="v">handed to you</span></div>
     </div>
   </div>
@@ -836,20 +891,33 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
   <div class="steps">
     <div class="step reveal">
       <div class="step-top"></div>
-      <h3>Build your profile</h3>
+      <h3>We get to know you</h3>
       <p>Resume, school, major, work auth. Saved once, synced to the extension.</p>
+      <div class="bviz" aria-hidden="true">
+        <div class="mrow"><span class="grow">MAJOR</span><span>CS + Finance</span></div>
+        <div class="mrow"><span class="grow">GRAD YEAR</span><span>2028</span></div>
+        <div class="mrow"><span class="grow">WORK AUTH</span><span>US citizen</span></div>
+      </div>
       <small class="st-note">about 10 minutes, once</small>
     </div>
     <div class="step reveal">
       <div class="step-top"></div>
-      <h3>Set your filters</h3>
+      <h3>We find the roles</h3>
       <p>SWE, quant, IB, consulting, product, data. Pick your lanes, create your tasks.</p>
+      <div class="bviz" aria-hidden="true">
+        <div class="mrow"><span class="mdot" style="background:var(--cyan)"></span><span class="grow">SWE · quant · IB filters</span><span>set</span></div>
+        <div class="mrow"><span class="mdot" style="background:var(--green)"></span><span class="grow">34 matching listings</span><span>live</span></div>
+      </div>
       <small class="st-note">50 tasks from one filter set</small>
     </div>
     <div class="step reveal">
       <div class="step-top"></div>
-      <h3>Review and send</h3>
-      <p>One click per filled application. Radar pings you when callbacks arrive.</p>
+      <h3>We apply, you approve</h3>
+      <p>Applications are filled and waiting. One click per send. Radar pings you when callbacks arrive.</p>
+      <div class="bviz" aria-hidden="true">
+        <div class="mrow"><span class="mdot" style="background:var(--green)"></span><span class="grow">Stripe · SWE Intern</span><span>sent ✓</span></div>
+        <div class="mrow"><span class="mdot" style="background:var(--green)"></span><span class="grow">Anthropic · AI/ML Intern</span><span>sent ✓</span></div>
+      </div>
       <small class="st-note">1 click per send</small>
     </div>
   </div>
