@@ -36,6 +36,9 @@ gtag('js',new Date());gtag('config','G-QP59EKE1BS');
 ]}]}
 </script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%2333528c'/%3E%3Cpath d='M33.5 20.5 A11 11 0 1 1 26.9 15.4' fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round'/%3E%3Cpath d='M29 19 L35 13' fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round'/%3E%3Cpath d='M29.5 12 H36 V18.5' fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#efe8d9;
@@ -63,6 +66,8 @@ gtag('js',new Date());gtag('config','G-QP59EKE1BS');
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
   --mono:"SF Mono","Cascadia Code",Consolas,ui-monospace,Menlo,monospace;
   --ease:cubic-bezier(.22,.61,.36,1);
+  --display:"Anton",var(--sans);
+  --serif:"Playfair Display",Georgia,serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -145,16 +150,20 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
 @media(max-width:700px){.nav-links a:not(.btn){display:none}}
 
 /* ---- hero ---- */
-.hero{padding:88px 0 46px;text-align:center}
-.hero h1{
-  font-size:clamp(36px,6.4vw,62px);
-  letter-spacing:-.022em;
-  text-wrap:balance;
-  max-width:880px;margin:0 auto 20px;
+.hero{padding:70px 0 40px;text-align:center}
+.hero .eyebrow{margin-bottom:26px}
+.hero h1{margin:0 auto 8px;max-width:1020px;text-wrap:balance}
+.hero .display{
+  display:block;font-family:var(--display);font-weight:400;text-transform:uppercase;
+  font-size:clamp(50px,11.2vw,140px);line-height:.9;letter-spacing:.006em;color:var(--ink);
 }
-.hero h1 .acc{color:var(--blue)}
+.hero .script{
+  display:block;font-family:var(--serif);font-style:italic;font-weight:500;
+  font-size:clamp(44px,10vw,122px);line-height:.84;letter-spacing:-.012em;color:var(--blue);
+  margin-top:-.02em;
+}
 .hero-sub{
-  color:var(--soft);font-size:18.5px;max-width:640px;margin:0 auto 30px;text-wrap:pretty;
+  color:var(--soft);font-size:18.5px;max-width:600px;margin:22px auto 30px;text-wrap:pretty;
 }
 .wait{
   display:flex;gap:10px;justify-content:center;align-items:stretch;
@@ -171,8 +180,10 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
   color:var(--green);font-weight:600;font-size:15.5px;margin:0 auto 14px;max-width:470px;
 }
 .wait-err{color:var(--red);font-weight:600;font-size:14px;margin:0 auto 14px;max-width:470px}
-.hero-cta{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:16px}
-.hero-cta .btn{padding:14px 34px;font-size:16px}
+.hero-cta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px;margin-bottom:14px}
+.hero-cta .btn{padding:15px 30px;font-size:16px}
+.hero-cta .btn-gold{box-shadow:0 10px 26px -12px rgba(200,134,47,.65)}
+@media(max-width:520px){.hero-cta{flex-direction:column}.hero-cta .btn{width:100%;max-width:340px}}
 .cta-perks{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:26px}
 .perk{display:inline-flex;align-items:center;border:1px solid rgba(46,157,104,.35);background:var(--card);border-radius:999px;padding:6px 14px;font:600 13px var(--sans);color:var(--soft)}
 .applied-stack{max-width:430px;margin:48px auto 0;display:flex;flex-direction:column;gap:12px}
@@ -645,16 +656,22 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
 
 <!-- ============ HERO ============ -->
 <header class="hero container" id="top">
-  <h1>Auto apply to <span class="acc">50 internships</span> while you're in class.</h1>
-  <p class="hero-sub">OfferAIO watches every live Summer 2027 posting and applies for you, <strong>in your own browser</strong>. You review each application and click send.</p>
+  <span class="live-pill eyebrow"><span class="live-dot" aria-hidden="true"></span><span id="livePillText">240+ live Summer 2027 listings</span></span>
 
-  <p class="hero-cta">
-    <a class="btn btn-gold" href="/dashboard/">Start free</a>
-  </p>
+  <h1>
+    <span class="display">Auto apply to</span>
+    <span class="script">50 internships.</span>
+  </h1>
+  <p class="hero-sub">Every live Summer 2027 posting, filled for you <strong>in your own browser</strong> &mdash; while you're in class. You review each one and hit send.</p>
+
+  <div class="hero-cta">
+    <a class="btn btn-gold" href="/dashboard/">Start free &nbsp;&rarr;</a>
+    <a class="btn btn-ghost" href="#demo">See it in action</a>
+  </div>
   <p class="cta-perks">
-    <span class="perk">✓ No credit card</span>
-    <span class="perk">✓ 100 submissions a month</span>
-    <span class="perk">✓ Free forever</span>
+    <span class="perk">&#10003; No credit card</span>
+    <span class="perk">&#10003; 100 submissions a month</span>
+    <span class="perk">&#10003; Free forever</span>
   </p>
 
   <form class="wait" id="waitForm" novalidate="">
@@ -665,18 +682,16 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
   <p class="wait-done" id="waitDone" hidden>You're on the list. We'll email you when access opens.</p>
   <p class="wait-err" id="waitErr" hidden>Something went wrong. Please try again.</p>
 
-  <span class="live-pill"><span class="live-dot" aria-hidden="true"></span><span id="livePillText">240+ live Summer 2027 listings</span></span>
-
   <div class="applied-stack" aria-hidden="true">
-    <div class="acard a1"><span class="atile" style="background:linear-gradient(135deg,#33528c,#4a72b8)">S</span><div><b>SWE Intern</b><small>Stripe · Summer 2027</small></div><span class="applied">✓ Applied</span></div>
-    <div class="acard a2"><span class="atile" style="background:var(--violet)">G</span><div><b>IB Summer Analyst</b><small>Goldman Sachs · Summer 2027</small></div><span class="applied">✓ Applied</span></div>
-    <div class="acard a3"><span class="atile" style="background:var(--cyan)">A</span><div><b>AI/ML Intern</b><small>Anthropic · Summer 2027</small></div><span class="applied">✓ Applied</span></div>
-    <div class="acard a4"><span class="atile" style="background:var(--amber)">D</span><div><b>Data Science Intern</b><small>Databricks · Summer 2027</small></div><span class="applied">✓ Applied</span></div>
+    <div class="acard a1"><span class="atile" style="background:linear-gradient(135deg,#33528c,#4a72b8)">S</span><div><b>SWE Intern</b><small>Stripe &middot; Summer 2027</small></div><span class="applied">&#10003; Applied</span></div>
+    <div class="acard a2"><span class="atile" style="background:var(--violet)">G</span><div><b>IB Summer Analyst</b><small>Goldman Sachs &middot; Summer 2027</small></div><span class="applied">&#10003; Applied</span></div>
+    <div class="acard a3"><span class="atile" style="background:var(--cyan)">A</span><div><b>AI/ML Intern</b><small>Anthropic &middot; Summer 2027</small></div><span class="applied">&#10003; Applied</span></div>
+    <div class="acard a4"><span class="atile" style="background:var(--amber)">D</span><div><b>Data Science Intern</b><small>Databricks &middot; Summer 2027</small></div><span class="applied">&#10003; Applied</span></div>
   </div>
 </header>
 
 <!-- ============ INTERACTIVE DEMO ============ -->
-<section class="demo-wrap container" aria-label="Interactive demo of the OfferAIO dashboard">
+<section class="demo-wrap container" id="demo" aria-label="Interactive demo of the OfferAIO dashboard">
   <div class="window" id="appWindow">
     <div class="titlebar">
       <span class="tb-dots" aria-hidden="true"><i></i><i></i><i></i></span>
