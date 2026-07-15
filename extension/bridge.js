@@ -1,6 +1,6 @@
 /* OfferAIO site bridge — relays your profile from the OfferAIO website
- * (tobyberg43.github.io/OfferAIO) straight into the extension's storage, so you
- * manage everything on the site and the extension just executes. */
+ * (offeraio.com) straight into the extension's storage, so you manage
+ * everything on the site and the extension just executes. */
 window.addEventListener("message", (e) => {
   const d = e.data;
   if (!d || d.source !== "offeraio-site") return;

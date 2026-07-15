@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <style>
-  :root{--bg:#fbf8f2;--panel:#f4eee2;--border:#e0d7c5;--border2:#d7cbb4;--txt:#2b2823;--dim:#726a5c;--dim2:#a89d89;--blue1:#33528c;--blue2:#4a72b8;--gold1:#c8862f;--gold2:#e0a548;--green:#2e9d68}
+  :root{--bg:#fbf8f2;--panel:#f4eee2;--border:#e0d7c5;--border2:#d7cbb4;--txt:#2b2823;--dim:#726a5c;--dim2:#a89d89;--blue1:#33528c;--blue2:#4a72b8;--gold1:#b9822b;--gold2:#c8862f;--green:#2e9d68}
   *{box-sizing:border-box}
   body{width:330px;margin:0;background:var(--bg);color:var(--txt);font:13px/1.4 -apple-system,'Segoe UI',sans-serif;padding:14px}
   .head{display:flex;align-items:center;gap:9px;margin-bottom:10px}
@@ -17,7 +17,7 @@
   .seg{display:flex;background:var(--panel);border:1px solid var(--border2);border-radius:8px;padding:3px;gap:3px;margin-top:4px}
   .seg button{flex:1;border:none;background:transparent;color:var(--dim);padding:6px;border-radius:6px;font-size:11.5px;font-weight:600;cursor:pointer}
   .seg button.on{background:linear-gradient(135deg,var(--blue1),var(--blue2));color:#fff}
-  .fillnow{width:100%;margin-top:10px;border:none;border-radius:9px;padding:10px;font-weight:700;font-size:13px;cursor:pointer;background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#3a2a10;box-shadow:0 4px 14px rgba(200,134,47,.3)}
+  .fillnow{width:100%;margin-top:10px;border:none;border-radius:9px;padding:10px;font-weight:700;font-size:13px;cursor:pointer;background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#fff;box-shadow:0 2px 8px rgba(120,82,20,.28)}
   .save{width:100%;margin-top:8px;border:none;border-radius:9px;padding:10px;font-weight:700;font-size:13px;cursor:pointer;background:linear-gradient(135deg,var(--blue1),var(--blue2));color:#fff}
   .note{font-size:10.5px;color:var(--dim2);margin-top:8px;text-align:center;line-height:1.5}
   .note a{color:var(--blue1);text-decoration:none;font-weight:600}
@@ -65,37 +65,8 @@
     <div class="ok" id="ok">Saved</div>
   </details>
 
-  <div class="note"><a href="https://tobyberg43.github.io/OfferAIO/" target="_blank">Open OfferAIO dashboard</a></div>
+  <div class="note"><a href="https://offeraio.com/dashboard/" target="_blank" rel="noopener">Open OfferAIO dashboard</a></div>
 
-<script>
-  const F = ["name","email","phone","school","major","minor","gradDate","gpa","linkedin","needsSponsorship","coverLetter"];
-  const seg = document.getElementById("modeSeg");
-  seg.querySelectorAll("button").forEach(b => b.onclick = () => {
-    seg.querySelectorAll("button").forEach(x => x.classList.remove("on"));
-    b.classList.add("on");
-    chrome.storage.local.set({ mode: b.dataset.v });
-  });
-  chrome.storage.local.get(["profile","mode"], d => {
-    const p = d.profile || {};
-    F.forEach(k => { if (p[k] != null) document.getElementById(k).value = p[k]; });
-    const mode = d.mode || "semi";
-    seg.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.v === mode));
-  });
-  document.getElementById("save").onclick = () => {
-    const profile = {};
-    F.forEach(k => profile[k] = document.getElementById(k).value.trim());
-    profile.needsSponsorship = document.getElementById("needsSponsorship").value === "true";
-    const mode = seg.querySelector("button.on").dataset.v;
-    chrome.storage.local.set({ profile, mode }, () => {
-      const ok = document.getElementById("ok"); ok.classList.add("show");
-      setTimeout(() => ok.classList.remove("show"), 2500);
-    });
-  };
-  document.getElementById("fillPage").onclick = async () => {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    try { await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["content.js"] }); } catch (e) {}
-    window.close();
-  };
-</script>
+<script src="popup.js"></script>
 </body>
 </html>
