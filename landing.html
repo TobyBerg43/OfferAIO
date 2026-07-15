@@ -150,24 +150,35 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
 @media(max-width:700px){.nav-links a:not(.btn){display:none}}
 
 /* ---- hero ---- */
-.hero{padding:70px 0 40px;text-align:center}
+.hero{padding:52px 0 46px;text-align:left}
 .hero .eyebrow{margin-bottom:26px}
-.hero h1{margin:0 auto 18px;max-width:1020px;text-wrap:balance}
+.hero h1{margin:0 0 18px;max-width:100%;text-wrap:balance}
 .hero .display{
   display:block;font-family:var(--display);font-weight:400;
-  font-size:clamp(34px,7.4vw,92px);line-height:1.02;letter-spacing:.003em;color:var(--ink);
+  font-size:clamp(34px,4.7vw,64px);line-height:1.03;letter-spacing:.003em;color:var(--ink);
 }
 .hero .script{
   display:block;font-family:var(--serif);font-style:italic;font-weight:500;
-  font-size:clamp(32px,6.9vw,86px);line-height:1.0;letter-spacing:-.01em;color:var(--blue);
+  font-size:clamp(31px,4.2vw,58px);line-height:1.0;letter-spacing:-.01em;color:var(--blue);
   margin-top:2px;
 }
 .hero-sub{
-  color:var(--soft);font-size:18.5px;max-width:600px;margin:22px auto 30px;text-wrap:pretty;
+  color:var(--soft);font-size:18.5px;max-width:460px;margin:20px 0 28px;text-wrap:pretty;
+}
+.hero-grid{display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1.15fr);gap:44px;align-items:center;max-width:1240px;margin:0 auto;padding:0 24px}
+.hero-copy{min-width:0}
+.hero-media{min-width:0}
+.hero-media .window{margin:0;max-width:none;width:100%}
+@media(max-width:940px){
+  .hero{text-align:center;padding-top:40px}
+  .hero-grid{grid-template-columns:1fr;gap:32px;padding:0 20px}
+  .hero-copy h1,.hero-copy .hero-sub{margin-left:auto;margin-right:auto}
+  .hero-copy .hero-cta{justify-content:center}
+  .hero-copy .wait{margin-left:auto;margin-right:auto}
 }
 .wait{
   display:flex;gap:10px;justify-content:center;align-items:stretch;
-  max-width:470px;margin:0 auto 14px;
+  max-width:440px;margin:0 0 14px;
 }
 .wait input{
   flex:1;min-width:0;
@@ -180,7 +191,7 @@ h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
   color:var(--green);font-weight:600;font-size:15.5px;margin:0 auto 14px;max-width:470px;
 }
 .wait-err{color:var(--red);font-weight:600;font-size:14px;margin:0 auto 14px;max-width:470px}
-.hero-cta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px;margin-bottom:14px}
+.hero-cta{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:12px;margin-bottom:14px}
 .hero-cta .btn{padding:15px 30px;font-size:16px}
 .hero-cta .btn-gold{box-shadow:0 10px 26px -12px rgba(200,134,47,.65)}
 @media(max-width:520px){.hero-cta{flex-direction:column}.hero-cta .btn{width:100%;max-width:340px}}
@@ -655,30 +666,30 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
 </nav>
 
 <!-- ============ HERO ============ -->
-<header class="hero container" id="top">
-  <h1>
-    <span class="display">Auto apply to</span>
-    <span class="script">internships</span>
-    <span class="display">while in class.</span>
-  </h1>
-  <p class="hero-sub">Apply to 100 internships at the click of a button &mdash; each one filled in your own browser, then reviewed and sent by you.</p>
+<header class="hero" id="top">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <h1>
+        <span class="display">Auto apply to</span>
+        <span class="script">internships</span>
+        <span class="display">while in class.</span>
+      </h1>
+      <p class="hero-sub">Apply to 100 internships at the click of a button &mdash; each one filled in your own browser, then reviewed and sent by you.</p>
 
-  <div class="hero-cta">
-    <a class="btn btn-gold" href="/dashboard/">Start free &nbsp;&rarr;</a>
-    <a class="btn btn-ghost" href="#demo">See it in action</a>
-  </div>
-  <form class="wait" id="waitForm" novalidate="">
-    <label class="sr-only" for="waitEmail">Email address</label>
-    <input id="waitEmail" type="email" required placeholder="you@email.com" autocomplete="email">
-    <button class="btn btn-ghost" type="submit" id="waitBtn">Join the Season waitlist</button>
-  </form>
-  <p class="wait-done" id="waitDone" hidden>You're on the list. We'll email you when access opens.</p>
-  <p class="wait-err" id="waitErr" hidden>Something went wrong. Please try again.</p>
-</header>
-
-<!-- ============ INTERACTIVE DEMO ============ -->
-<section class="demo-wrap container" id="demo" aria-label="Interactive demo of the OfferAIO dashboard">
-  <div class="window" id="appWindow">
+      <div class="hero-cta">
+        <a class="btn btn-gold" href="/dashboard/">Start free &nbsp;&rarr;</a>
+        <a class="btn btn-ghost" href="#demo">See it in action</a>
+      </div>
+      <form class="wait" id="waitForm" novalidate="">
+        <label class="sr-only" for="waitEmail">Email address</label>
+        <input id="waitEmail" type="email" required placeholder="you@email.com" autocomplete="email">
+        <button class="btn btn-ghost" type="submit" id="waitBtn">Join the Season waitlist</button>
+      </form>
+      <p class="wait-done" id="waitDone" hidden>You're on the list. We'll email you when access opens.</p>
+      <p class="wait-err" id="waitErr" hidden>Something went wrong. Please try again.</p>
+    </div>
+    <div class="hero-media" id="demo">
+      <div class="window" id="appWindow">
     <div class="titlebar">
       <span class="tb-dots" aria-hidden="true"><i></i><i></i><i></i></span>
       <span class="tb-title">OfferAIO v3.1.0 — Summer 2027 Internship Suite</span>
@@ -784,7 +795,10 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
   </div>
 
   <p class="demo-hint">This is a live demo, click around. Try <kbd>Listings</kbd> → <kbd>+ Task</kbd>, or send something from the <kbd>Review Queue</kbd>.</p>
-</section>
+    </div>
+  </div>
+</header>
+
 <!-- ============ COVER LETTER VOICE ============ -->
 <section class="container" id="voice">
   <div class="sec-head reveal">
@@ -1489,7 +1503,6 @@ renderQueue();
 renderChart();
 })();
 </script>
-
 
 </body>
 </html>
