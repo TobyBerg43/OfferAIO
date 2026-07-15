@@ -26,7 +26,7 @@ gtag('js',new Date());gtag('config','G-QP59EKE1BS');
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
 {"@type":"Organization","@id":"https://offeraio.com/#org","name":"OfferAIO","url":"https://offeraio.com/","logo":"https://offeraio.com/logo.png"},
-{"@type":"SoftwareApplication","name":"OfferAIO","operatingSystem":"Web","applicationCategory":"BusinessApplication","url":"https://offeraio.com/","description":"Internship application tool for Summer 2027. Watches live postings, fills applications in your browser, and writes cover letters in your voice.","offers":[{"@type":"Offer","name":"Free","price":"0","priceCurrency":"USD","description":"100 submissions per month"},{"@type":"Offer","name":"Pro","price":"30","priceCurrency":"USD","description":"Monthly subscription"},{"@type":"Offer","name":"Season","price":"199","priceCurrency":"USD","description":"One payment through August 2027"}],"publisher":{"@id":"https://offeraio.com/#org"}},
+{"@type":"SoftwareApplication","name":"OfferAIO","operatingSystem":"Web","applicationCategory":"BusinessApplication","url":"https://offeraio.com/","description":"Internship application tool for Summer 2027. Watches live postings, fills applications in your browser, and writes cover letters in your voice.","offers":[{"@type":"Offer","name":"Free","price":"0","priceCurrency":"USD","description":"50 submissions per month"},{"@type":"Offer","name":"Pro","price":"30","priceCurrency":"USD","description":"250 submissions per month"}],"publisher":{"@id":"https://offeraio.com/#org"}},
 {"@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Is this even allowed?","acceptedAnswer":{"@type":"Answer","text":"You authorize every send. OfferAIO fills applications, then waits for you to review and click send, in your own browser, logged in as you. Full-auto mode exists, but it is opt-in, clearly labeled, and off by default."}},
 {"@type":"Question","name":"Does it bypass CAPTCHAs?","acceptedAnswer":{"@type":"Answer","text":"Never. When a CAPTCHA appears, OfferAIO hands control back to you. Resume upload is also manual for browser security reasons; the field is highlighted so you can drop the file in two seconds."}},
@@ -556,7 +556,7 @@ section.demo-wrap{padding:40px 20px 84px}
 .step p{color:var(--soft);font-size:14.5px}
 
 /* ---- pricing ---- */
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.plans{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;align-items:stretch;max-width:760px;margin:0 auto}
 @media(max-width:920px){.plans{grid-template-columns:1fr;max-width:440px;margin:0 auto}}
 .plan{
   background:var(--card);border:1px solid var(--line);border-radius:14px;
@@ -638,6 +638,68 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
   .js-reveal .reveal{opacity:1;transform:none}
   .mq-track{animation:none !important}
 }
+
+/* ============================================================= */
+/* ==================  PREMIUM / CHROME POLISH  ================= */
+/* ============================================================= */
+:root{
+  --sh-1:0 1px 2px rgba(74,58,34,.05), 0 3px 10px rgba(74,58,34,.05);
+  --sh-2:0 8px 20px -8px rgba(74,58,34,.14), 0 20px 48px -20px rgba(74,58,34,.18);
+  --sh-3:0 30px 66px -26px rgba(74,58,34,.30), 0 10px 24px -14px rgba(74,58,34,.14);
+  --sheen:inset 0 1px 0 rgba(255,255,255,.75);
+}
+/* airier rhythm */
+section{padding:104px 0}
+section.container{padding:104px 20px}
+.sec-head{margin-bottom:50px}
+.sec-head h2{font-size:clamp(28px,3.7vw,43px);letter-spacing:-.024em}
+.sec-head h2::after{content:"";display:block;width:52px;height:3px;border-radius:3px;
+  margin:18px auto 0;background:linear-gradient(90deg,var(--blue),var(--blue2))}
+
+/* card surfaces: depth + subtle sheen (less flat) */
+.vcard,.bcard,.step,.plan,.trust,.faq details{
+  box-shadow:var(--sh-2),var(--sheen);
+  border-color:rgba(88,74,52,.12);
+}
+.vcard{border-radius:16px}
+.t-panel{box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+
+/* interactive lift */
+.bcard,.plan,.step,.faq details{transition:transform .24s var(--ease),box-shadow .24s var(--ease),border-color .24s var(--ease)}
+.bcard:hover,.step:hover{transform:translateY(-4px);box-shadow:var(--sh-3),var(--sheen);border-color:rgba(88,74,52,.2)}
+.faq details:hover{border-color:rgba(88,74,52,.2)}
+.faq details[open]{box-shadow:var(--sh-2),var(--sheen)}
+
+/* demo window: richer premium frame */
+.window{border-radius:16px;box-shadow:var(--sh-3),var(--sheen)}
+
+/* buttons: flat, professional */
+.btn{border-radius:9px;font-weight:600;transition:background-color .16s var(--ease),border-color .16s var(--ease),transform .16s var(--ease)}
+.btn:hover{transform:translateY(-1px);filter:none}
+.btn-gold{background:#b9822b;color:#241a06;border:1px solid rgba(120,82,20,.42);box-shadow:0 1px 2px rgba(74,58,34,.16)}
+.btn-gold:hover{background:#a8731f;box-shadow:0 4px 10px -3px rgba(120,82,20,.4)}
+.btn-blue{background:#33528c;color:#fff;border:1px solid rgba(28,50,96,.5);box-shadow:0 1px 2px rgba(28,50,96,.22)}
+.btn-blue:hover{background:#2c4778}
+.btn-ghost{background:#fff;border:1px solid var(--line2);color:var(--ink);box-shadow:0 1px 2px rgba(74,58,34,.07)}
+.btn-ghost:hover{background:#faf6ee;border-color:var(--dim)}
+.plan-tag{z-index:2}
+
+/* nav: glassier with a hairline lift */
+.nav{box-shadow:0 1px 0 rgba(88,74,52,.06), 0 8px 24px -18px rgba(74,58,34,.4)}
+
+/* marquee: soft edge fade + polish */
+.mq-sec{background:linear-gradient(180deg,rgba(255,253,248,.72),rgba(255,253,248,.42))}
+.marquee{-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+
+/* pricing: elevate the popular plan, lift the rest */
+.plan-hi{box-shadow:var(--sh-3)}
+.plan-hi .plan{box-shadow:none}
+.plans .plan:hover{transform:translateY(-4px);box-shadow:var(--sh-3),var(--sheen);border-color:rgba(88,74,52,.2)}
+
+/* final CTA: deeper premium panel */
+.cta-panel{box-shadow:var(--sh-3),var(--sheen)}
+/* ============================================================= */
 </style>
 </head>
 <body>
@@ -678,12 +740,11 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
 
       <div class="hero-cta">
         <a class="btn btn-gold" href="/dashboard/">Start free &nbsp;&rarr;</a>
-        <a class="btn btn-ghost" href="#demo">See it in action</a>
       </div>
       <form class="wait" id="waitForm" novalidate="">
         <label class="sr-only" for="waitEmail">Email address</label>
         <input id="waitEmail" type="email" required placeholder="you@email.com" autocomplete="email">
-        <button class="btn btn-ghost" type="submit" id="waitBtn">Join the Season waitlist</button>
+        <button class="btn btn-ghost" type="submit" id="waitBtn">Join the waitlist</button>
       </form>
       <p class="wait-done" id="waitDone" hidden>You're on the list. We'll email you when access opens.</p>
       <p class="wait-err" id="waitErr" hidden>Something went wrong. Please try again.</p>
@@ -959,7 +1020,7 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
       <div class="price m">$0</div>
       <div class="per">forever</div>
       <ul>
-        <li>100 submissions per month</li>
+        <li>50 submissions per month</li>
         <li>Browse the full live database</li>
         <li>Paste any link as a task</li>
         <li>CSV export</li>
@@ -973,7 +1034,7 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
         <div class="price m">$30<small>/mo</small></div>
         <div class="per">cancel anytime</div>
         <ul>
-          <li>Unlimited tasks, created 50 at a time</li>
+          <li>250 submissions per month</li>
           <li>Review Queue with one-click send</li>
           <li>Cover letters in your voice</li>
           <li>Gmail Response Radar</li>
@@ -982,20 +1043,8 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
         <button class="btn btn-ghost" data-waitlist>Get access</button>
       </div>
     </div>
-    <div class="plan reveal">
-      <h3>Season</h3>
-      <div class="price m">$199</div>
-      <div class="per">one payment · through August 2027</div>
-      <ul>
-        <li>Everything in Pro</li>
-        <li>Full-auto mode: submits on match</li>
-        <li>Listings refresh every 2 hours</li>
-        <li>Discord notifications</li>
-      </ul>
-      <button class="btn btn-ghost" data-waitlist>Join the waitlist</button>
-    </div>
   </div>
-  <p class="plans-note">Season access opens as Summer 2027 postings ramp up this fall.</p>
+  <p class="plans-note">Pro access opens as Summer 2027 postings ramp up this fall.</p>
 </section>
 
 <!-- ============ FAQ ============ -->
@@ -1034,7 +1083,7 @@ footer{border-top:1px solid var(--line);padding:44px 0 52px;margin-top:70px}
     <p>Summer 2027 postings are already going live. Have your pipeline running before the season peaks.</p>
     <div class="cta-row">
       <a class="btn btn-gold" href="/dashboard/">Start free</a>
-      <button class="btn btn-ghost" data-waitlist>Join the Season waitlist</button>
+      <button class="btn btn-ghost" data-waitlist>Join the waitlist</button>
     </div>
   </div>
 </section>
