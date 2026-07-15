@@ -284,7 +284,7 @@
           </div>
         </div>
         <div style="display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap" id="taskTabs">
-          <div class="cat on" data-f="all">All</div>
+          <div class="cat on" data-f="all">Active</div>
           <div class="cat" data-f="running">Running</div>
           <div class="cat" data-f="ready">In Review</div>
           <div class="cat" data-f="done">Submitted</div>
@@ -1008,7 +1008,7 @@ function submitAllReviews(){tasks.filter(t=>t.status==='ready').forEach((t,i)=>s
 /* ============ RENDER ============ */
 let taskFilter='all';
 const TASK_FILTERS={
-  all:()=>true,
+  all:t=>!['submitted','reply','interview'].includes(t.status),
   running:t=>['monitoring','match','filling','cover'].includes(t.status),
   ready:t=>t.status==='ready',
   done:t=>t.status==='submitted',
@@ -1021,6 +1021,8 @@ document.querySelectorAll('#taskTabs .cat').forEach(tab=>tab.onclick=()=>{
 function render(){
   // tasks table
   const tb=$('taskBody');tb.innerHTML='';
+  const FLABELS={all:'Active',running:'Running',ready:'In Review',done:'Submitted',resp:'Responses'};
+  document.querySelectorAll('#taskTabs .cat').forEach(x=>{const f=x.dataset.f;const fn=TASK_FILTERS[f];const c=fn?tasks.filter(fn).length:tasks.length;x.textContent=FLABELS[f]+(c?' '+c:'');});
   const visible=tasks.filter(TASK_FILTERS[taskFilter]||TASK_FILTERS.all);
   visible.forEach(t=>{
     const m=STATUS_META[t.status];
