@@ -6,7 +6,7 @@
  },
  "travelers": {
   "name": "Travelers",
-  "lastSeen": "2026-07-15",
+  "lastSeen": "2026-07-17",
   "roles": 1
  },
  "citi": {
@@ -22,12 +22,12 @@
  "capital-one": {
   "name": "Capital One",
   "lastSeen": "2026-07-17",
-  "roles": 4
+  "roles": 3
  },
  "salesforce": {
   "name": "Salesforce",
   "lastSeen": "2026-07-17",
-  "roles": 2
+  "roles": 3
  },
  "pwc": {
   "name": "PwC",
