@@ -27,7 +27,7 @@
  "salesforce": {
   "name": "Salesforce",
   "lastSeen": "2026-07-18",
-  "roles": 1
+  "roles": 2
  },
  "pwc": {
   "name": "PwC",
@@ -317,7 +317,7 @@
  "intel": {
   "name": "Intel",
   "lastSeen": "2026-07-18",
-  "roles": 1
+  "roles": 2
  },
  "homebase": {
   "name": "Homebase",
