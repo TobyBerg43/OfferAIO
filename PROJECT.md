@@ -130,15 +130,21 @@ Chrome Web Store payments were discontinued, so the approach is license keys val
 server-side. **Not** offline-signed keys — those can't be revoked when someone cancels.
 
 **Phases.** 0: Worker source into the repo + KV namespace (**done**, §14). 1: Worker
-endpoints. 2: site success page + Payment Link buttons. 3: extension quota + license UI.
-4: gate `/cover` behind a key.
+endpoints (**done** — `worker/src/billing.js`, 38 tests, contract in `worker/README.md`;
+not deployed yet). 2: site success page + Payment Link buttons. 3: extension quota +
+license UI. 4: gate `/cover` behind a key.
+
+Phase 1 needs **only `STRIPE_WEBHOOK_SECRET`** — every field required comes in the event
+payloads, so there's no Stripe API call and no `STRIPE_SECRET_KEY` to leak.
 
 **KV layout** (namespace `offeraio-licenses`, binding `LICENSES`):
 - `key:<KEY>` → `{email, status, periodEnd, customerId, subscriptionId, installs[]}`
 - `cust:<STRIPE_CUSTOMER_ID>` → `<KEY>` — **required.** Subscription lifecycle webhooks
   carry a customer id, not the license key. Without this reverse index, written at
   checkout time, cancellation cannot be processed at all.
-- `evt:<STRIPE_EVENT_ID>` → `"1"`, short TTL — webhook idempotency. Stripe retries.
+- `evt:<STRIPE_EVENT_ID>` → `"1"`, 3-day TTL — webhook idempotency. Stripe retries.
+- `sess:<CHECKOUT_SESSION_ID>` → `<KEY>`, 30-day TTL — lets the success page show the key
+  with no Stripe API call.
 
 **Flow.** Payment Link → `checkout.session.completed` → generate `OA-XXXX-XXXX-XXXX`,
 write both KV records → surface on `/license?session_id=…`. The extension stores the key,
@@ -156,7 +162,15 @@ calls `/license/verify`, and caches the result ~24h.
 3. **Fail open on network error, closed on explicit inactive.** If the Worker is
    unreachable, the extension keeps last-known-good for ~7 days rather than dropping to
    Free — an outage here must not downgrade paying users.
-4. **Keys are bound to installs** (~3) at activation, to stop casual key-sharing.
+4. **Keys are bound to installs** (max 3), to stop casual key-sharing. `activate` binds
+   explicitly; `verify` adopts a new install when there's room, so a reinstall doesn't
+   force re-activation, and refuses only once the limit is reached.
+
+A fifth rule emerged while implementing: the `periodEnd` written at checkout is a
+**provisional 35-day guess** (the checkout event carries no period), flagged
+`periodProvisional`. The first authoritative value from Stripe always replaces it, even
+if earlier — otherwise a plain "never shorten" guard keeps the guess and grants a free
+extra month. After that, "never shorten" applies normally.
 
 **Two Workers gotchas.** Stripe's Node SDK `constructEvent` uses sync crypto and does not
 run on Workers — use `constructEventAsync`, or hand-roll HMAC-SHA256 over

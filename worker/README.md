@@ -10,11 +10,52 @@ and can't be silently lost. Edit it here, not in the Cloudflare dashboard.
 
 ## Endpoints
 
-| Route     | Method | Purpose                                    |
-| --------- | ------ | ------------------------------------------ |
-| `/health` | GET    | Liveness probe                             |
-| `/cover`  | POST   | Cover-letter generation (Anthropic)        |
-| `/rank`   | POST   | Resume↔listing ranking (OpenAI embeddings) |
+| Route                 | Method | Purpose                                    |
+| --------------------- | ------ | ------------------------------------------ |
+| `/health`             | GET    | Liveness probe                             |
+| `/cover`              | POST   | Cover-letter generation (Anthropic)        |
+| `/rank`               | POST   | Resume↔listing ranking (OpenAI embeddings) |
+| `/stripe/webhook`     | POST   | Stripe events → license records            |
+| `/license/verify`     | POST   | `{key, installId?}` → plan + quota         |
+| `/license/activate`   | POST   | `{key, installId}` → bind an install       |
+| `/license/by-session` | GET    | `?session_id=cs_…` → key, for success page |
+
+### `/license/verify`
+
+```
+POST {"key": "OA-XXXX-XXXX-XXXX", "installId": "<uuid>"}
+->   {"ok":true, "active":true,  "plan":"pro",  "quota":250, "status":"active",
+      "periodEnd":1762592000000, "installs":1, "maxInstalls":3}
+->   {"ok":true, "active":false, "plan":"free", "quota":50, "reason":"canceled"}
+```
+
+Always 200, even for a bad key — the extension has one code path: trust `active`, else
+fall back to Free. `reason` is one of `malformed`, `unknown`, `expired`, `canceled`,
+`device_limit`.
+
+The key format is `OA-XXXX-XXXX-XXXX` in Crockford base32 (no I/L/O/U), 60 bits of
+entropy. Input is normalised, so lowercase, missing dashes, and `I`→`1` / `O`→`0`
+typos all resolve.
+
+### Webhook
+
+Signature is verified with `crypto.subtle` HMAC-SHA256 over `` `${t}.${rawBody}` ``, 300s
+tolerance — the Stripe SDK is not used because its `constructEvent` needs sync crypto that
+Workers doesn't have. Events are deduped on `evt:<id>` for 3 days. A handler error returns
+500 **without** marking the event, so Stripe retries rather than dropping a payment.
+
+Point the Stripe endpoint at `https://offeraio-worker.tobybergerbusiness.workers.dev/stripe/webhook`
+and subscribe to: `checkout.session.completed`, `invoice.paid`,
+`customer.subscription.created`, `customer.subscription.updated`,
+`customer.subscription.deleted`. (`invoice.payment_failed` may be subscribed; it is
+deliberately a no-op — see PROJECT.md §10.)
+
+## Tests
+
+`npm test --prefix worker` — 38 cases, no network, no Stripe account, no wrangler runtime
+(billing.js sticks to Web-standard APIs so it runs on plain Node). Covers forged and
+replayed signatures, out-of-order delivery, dropped-webhook expiry, dunning, and the
+install limit. CI runs them before every deploy.
 
 > `/cover` and `/rank` are currently **unauthenticated and CORS-open to `*`**. Once
 > `ANTHROPIC_API_KEY` is set, anyone who finds this hostname can spend the key.

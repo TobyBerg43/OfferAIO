@@ -26,7 +26,9 @@ jobs:
         with:
           node-version: "22"
       - name: Check syntax
-        run: node --check worker/src/index.js
+        run: npm run check --prefix worker
+      - name: Test
+        run: npm test --prefix worker
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:

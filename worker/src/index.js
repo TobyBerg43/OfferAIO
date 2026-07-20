@@ -3,6 +3,8 @@
  * Deploy: set ANTHROPIC_API_KEY (or OPENAI_API_KEY) as a secret, then deploy.
  * Free tier = 100,000 requests/day. */
 
+import { handleWebhook, verifyLicense, activateLicense, licenseBySession } from "./billing.js";
+
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "content-type",
@@ -13,10 +15,30 @@ const json = (o, status = 200) =>
 
 export default {
   async fetch(request, env) {
+    // Before the OPTIONS/CORS handling below: the webhook is server-to-server, needs no
+    // CORS, and must consume the raw body itself so the HMAC matches the exact bytes
+    // Stripe signed.
+    if (new URL(request.url).pathname === "/stripe/webhook") {
+      if (request.method !== "POST") return new Response("method not allowed", { status: 405 });
+      return handleWebhook(request, env);
+    }
+
     if (request.method === "OPTIONS") return new Response(null, { headers: CORS });
     const { pathname } = new URL(request.url);
     try {
       if (pathname === "/health") return json({ ok: true, service: "offeraio-worker/1.0" });
+
+      if (pathname === "/license/verify" && request.method === "POST") {
+        return json(await verifyLicense(env, await request.json()));
+      }
+      if (pathname === "/license/activate" && request.method === "POST") {
+        return json(await activateLicense(env, await request.json()));
+      }
+      if (pathname === "/license/by-session" && request.method === "GET") {
+        const sid = new URL(request.url).searchParams.get("session_id");
+        return json(await licenseBySession(env, sid));
+      }
+
       if (pathname === "/cover" && request.method === "POST") {
         const { company, role, description = "", profile = {} } = await request.json();
         return json({ ok: true, letter: await writeCover({ company, role, description, profile }, env) });
