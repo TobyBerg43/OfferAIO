@@ -227,11 +227,25 @@ export async function processEvent(env, event, nowMs = Date.now()) {
 
       const { key, rec } = await ensureLicense(env, customerId, nowMs);
       rec.email = obj.customer_details?.email || obj.customer_email || rec.email;
-      rec.subscriptionId =
-        (typeof obj.subscription === "string" ? obj.subscription : obj.subscription?.id) ||
-        rec.subscriptionId;
-      // Don't resurrect a cancelled licence just because an old checkout event is replayed.
-      if (rec.status !== "canceled") rec.status = "active";
+      const incomingSub =
+        (typeof obj.subscription === "string" ? obj.subscription : obj.subscription?.id) || null;
+
+      // A cancelled licence must not be resurrected by a replayed checkout event — but a
+      // customer who cancels and later buys again is a different case, and Stripe reuses
+      // the customer id, so `cust:` still points at their old cancelled record. Tell them
+      // apart by subscription id: a new one means a genuine re-subscribe, the same one
+      // means a replay.
+      const reSubscribed = rec.status === "canceled" && incomingSub && incomingSub !== rec.subscriptionId;
+      if (rec.status !== "canceled" || reSubscribed) rec.status = "active";
+      if (reSubscribed) {
+        delete rec.canceledAt;
+        // The old period is stale; fall back to a guess until this subscription's
+        // invoice or subscription event lands.
+        rec.periodEnd = nowMs + PROVISIONAL_PERIOD_MS;
+        rec.periodProvisional = true;
+      }
+
+      if (incomingSub) rec.subscriptionId = incomingSub;
       await writeKey(env, key, rec);
 
       // Lets the success page show the key without a Stripe API call.
@@ -258,6 +272,13 @@ export async function processEvent(env, event, nowMs = Date.now()) {
       if (!customerId) return "ignored:no-customer";
 
       const { key, rec } = await ensureLicense(env, customerId, nowMs);
+
+      // Same replay-vs-re-subscribe distinction as checkout: once a subscription is
+      // cancelled, a late event for *that* subscription must not revive it, but a new
+      // subscription id is a genuine repurchase.
+      const staleEvent = rec.status === "canceled" && obj.id && obj.id === rec.subscriptionId;
+      if (staleEvent) return `ignored:stale-subscription:${obj.id}`;
+
       rec.subscriptionId = obj.id || rec.subscriptionId;
       if (typeof obj.status === "string") rec.status = obj.status;
       applyPeriodEnd(rec, subscriptionPeriodEnd(obj));

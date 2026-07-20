@@ -391,6 +391,56 @@ test("a replayed checkout cannot resurrect a cancelled licence", async () => {
   assert.equal((await verifyLicense(env, { key }, NOW)).active, false);
 });
 
+test("a customer who cancels and buys again gets their licence back", async () => {
+  // Stripe reuses the customer id on repurchase, so `cust:` still points at the old
+  // cancelled record. Refusing to reactivate would leave a paying customer on Free.
+  const env = makeEnv();
+  await processEvent(env, checkoutEvent(), NOW);
+  const key = await env.LICENSES.get(`cust:${CUST}`);
+  await processEvent(
+    env,
+    { id: "evt_del", type: "customer.subscription.deleted", data: { object: { customer: CUST } } },
+    NOW,
+  );
+  assert.equal((await verifyLicense(env, { key }, NOW)).active, false);
+
+  const later = NOW + 90 * DAY;
+  await processEvent(
+    env,
+    { ...checkoutEvent({ id: "cs_test_second", subscription: "sub_TEST2" }), id: "evt_checkout_2" },
+    later,
+  );
+
+  const back = await verifyLicense(env, { key }, later);
+  assert.equal(back.active, true, "repurchase must restore Pro");
+  assert.equal(back.quota, PLAN_QUOTA.pro);
+
+  const rec = JSON.parse(await env.LICENSES.get(`key:${key}`));
+  assert.equal(rec.subscriptionId, "sub_TEST2");
+  assert.equal(rec.canceledAt, undefined);
+  // The old period was stale; a fresh guess stands in until the new invoice lands.
+  assert.equal(rec.periodProvisional, true);
+  assert.ok(rec.periodEnd > later);
+  // Same licence key — the customer keeps the one they already saved.
+  assert.equal(await env.LICENSES.get("sess:cs_test_second"), key);
+});
+
+test("a stale subscription event cannot revive a cancelled licence", async () => {
+  const env = makeEnv();
+  await processEvent(env, checkoutEvent(), NOW);
+  const key = await env.LICENSES.get(`cust:${CUST}`);
+  await processEvent(
+    env,
+    { id: "evt_del", type: "customer.subscription.deleted", data: { object: { customer: CUST } } },
+    NOW,
+  );
+
+  // An out-of-order "active" update for the subscription we know is dead.
+  const r = await processEvent(env, subEvent("active", NOW + 30 * DAY, "evt_late"), NOW);
+  assert.match(r, /^ignored:stale-subscription/);
+  assert.equal((await verifyLicense(env, { key }, NOW)).active, false);
+});
+
 test("cancellation of an unknown customer is ignored rather than throwing", async () => {
   const env = makeEnv();
   const r = await processEvent(
