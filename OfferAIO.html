@@ -201,7 +201,7 @@
   <div class="titlebar">
     <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
     <div class="title">OfferAIO v3.1.0 — Summer 2027 Internship Suite</div>
-    <div class="conn" id="engStatus" style="margin-right:16px;color:var(--dim2)" title="Run the local OfferAIO Engine for real applying">ENGINE: OFF</div>
+    <div class="conn" id="engStatus" style="margin-right:16px;color:var(--dim2);cursor:pointer" title="Click to connect the local OfferAIO Engine (desktop app). Off by default — no local-network access is used unless you turn it on.">ENGINE: OFF</div>
     <div class="conn" id="dbStatus" style="margin-right:16px;color:var(--dim)">DB: syncing…</div>
     <div class="conn"><div class="pulse"></div>CONNECTED</div>
   </div>
@@ -738,7 +738,16 @@ function pickListing(cats){
 /* ============ LOCAL ENGINE (real apply / AI / radar) ============ */
 const ENGINE='http://127.0.0.1:7717';
 let engineOn=false, engineFeat={};
+/* The local engine lives on 127.0.0.1, and probing it makes Chrome show a
+   "access other apps and services on this device" permission prompt. Almost
+   nobody runs the desktop engine, so this is OPT-IN: we never touch localhost
+   unless the user explicitly turns it on (click the ENGINE chip). */
+function engineOptedIn(){try{return localStorage.getItem('oa_engine')==='1';}catch(e){return false;}}
+function engineOff(){engineOn=false;const e=$('engStatus');if(e){e.textContent='ENGINE: OFF';e.style.color='var(--dim2)';}}
+function setEngineOptIn(on){try{localStorage.setItem('oa_engine',on?'1':'0');}catch(e){}
+  if(on){checkEngine();}else{engineOff();}}
 async function checkEngine(){
+  if(!engineOptedIn()){engineOff();return;}
   try{
     const h=await fetch(ENGINE+'/health',{signal:AbortSignal.timeout(1500)}).then(r=>r.json());
     if(h.ok){
@@ -790,7 +799,7 @@ function pollRadar(){
     }catch(_){}
   },60000);
 }
-setInterval(checkEngine,30000);
+setInterval(function(){if(engineOptedIn())checkEngine();},30000);
 
 /* ============ STATE ============ */
 let tasks=[]; let nextId=1; let feedItems=[]; let radarItems=[];
@@ -1252,6 +1261,12 @@ function bumpVoice(n){
   try{const u=localStorage.getItem('oa_customdb');if(u)$('customDb').value=u;}catch(e){}
   render();
   loadListings();
+  const es=$('engStatus');
+  if(es)es.onclick=function(){
+    const on=!engineOptedIn();
+    setEngineOptIn(on);
+    toast('',on?'Looking for the local engine…':'Local engine disconnected','info');
+  };
   checkEngine();
 })();
 </script>
