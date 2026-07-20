@@ -92,10 +92,18 @@ session re-uploading old files. After any extension change, verify the raw file 
   (solid muted gold primary, white ghost — no glossy gradients).
 
 ## 7. The Chrome extension (`extension/`)
-Manifest V3. Name "OfferAIO — Auto Apply", v1.0.0.
+Manifest V3. Name "OfferAIO — Auto Apply", **v1.1.0** (bumped from 1.0.0 for licensing).
 
 Files: `manifest.json`, `popup.html`, `popup.js`, `content.js`, `bridge.js`,
-`icons/icon16|48|128.png`.
+`license.js`, `icons/icon16|48|128.png`.
+
+`license.js` holds licensing + the submission counter and is shared by the popup and
+the content script. It's a plain IIFE on `self` rather than an ES module, because
+content scripts can't `import`. It is listed **before** `content.js` in both
+`content_scripts.js` and the `executeScript` call in `popup.js` — if either loses it,
+the quota check silently no-ops (deliberately: a metering bug must never stop someone
+applying for a job). Tests: `node --test tests/license.test.mjs` — kept outside
+`extension/` because `zip-extension.yml` ships that whole folder to the store.
 
 **Three fixes that must not regress:**
 1. `popup.js` is **external** — MV3's CSP blocks inline `<script>`, so an inline popup
@@ -103,6 +111,9 @@ Files: `manifest.json`, `popup.html`, `popup.js`, `content.js`, `bridge.js`,
 2. `manifest.json` must declare `icons` **and** `action.default_icon` (store requires 128px).
 3. `offeraio.com` must be in `host_permissions` **and** the `bridge.js` content-script
    matches, or the extension can't talk to the live dashboard.
+4. The Worker origin is now in `host_permissions` too, for license verification.
+   ⚠️ Adding it means the **Chrome Web Store privacy tab and permission justifications
+   in `store/OfferAIO-store-listing.md` need updating** before the next submission.
 
 Behaviour: fills fields across Greenhouse, Lever, Ashby, Workday, SmartRecruiters, iCIMS,
 Workable, Jobvite, BambooHR, Breezy, Taleo, Handshake, LinkedIn, ZipRecruiter, Indeed,
@@ -134,8 +145,13 @@ server-side. **Not** offline-signed keys — those can't be revoked when someone
 **Phases.** 0: Worker source into the repo + KV namespace (**done**, §14). 1: Worker
 endpoints (**done** — `worker/src/billing.js`, 40 tests, contract in `worker/README.md`;
 not deployed yet). 2: site success page + Payment Link buttons (**done** —
-`license.html`, `billing.js`). 3: extension quota + license UI. 4: gate `/cover` behind
-a key.
+`license.html`, `billing.js`). 3: extension quota + license UI (**done** —
+`extension/license.js`, 19 tests). 4: gate `/cover` behind a key.
+
+**Phase 3 built the submission counter from scratch** — nothing in the extension
+tracked submissions before, so "50/month" was marketing copy only. Counting happens in
+`content.js` `doSubmit()`, *after* the submit button is actually clicked, so a failed
+lookup never burns a submission. The monthly reset is keyed on local-time `YYYY-MM`.
 
 **To go live, paste the Payment Link into `billing.js`.** That's the only edit needed —
 `landing.html` and `pricing/index.html` both read it from there. While it's empty the

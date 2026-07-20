@@ -25,10 +25,36 @@
   .ok.show{opacity:1}
   details summary{cursor:pointer;color:var(--dim);font-size:11px;font-weight:600;margin-top:10px;list-style:none}
   details summary::-webkit-details-marker{display:none}
+  .plan{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--panel);border:1px solid var(--border2);border-radius:8px;padding:8px 10px;margin-bottom:10px}
+  .plan-l{display:flex;align-items:center;gap:7px;min-width:0}
+  .badge{font-size:10px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:999px;background:var(--border2);color:#4a4335}
+  .badge.pro{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#fff}
+  .meter{flex:1;height:4px;background:var(--border2);border-radius:2px;overflow:hidden;margin-top:5px}
+  .meter i{display:block;height:100%;background:linear-gradient(135deg,var(--blue1),var(--blue2));border-radius:2px}
+  .meter i.hot{background:linear-gradient(135deg,#c8862f,#d0654a)}
+  .usage{font-size:10.5px;color:var(--dim);white-space:nowrap}
+  .lic-row{display:flex;gap:6px;margin-top:4px}
+  .lic-row input{flex:1;font-family:ui-monospace,Consolas,monospace;letter-spacing:.5px;text-transform:uppercase}
+  .lic-row button{border:none;border-radius:8px;padding:0 12px;font-weight:700;font-size:12px;cursor:pointer;background:linear-gradient(135deg,var(--blue1),var(--blue2));color:#fff}
+  .lic-msg{font-size:10.5px;margin-top:6px;line-height:1.45;display:none}
+  .lic-msg.show{display:block}
+  .lic-msg.bad{color:#b4442f}
+  .lic-msg.good{color:var(--green)}
+  .linkbtn{background:none;border:none;color:var(--dim);font-size:10.5px;cursor:pointer;padding:0;text-decoration:underline}
 </style>
 </head>
 <body>
   <div class="head"><div class="logo">O</div><b>Offer<span>AIO</span></b></div>
+
+  <div class="plan">
+    <div class="plan-l" style="flex:1">
+      <span class="badge" id="planBadge">FREE</span>
+      <div style="flex:1;min-width:0">
+        <div class="usage" id="usageText">—</div>
+        <div class="meter"><i id="usageBar" style="width:0%"></i></div>
+      </div>
+    </div>
+  </div>
 
   <label>Apply mode</label>
   <div class="seg" id="modeSeg">
@@ -65,8 +91,23 @@
     <div class="ok" id="ok">Saved</div>
   </details>
 
+  <details id="licBlock">
+    <summary>License ▾</summary>
+    <div class="lic-row">
+      <input id="licKey" placeholder="OA-XXXX-XXXX-XXXX" spellcheck="false" autocomplete="off">
+      <button id="licActivate">Activate</button>
+    </div>
+    <div class="lic-msg" id="licMsg"></div>
+    <div class="note" style="text-align:left;margin-top:7px">
+      Pro is $30/mo for 250 submissions.
+      <a href="https://offeraio.com/pricing/" target="_blank" rel="noopener">Get a key</a>
+      · <button class="linkbtn" id="licRemove" type="button" style="display:none">Remove key</button>
+    </div>
+  </details>
+
   <div class="note"><a href="https://offeraio.com/dashboard/" target="_blank" rel="noopener">Open OfferAIO dashboard</a></div>
 
+<script src="license.js"></script>
 <script src="popup.js"></script>
 </body>
 </html>
