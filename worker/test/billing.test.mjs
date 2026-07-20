@@ -18,7 +18,8 @@ import {
   activateLicense,
   licenseBySession,
   isActive,
-  checkAndMeterAI,
+  checkAI,
+  recordAI,
   PLAN_QUOTA,
 } from "../src/billing.js";
 
@@ -118,6 +119,16 @@ const subEvent = (status, periodEndMs, id = "evt_sub_1", type = "customer.subscr
     },
   },
 });
+
+
+/**
+ * check-then-charge, mirroring what the /cover and /rank handlers do. They bill only
+ * after the LLM responds, so these are two calls rather than one.
+ */
+async function meter(env, body, now) {
+  const gate = await checkAI(env, { installId: "dev-1", ...body }, now);
+  return gate.allowed ? await recordAI(env, gate) : gate;
+}
 
 /* ------------------------------------------------------------------ key format */
 
@@ -438,8 +449,129 @@ test("a stale subscription event cannot revive a cancelled licence", async () =>
 
   // An out-of-order "active" update for the subscription we know is dead.
   const r = await processEvent(env, subEvent("active", NOW + 30 * DAY, "evt_late"), NOW);
-  assert.match(r, /^ignored:stale-subscription/);
+  assert.match(r, /^ignored:other-subscription/);
   assert.equal((await verifyLicense(env, { key }, NOW)).active, false);
+});
+
+test("the old subscription's deleted event cannot cancel a resubscribed customer", async () => {
+  // Regression: cancel-at-period-end then resubscribe. Stripe delivers sub_A's
+  // `deleted` when its period finally lapses — days AFTER sub_B is live and billing.
+  // Acting on it cancelled a paying customer, and since invoice.paid only rescues
+  // past_due, every later payment left them cancelled. Permanent lockout.
+  const env = makeEnv();
+  await processEvent(env, checkoutEvent(), NOW); // sub_TEST1
+  const key = await env.LICENSES.get(`cust:${CUST}`);
+  await processEvent(
+    env,
+    { id: "evt_del1", type: "customer.subscription.deleted", data: { object: { id: "sub_TEST1", customer: CUST } } },
+    NOW,
+  );
+
+  // Repurchase as sub_TEST2.
+  const later = NOW + 10 * DAY;
+  await processEvent(
+    env,
+    { ...checkoutEvent({ id: "cs_2", subscription: "sub_TEST2" }), id: "evt_checkout_2" },
+    later,
+  );
+  await processEvent(
+    env,
+    {
+      id: "evt_sub2",
+      type: "customer.subscription.updated",
+      data: {
+        object: {
+          id: "sub_TEST2",
+          customer: CUST,
+          status: "active",
+          current_period_end: Math.floor((later + 30 * DAY) / 1000),
+        },
+      },
+    },
+    later,
+  );
+  assert.equal((await verifyLicense(env, { key }, later)).active, true);
+
+  // sub_TEST1's period lapses and Stripe delivers its deleted event.
+  const r = await processEvent(
+    env,
+    { id: "evt_del_old", type: "customer.subscription.deleted", data: { object: { id: "sub_TEST1", customer: CUST } } },
+    later + DAY,
+  );
+  assert.match(r, /^ignored:other-subscription/);
+  assert.equal(
+    (await verifyLicense(env, { key }, later + DAY)).active,
+    true,
+    "a paying customer must not be cancelled by their old subscription",
+  );
+});
+
+test("an update for a different subscription cannot clobber the active one", async () => {
+  const env = makeEnv();
+  await processEvent(env, checkoutEvent({ subscription: "sub_NEW" }), NOW);
+  const key = await env.LICENSES.get(`cust:${CUST}`);
+  await processEvent(
+    env,
+    {
+      id: "evt_new",
+      type: "customer.subscription.updated",
+      data: { object: { id: "sub_NEW", customer: CUST, status: "active", current_period_end: Math.floor((NOW + 30 * DAY) / 1000) } },
+    },
+    NOW,
+  );
+
+  // The wind-down of the previous subscription arrives afterwards.
+  const r = await processEvent(
+    env,
+    { id: "evt_old", type: "customer.subscription.updated", data: { object: { id: "sub_OLD", customer: CUST, status: "canceled" } } },
+    NOW,
+  );
+  assert.match(r, /^ignored:other-subscription/);
+
+  const rec = JSON.parse(await env.LICENSES.get(`key:${key}`));
+  assert.equal(rec.subscriptionId, "sub_NEW");
+  assert.equal((await verifyLicense(env, { key }, NOW)).active, true);
+});
+
+test("an unpaid checkout session does not provision Pro", async () => {
+  // Delayed-notification methods complete the session before the money arrives.
+  const env = makeEnv();
+  const r = await processEvent(env, checkoutEvent({ payment_status: "unpaid" }), NOW);
+  assert.equal(r, "ignored:unpaid");
+  assert.equal(await env.LICENSES.get(`cust:${CUST}`), null);
+});
+
+test("invoice period end takes the latest line, not the first", async () => {
+  // A proration/credit line covering an earlier window used to win and expire someone
+  // who had just paid.
+  const env = makeEnv();
+  await processEvent(env, checkoutEvent(), NOW);
+  const key = await env.LICENSES.get(`cust:${CUST}`);
+  const real = NOW + 30 * DAY;
+
+  await processEvent(
+    env,
+    {
+      id: "evt_multi",
+      type: "invoice.paid",
+      data: {
+        object: {
+          customer: CUST,
+          lines: {
+            data: [
+              { period: { end: Math.floor((NOW - 5 * DAY) / 1000) } }, // proration for the past
+              { period: { end: Math.floor(real / 1000) } },
+            ],
+          },
+        },
+      },
+    },
+    NOW,
+  );
+
+  const rec = JSON.parse(await env.LICENSES.get(`key:${key}`));
+  assert.equal(rec.periodEnd, real);
+  assert.equal((await verifyLicense(env, { key }, NOW)).active, true);
 });
 
 test("cancellation of an unknown customer is ignored rather than throwing", async () => {
@@ -626,25 +758,52 @@ test("by-session returns the key for a real session id only", async () => {
 test("AI endpoints refuse a request with no key", async () => {
   // The whole point of Phase 4: an open /cover lets anyone drain the Anthropic key.
   const env = makeEnv();
-  const gate = await checkAndMeterAI(env, {}, NOW);
+  const gate = await meter(env, {}, NOW);
   assert.equal(gate.allowed, false);
   assert.equal(gate.status, 402);
 });
 
+test("AI endpoints require an install id", async () => {
+  // verifyLicense treats installId as optional, so without this check a shared key
+  // would never hit the 3-device binding on these endpoints.
+  const env = makeEnv();
+  await processEvent(env, checkoutEvent(), NOW);
+  const key = await env.LICENSES.get(`cust:${CUST}`);
+
+  const gate = await checkAI(env, { key }, NOW);
+  assert.equal(gate.allowed, false);
+  assert.equal(gate.reason, "install_id_required");
+});
+
+test("a failed generation does not consume a metered unit", async () => {
+  // checkAI reserves nothing; recordAI is only called once the LLM has answered, so an
+  // Anthropic outage can't quietly eat someone's monthly allowance.
+  const env = makeEnv();
+  await processEvent(env, checkoutEvent(), NOW);
+  const key = await env.LICENSES.get(`cust:${CUST}`);
+
+  const gate = await checkAI(env, { key, installId: "dev-1" }, NOW);
+  assert.equal(gate.allowed, true);
+  // ...generation throws here, so recordAI is never reached.
+
+  const next = await checkAI(env, { key, installId: "dev-1" }, NOW);
+  assert.equal(next.used, 0, "nothing should have been billed");
+});
+
 test("AI endpoints refuse an unknown or cancelled key", async () => {
   const env = makeEnv();
-  assert.equal((await checkAndMeterAI(env, { key: "OA-2222-3333-4444" }, NOW)).allowed, false);
+  assert.equal((await meter(env, { key: "OA-2222-3333-4444" }, NOW)).allowed, false);
 
   await processEvent(env, checkoutEvent(), NOW);
   const key = await env.LICENSES.get(`cust:${CUST}`);
-  assert.equal((await checkAndMeterAI(env, { key }, NOW)).allowed, true);
+  assert.equal((await meter(env, { key }, NOW)).allowed, true);
 
   await processEvent(
     env,
     { id: "evt_del", type: "customer.subscription.deleted", data: { object: { customer: CUST } } },
     NOW,
   );
-  const after = await checkAndMeterAI(env, { key }, NOW);
+  const after = await meter(env, { key }, NOW);
   assert.equal(after.allowed, false);
   assert.equal(after.reason, "canceled");
 });
@@ -655,12 +814,12 @@ test("AI usage is metered and capped per month", async () => {
   const key = await env.LICENSES.get(`cust:${CUST}`);
 
   for (let i = 1; i <= PLAN_QUOTA.pro; i++) {
-    const g = await checkAndMeterAI(env, { key }, NOW);
+    const g = await meter(env, { key }, NOW);
     assert.equal(g.allowed, true, `call ${i} should be allowed`);
     assert.equal(g.used, i);
   }
 
-  const over = await checkAndMeterAI(env, { key }, NOW);
+  const over = await meter(env, { key }, NOW);
   assert.equal(over.allowed, false);
   assert.equal(over.status, 429);
   assert.equal(over.reason, "monthly_limit");
@@ -671,13 +830,13 @@ test("AI usage resets the following month", async () => {
   await processEvent(env, checkoutEvent(), NOW);
   const key = await env.LICENSES.get(`cust:${CUST}`);
 
-  for (let i = 0; i < PLAN_QUOTA.pro; i++) await checkAndMeterAI(env, { key }, NOW);
-  assert.equal((await checkAndMeterAI(env, { key }, NOW)).allowed, false);
+  for (let i = 0; i < PLAN_QUOTA.pro; i++) await meter(env, { key }, NOW);
+  assert.equal((await meter(env, { key }, NOW)).allowed, false);
 
   // Same licence, next month — but keep it inside the paid period.
   const nextMonth = NOW + 32 * DAY;
   await processEvent(env, subEvent("active", nextMonth + 30 * DAY, "evt_renew"), NOW);
-  const fresh = await checkAndMeterAI(env, { key }, nextMonth);
+  const fresh = await meter(env, { key }, nextMonth);
   assert.equal(fresh.allowed, true);
   assert.equal(fresh.used, 1);
 });
@@ -687,8 +846,8 @@ test("metering is keyed on the normalised key, so formatting can't multiply the 
   await processEvent(env, checkoutEvent(), NOW);
   const key = await env.LICENSES.get(`cust:${CUST}`);
 
-  await checkAndMeterAI(env, { key }, NOW);
-  const second = await checkAndMeterAI(env, { key: key.toLowerCase().replace(/-/g, "") }, NOW);
+  await meter(env, { key }, NOW);
+  const second = await meter(env, { key: key.toLowerCase().replace(/-/g, "") }, NOW);
   assert.equal(second.used, 2, "reformatting the key must not open a fresh counter");
 });
 

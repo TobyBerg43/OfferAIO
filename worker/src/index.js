@@ -8,7 +8,8 @@ import {
   verifyLicense,
   activateLicense,
   licenseBySession,
-  checkAndMeterAI,
+  checkAI,
+  recordAI,
 } from "./billing.js";
 
 const CORS = {
@@ -50,22 +51,21 @@ export default {
       // enforcement that isn't client-side and therefore bypassable.
       if (pathname === "/cover" && request.method === "POST") {
         const body = await request.json();
-        const gate = await checkAndMeterAI(env, body);
+        const gate = await checkAI(env, body);
         if (!gate.allowed) return json({ ok: false, error: "Pro required", ...gate }, gate.status);
         const { company, role, description = "", profile = {} } = body;
-        return json({
-          ok: true,
-          letter: await writeCover({ company, role, description, profile }, env),
-          used: gate.used,
-          limit: gate.limit,
-        });
+        const letter = await writeCover({ company, role, description, profile }, env);
+        const m = await recordAI(env, gate); // only bill what actually generated
+        return json({ ok: true, letter, used: m.used, limit: m.limit });
       }
       if (pathname === "/rank" && request.method === "POST") {
         const body = await request.json();
-        const gate = await checkAndMeterAI(env, body);
+        const gate = await checkAI(env, body);
         if (!gate.allowed) return json({ ok: false, error: "Pro required", ...gate }, gate.status);
         const { resumeText = "", listings = [] } = body;
-        return json({ ok: true, order: await rank(resumeText, listings, env), used: gate.used, limit: gate.limit });
+        const order = await rank(resumeText, listings, env);
+        const m = await recordAI(env, gate);
+        return json({ ok: true, order, used: m.used, limit: m.limit });
       }
       return json({ ok: false, error: "Not found" }, 404);
     } catch (e) {

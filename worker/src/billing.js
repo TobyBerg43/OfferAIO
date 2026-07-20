@@ -185,6 +185,19 @@ function subscriptionPeriodEnd(sub) {
 }
 
 /**
+ * Latest period end on an invoice.
+ *
+ * Not `lines.data[0]` — the first line can be a proration or credit covering an
+ * *earlier* window, and because a provisional period accepts any authoritative value
+ * (even an earlier one), that would expire a customer who just paid.
+ */
+function invoicePeriodEnd(inv) {
+  const ends = (inv?.lines?.data || []).map((l) => toMs(l?.period?.end)).filter(Boolean);
+  if (ends.length) return Math.max(...ends);
+  return toMs(inv?.period_end);
+}
+
+/**
  * Adopt a period end from Stripe.
  *
  * Two rules that interact: a real value must always replace the provisional guess made
@@ -198,6 +211,28 @@ function applyPeriodEnd(rec, periodEnd) {
     rec.periodEnd = periodEnd;
     rec.periodProvisional = false;
   }
+}
+
+/**
+ * Should a subscription-scoped event be applied to this licence?
+ *
+ * A Stripe customer can own more than one subscription over time — cancel-then-
+ * resubscribe is the common case, and the old subscription keeps emitting events
+ * (`updated` as it winds down, `deleted` when its period finally lapses) *after* the
+ * new one is live. Applying those to the licence would cancel a paying customer, and
+ * because `invoice.paid` only rescues `past_due`, the record would never recover.
+ *
+ * So: accept events for the subscription we track, accept anything when we track none
+ * yet, and otherwise accept only a genuine repurchase — an active subscription arriving
+ * while the licence sits cancelled.
+ */
+function appliesToCurrentSubscription(rec, incomingId, incomingStatus) {
+  if (!incomingId || !rec.subscriptionId) return true;
+  if (incomingId === rec.subscriptionId) {
+    // A late event for a subscription we already know is dead must not revive it.
+    return rec.status !== "canceled" || !ACTIVE_STATUSES.has(incomingStatus);
+  }
+  return rec.status === "canceled" && ACTIVE_STATUSES.has(incomingStatus);
 }
 
 /* ------------------------------------------------------------- active window */
@@ -224,6 +259,11 @@ export async function processEvent(env, event, nowMs = Date.now()) {
     case "checkout.session.completed": {
       const customerId = typeof obj.customer === "string" ? obj.customer : obj.customer?.id;
       if (!customerId) return "ignored:no-customer";
+
+      // Delayed-notification methods (ACH, SEPA, Klarna…) complete the session while
+      // payment is still pending. Provisioning here would hand out 35 days of Pro for
+      // money that may never arrive; the subscription events will activate it if it does.
+      if (obj.payment_status === "unpaid") return "ignored:unpaid";
 
       const { key, rec } = await ensureLicense(env, customerId, nowMs);
       rec.email = obj.customer_details?.email || obj.customer_email || rec.email;
@@ -259,7 +299,7 @@ export async function processEvent(env, event, nowMs = Date.now()) {
       if (!customerId) return "ignored:no-customer";
 
       const { key, rec } = await ensureLicense(env, customerId, nowMs);
-      applyPeriodEnd(rec, toMs(obj.lines?.data?.[0]?.period?.end) ?? toMs(obj.period_end));
+      applyPeriodEnd(rec, invoicePeriodEnd(obj));
       if (rec.status === "past_due") rec.status = "active"; // they paid; dunning is over
       rec.email = obj.customer_email || rec.email;
       await writeKey(env, key, rec);
@@ -273,11 +313,9 @@ export async function processEvent(env, event, nowMs = Date.now()) {
 
       const { key, rec } = await ensureLicense(env, customerId, nowMs);
 
-      // Same replay-vs-re-subscribe distinction as checkout: once a subscription is
-      // cancelled, a late event for *that* subscription must not revive it, but a new
-      // subscription id is a genuine repurchase.
-      const staleEvent = rec.status === "canceled" && obj.id && obj.id === rec.subscriptionId;
-      if (staleEvent) return `ignored:stale-subscription:${obj.id}`;
+      if (!appliesToCurrentSubscription(rec, obj.id, obj.status)) {
+        return `ignored:other-subscription:${obj.id}`;
+      }
 
       rec.subscriptionId = obj.id || rec.subscriptionId;
       if (typeof obj.status === "string") rec.status = obj.status;
@@ -296,6 +334,14 @@ export async function processEvent(env, event, nowMs = Date.now()) {
       if (!key) return "ignored:unknown-customer";
       const rec = await readKey(env, key);
       if (!rec) return "ignored:unknown-key";
+
+      // Only the subscription the licence currently tracks can cancel it. A customer
+      // who cancelled sub_A and re-subscribed as sub_B still gets sub_A's deleted event
+      // when the old period lapses; acting on it would cut off someone who is paying.
+      if (obj.id && rec.subscriptionId && obj.id !== rec.subscriptionId) {
+        return `ignored:other-subscription:${obj.id}`;
+      }
+
       rec.status = "canceled";
       rec.canceledAt = nowMs;
       await writeKey(env, key, rec);
@@ -452,22 +498,40 @@ function monthKey(nowMs) {
  * costs at most a few extra generations at the boundary, which is far cheaper than the
  * machinery to make it exact.
  */
-export async function checkAndMeterAI(env, { key, installId }, nowMs = Date.now()) {
+export async function checkAI(env, { key, installId }, nowMs = Date.now()) {
+  // Required here even though verifyLicense treats it as optional: without it the
+  // 3-device binding is never consulted, and a shared key would be bounded only by the
+  // monthly cap.
+  if (!installId) return { allowed: false, status: 400, reason: "install_id_required" };
+
   const verdict = await verifyLicense(env, { key, installId }, nowMs);
   if (!verdict.active) {
     return { allowed: false, status: 402, reason: verdict.reason || "inactive" };
   }
 
-  const normalized = normalizeKey(key);
-  const rec = usageRec(normalized, monthKey(nowMs));
+  const rec = usageRec(normalizeKey(key), monthKey(nowMs));
   const used = Number((await env.LICENSES.get(rec)) || 0);
 
   if (used >= AI_MONTHLY_LIMIT) {
     return { allowed: false, status: 429, reason: "monthly_limit", used, limit: AI_MONTHLY_LIMIT };
   }
 
-  await env.LICENSES.put(rec, String(used + 1), { expirationTtl: USAGE_TTL_S });
-  return { allowed: true, used: used + 1, limit: AI_MONTHLY_LIMIT };
+  return { allowed: true, meterRec: rec, used, limit: AI_MONTHLY_LIMIT };
+}
+
+/**
+ * Count a generation that actually happened.
+ *
+ * Deliberately called *after* the LLM responds: charging on entry means an Anthropic
+ * outage silently eats a customer's monthly allowance. The cap is still enforced up
+ * front by checkAI, so the exposure from counting late is bounded by concurrency, not
+ * by failures.
+ */
+export async function recordAI(env, gate) {
+  if (!gate || !gate.meterRec) return gate;
+  const used = gate.used + 1;
+  await env.LICENSES.put(gate.meterRec, String(used), { expirationTtl: USAGE_TTL_S });
+  return { ...gate, used };
 }
 
 /**

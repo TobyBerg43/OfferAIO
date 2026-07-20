@@ -213,6 +213,37 @@ test("an inactive verdict does not advance the offline grace clock", async () =>
   assert.equal(store.license.cache.lastActiveAt, activatedAt, "must not move on an inactive answer");
 });
 
+test("a cancelled key cannot regain Pro by making the Worker unreachable", async () => {
+  // Regression: offline grace keyed only on lastActiveAt, which an inactive verdict
+  // leaves untouched. So a cancelled user could block the Worker — hosts file, or just
+  // wait for a 5xx, since any non-2xx counts as unreachable — and coast for a week.
+  let online = true;
+  const { LIC, store } = load({
+    activate: () => activeVerdict(),
+    verify: () => (online ? { ok: true, active: false, reason: "canceled" } : new Error("offline")),
+  });
+
+  await LIC.activate("OA-4K2P-9XQR-7M3V");
+  store.license.cache.checkedAt = 0;
+  assert.equal((await LIC.status()).plan, "free", "cancellation lands while online");
+
+  online = false;
+  store.license.cache.checkedAt = 0;
+  const s = await LIC.status();
+  assert.equal(s.plan, "free", "grace must not resurrect a known-cancelled licence");
+  assert.equal(s.reason, "unreachable");
+});
+
+test("a clock knocked into the future doesn't freeze the cached verdict", async () => {
+  const { LIC, store, calls } = load({ activate: () => activeVerdict(), verify: () => activeVerdict() });
+  await LIC.activate("OA-4K2P-9XQR-7M3V");
+
+  // checkedAt a year ahead: a bare `age < CACHE_MS` test calls this fresh forever.
+  store.license.cache.checkedAt = Date.now() + 365 * DAY;
+  await LIC.getLicense();
+  assert.equal(calls.verify, 1, "a future timestamp must be treated as stale, not fresh");
+});
+
 test("removing the key returns the user to Free", async () => {
   const { LIC } = load({ activate: () => activeVerdict() });
   await LIC.activate("OA-4K2P-9XQR-7M3V");

@@ -73,9 +73,14 @@ This is the **only** enforcement in the system that isn't client-side. The exten
 submission counter lives in `chrome.storage.local` and is trivially resettable; that's
 accepted (PROJECT.md §10). Metering here is what actually bounds spend.
 
+`installId` is required (unlike on `/license/verify`, where it's optional) — without it
+the 3-device binding is never consulted and a shared key would be bounded only by the
+monthly cap. Usage is counted *after* the LLM responds, so a provider outage can't eat a
+customer's allowance.
+
 The counter is a read-modify-write on KV and therefore not atomic — concurrent requests
-can lose an increment. That risks a handful of extra generations at the month boundary,
-which is much cheaper than making it exact.
+can lose an increment. That risks a handful of extra generations, which is much cheaper
+than making it exact.
 
 > Nothing calls these endpoints today: the dashboard's cover-letter button talks to the
 > local Electron engine on `127.0.0.1:7717`. Any future caller must send the key.

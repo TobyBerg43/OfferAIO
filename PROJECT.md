@@ -198,6 +198,14 @@ A fifth rule emerged while implementing: the `periodEnd` written at checkout is 
 if earlier — otherwise a plain "never shorten" guard keeps the guess and grants a free
 extra month. After that, "never shorten" applies normally.
 
+**Known limitation (not fixed).** Webhook idempotency and the `cust:` index are
+read-then-write with no atomic reservation, and Workers KV is eventually consistent. Two
+near-simultaneous deliveries of the same event can in principle both miss the guard and
+mint two keys, leaving `cust:`/`sess:` pointing at different ones — the buyer would see a
+key that later stops renewing. Fixing it properly needs a Durable Object. At this volume
+the odds are negligible; **if a customer ever reports a key that stopped working a month
+after purchase, look here first.**
+
 **Two Workers gotchas.** Stripe's Node SDK `constructEvent` uses sync crypto and does not
 run on Workers — use `constructEventAsync`, or hand-roll HMAC-SHA256 over
 `` `${timestamp}.${payload}` `` with `crypto.subtle` (preferred: no SDK, no bundler). And

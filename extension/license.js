@@ -90,7 +90,11 @@
 
     const now = Date.now();
     const cached = lic.cache;
-    const fresh = cached && now - (cached.checkedAt || 0) < CACHE_MS;
+    // `age >= 0` matters: a clock knocked forward and later corrected leaves checkedAt
+    // in the future, and a bare `age < CACHE_MS` would call that fresh forever —
+    // freezing whatever verdict was cached, in either direction.
+    const age = now - (cached && cached.checkedAt ? cached.checkedAt : 0);
+    const fresh = cached && age >= 0 && age < CACHE_MS;
     if (fresh && !opts.force) {
       return {
         active: !!cached.active,
@@ -106,7 +110,13 @@
     if (!verdict) {
       // Couldn't reach the Worker. Trust the last known-good answer for a while
       // rather than punishing a paying user for our outage.
-      const lastGood = (cached && cached.lastActiveAt) || 0;
+      //
+      // `cached.active` is part of the test on purpose. Without it, someone whose
+      // licence we already know is cancelled could block the Worker (hosts file, or
+      // just wait for a 5xx) and coast on grace for another week, because
+      // `lastActiveAt` still points at their last good check. Grace extends a
+      // last-known-GOOD answer; it never resurrects a known-bad one.
+      const lastGood = (cached && cached.active && cached.lastActiveAt) || 0;
       if (lastGood && now - lastGood < OFFLINE_GRACE_MS) {
         return { active: true, plan: "pro", quota: PRO_QUOTA, reason: "offline_grace", stale: true };
       }
