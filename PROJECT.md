@@ -65,6 +65,8 @@ session re-uploading old files. After any extension change, verify the raw file 
 - `landing.html` — marketing page (hero, demo, features, pricing, FAQ, footer)
 - `start.html` — **onboarding**: install → pin → profile → apply, + safety block
 - `privacy.html` — privacy policy (required for the Chrome Web Store listing)
+- `license.html` — post-checkout page showing the Pro key (noindex); polls the Worker
+- `billing.js` — the single place the Stripe Payment Link lives; wires `[data-buy-pro]`
 - `OfferAIO.html` — the interactive dashboard app
 - `extension/` — the Chrome extension (see §7)
 - `internships/`, `data/` — programmatic SEO pages + listings, regenerated every 6h
@@ -130,9 +132,16 @@ Chrome Web Store payments were discontinued, so the approach is license keys val
 server-side. **Not** offline-signed keys — those can't be revoked when someone cancels.
 
 **Phases.** 0: Worker source into the repo + KV namespace (**done**, §14). 1: Worker
-endpoints (**done** — `worker/src/billing.js`, 38 tests, contract in `worker/README.md`;
-not deployed yet). 2: site success page + Payment Link buttons. 3: extension quota +
-license UI. 4: gate `/cover` behind a key.
+endpoints (**done** — `worker/src/billing.js`, 40 tests, contract in `worker/README.md`;
+not deployed yet). 2: site success page + Payment Link buttons (**done** —
+`license.html`, `billing.js`). 3: extension quota + license UI. 4: gate `/cover` behind
+a key.
+
+**To go live, paste the Payment Link into `billing.js`.** That's the only edit needed —
+`landing.html` and `pricing/index.html` both read it from there. While it's empty the
+"Get access" buttons keep their old waitlist behaviour, so this ships safely before
+Stripe exists. Set the link's success URL to
+`https://offeraio.com/license.html?session_id={CHECKOUT_SESSION_ID}`.
 
 Phase 1 needs **only `STRIPE_WEBHOOK_SECRET`** — every field required comes in the event
 payloads, so there's no Stripe API call and no `STRIPE_SECRET_KEY` to leak.
