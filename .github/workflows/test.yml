@@ -1,0 +1,32 @@
+name: Tests
+
+# Worker billing logic + extension licensing/quota logic. Both suites are plain
+# node:test with no network, no Stripe account and no wrangler runtime.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Worker syntax
+        run: npm run check --prefix worker
+      - name: Worker billing tests
+        run: npm test --prefix worker
+      - name: Extension syntax
+        run: |
+          for f in extension/*.js; do node --check "$f"; done
+          node -e "JSON.parse(require('fs').readFileSync('extension/manifest.json','utf8'))"
+      - name: Extension licensing tests
+        run: node --test tests/license.test.mjs

@@ -1040,7 +1040,7 @@ section.container{padding:104px 20px}
           <li>Gmail Response Radar</li>
           <li>Resume-ranked matching</li>
         </ul>
-        <button class="btn btn-ghost" data-waitlist>Get access</button>
+        <button class="btn btn-ghost" data-buy-pro data-waitlist>Get access</button>
       </div>
     </div>
   </div>
@@ -1552,6 +1552,10 @@ renderQueue();
 renderChart();
 })();
 </script>
+
+<!-- Turns [data-buy-pro] into the Stripe checkout link once PAYMENT_LINK is set.
+     While it's empty the button keeps its waitlist behaviour. -->
+<script src="/billing.js"></script>
 
 </body>
 </html>

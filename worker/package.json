@@ -1,0 +1,11 @@
+{
+  "name": "offeraio-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/billing.test.mjs",
+    "check": "node --check src/index.js && node --check src/billing.js",
+    "dry-run": "wrangler deploy --dry-run",
+    "deploy": "wrangler deploy"
+  }
+}

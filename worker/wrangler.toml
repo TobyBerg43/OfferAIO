@@ -1,0 +1,24 @@
+name = "offeraio-worker"
+main = "src/index.js"
+compatibility_date = "2026-07-19"
+account_id = "4062b706ecb83a30bdfcabc85c6f22be"
+
+# Keep the workers.dev hostname alive — the extension and site call
+# https://offeraio-worker.tobybergerbusiness.workers.dev
+workers_dev = true
+
+# License records for Stripe billing (PROJECT.md §10).
+#   key:<LICENSE_KEY>      -> { email, status, periodEnd, customerId, subscriptionId, installs[] }
+#   cust:<STRIPE_CUST_ID>  -> <LICENSE_KEY>      (reverse index; subscription webhooks
+#                                                 carry the customer id, not the key)
+#   evt:<STRIPE_EVENT_ID>  -> "1"                (webhook idempotency, short TTL)
+[[kv_namespaces]]
+binding = "LICENSES"
+id = "40fb8a5ef93143fc9d0ad49592a7dc64"
+
+# Secrets are NOT set here — they are stored separately and survive `wrangler deploy`.
+# Set them with `wrangler secret put <NAME>` or in the Cloudflare dashboard:
+#   ANTHROPIC_API_KEY     cover letters (PROJECT.md §12 TODO 2 — still unset)
+#   OPENAI_API_KEY        optional; required by /rank embeddings
+#   STRIPE_SECRET_KEY     Phase 1
+#   STRIPE_WEBHOOK_SECRET Phase 1

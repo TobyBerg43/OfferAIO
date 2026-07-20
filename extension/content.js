@@ -148,21 +148,52 @@
       rf.style.outline = "3px solid #33528c";
       (rf.closest("div,section,fieldset") || rf).scrollIntoView({ behavior: "smooth", block: "center" });
     }
-    status("Filled " + n + " fields" + (rf ? " - attach your resume (highlighted), then Submit" : " - review, then Submit"));
+    let tail = rf ? " - attach your resume (highlighted), then Submit" : " - review, then Submit";
+    if (LIC()) {
+      const s = await LIC().status();
+      tail += " (" + s.remaining + " of " + s.quota + " left)";
+    }
+    status("Filled " + n + " fields" + tail);
     const sb = document.getElementById("oa-submit");
     if (sb) sb.style.display = "inline-block";
     if (mode === "auto") { status("Full-auto - submitting in 2s..."); setTimeout(doSubmit, 2000); }
   }
 
-  function doSubmit() {
+  const LIC = () => self.OfferAIOLicense;
+
+  async function doSubmit() {
     if (q('iframe[src*="recaptcha"], iframe[src*="hcaptcha"], .g-recaptcha')) {
       status("CAPTCHA present - solve it yourself, then click Submit (never bypassed).");
       return;
     }
+
+    // Quota gate. If the licence module somehow isn't loaded, let the submission
+    // through — a metering bug must never block someone from applying for a job.
+    if (LIC()) {
+      const s = await LIC().status();
+      if (s.remaining <= 0) {
+        status(
+          s.plan === "pro"
+            ? "You've used all " + s.quota + " submissions this month. Resets on the 1st."
+            : "Free limit reached (" + s.quota + " this month). Upgrade to Pro for 250 - offeraio.com/pricing/",
+        );
+        return;
+      }
+    }
+
     const btn = findSubmit();
     if (!btn) { status("Could not find the Submit button - please submit manually."); return; }
     btn.click();
-    status("Submitted via OfferAIO");
+
+    // Counted only after the click actually happened, so a failed lookup above never
+    // burns a submission.
+    let note = "Submitted via OfferAIO";
+    if (LIC()) {
+      const u = await LIC().recordSubmission();
+      const s = await LIC().status();
+      note += " - " + u.count + "/" + s.quota + " this month";
+    }
+    status(note);
   }
 
   // SPA forms can render late — retry building the bar for a few seconds.
