@@ -1,0 +1,38 @@
+name: Deploy Worker
+
+# Deploys worker/ to the offeraio-worker Cloudflare Worker.
+# Requires repo secret CLOUDFLARE_API_TOKEN (Edit Cloudflare Workers template,
+# scoped to the offeraio.com account). Worker secrets — ANTHROPIC_API_KEY,
+# STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET — are stored in Cloudflare and are
+# preserved across deploys; they are never passed through this workflow.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "worker/**"
+      - ".github/workflows/deploy-worker.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check syntax
+        run: node --check worker/src/index.js
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: worker
+      - name: Verify /health
+        run: |
+          sleep 5
+          curl -fsS https://offeraio-worker.tobybergerbusiness.workers.dev/health
