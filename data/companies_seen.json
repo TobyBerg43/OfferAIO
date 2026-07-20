@@ -2,7 +2,7 @@
  "marsh-mclennan": {
   "name": "Marsh McLennan",
   "lastSeen": "2026-07-20",
-  "roles": 1
+  "roles": 2
  },
  "travelers": {
   "name": "Travelers",
@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-07-20",
-  "roles": 14
+  "roles": 13
  },
  "capital-one": {
   "name": "Capital One",
