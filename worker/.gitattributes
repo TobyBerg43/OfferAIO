@@ -1,0 +1,4 @@
+# Keep LF in the working copy. The deployed script is LF; without this, Windows
+# checkouts get CRLF and a local `wrangler deploy` would upload bytes that differ
+# from what CI uploads.
+* text eol=lf
