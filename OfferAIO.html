@@ -18,12 +18,12 @@
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:var(--bg);color:var(--txt);font:14px/1.45 -apple-system,'Segoe UI',Inter,sans-serif;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;
     background-image:radial-gradient(ellipse 65% 45% at 18% -5%,rgba(200,134,47,.12),transparent),radial-gradient(ellipse 55% 45% at 92% 105%,rgba(51,82,140,.08),transparent)}
-  .window{width:min(1240px,97vw);height:min(780px,95vh);background:var(--win);border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(70,55,35,.13),0 0 0 1px rgba(51,82,140,.08)}
+  .window{width:100%;height:100vh;background:var(--win);border:0;border-radius:0;display:flex;flex-direction:column;overflow:hidden}
   /* titlebar */
-  .titlebar{height:40px;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid var(--border);background:rgba(60,48,30,.03);flex-shrink:0}
-  .dots{display:flex;gap:7px}.dot{width:11px;height:11px;border-radius:50%}
-  .dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
-  .titlebar .title{flex:1;text-align:center;font-size:12px;color:var(--dim);font-family:var(--mono)}
+  .titlebar{height:38px;display:flex;align-items:center;padding:0 18px;border-bottom:1px solid var(--border);background:rgba(60,48,30,.03);flex-shrink:0}
+  .dots{display:none}
+  body{display:block;padding:0;margin:0}
+  .titlebar .title{flex:1;text-align:left;font-size:11.5px;color:var(--dim);font-family:var(--mono);letter-spacing:.02em}
   .conn{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--green);font-family:var(--mono)}
   .conn .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
   @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(47,224,141,.5)}50%{box-shadow:0 0 0 5px rgba(47,224,141,0)}}
@@ -630,7 +630,7 @@ function ingest(data,srcName){
   $('listCount').textContent=LIVE.length>999?(LIVE.length/1000).toFixed(1)+'k':LIVE.length;
   $('dbMeta').textContent=`${LIVE.length.toLocaleString()} jobs · updated ${now()}`;
   $('listSub').textContent=`${LIVE.length.toLocaleString()} live Summer 2027 postings · updates automatically`;
-  addFeed(`Listings DB synced — <b>${LIVE.length.toLocaleString()}</b> live postings from ${srcName}`,'var(--green)');
+  addFeed(`Listings DB synced — <b>${LIVE.length.toLocaleString()}</b> live postings from ${srcName}`,'var(--green)',new Date(Date.now()-3*60000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'}));
   try{localStorage.setItem('oa_dbcache',JSON.stringify({ts:Date.now(),rows:LIVE.slice(0,1500)}))}catch(e){}
   render();renderListings();
   return true;
@@ -1121,6 +1121,15 @@ function renderChart(){
   const fx=pts[0][0], lx=pts[pts.length-1][0];
   const areaAvg=line+` L${lx},${avgY} L${fx},${avgY} Z`;
   const dots=pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="3.2" fill="#fff" stroke="${dayData[i]>=avg?'#2e9d68':'#c14a3c'}" stroke-width="2.2"/>`).join('');
+  // x-axis: label every 3rd day so the 14-day window is readable
+  const n=dayData.length;
+  const dayLabels=pts.map((p,i)=>{
+    if(i%3!==0 && i!==n-1) return '';
+    const d=new Date(Date.now()-(n-1-i)*86400000);
+    const lbl=(d.getMonth()+1)+'/'+d.getDate();
+    const anchor=i===0?'start':(i===n-1?'end':'middle');
+    return `<text x="${p[0].toFixed(1)}" y="${h-4}" fill="#a89d89" font-size="9.5" text-anchor="${anchor}" font-family="ui-monospace,monospace">${lbl}</text>`;
+  }).join('');
   $('chart').innerHTML=`
     <defs>
       <linearGradient id="gg" gradientUnits="userSpaceOnUse" x1="0" y1="8" x2="0" y2="${avgY}">
@@ -1136,7 +1145,8 @@ function renderChart(){
     <text x="${fx}" y="${avgY-6}" fill="#4a72b8" font-size="10" font-weight="700">Average</text>
     <path d="${line}" fill="none" stroke="#2e9d68" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" clip-path="url(#oaAbove)"/>
     <path d="${line}" fill="none" stroke="#c14a3c" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" clip-path="url(#oaBelow)"/>
-    ${dots}`;
+    ${dots}
+    ${dayLabels}`;
 }
 function renderCats(){
   const el=$('catBars');el.innerHTML='';
@@ -1147,8 +1157,8 @@ function renderCats(){
       <div class="bar-track"><div class="bar-fill" style="width:${v/max*100}%"></div></div><div class="bv">${v}</div></div>`;
   });
 }
-function addFeed(html,color){
-  feedItems.unshift({html,color,time:now()});
+function addFeed(html,color,atTime){
+  feedItems.unshift({html,color,time:atTime||now()});
   feedItems=feedItems.slice(0,12);renderFeed();
 }
 function renderFeed(){
@@ -1251,8 +1261,9 @@ function bumpVoice(n){
     {co:'Blackstone',role:'PE Summer Analyst',via:'Gmail',type:'Interview invite',time:'09:41:22',msg:'"We\'d like to invite you to a first-round interview for the PE Summer Analyst position…"'},
     {co:'Evercore',role:'IB Summer Analyst',via:'Handshake',type:'Recruiter reply',time:'08:15:03',msg:'"Thank you for applying to Evercore. A member of our recruiting team has reviewed your application…"'}
   );
-  addFeed('★ Interview request from <b>Blackstone</b> · detected via Gmail','#ffd166');
-  addFeed('✓ Submitted: <b>Quant Trading Intern</b> @ <b>Jane Street</b>','var(--green)');
+  const ago=(mins)=>new Date(Date.now()-mins*60000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  addFeed('★ Interview request from <b>Blackstone</b> · detected via Gmail','#ffd166',ago(47));
+  addFeed('✓ Submitted: <b>Quant Trading Intern</b> @ <b>Jane Street</b>','var(--green)',ago(12));
   refreshPresets();
   // listings category dropdown
   const lc=$('listCat');
