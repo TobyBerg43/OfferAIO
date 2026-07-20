@@ -13,8 +13,8 @@ and can't be silently lost. Edit it here, not in the Cloudflare dashboard.
 | Route                 | Method | Purpose                                    |
 | --------------------- | ------ | ------------------------------------------ |
 | `/health`             | GET    | Liveness probe                             |
-| `/cover`              | POST   | Cover-letter generation (Anthropic)        |
-| `/rank`               | POST   | Resume↔listing ranking (OpenAI embeddings) |
+| `/cover`              | POST   | Cover-letter generation (Anthropic) — Pro  |
+| `/rank`               | POST   | Resume↔listing ranking (OpenAI) — Pro      |
 | `/stripe/webhook`     | POST   | Stripe events → license records            |
 | `/license/verify`     | POST   | `{key, installId?}` → plan + quota         |
 | `/license/activate`   | POST   | `{key, installId}` → bind an install       |
@@ -57,9 +57,28 @@ deliberately a no-op — see PROJECT.md §10.)
 replayed signatures, out-of-order delivery, dropped-webhook expiry, dunning, and the
 install limit. CI runs them before every deploy.
 
-> `/cover` and `/rank` are currently **unauthenticated and CORS-open to `*`**. Once
-> `ANTHROPIC_API_KEY` is set, anyone who finds this hostname can spend the key.
-> Gating these behind a license is Phase 4 of the billing work.
+### `/cover` and `/rank` require Pro
+
+Both spend real money on the Anthropic/OpenAI keys, so both need an active licence and
+are metered server-side. Callers must include the key in the POST body:
+
+```
+POST /cover {"key":"OA-…","installId":"…","company":"…","role":"…","profile":{…}}
+->  200 {"ok":true,"letter":"…","used":12,"limit":250}
+->  402 {"ok":false,"error":"Pro required","reason":"unknown"}
+->  429 {"ok":false,"error":"Pro required","reason":"monthly_limit","used":250}
+```
+
+This is the **only** enforcement in the system that isn't client-side. The extension's
+submission counter lives in `chrome.storage.local` and is trivially resettable; that's
+accepted (PROJECT.md §10). Metering here is what actually bounds spend.
+
+The counter is a read-modify-write on KV and therefore not atomic — concurrent requests
+can lose an increment. That risks a handful of extra generations at the month boundary,
+which is much cheaper than making it exact.
+
+> Nothing calls these endpoints today: the dashboard's cover-letter button talks to the
+> local Electron engine on `127.0.0.1:7717`. Any future caller must send the key.
 
 ## Deploy
 

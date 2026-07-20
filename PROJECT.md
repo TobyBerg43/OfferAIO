@@ -146,7 +146,8 @@ server-side. **Not** offline-signed keys — those can't be revoked when someone
 endpoints (**done** — `worker/src/billing.js`, 40 tests, contract in `worker/README.md`;
 not deployed yet). 2: site success page + Payment Link buttons (**done** —
 `license.html`, `billing.js`). 3: extension quota + license UI (**done** —
-`extension/license.js`, 19 tests). 4: gate `/cover` behind a key.
+`extension/license.js`, 19 tests). 4: gate the paid AI endpoints (**done** — `/cover`
+and `/rank` now require an active key and are metered server-side at 250/month).
 
 **Phase 3 built the submission counter from scratch** — nothing in the extension
 tracked submissions before, so "50/month" was marketing copy only. Counting happens in
@@ -221,6 +222,7 @@ that matters.
 ## 12. Open TODOs
 1. **Chrome Web Store:** finish the draft listing (icon, screenshots, privacy tab) and submit.
 2. **Cloudflare Worker:** set the `ANTHROPIC_API_KEY` secret so cover letters work.
+   Safe to do now that §10 Phase 4 gates `/cover` behind a licence.
 3. **Dashboard UI polish** (agreed, not yet done): remove the fake window chrome /
    traffic-light title bar (it wastes ~20% of the viewport inside a browser tab), fix the
    duplicate identical timestamps in Live activity, add date labels to the 14-day chart,
@@ -256,9 +258,10 @@ was vendored from the live deployment, verified byte-for-byte (md5
   unused until §10 Phase 1.
 - ⚠️ The site does **not** call this Worker. The dashboard's cover-letter button hits the
   local Electron engine on `127.0.0.1:7717`, not `/cover`. Wiring it up is unfinished work.
-- ⚠️ `/cover` and `/rank` are unauthenticated with `Access-Control-Allow-Origin: *`. Gate
-  them (§10 Phase 4) before setting `ANTHROPIC_API_KEY`, or the key can be drained by
-  anyone who finds the hostname.
+- `/cover` and `/rank` require an active licence and are metered per key in KV
+  (250/month). Fixed in §10 Phase 4 — before that they were open to the world, which
+  would have let anyone drain `ANTHROPIC_API_KEY` once it was set. Any caller must now
+  send `{key, installId}` in the POST body.
 - ⚠️ First `wrangler deploy` caveat: the Cloudflare API doesn't expose the live binding
   list, so `wrangler.toml` was reconstructed from what the code reads. Check the
   dashboard's Settings → Bindings first; any dashboard-added binding not referenced in

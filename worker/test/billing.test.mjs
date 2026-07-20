@@ -18,6 +18,7 @@ import {
   activateLicense,
   licenseBySession,
   isActive,
+  checkAndMeterAI,
   PLAN_QUOTA,
 } from "../src/billing.js";
 
@@ -618,6 +619,77 @@ test("by-session returns the key for a real session id only", async () => {
   assert.equal((await licenseBySession(env, "cs_test_nope")).ok, false);
   assert.equal((await licenseBySession(env, "not_a_session")).reason, "malformed");
   assert.equal((await licenseBySession(env, null)).reason, "malformed");
+});
+
+/* ------------------------------------------------------- AI endpoint gating */
+
+test("AI endpoints refuse a request with no key", async () => {
+  // The whole point of Phase 4: an open /cover lets anyone drain the Anthropic key.
+  const env = makeEnv();
+  const gate = await checkAndMeterAI(env, {}, NOW);
+  assert.equal(gate.allowed, false);
+  assert.equal(gate.status, 402);
+});
+
+test("AI endpoints refuse an unknown or cancelled key", async () => {
+  const env = makeEnv();
+  assert.equal((await checkAndMeterAI(env, { key: "OA-2222-3333-4444" }, NOW)).allowed, false);
+
+  await processEvent(env, checkoutEvent(), NOW);
+  const key = await env.LICENSES.get(`cust:${CUST}`);
+  assert.equal((await checkAndMeterAI(env, { key }, NOW)).allowed, true);
+
+  await processEvent(
+    env,
+    { id: "evt_del", type: "customer.subscription.deleted", data: { object: { customer: CUST } } },
+    NOW,
+  );
+  const after = await checkAndMeterAI(env, { key }, NOW);
+  assert.equal(after.allowed, false);
+  assert.equal(after.reason, "canceled");
+});
+
+test("AI usage is metered and capped per month", async () => {
+  const env = makeEnv();
+  await processEvent(env, checkoutEvent(), NOW);
+  const key = await env.LICENSES.get(`cust:${CUST}`);
+
+  for (let i = 1; i <= PLAN_QUOTA.pro; i++) {
+    const g = await checkAndMeterAI(env, { key }, NOW);
+    assert.equal(g.allowed, true, `call ${i} should be allowed`);
+    assert.equal(g.used, i);
+  }
+
+  const over = await checkAndMeterAI(env, { key }, NOW);
+  assert.equal(over.allowed, false);
+  assert.equal(over.status, 429);
+  assert.equal(over.reason, "monthly_limit");
+});
+
+test("AI usage resets the following month", async () => {
+  const env = makeEnv();
+  await processEvent(env, checkoutEvent(), NOW);
+  const key = await env.LICENSES.get(`cust:${CUST}`);
+
+  for (let i = 0; i < PLAN_QUOTA.pro; i++) await checkAndMeterAI(env, { key }, NOW);
+  assert.equal((await checkAndMeterAI(env, { key }, NOW)).allowed, false);
+
+  // Same licence, next month — but keep it inside the paid period.
+  const nextMonth = NOW + 32 * DAY;
+  await processEvent(env, subEvent("active", nextMonth + 30 * DAY, "evt_renew"), NOW);
+  const fresh = await checkAndMeterAI(env, { key }, nextMonth);
+  assert.equal(fresh.allowed, true);
+  assert.equal(fresh.used, 1);
+});
+
+test("metering is keyed on the normalised key, so formatting can't multiply the quota", async () => {
+  const env = makeEnv();
+  await processEvent(env, checkoutEvent(), NOW);
+  const key = await env.LICENSES.get(`cust:${CUST}`);
+
+  await checkAndMeterAI(env, { key }, NOW);
+  const second = await checkAndMeterAI(env, { key: key.toLowerCase().replace(/-/g, "") }, NOW);
+  assert.equal(second.used, 2, "reformatting the key must not open a fresh counter");
 });
 
 /* ------------------------------------------------------------------- misc */

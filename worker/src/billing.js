@@ -429,6 +429,47 @@ export async function activateLicense(env, { key: rawKey, installId }, nowMs = D
   return planResponse(rec, true, { key, installs: installs.length, maxInstalls: MAX_INSTALLS });
 }
 
+/* ------------------------------------------------- server-side AI metering */
+
+// Cover letters and ranking cost real Anthropic/OpenAI money, so unlike the submission
+// counter (which lives in chrome.storage.local and is trivially resettable) this one is
+// authoritative. It's the only enforcement in the system that actually protects spend.
+const AI_MONTHLY_LIMIT = PLAN_QUOTA.pro;
+
+const usageRec = (key, month) => `use:${key}:${month}`;
+const USAGE_TTL_S = 70 * 86400; // outlives the month it counts, then evaporates
+
+function monthKey(nowMs) {
+  const d = new Date(nowMs);
+  return d.getUTCFullYear() + "-" + String(d.getUTCMonth() + 1).padStart(2, "0");
+}
+
+/**
+ * Gate an AI endpoint on a valid licence and a monthly cap.
+ *
+ * Note the counter is read-modify-write against KV, which is not atomic — two
+ * simultaneous requests can both read the same value and one increment is lost. That
+ * costs at most a few extra generations at the boundary, which is far cheaper than the
+ * machinery to make it exact.
+ */
+export async function checkAndMeterAI(env, { key, installId }, nowMs = Date.now()) {
+  const verdict = await verifyLicense(env, { key, installId }, nowMs);
+  if (!verdict.active) {
+    return { allowed: false, status: 402, reason: verdict.reason || "inactive" };
+  }
+
+  const normalized = normalizeKey(key);
+  const rec = usageRec(normalized, monthKey(nowMs));
+  const used = Number((await env.LICENSES.get(rec)) || 0);
+
+  if (used >= AI_MONTHLY_LIMIT) {
+    return { allowed: false, status: 429, reason: "monthly_limit", used, limit: AI_MONTHLY_LIMIT };
+  }
+
+  await env.LICENSES.put(rec, String(used + 1), { expirationTtl: USAGE_TTL_S });
+  return { allowed: true, used: used + 1, limit: AI_MONTHLY_LIMIT };
+}
+
 /**
  * Success-page lookup. The session id is the capability: it's only in the redirect URL
  * and on the customer's Stripe receipt. Deliberately does not accept an email, which

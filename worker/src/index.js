@@ -3,7 +3,13 @@
  * Deploy: set ANTHROPIC_API_KEY (or OPENAI_API_KEY) as a secret, then deploy.
  * Free tier = 100,000 requests/day. */
 
-import { handleWebhook, verifyLicense, activateLicense, licenseBySession } from "./billing.js";
+import {
+  handleWebhook,
+  verifyLicense,
+  activateLicense,
+  licenseBySession,
+  checkAndMeterAI,
+} from "./billing.js";
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -39,13 +45,27 @@ export default {
         return json(await licenseBySession(env, sid));
       }
 
+      // /cover and /rank spend real money on the Anthropic and OpenAI keys, so they
+      // require an active licence and are metered server-side. This is the only
+      // enforcement that isn't client-side and therefore bypassable.
       if (pathname === "/cover" && request.method === "POST") {
-        const { company, role, description = "", profile = {} } = await request.json();
-        return json({ ok: true, letter: await writeCover({ company, role, description, profile }, env) });
+        const body = await request.json();
+        const gate = await checkAndMeterAI(env, body);
+        if (!gate.allowed) return json({ ok: false, error: "Pro required", ...gate }, gate.status);
+        const { company, role, description = "", profile = {} } = body;
+        return json({
+          ok: true,
+          letter: await writeCover({ company, role, description, profile }, env),
+          used: gate.used,
+          limit: gate.limit,
+        });
       }
       if (pathname === "/rank" && request.method === "POST") {
-        const { resumeText = "", listings = [] } = await request.json();
-        return json({ ok: true, order: await rank(resumeText, listings, env) });
+        const body = await request.json();
+        const gate = await checkAndMeterAI(env, body);
+        if (!gate.allowed) return json({ ok: false, error: "Pro required", ...gate }, gate.status);
+        const { resumeText = "", listings = [] } = body;
+        return json({ ok: true, order: await rank(resumeText, listings, env), used: gate.used, limit: gate.limit });
       }
       return json({ ok: false, error: "Not found" }, 404);
     } catch (e) {
