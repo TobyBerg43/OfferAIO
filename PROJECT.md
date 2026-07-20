@@ -39,9 +39,13 @@ dashboard can talk to on `http://127.0.0.1:7717` for real (non-simulated) applyi
   returning persistent 503s. Do **not** delete this file — it also makes deploys faster.)
 - **CDN/DNS:** Cloudflare. Account id `4062b706ecb83a30bdfcabc85c6f22be`, zone `offeraio.com`.
 - **Waitlist:** Web3Forms (hero email form on the landing page).
-- **Cover letters:** Cloudflare Worker (`offeraio-worker`) calling the Anthropic API.
-  Needs secret `ANTHROPIC_API_KEY` — **still unset** (see TODOs). Source lives in
+- **Cover letters + ranking:** Cloudflare Worker (`offeraio-worker`) calling the OpenAI
+  API. Needs secret `OPENAI_API_KEY` — **still unset** (see TODOs). Source lives in
   `worker/` and deploys from `main`; see §14.
+- **AI vendor: OpenAI only.** One key covers both paths — chat for `/cover`, embeddings
+  for `/rank`. Anthropic was dropped 2026-07-20 because it has no embeddings API, so
+  keeping it meant either a second vendor or a Workers AI binding purely for ranking.
+  **`ANTHROPIC_API_KEY` should never be set.**
 - **Analytics:** GA4, measurement id `G-QP59EKE1BS`.
 
 ## 4. Deploy process (how changes go live)
@@ -219,18 +223,35 @@ Note the submission counter lives in `chrome.storage.local`, so submission enfor
 inherently soft; that's true of all client-side extensions and is why heavy auth isn't
 worth building. The counter **does not exist yet** — nothing in `extension/` tracks
 submissions today, so Phase 3 builds it from scratch. Real enforcement lives in Phase 4:
-`/cover` costs actual Anthropic money, so metering it per key server-side is the lever
+`/cover` costs actual OpenAI money, so metering it per key server-side is the lever
 that matters.
 
-## 11. Accounts
+## 11. Accounts and keys
 - GitHub: **TobyBerg43**
 - Google (Cloudflare, Chrome Web Store, GA4): **tobybergerbusiness@gmail.com**
-- **Never commit secrets.** The Anthropic key belongs only in Cloudflare Worker secrets.
+- **Never commit secrets.** API keys belong only in Cloudflare Worker secrets or GitHub
+  Actions secrets.
+
+**The complete key inventory — there are exactly four:**
+
+| Key | Lives in | Purpose | Status |
+| --- | --- | --- | --- |
+| `CLOUDFLARE_API_TOKEN` | GitHub Actions secret | lets CI run `wrangler deploy` | **unset — blocking the Worker deploy** |
+| `OPENAI_API_KEY` | Cloudflare Worker secret | chat for `/cover`, embeddings for `/rank` | unset |
+| `STRIPE_SECRET_KEY` | Cloudflare Worker secret | reserved; **the code does not use it** — every field needed arrives in the webhook payloads | unset |
+| `STRIPE_WEBHOOK_SECRET` | Cloudflare Worker secret | webhook signature verification | unset |
+
+`ANTHROPIC_API_KEY` is **not** on this list and should never be set — see §3.
 
 ## 12. Open TODOs
 1. **Chrome Web Store:** finish the draft listing (icon, screenshots, privacy tab) and submit.
-2. **Cloudflare Worker:** set the `ANTHROPIC_API_KEY` secret so cover letters work.
-   Safe to do now that §10 Phase 4 gates `/cover` behind a licence.
+2. **Cloudflare Worker:** set `CLOUDFLARE_API_TOKEN` as a **GitHub Actions secret** so
+   the deploy can run at all — it is currently unset and Deploy Worker fails on it.
+   Then set the `OPENAI_API_KEY` Worker secret so cover letters and ranking work.
+   ⚠️ **Order matters:** the *deployed* Worker is still the pre-billing script, in which
+   `/cover` and `/rank` are unauthenticated and CORS-open to `*`. Deploy first (that
+   ships the §10 Phase 4 gating), then set the OpenAI key. Setting it against the
+   currently-deployed code would let anyone who finds the hostname spend it.
 3. **Dashboard UI polish** (agreed, not yet done): remove the fake window chrome /
    traffic-light title bar (it wastes ~20% of the viewport inside a browser tab), fix the
    duplicate identical timestamps in Live activity, add date labels to the 14-day chart,
@@ -268,8 +289,13 @@ was vendored from the live deployment, verified byte-for-byte (md5
   local Electron engine on `127.0.0.1:7717`, not `/cover`. Wiring it up is unfinished work.
 - `/cover` and `/rank` require an active licence and are metered per key in KV
   (250/month). Fixed in §10 Phase 4 — before that they were open to the world, which
-  would have let anyone drain `ANTHROPIC_API_KEY` once it was set. Any caller must now
-  send `{key, installId}` in the POST body.
+  would let anyone drain `OPENAI_API_KEY` once it is set. Any caller must send
+  `{key, installId}` in the POST body. ⚠️ **This gating is in the repo but NOT yet
+  deployed** — the running script is still the pre-billing version, so don't set the
+  OpenAI key until a deploy succeeds.
+- Models: `/cover` on `gpt-5.6-terra`, `/rank` on `text-embedding-3-small`. Both are
+  constants at the top of `worker/src/index.js`. `/cover` is deliberately not on a
+  mini/nano model — voice-matching is the product, and that's where small models fail.
 - ⚠️ First `wrangler deploy` caveat: the Cloudflare API doesn't expose the live binding
   list, so `wrangler.toml` was reconstructed from what the code reads. Check the
   dashboard's Settings → Bindings first; any dashboard-added binding not referenced in

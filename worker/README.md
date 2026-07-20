@@ -98,10 +98,8 @@ Set in Cloudflare, never in this repo. They are stored separately from the scrip
 **survive `wrangler deploy`**.
 
 ```
-wrangler secret put ANTHROPIC_API_KEY      # cover letters
-wrangler secret put OPENAI_API_KEY         # optional, needed by /rank
-wrangler secret put STRIPE_SECRET_KEY      # Phase 1
-wrangler secret put STRIPE_WEBHOOK_SECRET  # Phase 1
+wrangler secret put OPENAI_API_KEY         # chat for /cover, embeddings for /rank
+wrangler secret put STRIPE_WEBHOOK_SECRET  # webhook signature verification
 ```
 
 GitHub needs one repo secret, `CLOUDFLARE_API_TOKEN` ("Edit Cloudflare Workers" template).
@@ -114,8 +112,8 @@ Bound but unused until Phase 1. Key layout is documented in `wrangler.toml`.
 ## Caveat on the first deploy
 
 The Cloudflare API doesn't expose the live Worker's binding list, so `wrangler.toml`
-was reconstructed from what the source actually reads (`ANTHROPIC_API_KEY`,
-`OPENAI_API_KEY` — both secrets) plus the new KV binding. If any binding was added
+was reconstructed from what the source actually reads (`OPENAI_API_KEY`, a secret)
+plus the new KV binding. If any binding was added
 through the dashboard and isn't referenced in the code, the first `wrangler deploy`
 will drop it. Check the dashboard's Settings → Bindings before the first deploy, and
 confirm `/health` and a real `/cover` call afterwards.

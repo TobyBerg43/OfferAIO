@@ -1,7 +1,11 @@
-/* OfferAIO Cloudflare Worker — holds your AI API key server-side so the website and
- * extension can request cover letters + resume ranking without exposing the key.
- * Deploy: set ANTHROPIC_API_KEY (or OPENAI_API_KEY) as a secret, then deploy.
- * Free tier = 100,000 requests/day. */
+/* OfferAIO Cloudflare Worker — holds the AI API key server-side so the website and
+ * extension can request cover letters + resume ranking without exposing it.
+ * Deploy: set OPENAI_API_KEY as a secret, then deploy.
+ * Free tier = 100,000 requests/day.
+ *
+ * OpenAI is the only AI vendor: one key covers both paths (chat for /cover,
+ * embeddings for /rank). Anthropic has no embeddings API, so keeping it would have
+ * meant a second provider or a Workers AI binding purely for ranking. */
 
 import {
   handleWebhook,
@@ -11,6 +15,16 @@ import {
   checkAI,
   recordAI,
 } from "./billing.js";
+
+/* Cover letters are the quality-critical path: the output has to read like a real
+ * 19-21 year old, dodge a banned-phrase list, and mirror the user's writing samples.
+ * A mini/nano model is precisely where that collapses into the generic AI voice the
+ * product sells against, so /cover runs on a mid-tier model. At ~1.5k in / 200 out
+ * that's ~$0.007 a letter — under 6% of a $30 subscription even if someone burns the
+ * full 250/month cap. Upgrade to gpt-5.6-sol here if the voice still isn't right.
+ * Ranking stays on the cheap embedding model; it's similarity maths, not prose. */
+const COVER_MODEL = "gpt-5.6-terra";
+const EMBED_MODEL = "text-embedding-3-small";
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -75,40 +89,21 @@ export default {
 };
 
 async function llm(system, user, env) {
-  if (env.ANTHROPIC_API_KEY) {
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "x-api-key": env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-5",
-        max_tokens: 700,
-        system,
-        messages: [{ role: "user", content: user }],
-      }),
-    });
-    const j = await r.json();
-    if (j.error) throw new Error(j.error.message);
-    return j.content[0].text.trim();
+  if (!env.OPENAI_API_KEY) {
+    throw new Error("No API key set. Add OPENAI_API_KEY as a secret in Settings > Variables.");
   }
-  if (env.OPENAI_API_KEY) {
-    const r = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: { authorization: "Bearer " + env.OPENAI_API_KEY, "content-type": "application/json" },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        max_tokens: 700,
-        messages: [{ role: "system", content: system }, { role: "user", content: user }],
-      }),
-    });
-    const j = await r.json();
-    if (j.error) throw new Error(j.error.message);
-    return j.choices[0].message.content.trim();
-  }
-  throw new Error("No API key set. Add ANTHROPIC_API_KEY as a secret in Settings > Variables.");
+  const r = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: { authorization: "Bearer " + env.OPENAI_API_KEY, "content-type": "application/json" },
+    body: JSON.stringify({
+      model: COVER_MODEL,
+      max_tokens: 700,
+      messages: [{ role: "system", content: system }, { role: "user", content: user }],
+    }),
+  });
+  const j = await r.json();
+  if (j.error) throw new Error(j.error.message);
+  return j.choices[0].message.content.trim();
 }
 
 async function writeCover({ company, role, description, profile }, env) {
@@ -135,7 +130,7 @@ async function rank(resumeText, listings, env) {
     const r = await fetch("https://api.openai.com/v1/embeddings", {
       method: "POST",
       headers: { authorization: "Bearer " + env.OPENAI_API_KEY, "content-type": "application/json" },
-      body: JSON.stringify({ model: "text-embedding-3-small", input }),
+      body: JSON.stringify({ model: EMBED_MODEL, input }),
     });
     const j = await r.json();
     if (j.error) throw new Error(j.error.message);

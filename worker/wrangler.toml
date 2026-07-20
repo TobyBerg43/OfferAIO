@@ -18,7 +18,5 @@ id = "40fb8a5ef93143fc9d0ad49592a7dc64"
 
 # Secrets are NOT set here — they are stored separately and survive `wrangler deploy`.
 # Set them with `wrangler secret put <NAME>` or in the Cloudflare dashboard:
-#   ANTHROPIC_API_KEY     cover letters (PROJECT.md §12 TODO 2 — still unset)
-#   OPENAI_API_KEY        optional; required by /rank embeddings
-#   STRIPE_SECRET_KEY     Phase 1
-#   STRIPE_WEBHOOK_SECRET Phase 1
+#   OPENAI_API_KEY        the only AI key — chat for /cover, embeddings for /rank
+#   STRIPE_WEBHOOK_SECRET billing webhook signature verification
