@@ -2,8 +2,8 @@
 
 Single source of truth for the OfferAIO project. Any assistant or person should be
 able to read this file and pick up the work without re-discovering anything.
-**Last updated: 2026-07-19.** (Latest change: Stripe licensing Phase 0 — Worker source
-moved into the repo, §14 added, §10 rewritten with the settled design.)
+**Last updated: 2026-07-22.** (Latest change: dashboard UI polish — TODO §12.3 done;
+titlebar removed, Anton typography adopted in `OfferAIO.html`.)
 
 ---
 
@@ -252,10 +252,11 @@ that matters.
    `/cover` and `/rank` are unauthenticated and CORS-open to `*`. Deploy first (that
    ships the §10 Phase 4 gating), then set the OpenAI key. Setting it against the
    currently-deployed code would let anyone who finds the hostname spend it.
-3. **Dashboard UI polish** (agreed, not yet done): remove the fake window chrome /
-   traffic-light title bar (it wastes ~20% of the viewport inside a browser tab), fix the
-   duplicate identical timestamps in Live activity, add date labels to the 14-day chart,
-   and align typography with the landing page.
+3. **Dashboard UI polish** — **done 2026-07-22.** The fake titlebar is removed entirely
+   (the ENGINE/DB/CONNECTED status chips moved to the sidebar bottom, ids unchanged so
+   the JS kept working), Live-activity timestamps are staggered, the 14-day chart has
+   date labels, and headings (`h1`, logo, modal `h2`) now use Anton via `--display`,
+   matching the landing page. Verified locally in Chrome before pushing.
 4. **Stripe licensing** (§10) — Phase 0 done. Phase 1 is blocked on you creating the Pro
    product + Payment Link in Stripe and setting `STRIPE_SECRET_KEY` /
    `STRIPE_WEBHOOK_SECRET` as Worker secrets.
