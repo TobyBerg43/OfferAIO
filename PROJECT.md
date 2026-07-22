@@ -2,8 +2,11 @@
 
 Single source of truth for the OfferAIO project. Any assistant or person should be
 able to read this file and pick up the work without re-discovering anything.
-**Last updated: 2026-07-22.** (Latest change: dashboard UI polish — TODO §12.3 done;
-titlebar removed, Anton typography adopted in `OfferAIO.html`.)
+**Last updated: 2026-07-22.** (Latest changes: dashboard UI polish done — §12.3;
+Worker with billing gating deployed & verified live — §12.2/§14. ⚠️ One-time hazard
+cleaned up: a mis-pathed `wrangler deploy` from the repo root auto-created a static
+worker "ffer" serving the whole repo; it was deleted and the stray `wrangler.jsonc`/
+`.gitignore` it wrote were removed. Always deploy from `worker/`.)
 
 ---
 
@@ -245,13 +248,13 @@ that matters.
 
 ## 12. Open TODOs
 1. **Chrome Web Store:** finish the draft listing (icon, screenshots, privacy tab) and submit.
-2. **Cloudflare Worker:** set `CLOUDFLARE_API_TOKEN` as a **GitHub Actions secret** so
-   the deploy can run at all — it is currently unset and Deploy Worker fails on it.
-   Then set the `OPENAI_API_KEY` Worker secret so cover letters and ranking work.
-   ⚠️ **Order matters:** the *deployed* Worker is still the pre-billing script, in which
-   `/cover` and `/rank` are unauthenticated and CORS-open to `*`. Deploy first (that
-   ships the §10 Phase 4 gating), then set the OpenAI key. Setting it against the
-   currently-deployed code would let anyone who finds the hostname spend it.
+2. **Cloudflare Worker:** the repo code (with §10 Phase 4 gating) **was deployed
+   2026-07-22** via local `wrangler deploy` (wrangler is OAuth-logged-in on this
+   machine). Verified live: `/cover` and `/rank` reject unlicensed calls. It is now
+   **safe to set `OPENAI_API_KEY`** (`npx wrangler secret put OPENAI_API_KEY` from
+   `worker/`) so cover letters and ranking work. Still open: `CLOUDFLARE_API_TOKEN`
+   as a GitHub Actions secret — until set, the Deploy Worker CI job fails on every
+   push touching `worker/**`, so deploys are local-only.
 3. **Dashboard UI polish** — **done 2026-07-22.** The fake titlebar is removed entirely
    (the ENGINE/DB/CONNECTED status chips moved to the sidebar bottom, ids unchanged so
    the JS kept working), Live-activity timestamps are staggered, the 14-day chart has
@@ -291,9 +294,9 @@ was vendored from the live deployment, verified byte-for-byte (md5
 - `/cover` and `/rank` require an active licence and are metered per key in KV
   (250/month). Fixed in §10 Phase 4 — before that they were open to the world, which
   would let anyone drain `OPENAI_API_KEY` once it is set. Any caller must send
-  `{key, installId}` in the POST body. ⚠️ **This gating is in the repo but NOT yet
-  deployed** — the running script is still the pre-billing version, so don't set the
-  OpenAI key until a deploy succeeds.
+  `{key, installId}` in the POST body. **Deployed 2026-07-22** (local wrangler,
+  version `03e504fe`) and verified live: unlicensed `/cover`/`/rank` calls are
+  rejected, so setting the OpenAI key is now safe.
 - Models: `/cover` on `gpt-5.6-terra`, `/rank` on `text-embedding-3-small`. Both are
   constants at the top of `worker/src/index.js`. `/cover` is deliberately not on a
   mini/nano model — voice-matching is the product, and that's where small models fail.
