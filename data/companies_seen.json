@@ -162,7 +162,7 @@
  "virtu-financial": {
   "name": "Virtu Financial",
   "lastSeen": "2026-07-22",
-  "roles": 3
+  "roles": 4
  },
  "transmarket-group": {
   "name": "TransMarket Group",
@@ -451,6 +451,11 @@
  },
  "old-mission": {
   "name": "Old Mission",
+  "lastSeen": "2026-07-22",
+  "roles": 1
+ },
+ "jll": {
+  "name": "JLL",
   "lastSeen": "2026-07-22",
   "roles": 1
  }
