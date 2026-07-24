@@ -22,7 +22,7 @@
  "capital-one": {
   "name": "Capital One",
   "lastSeen": "2026-07-24",
-  "roles": 4
+  "roles": 3
  },
  "salesforce": {
   "name": "Salesforce",
@@ -42,7 +42,7 @@
  "akuna-capital": {
   "name": "Akuna Capital",
   "lastSeen": "2026-07-24",
-  "roles": 14
+  "roles": 16
  },
  "anduril": {
   "name": "Anduril",
@@ -62,7 +62,7 @@
  "palantir": {
   "name": "Palantir",
   "lastSeen": "2026-07-24",
-  "roles": 29
+  "roles": 12
  },
  "optiver": {
   "name": "Optiver",
@@ -92,7 +92,7 @@
  "nvidia": {
   "name": "NVIDIA",
   "lastSeen": "2026-07-24",
-  "roles": 3
+  "roles": 1
  },
  "jump-trading": {
   "name": "Jump Trading",
@@ -132,7 +132,7 @@
  "imc": {
   "name": "IMC",
   "lastSeen": "2026-07-24",
-  "roles": 1
+  "roles": 4
  },
  "susquehanna-investment-group": {
   "name": "Susquehanna Investment Group",
@@ -317,7 +317,7 @@
  "intel": {
   "name": "Intel",
   "lastSeen": "2026-07-24",
-  "roles": 2
+  "roles": 1
  },
  "homebase": {
   "name": "Homebase",
@@ -517,7 +517,7 @@
  "netic": {
   "name": "Netic",
   "lastSeen": "2026-07-24",
-  "roles": 1
+  "roles": 3
  },
  "astranis": {
   "name": "Astranis",
@@ -526,6 +526,31 @@
  },
  "google": {
   "name": "Google",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "walleye-capital": {
+  "name": "Walleye Capital",
+  "lastSeen": "2026-07-24",
+  "roles": 4
+ },
+ "palantir-technologies": {
+  "name": "Palantir Technologies",
+  "lastSeen": "2026-07-24",
+  "roles": 17
+ },
+ "jane-street": {
+  "name": "Jane Street",
+  "lastSeen": "2026-07-24",
+  "roles": 16
+ },
+ "deepgram": {
+  "name": "Deepgram",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "schweitzer-engineering-laboratories": {
+  "name": "Schweitzer Engineering Laboratories",
   "lastSeen": "2026-07-24",
   "roles": 1
  }
