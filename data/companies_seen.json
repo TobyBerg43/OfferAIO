@@ -553,5 +553,10 @@
   "name": "Schweitzer Engineering Laboratories",
   "lastSeen": "2026-07-24",
   "roles": 1
+ },
+ "appian": {
+  "name": "Appian",
+  "lastSeen": "2026-07-24",
+  "roles": 2
  }
 }
