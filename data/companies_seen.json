@@ -27,7 +27,7 @@
  "salesforce": {
   "name": "Salesforce",
   "lastSeen": "2026-07-24",
-  "roles": 2
+  "roles": 1
  },
  "pwc": {
   "name": "PwC",
@@ -42,7 +42,7 @@
  "akuna-capital": {
   "name": "Akuna Capital",
   "lastSeen": "2026-07-24",
-  "roles": 8
+  "roles": 14
  },
  "anduril": {
   "name": "Anduril",
@@ -262,7 +262,7 @@
  "tesla": {
   "name": "Tesla",
   "lastSeen": "2026-07-24",
-  "roles": 27
+  "roles": 28
  },
  "apex-technology-inc": {
   "name": "Apex Technology, Inc.",
@@ -456,6 +456,76 @@
  },
  "jll": {
   "name": "JLL",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "radix-trading": {
+  "name": "Radix Trading",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "copart": {
+  "name": "Copart",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "fab2": {
+  "name": "fab2",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "phonely": {
+  "name": "Phonely",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "mobius-renewables": {
+  "name": "Mobius Renewables",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "neosigma": {
+  "name": "NeoSigma",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "moon": {
+  "name": "Moon",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "spreeai": {
+  "name": "SpreeAI",
+  "lastSeen": "2026-07-24",
+  "roles": 2
+ },
+ "moog": {
+  "name": "Moog",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "hudson-river-trading": {
+  "name": "Hudson River Trading",
+  "lastSeen": "2026-07-24",
+  "roles": 2
+ },
+ "five-rings": {
+  "name": "Five Rings",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "netic": {
+  "name": "Netic",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "astranis": {
+  "name": "Astranis",
+  "lastSeen": "2026-07-24",
+  "roles": 1
+ },
+ "google": {
+  "name": "Google",
   "lastSeen": "2026-07-24",
   "roles": 1
  }
