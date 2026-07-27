@@ -162,7 +162,7 @@
  "virtu-financial": {
   "name": "Virtu Financial",
   "lastSeen": "2026-07-27",
-  "roles": 4
+  "roles": 3
  },
  "transmarket-group": {
   "name": "TransMarket Group",
@@ -557,7 +557,7 @@
  "appian": {
   "name": "Appian",
   "lastSeen": "2026-07-27",
-  "roles": 2
+  "roles": 3
  },
  "micron": {
   "name": "Micron",
@@ -568,5 +568,50 @@
   "name": "PDT Partners",
   "lastSeen": "2026-07-27",
   "roles": 2
+ },
+ "stevens-capital-management": {
+  "name": "Stevens Capital Management",
+  "lastSeen": "2026-07-27",
+  "roles": 1
+ },
+ "sentara-health": {
+  "name": "Sentara Health",
+  "lastSeen": "2026-07-27",
+  "roles": 1
+ },
+ "hyperlight": {
+  "name": "HyperLight",
+  "lastSeen": "2026-07-27",
+  "roles": 1
+ },
+ "hirevue-inc": {
+  "name": "Hirevue Inc",
+  "lastSeen": "2026-07-27",
+  "roles": 1
+ },
+ "pony-ai": {
+  "name": "Pony.ai",
+  "lastSeen": "2026-07-27",
+  "roles": 2
+ },
+ "virtu": {
+  "name": "Virtu",
+  "lastSeen": "2026-07-27",
+  "roles": 1
+ },
+ "tenstorrent": {
+  "name": "Tenstorrent",
+  "lastSeen": "2026-07-27",
+  "roles": 1
+ },
+ "anthelion-capital": {
+  "name": "Anthelion Capital",
+  "lastSeen": "2026-07-27",
+  "roles": 1
+ },
+ "quadrillion-labs": {
+  "name": "Quadrillion Labs",
+  "lastSeen": "2026-07-27",
+  "roles": 1
  }
 }
