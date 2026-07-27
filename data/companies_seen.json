@@ -352,7 +352,7 @@
  "atomic-semi": {
   "name": "Atomic Semi",
   "lastSeen": "2026-07-27",
-  "roles": 3
+  "roles": 5
  },
  "pinterest": {
   "name": "Pinterest",
@@ -613,5 +613,20 @@
   "name": "Quadrillion Labs",
   "lastSeen": "2026-07-27",
   "roles": 1
+ },
+ "robert-bosch-llc": {
+  "name": "Robert Bosch LLC",
+  "lastSeen": "2026-07-27",
+  "roles": 1
+ },
+ "core-and-main": {
+  "name": "Core & Main",
+  "lastSeen": "2026-07-27",
+  "roles": 1
+ },
+ "toshiba-commerce-solutions": {
+  "name": "Toshiba Commerce Solutions",
+  "lastSeen": "2026-07-27",
+  "roles": 3
  }
 }
