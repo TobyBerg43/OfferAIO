@@ -52,7 +52,7 @@
  "cloudflare": {
   "name": "Cloudflare",
   "lastSeen": "2026-07-28",
-  "roles": 1
+  "roles": 2
  },
  "point72": {
   "name": "Point72",
@@ -648,5 +648,30 @@
   "name": "Mathtech",
   "lastSeen": "2026-07-28",
   "roles": 1
+ },
+ "nightwing": {
+  "name": "Nightwing",
+  "lastSeen": "2026-07-28",
+  "roles": 1
+ },
+ "rendezvous-robotics": {
+  "name": "Rendezvous Robotics",
+  "lastSeen": "2026-07-28",
+  "roles": 1
+ },
+ "apptronik": {
+  "name": "Apptronik",
+  "lastSeen": "2026-07-28",
+  "roles": 1
+ },
+ "touchdown-labs": {
+  "name": "Touchdown Labs",
+  "lastSeen": "2026-07-28",
+  "roles": 1
+ },
+ "chicago-trading-company": {
+  "name": "Chicago Trading Company",
+  "lastSeen": "2026-07-28",
+  "roles": 2
  }
 }
