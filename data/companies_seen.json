@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-07-31",
-  "roles": 13
+  "roles": 14
  },
  "capital-one": {
   "name": "Capital One",
@@ -37,7 +37,7 @@
  "drw": {
   "name": "DRW",
   "lastSeen": "2026-07-31",
-  "roles": 9
+  "roles": 16
  },
  "akuna-capital": {
   "name": "Akuna Capital",
@@ -162,7 +162,7 @@
  "virtu-financial": {
   "name": "Virtu Financial",
   "lastSeen": "2026-07-31",
-  "roles": 4
+  "roles": 5
  },
  "transmarket-group": {
   "name": "TransMarket Group",
@@ -422,7 +422,7 @@
  "rivian-and-volkswagen-group-technologies": {
   "name": "Rivian and Volkswagen Group Technologies",
   "lastSeen": "2026-07-31",
-  "roles": 3
+  "roles": 4
  },
  "herdora": {
   "name": "Herdora",
@@ -681,6 +681,21 @@
  },
  "general-dynamics-information-technology": {
   "name": "General Dynamics Information Technology",
+  "lastSeen": "2026-07-31",
+  "roles": 1
+ },
+ "cirrus-logic": {
+  "name": "Cirrus Logic",
+  "lastSeen": "2026-07-31",
+  "roles": 1
+ },
+ "castleton-commodities-international": {
+  "name": "Castleton Commodities International",
+  "lastSeen": "2026-07-31",
+  "roles": 3
+ },
+ "fti-consulting": {
+  "name": "FTI Consulting",
   "lastSeen": "2026-07-31",
   "roles": 1
  }
