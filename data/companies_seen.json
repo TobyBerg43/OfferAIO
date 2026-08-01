@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-08-01",
-  "roles": 14
+  "roles": 13
  },
  "capital-one": {
   "name": "Capital One",
@@ -701,6 +701,11 @@
  },
  "sk-hynix-memory-solution": {
   "name": "SK Hynix Memory Solution",
+  "lastSeen": "2026-08-01",
+  "roles": 1
+ },
+ "adobe": {
+  "name": "Adobe",
   "lastSeen": "2026-08-01",
   "roles": 1
  }
