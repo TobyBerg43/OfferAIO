@@ -262,7 +262,7 @@
  "tesla": {
   "name": "Tesla",
   "lastSeen": "2026-08-03",
-  "roles": 28
+  "roles": 29
  },
  "apex-technology-inc": {
   "name": "Apex Technology, Inc.",
@@ -317,7 +317,7 @@
  "intel": {
   "name": "Intel",
   "lastSeen": "2026-08-03",
-  "roles": 1
+  "roles": 2
  },
  "homebase": {
   "name": "Homebase",
@@ -706,6 +706,31 @@
  },
  "adobe": {
   "name": "Adobe",
+  "lastSeen": "2026-08-03",
+  "roles": 1
+ },
+ "heliux": {
+  "name": "Heliux",
+  "lastSeen": "2026-08-03",
+  "roles": 1
+ },
+ "astera": {
+  "name": "Astera",
+  "lastSeen": "2026-08-03",
+  "roles": 1
+ },
+ "hpr": {
+  "name": "HPR",
+  "lastSeen": "2026-08-03",
+  "roles": 1
+ },
+ "medtronic": {
+  "name": "Medtronic",
+  "lastSeen": "2026-08-03",
+  "roles": 1
+ },
+ "postman": {
+  "name": "Postman",
   "lastSeen": "2026-08-03",
   "roles": 1
  }
