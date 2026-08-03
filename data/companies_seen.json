@@ -22,7 +22,7 @@
  "capital-one": {
   "name": "Capital One",
   "lastSeen": "2026-08-03",
-  "roles": 6
+  "roles": 8
  },
  "salesforce": {
   "name": "Salesforce",
@@ -167,7 +167,7 @@
  "transmarket-group": {
   "name": "TransMarket Group",
   "lastSeen": "2026-08-03",
-  "roles": 2
+  "roles": 3
  },
  "stoke-space": {
   "name": "Stoke Space",
@@ -532,7 +532,7 @@
  "walleye-capital": {
   "name": "Walleye Capital",
   "lastSeen": "2026-08-03",
-  "roles": 4
+  "roles": 1
  },
  "palantir-technologies": {
   "name": "Palantir Technologies",
@@ -731,6 +731,11 @@
  },
  "postman": {
   "name": "Postman",
+  "lastSeen": "2026-08-03",
+  "roles": 1
+ },
+ "samsara": {
+  "name": "Samsara",
   "lastSeen": "2026-08-03",
   "roles": 1
  }
