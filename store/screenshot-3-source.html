@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OfferAIO store screenshot 3 — source</title>
+<!-- robots.txt is Allow: /, and GitHub Pages publishes store/ too. This is a build
+     artifact whose iframe points at localhost, so keep it out of the index. -->
+<meta name="robots" content="noindex,nofollow">
+<!--
+  Source for store/store-screenshot-3.png (Chrome Web Store, 1280x800).
+
+  The previous screenshot-3 was a hand-drawn mock of the dashboard and went stale the
+  moment the real UI changed — it still showed the fake macOS titlebar that was removed
+  on 2026-07-22. This one frames the REAL dashboard in an iframe, so re-rendering it
+  after any UI change reproduces the truth instead of a drawing of it.
+
+  How to regenerate:
+    1. serve the repo root over http (the iframe can't load file://)
+    2. open this file at a 1280x800 viewport
+    3. screenshot the viewport -> store/store-screenshot-3.png
+-->
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1280px;height:800px;overflow:hidden}
+  body{
+    background:#ede6d7;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    color:#2b2823;position:relative;
+  }
+  /* the faint diagonals from the other two screenshots, so the set reads as one family */
+  .rule{position:absolute;top:-80px;width:1px;height:1000px;background:rgba(88,74,52,.16);transform:rotate(12deg)}
+  .r1{left:920px}.r2{left:1075px}.r3{left:1195px}
+
+  .brand{position:absolute;top:44px;left:80px;display:flex;align-items:center;gap:14px}
+  .mark{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#33528c,#4a72b8);
+        display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px}
+  .brandname{font-size:26px;font-weight:800;letter-spacing:-.01em}
+
+  /* one line at 1280 wide — wrapping pushes the subtitle into the dashboard frame */
+  h1{position:absolute;top:104px;left:80px;font-size:52px;line-height:1.04;letter-spacing:-.02em;font-weight:800;white-space:nowrap}
+  .sub{position:absolute;top:176px;left:80px;font-size:20px;color:#5c5546;line-height:1.45;white-space:nowrap}
+
+  /* real dashboard, scaled to fit — not a redrawing of it */
+  .frame{
+    position:absolute;left:470px;top:228px;width:730px;height:462px;
+    border-radius:16px;overflow:hidden;background:#fffdf8;
+    border:1px solid rgba(88,74,52,.22);
+    box-shadow:0 26px 60px -26px rgba(74,58,34,.45), 0 3px 10px -4px rgba(74,58,34,.25);
+  }
+  .frame iframe{
+    width:1460px;height:924px;border:0;
+    transform:scale(.5);transform-origin:top left;
+  }
+</style>
+</head>
+<body>
+  <div class="rule r1"></div><div class="rule r2"></div><div class="rule r3"></div>
+
+  <div class="brand"><div class="mark">O</div><div class="brandname">OfferAIO</div></div>
+  <h1>Track every application in one place.</h1>
+  <p class="sub">Active, submitted, and every callback — one task per internship.</p>
+
+  <div class="frame">
+    <iframe src="http://localhost:8099/OfferAIO.html" title="OfferAIO dashboard"></iframe>
+  </div>
+</body>
+</html>

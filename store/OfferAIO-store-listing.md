@@ -78,10 +78,31 @@ https://offeraio.com/privacy.html
 ## Graphic assets you still need to upload
 
 - Store icon 128×128 — included in the zip (icons/icon128.png). ✅
-- At least 1 screenshot, 1280×800 or 640×400 (PNG/JPEG). Suggested shots:
-  1. The extension popup (mode toggle + "Fill this application" + profile).
-  2. The in-page OfferAIO bar on a real Greenhouse/Lever application.
-  3. The offeraio.com dashboard.
+- At least 1 screenshot, 1280×800 or 640×400 (PNG/JPEG):
+  1. `store-screenshot-1.png` — the extension popup. ✅ still accurate.
+  2. `store-screenshot-2.png` — the in-page fill bar on an application. ✅ still accurate.
+  3. `store-screenshot-3.png` — the dashboard. ⚠️ **STALE — regenerate before submitting.**
 - (Optional) Small promo tile 440×280.
 
-I can generate these screenshots for you when you're ready.
+### Regenerating screenshot 3
+
+All three were hand-drawn mocks. That was fine until the dashboard was rebuilt on
+2026-07-22: #3 still shows the fake macOS titlebar (the three traffic-light dots) that no
+longer exists, so it advertises a UI we don't ship.
+
+`store/screenshot-3-source.html` replaces the drawing with the **real dashboard in an
+iframe**, so it can't drift again — re-render it after any UI change and it tells the
+truth by construction. To produce the PNG:
+
+```
+# from the repo root
+node -e "const h=require('http'),f=require('fs'),p=require('path');h.createServer((q,s)=>{let u=decodeURIComponent(q.url.split('?')[0]);if(u==='/')u='/OfferAIO.html';f.readFile(p.join(process.cwd(),u),(e,d)=>{if(e){s.writeHead(404);return s.end()}s.writeHead(200,{'content-type':{'.html':'text/html','.js':'text/javascript','.json':'application/json','.png':'image/png'}[p.extname(u)]||'application/octet-stream'});s.end(d)})}).listen(8099)"
+# then open http://localhost:8099/store/screenshot-3-source.html
+```
+
+Capture it at a **1280×800 viewport** and save as `store/store-screenshot-3.png`. In
+Chrome: DevTools → Ctrl+Shift+M (device toolbar) → set 1280×800 → ⋮ → "Capture screenshot".
+That gives an exact-size PNG; a plain window screenshot does not, because the browser
+window can't be sized to an exact viewport and the capture gets rescaled to a lossy JPEG.
+The page is already laid out for exactly 1280×800 — the headline is `white-space:nowrap`
+because wrapping pushes the subtitle into the dashboard frame.

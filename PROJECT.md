@@ -155,7 +155,12 @@ scripts attaching files); the field is highlighted instead.
   **`hcbchgpjladdfmcammhgbbmkdagcfcgd`**. Zip uploaded, title/summary auto-filled.
 - Listing copy, category, permission justifications and data disclosures live in
   `store/OfferAIO-store-listing.md`.
-- Screenshots (1280×800) in `store/` — popup, in-page fill bar, dashboard.
+- Screenshots (1280×800) in `store/` — popup, in-page fill bar, dashboard. All three were
+  hand-drawn mocks, and the dashboard one went stale when the UI was rebuilt on
+  2026-07-22 (it still shows the removed fake titlebar). `store/screenshot-3-source.html`
+  now renders the **real** dashboard in an iframe so it can't drift again; regeneration
+  steps are in `store/OfferAIO-store-listing.md`. Capture it from DevTools' device
+  toolbar at 1280×800 — an ordinary window screenshot comes out rescaled and lossy.
 - Privacy policy URL to enter: `https://offeraio.com/privacy.html`
 - **Remaining:** upload store icon + screenshots, complete the Privacy tab, submit for review.
 - The packaged zip is also published on the `extension-latest` GitHub release.
