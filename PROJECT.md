@@ -199,7 +199,17 @@ scripts attaching files); the field is highlighted instead.
   `chrome.storage.local` stubbed. The script drives headless Chrome, which is the only
   way to get an exact 1280×800 PNG; a normal window screenshot comes out rescaled.
 - Privacy policy URL to enter: `https://offeraio.com/privacy.html`
-- **Remaining:** upload store icon + screenshots, complete the Privacy tab, submit for review.
+- **Remaining:** complete the Privacy tab + listing fields, then submit.
+- **Submitting via API:** `node store/publish-extension.mjs` uploads the packaged zip and
+  calls `:publish`. Needs `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET`, `CWS_REFRESH_TOKEN` and
+  `CWS_PUBLISHER_ID` in the environment; `--dry-run` authenticates and reads status without
+  changing anything. ⚠️ **The API cannot fill the listing.** There is no method for the
+  description, category, screenshots, store icon or the Privacy practices tab — those are
+  dashboard-only, and `:publish` fails naming them if they're blank.
+- ⚠️ **The dashboard cannot be automated at all.** Verified 2026-08-04: Chrome refuses
+  extension scripting on `chrome.google.com/webstore/*` — a screenshot attempt returns
+  "The extensions gallery cannot be scripted". This applies to the dev console, not just
+  the public gallery, so browser automation is not an option for any of it.
 - The packaged zip is also published on the `extension-latest` GitHub release.
 
 ## 9. Pricing
