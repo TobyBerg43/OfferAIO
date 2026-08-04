@@ -1,6 +1,13 @@
 name: Package extension
 
+# Manual-only until 2026-08-04, which meant the published zip silently rotted: it was
+# last built 2026-07-19, before licensing existed, while landing.html and start.html
+# kept linking to it as the manual-install download. Anyone who took that link got an
+# extension with no license.js at all. Build it on every change to extension/ instead.
 on:
+  push:
+    branches: [main]
+    paths: ["extension/**"]
   workflow_dispatch:
 
 permissions:
