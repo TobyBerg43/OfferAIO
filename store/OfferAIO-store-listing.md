@@ -77,8 +77,11 @@ https://offeraio.com/privacy.html
 
 ## Graphic assets you still need to upload
 
-- Store icon 128×128 — included in the zip (icons/icon128.png). ✅
-- Screenshots, all three exactly 1280×800 PNG, regenerated 2026-08-04. ✅ Upload as-is:
+- Store icon 128×128 — included in the zip (icons/icon128.png). ✅ **New logo as of
+  2026-08-04** — if the draft listing already has the old blue "O" icon uploaded,
+  replace it.
+- Screenshots, all three exactly 1280×800 PNG, regenerated 2026-08-04 with the new logo.
+  ✅ Upload as-is:
   1. `store-screenshot-1.png` — the extension popup.
   2. `store-screenshot-2.png` — the in-page fill bar on an application.
   3. `store-screenshot-3.png` — the dashboard.

@@ -1,0 +1,60 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>OfferAIO icons — source</title>
+<meta name="robots" content="noindex,nofollow"></head><body>
+<pre id="out">working…</pre>
+<script>
+/* Cuts store/logo-master.png into every icon size the product uses.
+   Driven by `node store/regenerate.mjs`, which serves this page and provides the
+   /save sink that writes the bytes to disk.
+
+   The master is a 1254x1254 export with the rounded-square plate measured at
+   (121,103) 1012x1012; the extra ~24px below it in the bounding box is a drop
+   shadow, deliberately excluded. The plate sits on near-white rather than
+   transparency, so each output is masked to a rounded rect — without that the
+   toolbar icon shows white notches at its corners on any dark browser theme. */
+const SRC = { x: 121, y: 103, s: 1012 };
+const RADIUS_RATIO = 0.222;          // measured off the plate's corner arc
+const OUTPUTS = [
+  ["extension/icons/icon16.png", 16],
+  ["extension/icons/icon48.png", 48],
+  ["extension/icons/icon128.png", 128],
+  ["favicon-32.png", 32],
+  ["favicon-180.png", 180],          // apple-touch-icon
+  ["logo-96.png", 96],               // nav / header marks — 512 is ~300KB, far too heavy there
+  ["logo.png", 512],                 // JSON-LD Organization logo, store icon
+];
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+const log = [];
+const img = new Image();
+img.onload = async () => {
+  for (const [name, size] of OUTPUTS) {
+    const c = document.createElement("canvas");
+    c.width = c.height = size;
+    const ctx = c.getContext("2d");
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(img, SRC.x, SRC.y, SRC.s, SRC.s, 0, 0, size, size);
+    ctx.globalCompositeOperation = "destination-in";
+    roundRect(ctx, 0, 0, size, size, size * RADIUS_RATIO);
+    ctx.fill();
+    ctx.globalCompositeOperation = "source-over";
+    const blob = await new Promise((r) => c.toBlob(r, "image/png"));
+    const res = await fetch("/save?name=" + encodeURIComponent(name), { method: "POST", body: blob });
+    log.push(name.padEnd(30) + size + "x" + size + "  " + blob.size + "B  " + (res.ok ? "saved" : "FAILED"));
+    document.getElementById("out").textContent = log.join("\n");
+  }
+  document.getElementById("out").textContent = log.join("\n") + "\nDONE";
+};
+img.onerror = () => { document.getElementById("out").textContent = "MASTER IMAGE FAILED TO LOAD"; };
+img.src = "/store/logo-master.png";
+</script>
+</body></html>

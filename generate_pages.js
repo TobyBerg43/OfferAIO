@@ -87,7 +87,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 44px;margin-top:80px}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
 </style>`;
 
-const LOGO = `<svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#33528c"/><stop offset="1" stop-color="#4a72b8"/></linearGradient></defs><rect width="48" height="48" rx="12" fill="url(#lg)"/><path d="M33.5 20.5 A11 11 0 1 1 26.9 15.4" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><path d="M29 19 L35 13" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><path d="M29.5 12 H36 V18.5" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const LOGO = `<img class="logo-mark" src="/logo-96.png" alt="" width="30" height="30" decoding="async">`;
 
 const NAV = `<nav class="nav"><div class="container nav-in"><a class="logo" href="/" aria-label="OfferAIO home">${LOGO}<span>Offer<span class="acc">AIO</span></span></a><div class="nav-links"><a href="/internships/">Internships</a><a href="/pricing/">Pricing</a><a href="/employers/">For Employers</a><a class="btn btn-blue" href="/dashboard/">Open the dashboard</a></div></div></nav>`;
 
@@ -105,6 +105,8 @@ function page(title, desc, canonPath, body, jsonld) {
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${SITE}${canonPath}">
 <link rel="icon" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/favicon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="${SITE}${canonPath}">
 <meta property="og:site_name" content="OfferAIO">

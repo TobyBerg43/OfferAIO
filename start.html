@@ -10,7 +10,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%2333528c'/%3E%3Ctext x='24' y='34' font-size='30' font-family='Arial' font-weight='700' fill='white' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/favicon-180.png">
 <style>
   :root{--bg:#efe8d9;--ink:#2b2823;--soft:#5c5546;--dim:#786f5e;--card:#fffdf8;--line:rgba(88,74,52,.15);--line2:rgba(88,74,52,.28);--blue:#33528c;--blue2:#4a72b8;--green:#2e9d68;--gold:#b9822b;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;--mono:"SF Mono","Cascadia Code",Consolas,ui-monospace,Menlo,monospace;
@@ -25,7 +27,7 @@
   a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
   .nav{position:sticky;top:0;background:rgba(239,232,217,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:10}
   .nav-in{max-width:880px;margin:0 auto;padding:0 22px;height:62px;display:flex;align-items:center;gap:10px}
-  .logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--blue2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+  .logo{width:30px;height:30px;border-radius:8px;background:url("/logo-96.png") center/contain no-repeat;flex:0 0 auto}
   .logo-txt{font-weight:700;font-size:17px}.logo-txt span{color:var(--blue)}
   .nav-in .back{margin-left:auto;font-size:14.5px;color:var(--soft);font-weight:500}
   main{max-width:880px;margin:0 auto;padding:56px 22px 90px}
@@ -58,7 +60,7 @@
 </head>
 <body>
 <nav class="nav"><div class="nav-in">
-  <span class="logo">O</span><span class="logo-txt">Offer<span>AIO</span></span>
+  <span class="logo" role="img" aria-label="OfferAIO"></span><span class="logo-txt">Offer<span>AIO</span></span>
   <a class="back" href="/">← Back to site</a>
 </div></nav>
 

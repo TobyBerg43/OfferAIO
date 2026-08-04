@@ -98,6 +98,40 @@ session re-uploading old files. After any extension change, verify the raw file 
 - `PROJECT.md` — this file
 
 ## 6. Design system
+
+### Logo and brand assets (replaced 2026-08-04)
+The old mark — a blue gradient tile with a white "O" — is **gone everywhere**. The new
+mark is a near-black rounded-square plate (`#060a15`) with a white arch, a violet
+gradient stroke (`#553bfa`) and a sparkle.
+
+**Master: `store/logo-master.png`.** Everything else is cut from it by
+**`node store/regenerate.mjs`**, which rebuilds, in one pass:
+
+| Output | Used by |
+| --- | --- |
+| `extension/icons/icon16\|48\|128.png` | the extension + Web Store |
+| `favicon-32.png`, `favicon-180.png` | modern favicon + apple-touch-icon |
+| `favicon.svg` | **every generated `internships/` page** — rebuilt from the 180px raster |
+| `logo-96.png` | nav/header marks (the 512 is ~300KB, far too heavy for a 30px tile) |
+| `logo.png` (512) | JSON-LD `Organization.logo`, store icon |
+| `og.png` | the social share card, from `store/og-source.html` |
+| `store/store-screenshot-{1,2,3}.png` | the Web Store listing |
+
+Two things worth knowing. The master is a 1254² export whose plate sits at
+**(121,103) 1012×1012** on near-white, not transparency — the extra ~24px of bounding box
+below it is a drop shadow. Each output is masked to a rounded rect at radius 0.222×size,
+otherwise the toolbar icon shows white notches on a dark browser theme. And the in-page
+bar in `content.js` carries the icon as an **inlined data URI**, because a relative path
+there would resolve against the employer's origin, and `chrome.runtime.getURL` would mean
+adding `web_accessible_resources` and re-justifying it at Web Store review.
+
+⚠️ **The new mark's palette does not match the site's.** The logo is near-black + electric
+violet; the site is cream `#efe8d9` + navy `#33528c` + gold. It reads as intentional
+contrast at nav size, but the violet appears nowhere else in the UI. Deliberately **not**
+resolved here — swapping the site palette is a rebrand, not a logo swap, and was not asked
+for. Decide whether to pull violet into the accents or leave the mark as the only dark
+element.
+
 - **Palette:** `--bg:#efe8d9` (cream), `--ink:#2b2823`, `--blue:#33528c`, `--blue2:#4a72b8`,
   gold `#b9822b`, green `#2e9d68`; panel tokens `--w-*`.
 - **Fonts:** **Anton** (display headline) + **Playfair Display italic** (accent), via

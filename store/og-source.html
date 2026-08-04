@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OfferAIO og:image — source</title>
+<meta name="robots" content="noindex,nofollow">
+<!--
+  Source for /og.png (1200x630) — the card shown when offeraio.com is shared on
+  social, in Slack, iMessage, etc. Referenced by landing.html, pricing, employers
+  and every generated internships page.
+
+  Reproduces the previous card's layout and copy exactly; the only change is the new
+  logo replacing the old blue mark. Kept as a source file for the same reason as the
+  store screenshots: the old og.png was a one-off export with no way to regenerate it,
+  so it silently went stale the moment the brand changed.
+
+  Regenerate with: node store/regenerate.mjs
+-->
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{
+    background:#ede6d7;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    color:#2b2823;position:relative;
+  }
+  /* the soft warm lift at the top, as on the original card */
+  .glow{position:absolute;inset:0;background:radial-gradient(120% 70% at 50% -10%, rgba(255,252,244,.95), rgba(255,252,244,0) 60%)}
+  .rule{position:absolute;top:-120px;width:1px;height:900px;background:rgba(88,74,52,.13);transform:rotate(11deg)}
+  .r1{left:880px}.r2{left:1010px}.r3{left:1120px}
+
+  .brand{position:absolute;top:96px;left:100px;display:flex;align-items:center;gap:22px}
+  .mark{width:96px;height:96px;border-radius:22px;background:url("/logo-96.png") center/contain no-repeat;flex:0 0 auto}
+  .bn{font-size:46px;font-weight:800;letter-spacing:-.02em}
+  .bn i{font-style:normal;color:#33528c}
+
+  h1{position:absolute;top:238px;left:100px;font-size:74px;line-height:1.14;letter-spacing:-.025em;font-weight:800;max-width:1010px}
+  h1 i{font-style:normal;color:#33528c}
+  .sub{position:absolute;top:432px;left:100px;font-size:28px;line-height:1.45;color:#5c5546;max-width:960px}
+
+  .cta{position:absolute;left:100px;top:545px;display:flex;align-items:center;gap:34px}
+  .pill{background:#d69a37;color:#2b2318;font-weight:800;font-size:26px;padding:16px 30px;border-radius:10px}
+  .url{font-family:ui-monospace,Consolas,"SF Mono",monospace;font-size:24px;color:#8d8371}
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="rule r1"></div><div class="rule r2"></div><div class="rule r3"></div>
+
+  <div class="brand">
+    <div class="mark" role="img" aria-label="OfferAIO"></div>
+    <div class="bn">Offer<i>AIO</i></div>
+  </div>
+
+  <h1>Apply to <i>50 internships</i><br>while you're in class.</h1>
+  <p class="sub">Live Summer 2027 postings. Applications filled in your browser.<br>Cover letters in your voice.</p>
+
+  <div class="cta">
+    <span class="pill">Start free</span>
+    <span class="url">offeraio.com</span>
+  </div>
+</body>
+</html>
