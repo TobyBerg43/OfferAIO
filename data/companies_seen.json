@@ -327,7 +327,7 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-08-04",
-  "roles": 2
+  "roles": 34
  },
  "notion": {
   "name": "Notion",
@@ -562,7 +562,7 @@
  "micron": {
   "name": "Micron",
   "lastSeen": "2026-08-04",
-  "roles": 1
+  "roles": 5
  },
  "pdt-partners": {
   "name": "PDT Partners",
@@ -746,6 +746,56 @@
  },
  "microsoft": {
   "name": "Microsoft",
+  "lastSeen": "2026-08-04",
+  "roles": 2
+ },
+ "dv-trading": {
+  "name": "DV Trading",
+  "lastSeen": "2026-08-04",
+  "roles": 1
+ },
+ "godaddy": {
+  "name": "GoDaddy",
+  "lastSeen": "2026-08-04",
+  "roles": 1
+ },
+ "rtx": {
+  "name": "RTX",
+  "lastSeen": "2026-08-04",
+  "roles": 2
+ },
+ "bytedance": {
+  "name": "ByteDance",
+  "lastSeen": "2026-08-04",
+  "roles": 3
+ },
+ "yotta-labs": {
+  "name": "Yotta Labs",
+  "lastSeen": "2026-08-04",
+  "roles": 1
+ },
+ "netsmart": {
+  "name": "Netsmart",
+  "lastSeen": "2026-08-04",
+  "roles": 1
+ },
+ "melius": {
+  "name": "Melius",
+  "lastSeen": "2026-08-04",
+  "roles": 1
+ },
+ "bot-auto": {
+  "name": "Bot Auto",
+  "lastSeen": "2026-08-04",
+  "roles": 1
+ },
+ "renderatl": {
+  "name": "RenderATL",
+  "lastSeen": "2026-08-04",
+  "roles": 1
+ },
+ "american-express": {
+  "name": "American Express",
   "lastSeen": "2026-08-04",
   "roles": 1
  }
