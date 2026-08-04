@@ -189,6 +189,16 @@ tracked submissions before, so "50/month" was marketing copy only. Counting happ
 `content.js` `doSubmit()`, *after* the submit button is actually clicked, so a failed
 lookup never burns a submission. The monthly reset is keyed on local-time `YYYY-MM`.
 
+⚠️ **OfferAIO needs its own Stripe account.** Checked 2026-08-04: the Stripe connector
+authorizes `acct_1Tm4Y7K5Z8GDflE1`, display name **CertTrack** — a different product of
+Toby's, in **live mode**, already holding two live CertTrack products, two live payment
+links and a live webhook to `certtrackhq.com`. Do **not** create OfferAIO's product there.
+Checkout branding and the statement descriptor are account-level, so OfferAIO buyers would
+see "CertTrack" on the payment page and on their card statement — brand confusion and a
+chargeback risk — and the two businesses' revenue and tax would commingle. Stripe allows
+several accounts under one login (dashboard → account switcher → new account); OfferAIO
+needs its own, and the connector must be re-authorized to it before any of §10 is built.
+
 **To go live, paste the Payment Link into `billing.js`.** That's the only edit needed —
 `landing.html` and `pricing/index.html` both read it from there. While it's empty the
 "Get access" buttons keep their old waitlist behaviour, so this ships safely before
