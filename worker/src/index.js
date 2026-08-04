@@ -60,9 +60,9 @@ export default {
         return json(await licenseBySession(env, sid));
       }
 
-      // /cover and /rank spend real money on the Anthropic and OpenAI keys, so they
-      // require an active licence and are metered server-side. This is the only
-      // enforcement that isn't client-side and therefore bypassable.
+      // /cover and /rank spend real money on the OpenAI key, so they require an active
+      // licence and are metered server-side. This is the only enforcement that isn't
+      // client-side and therefore bypassable.
       if (pathname === "/cover" && request.method === "POST") {
         const body = await request.json();
         const gate = await checkAI(env, body);

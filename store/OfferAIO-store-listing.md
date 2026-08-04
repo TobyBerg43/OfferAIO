@@ -37,7 +37,9 @@ Built to be safe and honest
 • Your resume is never uploaded or transmitted by the extension; the file field is highlighted so you attach it yourself.
 • Your profile is stored locally in your browser, not on our servers.
 
-Free to use. Learn more at https://offeraio.com
+Free to install and use — 50 submissions a month, no account required. Pro ($30/month) raises that to 250 and adds AI cover letters written in your own voice.
+
+Learn more at https://offeraio.com
 
 ---
 
@@ -47,18 +49,26 @@ Free to use. Learn more at https://offeraio.com
 OfferAIO fills internship application forms on supported job sites with the user's saved profile, in the user's own browser, so the user can review and submit them.
 
 **Permission justifications**
-- storage — Save the user's application profile (name, school, contact details, cover-letter template) locally in the browser.
+- storage — Save the user's application profile (name, school, contact details, cover-letter template) locally in the browser, plus their monthly submission count and, on the paid plan, their license key.
 - activeTab — Act on the application page the user is currently viewing when they click "Fill".
 - scripting — Inject the form-filler into that page on demand to complete the fields.
 - Host permissions (the job sites listed) — Fill application form fields on those application pages.
-- offeraio.com — Let the OfferAIO dashboard sync the user's profile into the extension.
+- offeraio.com — Let the OfferAIO dashboard sync the user's profile into the extension, and hand the dashboard the license key it needs to request a cover letter.
+- tobyberg43.github.io — The same dashboard served from its GitHub Pages origin, used for staging and as a fallback if the custom domain is unavailable.
+- offeraio-worker.tobybergerbusiness.workers.dev — Our own backend. Used only to verify that a paid license key is still active and to request an AI cover letter the user asked for. No browsing data is sent to it.
 
 **Data collected / usage disclosures** (check these in the form)
 - Personally identifiable information (name, email address, phone number): YES — collected.
 - Web history / location / financial / health / authentication info: NO.
-- The data is stored locally on the user's device and is used only for the single purpose above.
-- Not sold or transferred to third parties (except cover-letter generation at the user's request).
+- The profile is stored locally on the user's device and is used only for the single purpose above.
+- Transferred to third parties only for a feature the user actively invokes: OpenAI, to generate a cover letter they requested; and Stripe, to process a subscription payment. **Not sold.**
 - Not used for purposes unrelated to the single purpose; not used for creditworthiness or lending.
+
+⚠️ **The "not sold or transferred" box cannot be checked as-is.** The paid tier sends the
+company, role and the profile fields needed to write the letter to our Worker, which calls
+OpenAI. Declare that transfer — it is disclosed in the privacy policy under "Cover-letter
+generation (Pro)" and "Licensing and payments (Pro)", and a mismatch between this form and
+the policy is a common rejection reason.
 
 **Privacy policy URL**
 https://offeraio.com/privacy.html

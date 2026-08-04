@@ -522,7 +522,7 @@ export async function checkAI(env, { key, installId }, nowMs = Date.now()) {
 /**
  * Count a generation that actually happened.
  *
- * Deliberately called *after* the LLM responds: charging on entry means an Anthropic
+ * Deliberately called *after* the LLM responds: charging on entry means an OpenAI
  * outage silently eats a customer's monthly allowance. The cap is still enforced up
  * front by checkAI, so the exposure from counting late is bounded by concurrency, not
  * by failures.

@@ -2,11 +2,16 @@
 
 Single source of truth for the OfferAIO project. Any assistant or person should be
 able to read this file and pick up the work without re-discovering anything.
-**Last updated: 2026-07-22.** (Latest changes: dashboard UI polish done — §12.3;
-Worker with billing gating deployed & verified live — §12.2/§14. ⚠️ One-time hazard
-cleaned up: a mis-pathed `wrangler deploy` from the repo root auto-created a static
-worker "ffer" serving the whole repo; it was deleted and the stray `wrangler.jsonc`/
-`.gitignore` it wrote were removed. Always deploy from `worker/`.)
+**Last updated: 2026-08-04.** (Latest changes: the dashboard now actually calls the
+Worker's `/cover` — the last piece of §14 that was still unfinished — via a new licence
+relay in `extension/bridge.js`; extension bumped to **1.1.1**; privacy policy and store
+listing brought in line with licensing, the Worker host permission and the OpenAI/Stripe
+data transfers, which would have failed Web Store review as written. Between 2026-07-22
+and 2026-08-04 nothing else changed: all 52 intervening commits were the 6-hourly
+`chore: refresh listings` scrape.)
+
+⚠️ Standing hazard, still true: a mis-pathed `wrangler deploy` from the repo root once
+auto-created a static worker "ffer" serving the whole repo. Always deploy from `worker/`.
 
 ---
 
@@ -81,6 +86,8 @@ session re-uploading old files. After any extension change, verify the raw file 
 - `store/` — Chrome Web Store listing copy + screenshots (see §8)
 - `desktop/` — Electron local engine
 - `worker/` — Cloudflare Worker source (`src/index.js`, `wrangler.toml`) — see §14
+- `tests/` — Node tests for extension files (`license.test.mjs`, `bridge.test.mjs`).
+  Deliberately outside `extension/`, which `zip-extension.yml` ships wholesale to the store.
 - `.github/workflows/` — scrape + generate-pages pipeline, patch action, worker deploy
 - `.nojekyll` — **do not delete**
 - `PROJECT.md` — this file
@@ -99,10 +106,19 @@ session re-uploading old files. After any extension change, verify the raw file 
   (solid muted gold primary, white ghost — no glossy gradients).
 
 ## 7. The Chrome extension (`extension/`)
-Manifest V3. Name "OfferAIO — Auto Apply", **v1.1.0** (bumped from 1.0.0 for licensing).
+Manifest V3. Name "OfferAIO — Auto Apply", **v1.1.1** (1.0.0 → 1.1.0 for licensing,
+→ 1.1.1 for the bridge licence relay below).
 
 Files: `manifest.json`, `popup.html`, `popup.js`, `content.js`, `bridge.js`,
 `license.js`, `icons/icon16|48|128.png`.
+
+`bridge.js` relays the profile from offeraio.com into storage, and answers a
+`{type:"license"}` request from the dashboard with `{key, installId}`. It deliberately
+hands over the **extension's existing** `installId` (minting one only if absent) rather
+than letting the dashboard generate its own — keys are bound to 3 installs, and one
+browser must not consume two slots just because the dashboard was opened in it. It also
+ignores messages whose `e.source !== window`, so an embedded third-party iframe can't
+ask for the key. Tests: `node --test tests/bridge.test.mjs` (9 tests).
 
 `license.js` holds licensing + the submission counter and is shared by the popup and
 the content script. It's a plain IIFE on `self` rather than an ES module, because
@@ -235,7 +251,8 @@ that matters.
 - **Never commit secrets.** API keys belong only in Cloudflare Worker secrets or GitHub
   Actions secrets.
 
-**The complete key inventory — there are exactly four:**
+**The complete key inventory — there are exactly four.** All four re-verified unset on
+2026-08-04 (`wrangler secret list` → `[]`, `gh secret list` → empty).
 
 | Key | Lives in | Purpose | Status |
 | --- | --- | --- | --- |
@@ -247,24 +264,47 @@ that matters.
 `ANTHROPIC_API_KEY` is **not** on this list and should never be set — see §3.
 
 ## 12. Open TODOs
-1. **Chrome Web Store:** finish the draft listing (icon, screenshots, privacy tab) and submit.
-2. **Cloudflare Worker:** the repo code (with §10 Phase 4 gating) **was deployed
-   2026-07-22** via local `wrangler deploy` (wrangler is OAuth-logged-in on this
-   machine). Verified live: `/cover` and `/rank` reject unlicensed calls. It is now
-   **safe to set `OPENAI_API_KEY`** (`npx wrangler secret put OPENAI_API_KEY` from
-   `worker/`) so cover letters and ranking work. Still open: `CLOUDFLARE_API_TOKEN`
-   as a GitHub Actions secret — until set, the Deploy Worker CI job fails on every
-   push touching `worker/**`, so deploys are local-only.
+
+**Everything left is blocked on a key or an account action only Toby can perform.** The
+code is done: 81 tests pass (`tests/license.test.mjs`, `tests/bridge.test.mjs`,
+`worker/test/billing.test.mjs`), the Worker is deployed and gating correctly, and the
+dashboard is wired to it. Nothing ships value until the four keys in §11 exist.
+
+0. **The four keys (§11).** In the order that unlocks the most:
+   - `OPENAI_API_KEY` → `npx wrangler secret put OPENAI_API_KEY` from `worker/`. Makes AI
+     cover letters actually work. Safe to set now — the endpoints are gated (§14).
+   - Stripe Pro product + Payment Link → paste into `billing.js` (§10), set the success
+     URL to `https://offeraio.com/license.html?session_id={CHECKOUT_SESSION_ID}`.
+   - `STRIPE_WEBHOOK_SECRET` → Worker secret. Without it no key is ever minted, so
+     nobody can become Pro even after paying.
+   - `CLOUDFLARE_API_TOKEN` → GitHub Actions secret. Until set, every push touching
+     `worker/**` fails the Deploy Worker job and deploys stay local-only.
+1. **Chrome Web Store:** finish the draft listing (icon, screenshots, privacy tab) and
+   submit. Listing copy and the privacy tab answers were refreshed 2026-08-04 for the
+   Worker host permission and the OpenAI/Stripe transfers — read the ⚠️ in
+   `store/OfferAIO-store-listing.md` before filling the data-transfer question, because
+   the honest answer changed once Pro started sending data off-device. Re-zip: the
+   packaged extension is now v1.1.1.
+2. **Cloudflare Worker** — deployed and verified (§14). Confirmed still healthy
+   2026-08-04: `/health` 200, and `/cover` returns 402 `unknown` for a bogus key and 400
+   `install_id_required` with no install id. `wrangler secret list` returns `[]`, so
+   **no Worker secret is set yet** — that is item 0, not a code problem.
 3. **Dashboard UI polish** — **done 2026-07-22.** The fake titlebar is removed entirely
    (the ENGINE/DB/CONNECTED status chips moved to the sidebar bottom, ids unchanged so
    the JS kept working), Live-activity timestamps are staggered, the 14-day chart has
    date labels, and headings (`h1`, logo, modal `h2`) now use Anton via `--display`,
    matching the landing page. Verified locally in Chrome before pushing.
-4. **Stripe licensing** (§10) — Phase 0 done. Phase 1 is blocked on you creating the Pro
-   product + Payment Link in Stripe and setting `STRIPE_SECRET_KEY` /
-   `STRIPE_WEBHOOK_SECRET` as Worker secrets.
+4. **Stripe licensing** (§10) — Phases 0–4 built and tested. Everything is inert until
+   the Payment Link and `STRIPE_WEBHOOK_SECRET` exist; see item 0. Note
+   `STRIPE_SECRET_KEY` is **not** needed — the code never calls the Stripe API.
 5. Mark GA4 key events once they appear in the Events list.
-6. Optional: `/guides/` blog template, comparison pages.
+6. **`/rank` has no caller.** The Worker endpoint, its gating and its metering all exist
+   and are tested, but nothing in the site, dashboard or extension ever invokes it. Either
+   wire resume-based ranking into the dashboard's job list or drop the endpoint — right
+   now it is tested, deployed, billable surface area that nothing uses.
+7. **No email on purchase** (§10). The success page is the only place a key is ever
+   shown. Fine at zero customers; the first "I lost my key" email is the signal to fix it.
+8. Optional: `/guides/` blog template, comparison pages.
 
 ## 13. Conventions for assistants
 - Verify the live site after every deploy (load the URL, screenshot).
@@ -289,8 +329,14 @@ was vendored from the live deployment, verified byte-for-byte (md5
 - Worker secrets are stored in Cloudflare, survive deploys, and are never in the repo.
 - KV `LICENSES` → `offeraio-licenses` (`40fb8a5ef93143fc9d0ad49592a7dc64`), bound but
   unused until §10 Phase 1.
-- ⚠️ The site does **not** call this Worker. The dashboard's cover-letter button hits the
-  local Electron engine on `127.0.0.1:7717`, not `/cover`. Wiring it up is unfinished work.
+- **The dashboard calls `/cover` as of 2026-08-04.** `enhanceCover()` in `OfferAIO.html`
+  tries the local Electron engine first (free, private, already running if it's on) and
+  falls back to the Worker, which is what almost every user actually has. Credentials come
+  from the extension over the bridge (§7); with no key the templated letter stands in
+  exactly as before and the feed says so **once** per session. A 429 `monthly_limit`
+  toasts; any other rejection degrades quietly. Verified in Chrome against the live
+  Worker: an invalid key returns 402 and the page handles it without throwing.
+  Still unwired: `/rank` has no caller anywhere.
 - `/cover` and `/rank` require an active licence and are metered per key in KV
   (250/month). Fixed in §10 Phase 4 — before that they were open to the world, which
   would let anyone drain `OPENAI_API_KEY` once it is set. Any caller must send

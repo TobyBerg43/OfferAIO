@@ -774,12 +774,60 @@ async function engineApply(t){
   return null; // null = fall back to simulation
 }
 async function enhanceCover(t){
-  if(!engineOn||!engineFeat.cover)return;
+  // Local engine first — it's free, private, and already running if it's on.
+  // Otherwise fall back to the Worker, which is what almost everyone actually has.
+  if(engineOn&&engineFeat.cover){
+    try{
+      const r=await fetch(ENGINE+'/cover',{method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({company:t.company,role:t.role})}).then(x=>x.json());
+      if(r.ok&&r.letter){t.coverCache=r.letter;render();addFeed(`✍️ Real AI cover letter written for <b>${t.company}</b>`,'var(--cyan)');return;}
+    }catch(_){}
+  }
+  await cloudCover(t);
+}
+
+/* ============ CLOUD COVER LETTERS (Worker /cover) ============ */
+const WORKER='https://offeraio-worker.tobybergerbusiness.workers.dev';
+let extLicense=null;      // {key,installId} handed over by the extension bridge
+let proNagged=false;      // only mention Pro once per session — nagging is worse than silence
+function cloudCoverAvailable(){return !!(extLicense&&extLicense.key&&extLicense.installId);}
+async function cloudCover(t){
+  if(!cloudCoverAvailable()){
+    // No key on this machine: the templated letter stands in, exactly as before.
+    if(!proNagged){
+      proNagged=true;
+      addFeed('✍️ Using your template — AI cover letters need Pro (activate your key in the extension)','var(--dim2)');
+    }
+    return;
+  }
   try{
-    const r=await fetch(ENGINE+'/cover',{method:'POST',headers:{'content-type':'application/json'},
-      body:JSON.stringify({company:t.company,role:t.role})}).then(x=>x.json());
-    if(r.ok&&r.letter){t.coverCache=r.letter;render();addFeed(`✍️ Real AI cover letter written for <b>${t.company}</b>`,'var(--cyan)');}
-  }catch(_){}
+    const r=await fetch(WORKER+'/cover',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({
+        key:extLicense.key, installId:extLicense.installId,
+        company:t.company, role:t.role,
+        profile:coverProfile(t)
+      })}).then(x=>x.json());
+    if(r.ok&&r.letter){
+      t.coverCache=r.letter;render();
+      const left=(typeof r.limit==='number'&&typeof r.used==='number')?` · ${Math.max(0,r.limit-r.used)} left this month`:'';
+      addFeed(`✍️ AI cover letter written for <b>${t.company}</b>${left}`,'var(--cyan)');
+      return;
+    }
+    if(r&&r.reason==='monthly_limit'){
+      toast('','Monthly AI cover-letter limit reached — using your template','warn');
+    } else if(r&&!r.ok&&!proNagged){
+      proNagged=true;
+      addFeed('✍️ Using your template — AI cover letters need an active Pro key','var(--dim2)');
+    }
+  }catch(_){ /* Worker unreachable — the template letter is already a working answer. */ }
+}
+/** What the Worker gets to write in the user's voice. A custom template is the
+ *  only sample of the user's own prose the dashboard holds, so pass it as one. */
+function coverProfile(t){
+  const p=collectProfile();
+  const sample=(t.cl==='custom'&&t.clText&&t.clText.trim())?t.clText.trim():'';
+  if(sample)p.samples=[sample];
+  return p;
 }
 let radarTimer=null;
 function pollRadar(){
@@ -1227,11 +1275,20 @@ function saveSettings(){
 }
 // site <-> extension bridge
 window.addEventListener('message',e=>{
+  if(e.source!==window)return;
   const d=e.data; if(!d||d.source!=='offeraio-ext')return;
   const s=$('extStatus');
-  if((d.type==='ready'||d.type==='pong')&&s){s.textContent='● connected';s.style.color='var(--green)';}
+  if((d.type==='ready'||d.type==='pong')&&s){s.textContent='● connected';s.style.color='var(--green)';askLicense();}
   if(d.type==='saved')toast('','Profile pushed to the OfferAIO extension','info');
+  if(d.type==='license')extLicense=d.key?{key:d.key,installId:d.installId}:null;
 });
+// Ask once the extension has announced itself; an older bridge.js simply won't answer,
+// and the dashboard falls back to templated letters exactly as it did before.
+let licenseAsked=false;
+function askLicense(){
+  if(licenseAsked)return; licenseAsked=true;
+  window.postMessage({source:'offeraio-site',type:'license'},'*');
+}
 setTimeout(()=>window.postMessage({source:'offeraio-site',type:'ping'},'*'),1200);
 let samples=0;
 function addSample(){

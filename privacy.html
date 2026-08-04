@@ -36,7 +36,7 @@
 
 <main>
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: July 15, 2026</p>
+  <p class="updated">Last updated: August 4, 2026</p>
 
   <p>OfferAIO ("we", "us") provides a website at offeraio.com and a Chrome browser extension, "OfferAIO — Auto Apply", that helps you fill out Summer 2027 internship applications in your own browser. This policy explains what the extension and site collect, how it is used, and the choices you have. We built OfferAIO to keep your data on your device by default.</p>
 
@@ -46,6 +46,8 @@
       <li>The details you enter (your application profile) are stored <strong>locally in your browser</strong>, not on our servers.</li>
       <li>The extension only runs on the job-application sites it supports and on the OfferAIO dashboard.</li>
       <li>You review and submit every application. CAPTCHAs are never bypassed. Your resume is never uploaded or transmitted by the extension.</li>
+      <li>If you ask for an AI cover letter, that one request — and only that request — leaves your device. Everything else stays local.</li>
+      <li>We never see your card details. Payment is handled entirely by Stripe.</li>
       <li>We do not sell or share your personal information.</li>
     </ul>
   </div>
@@ -55,14 +57,26 @@
   <ul>
     <li>Contact and application details you enter: name, email, phone, school, graduation date, major, minor, GPA, LinkedIn URL, work-authorization/sponsorship preference, and an optional cover-letter template.</li>
     <li>Your apply-mode preference (semi-auto or full-auto).</li>
+    <li>A count of how many applications you have submitted this month, so the extension can show your remaining monthly allowance. It resets each month and is never sent anywhere.</li>
+    <li>If you are on Pro: your license key and a randomly generated install identifier.</li>
   </ul>
-  <p>This information stays in your browser. The extension does not transmit your profile to OfferAIO servers.</p>
+  <p>This information stays in your browser. The extension never transmits your profile to OfferAIO servers — the only things it sends us are the license key and install identifier, and only to check that your subscription is active.</p>
 
   <h2>How the information is used</h2>
   <p>Your saved profile is used for a single purpose: to fill the fields of internship application forms on supported sites when you click "Fill", so you can review and submit them yourself. It is not used for advertising, profiling, or any unrelated purpose.</p>
 
-  <h2>Cover-letter generation</h2>
-  <p>If you use the cover-letter feature on the OfferAIO dashboard, the text and details you provide are sent to our cover-letter service to generate a draft and are processed for that request only. They are not stored after the draft is returned.</p>
+  <h2>Cover-letter generation (Pro)</h2>
+  <p>AI cover letters are the one feature that leaves your device. When you request one, the company name, the role title, the profile details needed to write it, and any writing sample you have supplied are sent to our service (a Cloudflare Worker), which forwards them to <strong>OpenAI</strong> to generate the draft. We do not store the request or the resulting letter after it is returned to you; OpenAI processes it as our API provider and does not use API content to train its models. Your resume file is never part of this — see below.</p>
+  <p>If you do not use this feature, none of your profile ever leaves your browser.</p>
+
+  <h2>Licensing and payments (Pro)</h2>
+  <p>Pro is billed through <strong>Stripe</strong>. We never receive or store your card number — Stripe handles checkout and sends us only what is needed to run the subscription.</p>
+  <ul>
+    <li>When you subscribe we generate a <strong>license key</strong> and store it alongside your email address, subscription status, and billing-period end date, so we know whether the key is currently active.</li>
+    <li>To check that key is valid, the extension and dashboard send the key and a randomly generated <strong>install identifier</strong> to our service. The install identifier is not tied to your identity; it exists only so a single key can be limited to a small number of browsers.</li>
+    <li>We count how many AI cover letters a key has used in the current month, to enforce the monthly limit.</li>
+  </ul>
+  <p>On the free plan none of this applies — there is no account, no key, and nothing to verify.</p>
 
   <h2>Your resume</h2>
   <p>For your security, browsers do not allow extensions to attach files. OfferAIO never uploads or transmits your resume — it simply highlights the file field so you can attach it yourself directly to the employer.</p>
@@ -73,13 +87,19 @@
     <li><strong>Active tab &amp; scripting</strong> — to run the form-filler on the application page you are viewing, only when you click "Fill".</li>
     <li><strong>Access to specific job sites</strong> (Greenhouse, Lever, Ashby, Workday, SmartRecruiters, iCIMS, Workable, Jobvite, BambooHR, Breezy, Taleo, Handshake, LinkedIn Jobs, ZipRecruiter, Indeed, Wellfound) — to fill application fields on those sites.</li>
     <li><strong>Access to offeraio.com</strong> — to let the OfferAIO dashboard sync your profile into the extension.</li>
+    <li><strong>Access to offeraio-worker.tobybergerbusiness.workers.dev</strong> — our own service, used only to check whether a Pro license key is active and to request AI cover letters.</li>
   </ul>
 
   <h2>Sharing</h2>
-  <p>We do not sell, rent, or trade your personal information. We do not share it with third parties except as needed to generate a cover letter at your request, or where required by law.</p>
+  <p>We do not sell, rent, or trade your personal information. We share it with third parties only in these cases:</p>
+  <ul>
+    <li><strong>OpenAI</strong> — to generate a cover letter you asked for.</li>
+    <li><strong>Stripe</strong> — to take payment and manage a Pro subscription.</li>
+    <li>Where required by law.</li>
+  </ul>
 
   <h2>Your choices and data deletion</h2>
-  <p>You can edit or clear your profile at any time in the extension. Removing the extension deletes its locally stored data from your browser. To request any assistance with your data, contact us below.</p>
+  <p>You can edit or clear your profile at any time in the extension. Removing the extension deletes its locally stored data from your browser, including any license key. If you cancel Pro, the key stops working at the end of the period you have paid for. To have the license record associated with your email deleted, or for any other help with your data, contact us below.</p>
 
   <h2>Children</h2>
   <p>OfferAIO is intended for college students and other adults seeking internships and is not directed to children under 13.</p>
