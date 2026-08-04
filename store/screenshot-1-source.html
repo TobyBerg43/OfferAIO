@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OfferAIO store screenshot 1 — source</title>
+<meta name="robots" content="noindex,nofollow">
+<!--
+  Source for store/store-screenshot-1.png (Chrome Web Store, 1280x800).
+
+  Like screenshot 3, this renders the REAL popup rather than a drawing of it: it fetches
+  extension/popup.html and runs the actual license.js + popup.js inside an iframe. The
+  only thing faked is chrome.storage.local, which doesn't exist outside an extension
+  context — seeded below with an ordinary Free-plan user so the quota meter and profile
+  show a lived-in state instead of empty placeholders.
+
+  That matters: the previous screenshot 1 was drawn on 2026-07-19, before licensing, so
+  it showed a popup with no plan badge, no quota meter and no License section. Rendering
+  the real thing means it can't drift again.
+
+  Regenerate (from the repo root, with the static server on :8099 — see the listing kit):
+    chrome --headless=new --screenshot=store/store-screenshot-1.png --window-size=1280,800 \
+           --hide-scrollbars --force-device-scale-factor=1 --virtual-time-budget=8000 \
+           http://localhost:8099/store/screenshot-1-source.html
+-->
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1280px;height:800px;overflow:hidden}
+  body{
+    background:#ede6d7;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    color:#2b2823;position:relative;
+  }
+  .rule{position:absolute;top:-80px;width:1px;height:1000px;background:rgba(88,74,52,.16);transform:rotate(12deg)}
+  .r1{left:920px}.r2{left:1075px}.r3{left:1195px}
+
+  .brand{position:absolute;top:44px;left:80px;display:flex;align-items:center;gap:14px}
+  .mark{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#33528c,#4a72b8);
+        display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px}
+  .brandname{font-size:26px;font-weight:800;letter-spacing:-.01em}
+
+  h1{position:absolute;top:104px;left:80px;font-size:52px;line-height:1.04;letter-spacing:-.02em;font-weight:800;white-space:nowrap}
+  .sub{position:absolute;top:176px;left:80px;font-size:20px;color:#5c5546;line-height:1.45;white-space:nowrap}
+
+  /* The popup at its true 330px width — scaling it would misrepresent how it looks. */
+  .frame{
+    position:absolute;right:110px;top:284px;width:330px;
+    border-radius:14px;overflow:hidden;background:#fbf8f2;
+    border:1px solid rgba(88,74,52,.22);
+    box-shadow:0 26px 60px -26px rgba(74,58,34,.45), 0 3px 10px -4px rgba(74,58,34,.25);
+  }
+  /* Height matches where the popup's content actually ends, with the profile and
+     licence sections collapsed as they are when you really open it. */
+  .frame iframe{display:block;width:330px;height:352px;border:0}
+</style>
+</head>
+<body>
+  <div class="rule r1"></div><div class="rule r2"></div><div class="rule r3"></div>
+
+  <div class="brand"><div class="mark">O</div><div class="brandname">OfferAIO</div></div>
+  <h1>Save your profile once.</h1>
+  <p class="sub">Then fill any internship application in a single click.</p>
+
+  <div class="frame"><iframe id="popup" title="OfferAIO popup"></iframe></div>
+
+<script>
+/* An ordinary Free user partway through the month. Nothing here flatters the product:
+   18 of 50 is a real number a real user would see. No licence key is seeded, so
+   license.js short-circuits on "no_key" and never touches the network. */
+const SEED = {
+  profile: {
+    name: "Toby B.", email: "toby@school.edu", phone: "555-201-8830",
+    school: "State University", gradDate: "May 2028", major: "Finance",
+    minor: "", gpa: "3.8", linkedin: "linkedin.com/in/tobyberger",
+    needsSponsorship: false, coverLetter: ""
+  },
+  mode: "semi",
+  usage: { month: new Date().getFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, "0"), count: 18 }
+};
+
+const STUB = `<scr` + `ipt>
+window.chrome = {
+  storage: { local: {
+    get(keys, cb) {
+      const seed = ${JSON.stringify(SEED)};
+      const out = {};
+      (Array.isArray(keys) ? keys : [keys]).forEach(k => { if (k in seed) out[k] = seed[k]; });
+      cb(out);
+    },
+    set(o, cb) { if (cb) cb(); }
+  } },
+  tabs: { query: () => Promise.resolve([{ id: 1 }]) },
+  scripting: { executeScript: () => Promise.resolve() }
+};
+<\/scr` + `ipt>`;
+
+(async () => {
+  const html = await (await fetch("../extension/popup.html")).text();
+  const patched = html
+    .replace("<head>", "<head>" + STUB)
+    .replace(/src="(?!http)/g, 'src="../extension/');   // scripts resolve against store/
+  document.getElementById("popup").srcdoc = patched;
+})();
+</script>
+</body>
+</html>

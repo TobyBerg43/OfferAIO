@@ -43,13 +43,15 @@
 
   /* real dashboard, scaled to fit — not a redrawing of it */
   .frame{
-    position:absolute;left:470px;top:228px;width:730px;height:462px;
+    /* Height is cropped to where the dashboard's content actually ends. Giving the
+       iframe its full height leaves a dead band of empty cream inside the panel. */
+    position:absolute;left:452px;top:246px;width:756px;height:392px;
     border-radius:16px;overflow:hidden;background:#fffdf8;
     border:1px solid rgba(88,74,52,.22);
     box-shadow:0 26px 60px -26px rgba(74,58,34,.45), 0 3px 10px -4px rgba(74,58,34,.25);
   }
   .frame iframe{
-    width:1460px;height:924px;border:0;
+    width:1512px;height:784px;border:0;
     transform:scale(.5);transform-origin:top left;
   }
 </style>

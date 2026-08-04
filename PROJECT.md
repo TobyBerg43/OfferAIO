@@ -155,12 +155,14 @@ scripts attaching files); the field is highlighted instead.
   **`hcbchgpjladdfmcammhgbbmkdagcfcgd`**. Zip uploaded, title/summary auto-filled.
 - Listing copy, category, permission justifications and data disclosures live in
   `store/OfferAIO-store-listing.md`.
-- Screenshots (1280×800) in `store/` — popup, in-page fill bar, dashboard. All three were
-  hand-drawn mocks, and the dashboard one went stale when the UI was rebuilt on
-  2026-07-22 (it still shows the removed fake titlebar). `store/screenshot-3-source.html`
-  now renders the **real** dashboard in an iframe so it can't drift again; regeneration
-  steps are in `store/OfferAIO-store-listing.md`. Capture it from DevTools' device
-  toolbar at 1280×800 — an ordinary window screenshot comes out rescaled and lossy.
+- Screenshots (1280×800) in `store/` — popup, in-page fill bar, dashboard. **Regenerate
+  with `node store/regenerate.mjs`; all three are current as of 2026-08-04.** They used to
+  be hand-drawn and rotted silently: the dashboard one still showed the fake titlebar
+  removed on 2026-07-22, and the popup one predated licensing entirely. Each
+  `store/screenshot-N-source.html` now frames the **real** UI — the live dashboard, the
+  real `popup.js`, and `content.js` genuinely filling a form — with only
+  `chrome.storage.local` stubbed. The script drives headless Chrome, which is the only
+  way to get an exact 1280×800 PNG; a normal window screenshot comes out rescaled.
 - Privacy policy URL to enter: `https://offeraio.com/privacy.html`
 - **Remaining:** upload store icon + screenshots, complete the Privacy tab, submit for review.
 - The packaged zip is also published on the `extension-latest` GitHub release.
@@ -289,12 +291,14 @@ dashboard is wired to it. Nothing ships value until the four keys in §11 exist.
      nobody can become Pro even after paying.
    - `CLOUDFLARE_API_TOKEN` → GitHub Actions secret. Until set, every push touching
      `worker/**` fails the Deploy Worker job and deploys stay local-only.
-1. **Chrome Web Store:** finish the draft listing (icon, screenshots, privacy tab) and
-   submit. Listing copy and the privacy tab answers were refreshed 2026-08-04 for the
-   Worker host permission and the OpenAI/Stripe transfers — read the ⚠️ in
-   `store/OfferAIO-store-listing.md` before filling the data-transfer question, because
-   the honest answer changed once Pro started sending data off-device. Re-zip: the
-   packaged extension is now v1.1.1.
+1. **Chrome Web Store:** the only remaining work is in the Developer Dashboard itself —
+   upload the three screenshots from `store/`, complete the Privacy tab, and hit Submit.
+   Everything feeding that is prepared and current as of 2026-08-04: listing copy,
+   permission justifications, screenshots (all three regenerated from the real UI), and
+   the packaged zip (v1.1.1, rebuilt automatically on every `extension/` change).
+   ⚠️ Read the warning in `store/OfferAIO-store-listing.md` before answering the
+   data-transfer question — the honest answer changed once Pro started sending data
+   off-device, and a mismatch with privacy.html is a common rejection reason.
 2. **Cloudflare Worker** — deployed and verified (§14). Confirmed still healthy
    2026-08-04: `/health` 200, and `/cover` returns 402 `unknown` for a bogus key and 400
    `install_id_required` with no install id. `wrangler secret list` returns `[]`, so
@@ -308,10 +312,21 @@ dashboard is wired to it. Nothing ships value until the four keys in §11 exist.
    the Payment Link and `STRIPE_WEBHOOK_SECRET` exist; see item 0. Note
    `STRIPE_SECRET_KEY` is **not** needed — the code never calls the Stripe API.
 5. Mark GA4 key events once they appear in the Events list.
-6. **`/rank` has no caller.** The Worker endpoint, its gating and its metering all exist
-   and are tested, but nothing in the site, dashboard or extension ever invokes it. Either
-   wire resume-based ranking into the dashboard's job list or drop the endpoint — right
-   now it is tested, deployed, billable surface area that nothing uses.
+6. **`/rank` has no caller, and can't get one as designed.** The endpoint, its gating and
+   its metering exist and are tested, but nothing invokes it — and wiring it the obvious
+   way would break a promise we make in public. `/rank` takes `resumeText`, while
+   `privacy.html` says in the summary box and again under "Your resume" that the resume
+   is **never uploaded or transmitted**. Sending resume text to the Worker and on to
+   OpenAI would contradict that on the same site. Three honest options, in the order I'd
+   pick them:
+   - **Drop `/rank`.** It is deployed, billable surface area with no caller. Least work,
+     no promise to renegotiate.
+   - **Rank on stated preferences instead** — category, major, target roles, i.e. text the
+     user typed into the dashboard rather than their resume. Keeps the promise intact and
+     still sorts the ~330 live listings by fit.
+   - **Keep resume ranking and rewrite the privacy promise** to be narrower ("the resume
+     *file* is never uploaded"). Possible, but it weakens a claim that currently helps
+     sell the product, for a feature nobody has asked for.
 7. **No email on purchase** (§10). The success page is the only place a key is ever
    shown. Fine at zero customers; the first "I lost my key" email is the signal to fix it.
 8. Optional: `/guides/` blog template, comparison pages.

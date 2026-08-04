@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OfferAIO store screenshot 2 — source</title>
+<meta name="robots" content="noindex,nofollow">
+<!--
+  Source for store/store-screenshot-2.png (Chrome Web Store, 1280x800).
+
+  Runs the REAL content.js against a form, then clicks its own "Fill application" button,
+  so what you see is the actual fill result and the actual in-page bar — including the
+  live "N of 50 left" quota text, which the previous hand-drawn version couldn't show
+  because licensing didn't exist when it was drawn.
+
+  The employer is deliberately fictional ("Northgate Systems"). We can't screenshot a
+  real company's application page — that would put someone else's brand in our store
+  listing — and inventing a plausible-looking real one would be worse. The form markup
+  below is a generic ATS layout using the same standard field names content.js matches
+  on anywhere, which is exactly the point: nothing here is hardcoded for one site.
+
+  Regenerate (from the repo root, with the static server on :8099 — see the listing kit):
+    chrome --headless=new --screenshot=store/store-screenshot-2.png --window-size=1280,800 \
+           --hide-scrollbars --force-device-scale-factor=1 --virtual-time-budget=9000 \
+           http://localhost:8099/store/screenshot-2-source.html
+-->
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1280px;height:800px;overflow:hidden}
+  body{
+    background:#ede6d7;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    color:#2b2823;position:relative;
+  }
+  .rule{position:absolute;top:-80px;width:1px;height:1000px;background:rgba(88,74,52,.16);transform:rotate(12deg)}
+  .r1{left:920px}.r2{left:1075px}.r3{left:1195px}
+
+  .brand{position:absolute;top:44px;left:80px;display:flex;align-items:center;gap:14px}
+  .mark{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#33528c,#4a72b8);
+        display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px}
+  .brandname{font-size:26px;font-weight:800;letter-spacing:-.01em}
+
+  h1{position:absolute;top:104px;left:80px;font-size:52px;line-height:1.04;letter-spacing:-.02em;font-weight:800;white-space:nowrap}
+  .sub{position:absolute;top:176px;left:80px;font-size:20px;color:#5c5546;line-height:1.45;white-space:nowrap}
+
+  .frame{
+    position:absolute;left:452px;top:246px;width:756px;height:406px;
+    border-radius:16px;overflow:hidden;background:#fff;
+    border:1px solid rgba(88,74,52,.22);
+    box-shadow:0 26px 60px -26px rgba(74,58,34,.45), 0 3px 10px -4px rgba(74,58,34,.25);
+  }
+  .frame iframe{width:1512px;height:812px;border:0;transform:scale(.5);transform-origin:top left}
+</style>
+</head>
+<body>
+  <div class="rule r1"></div><div class="rule r2"></div><div class="rule r3"></div>
+
+  <div class="brand"><div class="mark">O</div><div class="brandname">OfferAIO</div></div>
+  <h1>One click fills the whole form.</h1>
+  <p class="sub">You review, attach your resume, and submit — in your own browser.</p>
+
+  <div class="frame"><iframe id="app" title="Application page"></iframe></div>
+
+<script>
+const SEED = {
+  profile: {
+    name: "Toby B.", email: "toby@school.edu", phone: "555-201-8830",
+    school: "State University", gradDate: "May 2028", major: "Finance",
+    minor: "", gpa: "3.8", linkedin: "linkedin.com/in/tobyberger",
+    needsSponsorship: false, coverLetter: ""
+  },
+  mode: "semi",
+  usage: { month: new Date().getFullYear() + "-" + String(new Date().getMonth() + 1).padStart(2, "0"), count: 18 }
+};
+
+const PAGE = `<!DOCTYPE html><html><head><meta charset="utf-8">
+<scr` + `ipt>
+// content.js scrolls the highlighted resume field into view. That's right in a real
+// browser and wrong for a still: it drags this document and the marketing page around
+// it out of frame, and racing it with scroll resets is non-deterministic. Neutralise
+// the scroll only — the blue outline it puts on the resume field, which is the thing
+// being shown, still happens for real.
+Element.prototype.scrollIntoView = function () {};
+
+window.chrome = { storage: { local: {
+  get(keys, cb) {
+    const seed = ${JSON.stringify(SEED)}, out = {};
+    (Array.isArray(keys) ? keys : [keys]).forEach(k => { if (k in seed) out[k] = seed[k]; });
+    cb(out);
+  },
+  set(o, cb) { if (cb) cb(); }
+} } };
+<\/scr` + `ipt>
+<style>
+  body{margin:0;background:#fff;color:#1f2328;font:15px/1.5 -apple-system,'Segoe UI',sans-serif;padding:34px 44px 90px}
+  .co{display:flex;align-items:center;gap:11px;margin-bottom:22px}
+  .co-mark{width:30px;height:30px;border-radius:7px;background:#1f3a5f;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px}
+  .co-name{font-weight:700;font-size:16px}
+  h1{font-size:25px;letter-spacing:-.01em;margin-bottom:5px}
+  .meta{color:#6b7280;font-size:13.5px;margin-bottom:26px}
+  label{display:block;font-size:13px;font-weight:600;color:#374151;margin:0 0 6px}
+  .f{margin-bottom:15px}
+  .row{display:flex;gap:15px}.row>*{flex:1}
+  input,select{width:100%;border:1px solid #d1d5db;border-radius:7px;padding:9px 11px;font-size:14.5px;font-family:inherit;color:#1f2328;background:#fff}
+  input[type=file]{padding:8px;background:#f9fafb}
+  .req{color:#b4442f}
+</style></head><body>
+  <div class="co"><div class="co-mark">N</div><div class="co-name">Northgate Systems</div></div>
+  <h1>Software Engineer Intern — Summer 2027</h1>
+  <div class="meta">Greenhouse · Application</div>
+
+  <div class="row">
+    <div class="f"><label>First name <span class="req">*</span></label><input name="first_name" autocomplete="given-name"></div>
+    <div class="f"><label>Last name <span class="req">*</span></label><input name="last_name" autocomplete="family-name"></div>
+  </div>
+  <div class="row">
+    <div class="f"><label>Email <span class="req">*</span></label><input type="email" name="email" autocomplete="email"></div>
+    <div class="f"><label>Phone</label><input name="phone" autocomplete="tel"></div>
+  </div>
+  <div class="f"><label>LinkedIn profile</label><input name="linkedin_url"></div>
+  <div class="row">
+    <div class="f"><label>School</label><input name="school"></div>
+    <div class="f"><label>Major / field of study</label><input name="major"></div>
+  </div>
+  <div class="row">
+    <div class="f"><label>Expected graduation</label><input name="graduation_date"></div>
+    <div class="f"><label>Will you require visa sponsorship?</label><select name="sponsorship"><option>No</option><option>Yes</option></select></div>
+  </div>
+  <div class="f"><label>Resume / CV <span class="req">*</span></label><input type="file" name="resume"></div>
+
+<scr` + `ipt src="../extension/license.js"><\/scr` + `ipt>
+<scr` + `ipt src="../extension/content.js"><\/scr` + `ipt>
+<scr` + `ipt>
+  // Click the extension's own Fill button once it has mounted, so the capture shows the
+  // real post-fill state rather than a mockup of one.
+  (function press(n){
+    const b = document.getElementById("oa-fill");
+    if (b) { b.click(); return settle(); }
+    if (n < 40) setTimeout(() => press(n + 1), 100);
+  })(0);
+
+  // content.js scrolls the highlighted resume field into view, which drags both this
+  // document AND the marketing page around it. Real behaviour, wrong for a still —
+  // scroll both back once the smooth scroll has finished.
+  function settle(){
+    [250, 600, 1000].forEach(t => setTimeout(() => {
+      window.scrollTo(0, 0);
+      try { parent.scrollTo(0, 0); } catch (e) {}
+    }, t));
+  }
+<\/scr` + `ipt>
+</body></html>`;
+
+document.getElementById("app").srcdoc = PAGE;
+</script>
+</body>
+</html>
