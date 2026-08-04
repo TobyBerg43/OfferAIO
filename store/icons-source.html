@@ -20,7 +20,16 @@ const OUTPUTS = [
   ["favicon-32.png", 32],
   ["favicon-180.png", 180],          // apple-touch-icon
   ["logo-96.png", 96],               // nav / header marks — 512 is ~300KB, far too heavy there
-  ["logo.png", 512],                 // JSON-LD Organization logo, store icon
+  ["logo.png", 512],                 // JSON-LD Organization logo, general use
+];
+
+/* The Chrome Web Store STORE icon is a different shape from the extension's own icons.
+   Google's image guidelines require the artwork to be 96x96 centred inside a 128x128
+   canvas, with 16px of transparent padding per side — "Don't put an edge around the
+   128x128 image; the UI might add edges." An edge-to-edge 128 (which is correct for the
+   toolbar) gets rejected or looks wrong once the store adds its own rounding. */
+const PADDED = [
+  ["store/store-icon-128.png", 128, 96],   // [name, canvas, artwork]
 ];
 
 function roundRect(ctx, x, y, w, h, r) {
@@ -52,6 +61,25 @@ img.onload = async () => {
     log.push(name.padEnd(30) + size + "x" + size + "  " + blob.size + "B  " + (res.ok ? "saved" : "FAILED"));
     document.getElementById("out").textContent = log.join("\n");
   }
+
+  for (const [name, canvas, art] of PADDED) {
+    const c = document.createElement("canvas");
+    c.width = c.height = canvas;
+    const ctx = c.getContext("2d");
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    const inset = (canvas - art) / 2;
+    ctx.drawImage(img, SRC.x, SRC.y, SRC.s, SRC.s, inset, inset, art, art);
+    ctx.globalCompositeOperation = "destination-in";
+    roundRect(ctx, inset, inset, art, art, art * RADIUS_RATIO);
+    ctx.fill();
+    ctx.globalCompositeOperation = "source-over";
+    const blob = await new Promise((r) => c.toBlob(r, "image/png"));
+    const res = await fetch("/save?name=" + encodeURIComponent(name), { method: "POST", body: blob });
+    log.push(name.padEnd(30) + canvas + "x" + canvas + " (art " + art + ")  " + blob.size + "B  " + (res.ok ? "saved" : "FAILED"));
+    document.getElementById("out").textContent = log.join("\n");
+  }
+
   document.getElementById("out").textContent = log.join("\n") + "\nDONE";
 };
 img.onerror = () => { document.getElementById("out").textContent = "MASTER IMAGE FAILED TO LOAD"; };

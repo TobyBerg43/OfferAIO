@@ -35,20 +35,22 @@
   .rule{position:absolute;top:-80px;width:1px;height:1000px;background:rgba(88,74,52,.16);transform:rotate(12deg)}
   .r1{left:920px}.r2{left:1075px}.r3{left:1195px}
 
-  .brand{position:absolute;top:44px;left:80px;display:flex;align-items:center;gap:14px}
-  .mark{width:44px;height:44px;border-radius:12px;background:url("/logo-96.png") center/contain no-repeat;flex:0 0 auto}
-  .brandname{font-size:26px;font-weight:800;letter-spacing:-.01em}
+  .brand{position:absolute;top:46px;left:72px;display:flex;align-items:center;gap:13px}
+  .mark{width:40px;height:40px;border-radius:11px;background:url("/logo-96.png") center/contain no-repeat;flex:0 0 auto}
+  .brandname{font-size:24px;font-weight:800;letter-spacing:-.01em}
 
-  h1{position:absolute;top:104px;left:80px;font-size:52px;line-height:1.04;letter-spacing:-.02em;font-weight:800;white-space:nowrap}
-  .sub{position:absolute;top:176px;left:80px;font-size:20px;color:#5c5546;line-height:1.45;white-space:nowrap}
+  h1{position:absolute;top:100px;left:72px;font-size:44px;line-height:1.05;letter-spacing:-.02em;font-weight:800;white-space:nowrap}
+  .sub{position:absolute;top:156px;left:72px;font-size:19px;color:#5c5546;line-height:1.45;white-space:nowrap}
 
+  /* 1:1, full width — see the note in screenshot-3-source.html. At scale(.5) the form
+     labels and the bar's status text were about 6px tall and simply unreadable. */
   .frame{
-    position:absolute;left:452px;top:246px;width:756px;height:406px;
-    border-radius:16px;overflow:hidden;background:#fff;
+    position:absolute;left:72px;top:212px;width:1136px;height:540px;
+    border-radius:14px;overflow:hidden;background:#fff;
     border:1px solid rgba(88,74,52,.22);
     box-shadow:0 26px 60px -26px rgba(74,58,34,.45), 0 3px 10px -4px rgba(74,58,34,.25);
   }
-  .frame iframe{width:1512px;height:812px;border:0;transform:scale(.5);transform-origin:top left}
+  .frame iframe{width:1136px;height:540px;border:0;display:block}
 </style>
 </head>
 <body>
@@ -145,7 +147,24 @@ window.chrome = { storage: { local: {
     [250, 600, 1000].forEach(t => setTimeout(() => {
       window.scrollTo(0, 0);
       try { parent.scrollTo(0, 0); } catch (e) {}
+      pinBar();
     }, t));
+  }
+
+  // The bar is position:fixed, which gives it its own compositor layer. Headless
+  // Chrome frequently paints that layer's background but not its children, so the
+  // capture came out with an empty cream strip where the bar should be — the elements
+  // were all present and correctly positioned, they simply never rasterised.
+  // Re-anchoring it as absolute puts it at exactly the same place on an ordinary
+  // layer. Capture-only, like the scrollIntoView stub above; nothing about how the
+  // bar behaves in a real browser is being changed here.
+  function pinBar(){
+    const bar = document.getElementById("offeraio-bar");
+    if (!bar || bar.dataset.pinned) return;
+    const h = bar.offsetHeight;
+    bar.style.position = "absolute";
+    bar.style.top = (window.scrollY + window.innerHeight - h) + "px";
+    bar.dataset.pinned = "1";
   }
 <\/scr` + `ipt>
 </body></html>`;

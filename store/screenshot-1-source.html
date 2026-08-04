@@ -34,23 +34,25 @@
   .rule{position:absolute;top:-80px;width:1px;height:1000px;background:rgba(88,74,52,.16);transform:rotate(12deg)}
   .r1{left:920px}.r2{left:1075px}.r3{left:1195px}
 
-  .brand{position:absolute;top:44px;left:80px;display:flex;align-items:center;gap:14px}
-  .mark{width:44px;height:44px;border-radius:12px;background:url("/logo-96.png") center/contain no-repeat;flex:0 0 auto}
-  .brandname{font-size:26px;font-weight:800;letter-spacing:-.01em}
+  .brand{position:absolute;top:46px;left:72px;display:flex;align-items:center;gap:13px}
+  .mark{width:40px;height:40px;border-radius:11px;background:url("/logo-96.png") center/contain no-repeat;flex:0 0 auto}
+  .brandname{font-size:24px;font-weight:800;letter-spacing:-.01em}
 
-  h1{position:absolute;top:104px;left:80px;font-size:52px;line-height:1.04;letter-spacing:-.02em;font-weight:800;white-space:nowrap}
-  .sub{position:absolute;top:176px;left:80px;font-size:20px;color:#5c5546;line-height:1.45;white-space:nowrap}
+  h1{position:absolute;top:100px;left:72px;font-size:44px;line-height:1.05;letter-spacing:-.02em;font-weight:800;white-space:nowrap}
+  .sub{position:absolute;top:156px;left:72px;font-size:19px;color:#5c5546;line-height:1.45;white-space:nowrap}
 
-  /* The popup at its true 330px width — scaling it would misrepresent how it looks. */
+  /* The popup is only 330px wide in real life, so unlike the other two it is scaled UP
+     rather than down — 1.5x, centred. Chrome re-rasterises the iframe at the scaled
+     size, so the text stays sharp instead of being an enlarged bitmap. Height matches
+     where the popup's content ends, with the profile and licence sections collapsed
+     as they are when you really open it. */
   .frame{
-    position:absolute;right:110px;top:284px;width:330px;
+    position:absolute;left:392px;top:212px;width:495px;height:528px;
     border-radius:14px;overflow:hidden;background:#fbf8f2;
     border:1px solid rgba(88,74,52,.22);
     box-shadow:0 26px 60px -26px rgba(74,58,34,.45), 0 3px 10px -4px rgba(74,58,34,.25);
   }
-  /* Height matches where the popup's content actually ends, with the profile and
-     licence sections collapsed as they are when you really open it. */
-  .frame iframe{display:block;width:330px;height:352px;border:0}
+  .frame iframe{display:block;width:330px;height:352px;border:0;transform:scale(1.5);transform-origin:top left}
 </style>
 </head>
 <body>
@@ -97,7 +99,12 @@ window.chrome = {
   const html = await (await fetch("../extension/popup.html")).text();
   const patched = html
     .replace("<head>", "<head>" + STUB)
-    .replace(/src="(?!http)/g, 'src="../extension/');   // scripts resolve against store/
+    // Relative paths inside popup.html resolve against the extension root in a real
+    // browser, but against /store/ here. Both forms need rewriting: script src=, and
+    // the CSS url() the logo tile uses — miss the latter and the capture shows a popup
+    // with a blank space where its own icon should be.
+    .replace(/src="(?!http)/g, 'src="../extension/')
+    .replace(/url\("(?!http|data:)/g, 'url("../extension/');
   document.getElementById("popup").srcdoc = patched;
 })();
 </script>

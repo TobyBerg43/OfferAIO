@@ -113,7 +113,8 @@ gradient stroke (`#553bfa`) and a sparkle.
 | `favicon-32.png`, `favicon-180.png` | modern favicon + apple-touch-icon |
 | `favicon.svg` | **every generated `internships/` page** — rebuilt from the 180px raster |
 | `logo-96.png` | nav/header marks (the 512 is ~300KB, far too heavy for a 30px tile) |
-| `logo.png` (512) | JSON-LD `Organization.logo`, store icon |
+| `logo.png` (512) | JSON-LD `Organization.logo`, general use |
+| `store/store-icon-128.png` | **the Web Store listing icon** — 96×96 artwork centred in a 128×128 canvas with 16px transparent padding, per Google's image guidelines. Deliberately *not* the same as the extension's edge-to-edge `icon128.png` |
 | `og.png` | the social share card, from `store/og-source.html` |
 | `store/store-screenshot-{1,2,3}.png` | the Web Store listing |
 

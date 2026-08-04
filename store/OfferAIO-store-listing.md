@@ -77,9 +77,12 @@ https://offeraio.com/privacy.html
 
 ## Graphic assets you still need to upload
 
-- Store icon 128×128 — included in the zip (icons/icon128.png). ✅ **New logo as of
-  2026-08-04** — if the draft listing already has the old blue "O" icon uploaded,
-  replace it.
+- **Store icon → upload `store/store-icon-128.png`.** ✅ Not the zip's `icons/icon128.png`:
+  those are two different shapes. Google's image guidelines require the store icon's
+  artwork to be **96×96 centred in a 128×128 canvas with 16px of transparent padding per
+  side** — "Don't put an edge around the 128x128 image; the UI might add edges." The
+  extension's own icon is deliberately edge-to-edge, which is right for the toolbar and
+  wrong here. If the draft already has the old blue "O" uploaded, replace it.
 - Screenshots, all three exactly 1280×800 PNG, regenerated 2026-08-04 with the new logo.
   ✅ Upload as-is:
   1. `store-screenshot-1.png` — the extension popup.
