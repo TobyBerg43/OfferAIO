@@ -59,8 +59,13 @@ dashboard can talk to on `http://127.0.0.1:7717` for real (non-simulated) applyi
 ## 4. Deploy process (how changes go live)
 1. Commit to `main` (easiest: `github.com/TobyBerg43/OfferAIO/upload/main[/<subdir>]`).
 2. GitHub Pages rebuilds (~1 min). Check **Actions → pages build and deployment**.
-3. **Purge the Cloudflare cache:** dash.cloudflare.com → offeraio.com → Caching →
-   Configuration → **Purge Everything**. New URLs don't need it; changed ones do.
+3. **Purge the Cloudflare cache — but only for static assets.** Measured 2026-08-04:
+   HTML pages (`/`, `/privacy.html`, `/dashboard/`) come back `cf-cache-status: DYNAMIC`,
+   i.e. Cloudflare isn't caching them at all, and edits are live the moment Pages
+   finishes. `.js`/`.css` **are** cached (`EXPIRED`/`HIT`). So a page-only change needs
+   no purge; a change to `billing.js` — which is exactly the file that changes when the
+   Stripe Payment Link is pasted in — does. Purge at dash.cloudflare.com → offeraio.com →
+   Caching → Configuration → **Purge Everything** (user-only; there's no API token).
 4. Verify by loading the live URL (add `?v=n` to bypass cache while testing).
 
 Large files (`landing.html`, `OfferAIO.html`) are edited with **exact-match patch
@@ -326,6 +331,11 @@ was vendored from the live deployment, verified byte-for-byte (md5
 
 - Deploy: push to `main` touching `worker/**` → `.github/workflows/deploy-worker.yml`.
   Needs repo secret `CLOUDFLARE_API_TOKEN`. Manually: `npx wrangler deploy` from `worker/`.
+- ℹ️ **Live is one commit behind `main` as of 2026-08-04, harmlessly.** The 2026-08-04
+  push touched `worker/**` with a comment-only edit (a stale "Anthropic" reference), so
+  CI tried to deploy and failed on the missing token as usual. The deployed script is
+  therefore functionally identical to `main` — no behaviour differs. It syncs on the next
+  successful deploy; nothing needs doing.
 - Worker secrets are stored in Cloudflare, survive deploys, and are never in the repo.
 - KV `LICENSES` → `offeraio-licenses` (`40fb8a5ef93143fc9d0ad49592a7dc64`), bound but
   unused until §10 Phase 1.
