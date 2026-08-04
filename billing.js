@@ -9,9 +9,11 @@
  */
 window.OfferAIO = window.OfferAIO || {};
 
-// Paste the Stripe Payment Link here, e.g. "https://buy.stripe.com/xxxxxxxxxxxx".
-// Set the link's success URL to: https://offeraio.com/license.html?session_id={CHECKOUT_SESSION_ID}
-window.OfferAIO.PAYMENT_LINK = "";
+// Live since 2026-08-04. Stripe account: OfferAIO (acct_1U0olS2ctbNhEUYI) — its own
+// account, deliberately NOT the CertTrack one; see PROJECT.md §10.
+// price_1U0pGB2ctbNhEUYIbQgkXzuh, $30/mo, redirecting to
+// https://offeraio.com/license.html?session_id={CHECKOUT_SESSION_ID}
+window.OfferAIO.PAYMENT_LINK = "https://buy.stripe.com/8x2fZaaIG8XI5vs9r78N200";
 
 // Same-origin when developing locally, so a local stub can stand in for the Worker.
 window.OfferAIO.WORKER =

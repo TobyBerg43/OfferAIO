@@ -189,17 +189,30 @@ tracked submissions before, so "50/month" was marketing copy only. Counting happ
 `content.js` `doSubmit()`, *after* the submit button is actually clicked, so a failed
 lookup never burns a submission. The monthly reset is keyed on local-time `YYYY-MM`.
 
-⚠️ **OfferAIO needs its own Stripe account.** Checked 2026-08-04: the Stripe connector
-authorizes `acct_1Tm4Y7K5Z8GDflE1`, display name **CertTrack** — a different product of
-Toby's, in **live mode**, already holding two live CertTrack products, two live payment
-links and a live webhook to `certtrackhq.com`. Do **not** create OfferAIO's product there.
-Checkout branding and the statement descriptor are account-level, so OfferAIO buyers would
-see "CertTrack" on the payment page and on their card statement — brand confusion and a
-chargeback risk — and the two businesses' revenue and tax would commingle. Stripe allows
-several accounts under one login (dashboard → account switcher → new account); OfferAIO
-needs its own, and the connector must be re-authorized to it before any of §10 is built.
+### Stripe objects — created live 2026-08-04
 
-**To go live, paste the Payment Link into `billing.js`.** That's the only edit needed —
+**Account: `acct_1U0olS2ctbNhEUYI`, display name "OfferAIO", `livemode: true`.** Its own
+account, deliberately **not** `acct_1Tm4Y7K5Z8GDflE1` ("CertTrack"), which the connector
+was originally bound to. Checkout branding and the statement descriptor are account-level,
+so building here would have put "CertTrack" on students' card statements and commingled
+two businesses' books. If the Stripe connector ever reports CertTrack again, it is pointed
+at the wrong account — revoke it from CertTrack's Connected apps, switch the dashboard to
+OfferAIO, then re-authorize.
+
+| Object | Id / value |
+| --- | --- |
+| Product | `prod_V0qxqcvAJ5vin2` — "OfferAIO Pro", statement descriptor `OFFERAIO PRO` |
+| Price | `price_1U0pGB2ctbNhEUYIbQgkXzuh` — $30.00/month USD recurring |
+| Payment Link | `plink_1U0pGM2ctbNhEUYIg2X6HKaz` → https://buy.stripe.com/8x2fZaaIG8XI5vs9r78N200 |
+| Webhook | `we_1U0pGm2ctbNhEUYIq2QF7lrI` → the Worker's `/stripe/webhook`, all 7 events |
+
+The Payment Link redirects to `https://offeraio.com/license.html?session_id={CHECKOUT_SESSION_ID}`
+and is pasted into `billing.js`. `STRIPE_WEBHOOK_SECRET` is set as a Worker secret.
+
+⚠️ **A secret change takes a minute or two to reach every edge location.** Straight after
+`wrangler secret put`, the webhook alternated cleanly between `400 invalid signature` and
+`500 webhook secret not configured` — old and new isolates both serving. It settled on its
+own. If you rotate the secret, expect the same and don't chase it. That's the only edit needed —
 `landing.html` and `pricing/index.html` both read it from there. While it's empty the
 "Get access" buttons keep their old waitlist behaviour, so this ships safely before
 Stripe exists. Set the link's success URL to
@@ -281,7 +294,7 @@ that matters.
 | `CLOUDFLARE_API_TOKEN` | GitHub Actions secret | lets CI run `wrangler deploy` | **unset — blocking the Worker deploy** |
 | `OPENAI_API_KEY` | Cloudflare Worker secret | chat for `/cover`, embeddings for `/rank` | unset |
 | `STRIPE_SECRET_KEY` | Cloudflare Worker secret | reserved; **the code does not use it** — every field needed arrives in the webhook payloads | unset |
-| `STRIPE_WEBHOOK_SECRET` | Cloudflare Worker secret | webhook signature verification | unset |
+| `STRIPE_WEBHOOK_SECRET` | Cloudflare Worker secret | webhook signature verification | **set 2026-08-04** — verified live: forged events get 400, unsigned get 400, nothing provisions |
 
 `ANTHROPIC_API_KEY` is **not** on this list and should never be set — see §3.
 
@@ -295,10 +308,8 @@ dashboard is wired to it. Nothing ships value until the four keys in §11 exist.
 0. **The four keys (§11).** In the order that unlocks the most:
    - `OPENAI_API_KEY` → `npx wrangler secret put OPENAI_API_KEY` from `worker/`. Makes AI
      cover letters actually work. Safe to set now — the endpoints are gated (§14).
-   - Stripe Pro product + Payment Link → paste into `billing.js` (§10), set the success
-     URL to `https://offeraio.com/license.html?session_id={CHECKOUT_SESSION_ID}`.
-   - `STRIPE_WEBHOOK_SECRET` → Worker secret. Without it no key is ever minted, so
-     nobody can become Pro even after paying.
+   - ~~Stripe Pro product + Payment Link~~ — **done 2026-08-04**, see §10.
+   - ~~`STRIPE_WEBHOOK_SECRET`~~ — **done 2026-08-04.**
    - `CLOUDFLARE_API_TOKEN` → GitHub Actions secret. Until set, every push touching
      `worker/**` fails the Deploy Worker job and deploys stay local-only.
 1. **Chrome Web Store:** the only remaining work is in the Developer Dashboard itself —
@@ -318,9 +329,14 @@ dashboard is wired to it. Nothing ships value until the four keys in §11 exist.
    the JS kept working), Live-activity timestamps are staggered, the 14-day chart has
    date labels, and headings (`h1`, logo, modal `h2`) now use Anton via `--display`,
    matching the landing page. Verified locally in Chrome before pushing.
-4. **Stripe licensing** (§10) — Phases 0–4 built and tested. Everything is inert until
-   the Payment Link and `STRIPE_WEBHOOK_SECRET` exist; see item 0. Note
+4. **Stripe licensing** (§10) — **live as of 2026-08-04.** Phases 0–4 built, tested and
+   now configured: product, price, Payment Link and webhook all exist in the OfferAIO
+   account, the link is in `billing.js`, and `STRIPE_WEBHOOK_SECRET` is set. Note
    `STRIPE_SECRET_KEY` is **not** needed — the code never calls the Stripe API.
+   **Untested end to end:** nobody has actually bought yet, so the
+   checkout → webhook → key-minted → `/license.html` path has never run with a real
+   Stripe event. The first purchase is the real test; if it misbehaves, look at the
+   KV race documented at the end of §10 first.
 5. Mark GA4 key events once they appear in the Events list.
 6. **`/rank` has no caller, and can't get one as designed.** The endpoint, its gating and
    its metering exist and are tested, but nothing invokes it — and wiring it the obvious
