@@ -67,7 +67,7 @@
  "optiver": {
   "name": "Optiver",
   "lastSeen": "2026-08-05",
-  "roles": 10
+  "roles": 11
  },
  "vital-lyfe": {
   "name": "VITAL LYFE",
@@ -457,7 +457,7 @@
  "jll": {
   "name": "JLL",
   "lastSeen": "2026-08-05",
-  "roles": 2
+  "roles": 1
  },
  "radix-trading": {
   "name": "Radix Trading",
@@ -801,6 +801,16 @@
  },
  "boeing": {
   "name": "Boeing",
+  "lastSeen": "2026-08-05",
+  "roles": 1
+ },
+ "hp": {
+  "name": "HP",
+  "lastSeen": "2026-08-05",
+  "roles": 2
+ },
+ "roblox": {
+  "name": "Roblox",
   "lastSeen": "2026-08-05",
   "roles": 1
  }
