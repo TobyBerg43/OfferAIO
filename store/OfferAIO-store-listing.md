@@ -64,11 +64,17 @@ OfferAIO fills internship application forms on supported job sites with the user
 - Transferred to third parties only for a feature the user actively invokes: OpenAI, to generate a cover letter they requested; and Stripe, to process a subscription payment. **Not sold.**
 - Not used for purposes unrelated to the single purpose; not used for creditworthiness or lending.
 
-⚠️ **The "not sold or transferred" box cannot be checked as-is.** The paid tier sends the
-company, role and the profile fields needed to write the letter to our Worker, which calls
-OpenAI. Declare that transfer — it is disclosed in the privacy policy under "Cover-letter
-generation (Pro)" and "Licensing and payments (Pro)", and a mismatch between this form and
-the policy is a common rejection reason.
+**All three certification boxes can be checked.** An earlier draft of this file said the
+"not sold or transferred" box could not be — that was wrong. Google's Limited Use policy
+lists four approved transfers, the first being "if necessary to providing or improving your
+single purpose". Sending the company, role and profile fields to our Worker and on to
+OpenAI exists solely to draft the cover letter, which *is* the single purpose, so it falls
+inside that exception. Stripe is not an extension transfer at all — the user enters card
+details on Stripe's own checkout page; nothing is sent there by the extension.
+
+Both flows remain disclosed in the privacy policy under "Cover-letter generation (Pro)" and
+"Licensing and payments (Pro)", which is what matters: the certification and the policy must
+agree, and they do.
 
 **Privacy policy URL**
 https://offeraio.com/privacy.html
