@@ -32,7 +32,8 @@ gtag('js',new Date());gtag('config','G-QP59EKE1BS');
 {"@type":"Question","name":"Does it bypass CAPTCHAs?","acceptedAnswer":{"@type":"Answer","text":"Never. When a CAPTCHA appears, OfferAIO hands control back to you. Resume upload is also manual for browser security reasons; the field is highlighted so you can drop the file in two seconds."}},
 {"@type":"Question","name":"Won't companies flag my applications as automated?","acceptedAnswer":{"@type":"Answer","text":"Everything goes out on your IP and your logged-in sessions, with randomized human pacing, a daily cap, quiet hours, and a match-quality floor. To an employer it looks like what it is: a real applicant who reviewed and sent an application."}},
 {"@type":"Question","name":"Where do the listings come from?","acceptedAnswer":{"@type":"Answer","text":"A pipeline runs every 6 hours: it aggregates community Summer 2027 lists and about 180 public company job boards via Greenhouse, Lever, Ashby, and Workday, then filters to US-only internship roles and dedupes. The database grows through fall 2026 as postings open."}},
-{"@type":"Question","name":"What happens to my data?","acceptedAnswer":{"@type":"Answer","text":"Your profile and resume stay in your browser and the extension. The cover-letter API processes requests without storing your documents."}}
+{"@type":"Question","name":"What happens to my data?","acceptedAnswer":{"@type":"Answer","text":"Your profile and resume stay in your browser and the extension. The cover-letter API processes requests without storing your documents."}},
+{"@type":"Question","name":"What if my GPA isn't great, or my school isn't a target?","acceptedAnswer":{"@type":"Answer","text":"OfferAIO has no GPA cutoff and no school filter. The live board is mostly not Jane Street and McKinsey: it is Wells Fargo commercial banking and audit, Marsh McLennan insurance, PNC, Nelnet, Fiserv, Micron, Bosch, Core & Main and JLL — hundreds of roles where a complete, on-time application is competitive. It will not turn a 2.8 into a Citadel offer; it removes the retyping so you can apply to more places, earlier."}}
 ]}]}
 </script>
 <link rel="icon" href="/favicon.svg">
@@ -821,7 +822,7 @@ section.container{padding:104px 20px}
 
         <!-- Listings -->
         <div class="page" data-page="listings">
-          <div class="pg-head"><h3>Listings</h3><small id="listSub">live database · updated every 6h</small></div>
+          <div class="pg-head"><h3>Listings</h3><small id="listSub">live database · checked every 6h</small></div>
           <div id="listBody"></div>
         </div>
 
@@ -901,7 +902,7 @@ section.container{padding:104px 20px}
   <div class="bento">
     <div class="bcard b3 reveal">
       <h3>Tasks that watch the market</h3>
-      <p>Fresh postings every 6 hours from ~180 company job boards. Tasks fire the moment a match appears.</p>
+      <p>Checked every 6 hours across ~180 company job boards and the community Summer 2027 lists. Tasks fire the moment a match appears.</p>
       <div class="bmini">
         <div class="row1">stripe.com/jobs · SWE Intern · <span class="g">match 94%</span></div>
         <div class="v">→ filling application… 14 of 22 fields</div>
@@ -1068,6 +1069,11 @@ section.container{padding:104px 20px}
     <details>
       <summary>What happens to my data?</summary>
       <p>Your profile and resume stay in your browser and the extension. The cover-letter API processes requests without storing your documents.</p>
+    </details>
+    <details>
+      <summary>What if my GPA isn't great, or my school isn't a target?</summary>
+      <p>Then volume is doing the most work for you, not the least. OfferAIO has no GPA cutoff and no school filter — it fills whatever you point it at. The live board is mostly not Jane Street and McKinsey: it's Wells Fargo commercial banking and audit, Marsh McLennan insurance, PNC, Nelnet, Fiserv, Micron, Bosch, Core &amp; Main, JLL. Hundreds of roles where a complete, on-time application from someone who actually wants the job is competitive, and where the real reason people miss out is that they applied to eight places in November instead of eighty.</p>
+      <p>We're not going to pretend this turns a 2.8 into a Citadel offer. It removes the part that has nothing to do with whether you'd be good at the job — retyping your address and graduation date two hundred times — so the applications you do send are to more places, earlier, with a cover letter that sounds like you.</p>
     </details>
   </div>
 </section>

@@ -91,7 +91,7 @@ const LOGO = `<img class="logo-mark" src="/logo-96.png" alt="" width="30" height
 
 const NAV = `<nav class="nav"><div class="container nav-in"><a class="logo" href="/" aria-label="OfferAIO home">${LOGO}<span>Offer<span class="acc">AIO</span></span></a><div class="nav-links"><a href="/internships/">Internships</a><a href="/pricing/">Pricing</a><a href="/employers/">For Employers</a><a class="btn btn-blue" href="/dashboard/">Open the dashboard</a></div></div></nav>`;
 
-const FOOT = `<footer><div class="container"><div class="foot-links"><a href="/">Home</a><a href="/internships/">Live internships</a><a href="/dashboard/">Dashboard</a><a href="/pricing/">Pricing</a><a href="/employers/">For Employers</a></div><p class="compliance">Listings refresh every 6 hours from public company job boards and community sources. OfferAIO is not affiliated with any employer, university, or applicant tracking system. Applications are always reviewed and authorized by you before submission. No outcomes are guaranteed. © 2026 OfferAIO.</p></div></footer>`;
+const FOOT = `<footer><div class="container"><div class="foot-links"><a href="/">Home</a><a href="/internships/">Live internships</a><a href="/dashboard/">Dashboard</a><a href="/pricing/">Pricing</a><a href="/employers/">For Employers</a></div><p class="compliance">Listings are checked every 6 hours against public company job boards and community sources; new postings appear when those sources publish them. OfferAIO is not affiliated with any employer, university, or applicant tracking system. Applications are always reviewed and authorized by you before submission. No outcomes are guaranteed. © 2026 OfferAIO.</p></div></footer>`;
 
 const CTA = `<div class="cta-band"><h2 style="margin-top:0">Stop applying one tab at a time</h2><p>OfferAIO watches these listings and applies for you, in your own browser. 100 submissions a month, free.</p><a class="btn btn-gold" href="/dashboard/">Start free</a></div>`;
 
@@ -174,9 +174,9 @@ const NC = Object.keys(byCompany).length;
   const c = crumbs([{ name: 'Home', href: '/' }, { name: 'Internships', href: '/internships/' }]);
   const catCards = CATS.map(cat => `<a class="card" href="/internships/${cat.slug}/"><h3>${esc(cat.name)}</h3><span class="cnt">${byCat[cat.slug].length} live roles</span></a>`).join('');
   const body = `${c.html}
-<h1>Live Summer 2027 internships, updated every 6 hours</h1>
+<h1>Live Summer 2027 internships, checked every 6 hours</h1>
 <p class="sub">${N} open internship roles across ${NC} companies, pulled from public job boards and deduped. Every listing links to the real application.</p>
-<span class="pill"><span class="dot"></span>${N} live listings · refreshed every 6h</span>
+<span class="pill"><span class="dot"></span>${N} live listings · checked every 6h</span>
 <h2>Browse by category</h2>
 <div class="grid">${catCards}</div>
 <h2>Newest listings</h2>
@@ -184,7 +184,7 @@ ${sorted.slice(0, 20).map(row).join('')}
 <p style="margin-top:18px"><a href="/internships/companies/">Browse all ${NC} companies →</a></p>
 ${CTA}`;
   const ld = { '@context': 'https://schema.org', '@graph': [c.ld, { '@type': 'ItemList', name: 'Summer 2027 internship categories', itemListElement: CATS.map((cat, i) => ({ '@type': 'ListItem', position: i + 1, name: cat.name + ' Internships', url: `${SITE}/internships/${cat.slug}/` })) }] };
-  write('internships/index.html', page(`Summer 2027 Internships: ${N} Live Openings | OfferAIO`, `Browse ${N} live Summer 2027 internship openings across ${NC} companies. Refreshed every 6 hours. SWE, quant, IB, consulting, product, and data roles.`, '/internships/', body, ld));
+  write('internships/index.html', page(`Summer 2027 Internships: ${N} Live Openings | OfferAIO`, `Browse ${N} live Summer 2027 internship openings across ${NC} companies. Checked every 6 hours. SWE, quant, IB, consulting, product, and data roles.`, '/internships/', body, ld));
 }
 
 /* ---------- categories ---------- */

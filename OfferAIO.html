@@ -541,14 +541,20 @@
 <script>
 /* ============ DATA ============ */
 const CATS = {
-  swe:{label:'SWE', roles:['Software Engineering Intern','Backend Intern','Full-Stack Intern'], cos:['Stripe','Databricks','Figma','Datadog','Roblox','Plaid']},
-  ai:{label:'AI/ML', roles:['ML Engineering Intern','AI Research Intern','Applied AI Intern'], cos:['Scale AI','Perplexity','Hugging Face','Anduril','Nvidia']},
-  ib:{label:'Inv. Banking', roles:['IB Summer Analyst','M&A Analyst Intern'], cos:['Goldman Sachs','Morgan Stanley','Evercore','Lazard','Jefferies']},
-  quant:{label:'Quant', roles:['Quant Trading Intern','Quant Research Intern'], cos:['Jane Street','Citadel','Two Sigma','HRT','SIG']},
-  consulting:{label:'Consulting', roles:['Consulting Summer Intern','Strategy Analyst Intern'], cos:['McKinsey','BCG','Bain','EY-Parthenon','Oliver Wyman']},
-  accounting:{label:'Accounting', roles:['Audit Intern','Tax Intern','Advisory Intern'], cos:['Deloitte','PwC','KPMG','EY','Grant Thornton']},
+  /* Company pools are drawn from the real listings database, deliberately mixing the
+     household names with the mid-market and corporate employers that make up most of it
+     — Wells Fargo, Marsh McLennan, Fiserv, Micron, Core & Main and the like. Showing
+     only Jane Street and McKinsey told anyone without a 3.9 from a target school that
+     this product wasn't for them, which is both untrue and the opposite of the point:
+     volume matters most precisely when your resume isn't the one at the top of the pile. */
+  swe:{label:'SWE', roles:['Software Engineering Intern','Backend Intern','Full-Stack Intern'], cos:['Stripe','Databricks','Fiserv','GoDaddy','Micron','Netsmart','Datadog']},
+  ai:{label:'AI/ML', roles:['ML Engineering Intern','AI Research Intern','Applied AI Intern'], cos:['Scale AI','Perplexity','Tenstorrent','PathAI','Nvidia']},
+  ib:{label:'Inv. Banking', roles:['IB Summer Analyst','M&A Analyst Intern','Commercial Banking Intern'], cos:['Goldman Sachs','Morgan Stanley','Wells Fargo','PNC','Citi','Jefferies']},
+  quant:{label:'Quant', roles:['Quant Trading Intern','Quant Research Intern'], cos:['Jane Street','Citadel','DV Trading','Old Mission','TransMarket Group']},
+  consulting:{label:'Consulting', roles:['Consulting Summer Intern','Strategy Analyst Intern'], cos:['McKinsey','BCG','FTI Consulting','Oliver Wyman','H&CO']},
+  accounting:{label:'Accounting', roles:['Audit Intern','Tax Intern','Advisory Intern'], cos:['Deloitte','PwC','KPMG','Grant Thornton','Nelnet','Wells Fargo']},
   pe:{label:'PE/VC', roles:['PE Summer Analyst','VC Analyst Intern','Growth Equity Intern'], cos:['Blackstone','KKR','Apollo','Vista','Insight Partners']},
-  re:{label:'Real Estate', roles:['RE Investment Intern','Acquisitions Intern'], cos:['CBRE','JLL','Related','Tishman Speyer','Hines']},
+  re:{label:'Real Estate', roles:['RE Investment Intern','Acquisitions Intern','Property Ops Intern'], cos:['CBRE','JLL','WSP','Related','Hines']},
   startup:{label:'Startups', roles:['Founding Team Intern','BizOps Intern','Growth Intern'], cos:['Ramp','Mercury','Vercel','Retool','Linear']},
   product:{label:'Product', roles:['Product Management Intern','APM Intern'], cos:['Notion','Duolingo','Salesforce','Adobe','Uber']},
   data:{label:'Data', roles:['Data Science Intern','Data Analytics Intern'], cos:['Palantir','Snowflake','Meta','Airbnb','Spotify']}
