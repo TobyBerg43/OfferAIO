@@ -93,7 +93,7 @@ const NAV = `<nav class="nav"><div class="container nav-in"><a class="logo" href
 
 const FOOT = `<footer><div class="container"><div class="foot-links"><a href="/">Home</a><a href="/internships/">Live internships</a><a href="/dashboard/">Dashboard</a><a href="/pricing/">Pricing</a><a href="/employers/">For Employers</a></div><p class="compliance">Listings are checked every 6 hours against public company job boards and community sources; new postings appear when those sources publish them. OfferAIO is not affiliated with any employer, university, or applicant tracking system. Applications are always reviewed and authorized by you before submission. No outcomes are guaranteed. © 2026 OfferAIO.</p></div></footer>`;
 
-const CTA = `<div class="cta-band"><h2 style="margin-top:0">Stop applying one tab at a time</h2><p>OfferAIO watches these listings and applies for you, in your own browser. 100 submissions a month, free.</p><a class="btn btn-gold" href="/dashboard/">Start free</a></div>`;
+const CTA = `<div class="cta-band"><h2 style="margin-top:0">Stop applying one tab at a time</h2><p>OfferAIO watches these listings and applies for you, in your own browser. 50 submissions a month, free.</p><a class="btn btn-gold" href="/dashboard/">Start free</a></div>`;
 
 function page(title, desc, canonPath, body, jsonld) {
   return `<!DOCTYPE html>
@@ -250,11 +250,26 @@ ${CTA}`;
   write(`internships/companies/${s}/index.html`, page(`${v.name} Internships Summer 2027 ${live.length ? `(${live.length} Open)` : '(Status)'} | OfferAIO`.slice(0, 70), `${v.name} Summer 2027 internships: ${live.length ? live.length + ' live openings with direct application links.' : 'no live openings right now, tracked for new postings.'} Updated every 6 hours.`, `/internships/companies/${s}/`, body, ld));
 }
 
+/* ---------- /dashboard/ ----------
+ * Every generated page, plus 404.html, landing.html, start.html, license.html, the
+ * pricing and employers pages and the extension popup, links to /dashboard/. That path
+ * used to resolve only because of a Cloudflare rule living outside version control, so
+ * the repo alone did not build a working site — a fresh deploy, or anyone cloning this,
+ * got a 404 on the product's main entry point. Emit it from the canonical dashboard file
+ * instead. OfferAIO.html stays the source of truth: engine-server.js, patch_dashboard.js
+ * and patch.yml all address it by that name.
+ */
+{
+  fs.mkdirSync('dashboard', { recursive: true });
+  fs.copyFileSync('OfferAIO.html', 'dashboard/index.html');
+}
+
 /* ---------- sitemap ---------- */
 {
   const stat = ['/', '/pricing/', '/employers/', '/employers/apply/'];
   const urls = [
     ...stat.map(u => ({ u, f: 'weekly', p: u === '/' ? '1.0' : '0.8' })),
+    { u: '/dashboard/', f: 'weekly', p: '0.9' },
     { u: '/internships/', f: 'hourly', p: '0.9' },
     ...CATS.map(c => ({ u: `/internships/${c.slug}/`, f: 'hourly', p: '0.8' })),
     { u: '/internships/companies/', f: 'daily', p: '0.7' },

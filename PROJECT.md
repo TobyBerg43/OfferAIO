@@ -84,7 +84,15 @@ session re-uploading old files. After any extension change, verify the raw file 
 - `privacy.html` — privacy policy (required for the Chrome Web Store listing)
 - `license.html` — post-checkout page showing the Pro key (noindex); polls the Worker
 - `billing.js` — the single place the Stripe Payment Link lives; wires `[data-buy-pro]`
-- `OfferAIO.html` — the interactive dashboard app
+- `OfferAIO.html` — the interactive dashboard app (**canonical**; `engine-server.js`,
+  `patch_dashboard.js` and `patch.yml` all address it by this name)
+- `dashboard/index.html` — a copy of the above, emitted by `generate_pages.js`. Everything
+  on the site links to `/dashboard/`, which previously resolved **only** through a
+  Cloudflare rule kept outside version control — so the repo alone did not build a working
+  site and a fresh deploy 404'd on the product's main entry point. Don't hand-edit it.
+- User state lives in `localStorage`: `oa_profile` (Settings fields) and `oa_state`
+  (tasks, stats, feed, radar). Before 2026-08-05 the dashboard held all of it in memory
+  and a refresh wiped everything.
 - `extension/` — the Chrome extension (see §7)
 - `internships/`, `data/` — programmatic SEO pages + listings, regenerated every 6h
 - `pricing/`, `employers/`, `404.html`, `robots`, `sitemap`
@@ -146,8 +154,30 @@ element.
   (solid muted gold primary, white ghost — no glossy gradients).
 
 ## 7. The Chrome extension (`extension/`)
-Manifest V3. Name "OfferAIO — Auto Apply", **v1.1.1** (1.0.0 → 1.1.0 for licensing,
-→ 1.1.1 for the bridge licence relay below).
+Manifest V3. Name "OfferAIO — Auto Apply", **v1.1.3** (1.0.0 → 1.1.0 licensing,
+→ 1.1.1 bridge licence relay, → 1.1.2 new logo, → 1.1.3 the three safety fixes below).
+
+### ⚠️ Three rules in `content.js` that must never regress (fixed 2026-08-05)
+
+1. **Never assert work authorisation.** `answerFor` used to return a flat `"Yes"` for any
+   label matching `/authoriz|eligible to work|legally/`, and route anything containing
+   "sponsor" through `needsSponsorship`. On *"Are you authorized to work in the US without
+   sponsorship?"* — which contains both — an international student was made to assert the
+   opposite of the truth on a legal declaration. `workAuthAnswer()` now answers only
+   unambiguous phrasings and returns `NEEDS_USER` otherwise, leaving the field blank,
+   outlined amber, and named in the bar. **The `without …sponsor` test must stay ahead of
+   the `requires …sponsor` test** — *"can you work without requiring sponsorship"* matches
+   both and inverts if ordered wrongly. Tests: `tests/content-workauth.test.mjs` (8 tests,
+   which caught exactly that ordering bug mid-fix). F-1 is deliberately never
+   auto-answered: CPT/OPT may authorise work, but the right answer varies by question and
+   by stage — precisely the judgement not to make on someone's behalf.
+2. **Full-auto stops for a missing resume or a flagged question.** Browsers forbid scripts
+   from attaching files, so auto-submitting past an empty file input sends a resume-less
+   application in the user's name.
+3. **Quota is charged only after the form validates.** It used to count on `btn.click()`,
+   so a blocked submit burned a submission *and* reported "Submitted via OfferAIO" for an
+   application that never left the page. `doSubmit` runs `form.checkValidity()` first and
+   counts nothing if it fails.
 
 Files: `manifest.json`, `popup.html`, `popup.js`, `content.js`, `bridge.js`,
 `license.js`, `icons/icon16|48|128.png`.
