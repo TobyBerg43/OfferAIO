@@ -32,13 +32,13 @@
   .rule{position:absolute;top:-80px;width:1px;height:1000px;background:rgba(88,74,52,.16);transform:rotate(12deg)}
   .r1{left:920px}.r2{left:1075px}.r3{left:1195px}
 
-  .brand{position:absolute;top:46px;left:72px;display:flex;align-items:center;gap:13px}
+  .brand{position:absolute;top:34px;left:72px;display:flex;align-items:center;gap:13px}
   .mark{width:40px;height:40px;border-radius:11px;background:url("/logo-96.png") center/contain no-repeat;flex:0 0 auto}
   .brandname{font-size:24px;font-weight:800;letter-spacing:-.01em}
 
   /* one line at 1280 wide — wrapping pushes the subtitle into the frame below */
-  h1{position:absolute;top:100px;left:72px;font-size:44px;line-height:1.05;letter-spacing:-.02em;font-weight:800;white-space:nowrap}
-  .sub{position:absolute;top:156px;left:72px;font-size:19px;color:#5c5546;line-height:1.45;white-space:nowrap}
+  h1{position:absolute;top:82px;left:72px;font-size:44px;line-height:1.05;letter-spacing:-.02em;font-weight:800;white-space:nowrap}
+  .sub{position:absolute;top:136px;left:72px;font-size:19px;color:#5c5546;line-height:1.45;white-space:nowrap}
 
   /* The dashboard at 1:1, full width. It used to sit beside the headline at scale(.5),
      which rendered every label about 6px tall — illegible at the size the Web Store
@@ -46,23 +46,92 @@
   .frame{
     /* Height ends just below the chart row. At the full 540 the frame clipped straight
        through the "Live activity" card's header, which reads as a broken export. */
-    position:absolute;left:72px;top:212px;width:1136px;height:472px;
+    position:absolute;left:72px;top:176px;width:1136px;height:602px;
     border-radius:14px;overflow:hidden;background:#fffdf8;
     border:1px solid rgba(88,74,52,.22);
     box-shadow:0 26px 60px -26px rgba(74,58,34,.45), 0 3px 10px -4px rgba(74,58,34,.25);
   }
-  .frame iframe{width:1136px;height:472px;border:0;display:block}
+  .frame iframe{width:1136px;height:602px;border:0;display:block}
 </style>
 </head>
 <body>
   <div class="rule r1"></div><div class="rule r2"></div><div class="rule r3"></div>
 
   <div class="brand"><div class="mark" role="img" aria-label="OfferAIO"></div><div class="brandname">OfferAIO</div></div>
-  <h1>Track every application in one place.</h1>
-  <p class="sub">Active, submitted, and every callback — one task per internship.</p>
+  <!-- The old subtitle promised "every callback". Reply detection only exists via the
+       optional local desktop engine, so for almost every user that was a promise the
+       product doesn't keep. Say what the screenshot actually shows. -->
+  <h1>Every application you've sent, in one place.</h1>
+  <p class="sub">Queued, opened, submitted — recorded by the extension as it happens.</p>
 
   <div class="frame">
-    <iframe src="http://localhost:8099/OfferAIO.html" title="OfferAIO dashboard"></iframe>
+    <iframe id="dash" src="http://localhost:8099/OfferAIO.html" title="OfferAIO dashboard"></iframe>
   </div>
+
+<script>
+/* Stand in for the extension.
+ *
+ * As of 2026-08-06 the dashboard renders a connect card and nothing else until
+ * extension/bridge.js answers, because with no extension there is no identity, no usage
+ * and no application history to show. Headless Chrome has no extension, so without this
+ * the capture is a picture of the connect card.
+ *
+ * The messages below are exactly what bridge.js sends. They must be posted from INSIDE
+ * the frame: the dashboard drops anything where `e.source !== window`, which is the guard
+ * that stops a third-party iframe reading someone's licence key. Same origin, so we can
+ * inject a script and let the page message itself.
+ *
+ * On the sample data: these are real companies from the live board, with honest field
+ * counts, and Responses/Interviews left at zero — which is what the product genuinely
+ * shows when no local engine is watching an inbox. Do not pad these numbers. Inventing a
+ * response rate here is the exact thing the 2026-08-06 pass existed to remove, and a
+ * store listing is a worse place to do it than the app itself.
+ */
+const SAMPLE = {
+  profile: { name: "Ada Lovelace", email: "ada@berkeley.edu" },
+  usage: { plan: "free", used: 4, quota: 50 },
+  applications: [
+    { company: "Stripe", role: "Software Engineering Intern", ats: "Greenhouse",
+      url: "https://job-boards.greenhouse.io/stripe/jobs/1", hoursAgo: 2,
+      fieldsFilled: 12, fieldsTotal: 14, unfilledRequired: ["Resume"], confirmed: true },
+    { company: "Databricks", role: "Backend Engineering Intern", ats: "Greenhouse",
+      url: "https://job-boards.greenhouse.io/databricks/jobs/2", hoursAgo: 5,
+      fieldsFilled: 11, fieldsTotal: 13, unfilledRequired: ["Resume"], confirmed: true },
+    { company: "Datadog", role: "Software Engineer Intern", ats: "Lever",
+      url: "https://jobs.lever.co/datadog/3", hoursAgo: 26,
+      fieldsFilled: 10, fieldsTotal: 12, unfilledRequired: [], confirmed: true },
+    { company: "Snowflake", role: "Data Engineering Intern", ats: "Ashby",
+      url: "https://jobs.ashbyhq.com/snowflake/4", hoursAgo: 30,
+      fieldsFilled: 9, fieldsTotal: 12, unfilledRequired: ["Resume", "Start date"], confirmed: true },
+  ],
+};
+
+document.getElementById("dash").addEventListener("load", (e) => {
+  const doc = e.target.contentDocument;
+  const apps = SAMPLE.applications.map((a) => {
+    const { hoursAgo, ...rest } = a;
+    return { ...rest, submittedAt: Date.now() - hoursAgo * 3600000 };
+  });
+  const messages = [
+    { source: "offeraio-ext", type: "ready" },
+    { source: "offeraio-ext", type: "identity", profile: SAMPLE.profile, usage: SAMPLE.usage },
+    { source: "offeraio-ext", type: "applications", applications: apps },
+  ];
+  const s = doc.createElement("script");
+  s.textContent =
+    JSON.stringify(messages) + '.forEach(m => window.postMessage(m, "*"));\n' +
+    /* Scroll the Applications card up to just under the KPI row. Left at the top of the
+       page the frame clips straight through the first application row, which reads as a
+       broken export; scrolled to the card, the screenshot shows what the headline
+       claims — the applications the extension actually recorded. `.content` is the
+       scroller, not the window. */
+    'requestAnimationFrame(() => {' +
+    '  const scroller = document.querySelector(".content");' +
+    '  const row = document.querySelector(".content .grid2");' +
+    '  if (row && scroller) scroller.scrollTop = row.offsetTop - scroller.offsetTop + 10;' +
+    '});';
+  doc.body.appendChild(s);
+});
+</script>
 </body>
 </html>

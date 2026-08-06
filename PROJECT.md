@@ -330,11 +330,22 @@ scripts attaching files); the field is highlighted instead.
   way to get an exact 1280×800 PNG; a normal window screenshot comes out rescaled.
 - Privacy policy URL to enter: `https://offeraio.com/privacy.html`
 - **Remaining:** complete the Privacy tab + listing fields, then submit.
-- ⚠️ **The screenshots are stale as of 2026-08-06.** All three were regenerated from the
-  real UI on 08-04, but the UI has since changed substantially: the dashboard no longer
-  shows the simulated pipeline or the seeded stats, and the popup's Fill button is now
-  context-aware. Re-run `node store/regenerate.mjs` **before** submitting, or the listing
-  will show a product that no longer exists.
+- ✅ **Screenshots regenerated 2026-08-06** against the v1.2.0 UI. Two of the three sources
+  needed changes first, because rendering the *real* UI means the sources break when the
+  UI's preconditions change:
+  - **Screenshot 1** stubs an active tab on a Greenhouse posting. The popup is now
+    disabled unless it can act, so with no tab stubbed it captured a greyed-out primary
+    button — accurate, but it makes the product look broken in a listing.
+  - **Screenshot 3** injects the bridge messages `bridge.js` would send. The dashboard
+    renders only a connect card until the extension answers, so the capture was otherwise
+    a picture of the connect card. The messages must be posted from **inside** the frame —
+    the dashboard drops anything where `e.source !== window`.
+  - Both seeds use a neutral persona (Ada Lovelace / UC Berkeley). Screenshot 2 previously
+    seeded the owner's own name and email into a public store listing.
+  - Sample data in screenshot 3 leaves Responses and Interviews at **zero**, which is what
+    the product honestly shows with no local engine watching an inbox. **Do not pad these.**
+    Inventing a response rate in a store listing is the same failure this pass removed from
+    the app, in a more public place.
 - ⚠️ **`host_permissions` changed** (`jobs.lever.co` → `*.lever.co`, §7). The permission
   justification in `store/OfferAIO-store-listing.md` should say the extension runs on
   Lever's regional instances too, since EU-hosted boards carry US roles (§15).
