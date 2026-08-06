@@ -146,7 +146,16 @@ session re-uploading old files. After any extension change, verify the raw file 
   single-use tool that becomes a landmine the moment it succeeds; write one-shot patches
   outside the repo and let them die with the change.
 - `.nojekyll` — **do not delete**
+- `README.md` — the map for someone opening the repo for the first time; points here
 - `PROJECT.md` — this file
+- **Branch `dev-harness`** (not merged, never merged) — `dev/mock-application.html`, a fake
+  Greenhouse-style form for testing the extension end to end without submitting anything to
+  a real employer. It exercises every branch of the submit tracker, the resume field scripts
+  cannot fill, the ambiguous work-auth question, and a dense block where label→input binding
+  must refuse to guess. It lives off `main` for two reasons: GitHub Pages publishes every
+  file in the repo, so a tracked `dev/` would put a convincing fake job posting live on
+  offeraio.com; and using it needs temporary `127.0.0.1`/`localhost` host permissions in the
+  extension that must never reach the Web Store. Setup in that branch's `dev/README.md`.
 
 ## 6. Design system
 
@@ -293,7 +302,7 @@ ask for the key. Tests: `node --test tests/bridge.test.mjs` (9 tests).
 `license.js` holds licensing + the submission counter and is shared by the popup and
 the content script. It's a plain IIFE on `self` rather than an ES module, because
 content scripts can't `import`. It is listed **before** `content.js` in both
-`content_scripts.js` and the `executeScript` call in `popup.js` — if either loses it,
+`manifest.json`'s `content_scripts` list and the `executeScript` call in `popup.js` — if either loses it,
 the quota check silently no-ops (deliberately: a metering bug must never stop someone
 applying for a job). Tests: `node --test tests/license.test.mjs` — kept outside
 `extension/` because `zip-extension.yml` ships that whole folder to the store.
