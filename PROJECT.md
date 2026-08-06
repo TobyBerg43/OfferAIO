@@ -2,13 +2,12 @@
 
 Single source of truth for the OfferAIO project. Any assistant or person should be
 able to read this file and pick up the work without re-discovering anything.
-**Last updated: 2026-08-04.** (Latest changes: the dashboard now actually calls the
-Worker's `/cover` — the last piece of §14 that was still unfinished — via a new licence
-relay in `extension/bridge.js`; extension bumped to **1.1.1**; privacy policy and store
-listing brought in line with licensing, the Worker host permission and the OpenAI/Stripe
-data transfers, which would have failed Web Store review as written. Between 2026-07-22
-and 2026-08-04 nothing else changed: all 52 intervening commits were the 6-hourly
-`chore: refresh listings` scrape.)
+**Last updated: 2026-08-06.** (Latest change: the **trust & clarity pass**. The dashboard
+no longer simulates applying — the `setTimeout` chain that walked tasks to "✓ Submitted"
+and rolled dice for replies and interviews is gone, and every number on screen is now
+derived from applications the extension genuinely recorded. See **§2**, which is the
+important one; then §7 for the extension-side tracker and §15 for listings hygiene.
+Extension at **v1.2.0**. 125 tests pass, up from 81.)
 
 ⚠️ Standing hazard, still true: a mis-pathed `wrangler deploy` from the repo root once
 auto-created a static worker "ffer" serving the whole repo. Always deploy from `worker/`.
@@ -36,6 +35,43 @@ the extension (the "sync" glue).
 
 Flow: land on site → **Start free** → `/start.html` → install extension → pin → fill
 profile → open any posting → click Fill → review → submit.
+
+### ⚠️ The dashboard queues and tracks. It does not apply. (rewritten 2026-08-06)
+
+This is the single most important rule in the project, and it was violated for the whole
+of the product's life until now. `OfferAIO.html` used to walk a task through
+`monitoring → match → filling → cover → submitted` on a `setTimeout` chain with random
+delays, then roll `Math.random() < 0.65` for a reply and `< 0.45` for an interview. None
+of it touched an employer. It printed **"✓ Submitted"** next to a real company pulled from
+the live listings database — which is how a closed Veeam req came to be marked as applied
+to, and why the founder's first read of the product was "the backend is not functioning."
+There is no backend for applying, by design. The simulation was the bug.
+
+The task lifecycle is now, in full:
+
+| Status | Reached by |
+| --- | --- |
+| `idle` | nothing claimed yet |
+| `ready` | a real listing matched the task's filters — instant, no timer |
+| `opened` | the user clicked **Open & fill**; the posting is open in a tab |
+| `applied` / `unconfirmed` | **only** an application record written by `content.js` |
+
+**No status a user can see is reachable without a real event, and there is no path to
+`applied` that does not go through the extension.** `stats`, `dayData` and `catCount` are
+derived from the extension's application records on every load and are deliberately *not*
+persisted, so there is nowhere for an invented number to survive a refresh. Guarded by
+`tests/content-tracker.test.mjs` and by the "no setTimeout drives a status" rule below.
+
+**The dashboard renders nothing until the extension answers the bridge.** With no
+extension there is no identity, no usage and no history, so it shows a single connect
+card (`#connectGate`). An empty dashboard is not a logged-out state, it is a broken one —
+and filling it with sample numbers is what caused all of this.
+
+**"Sign in" is the extension, and that is deliberate.** The dashboard asks the bridge for
+`identity` (profile + plan + real monthly usage) and `applications`. Real accounts would
+mean a user database, sessions, password reset and a privacy-policy rewrite — weeks of
+work to solve a feeling, and it would cost the "nothing leaves your browser" claim that
+currently helps sell the product. Do not build them.
 
 There is also an optional **local desktop engine** (Electron, `desktop/`) that the
 dashboard can talk to on `http://127.0.0.1:7717` for real (non-simulated) applying.
@@ -99,9 +135,16 @@ session re-uploading old files. After any extension change, verify the raw file 
 - `store/` — Chrome Web Store listing copy + screenshots (see §8)
 - `desktop/` — Electron local engine
 - `worker/` — Cloudflare Worker source (`src/index.js`, `wrangler.toml`) — see §14
-- `tests/` — Node tests for extension files (`license.test.mjs`, `bridge.test.mjs`).
-  Deliberately outside `extension/`, which `zip-extension.yml` ships wholesale to the store.
-- `.github/workflows/` — scrape + generate-pages pipeline, patch action, worker deploy
+- `tests/` — Node tests for extension + pipeline logic (`license.test.mjs`,
+  `bridge.test.mjs`, `content-workauth.test.mjs`, `content-tracker.test.mjs`,
+  `listings.test.mjs`). Deliberately outside `extension/`, which `zip-extension.yml` ships
+  wholesale to the store. `test.yml` globs `tests/*.test.mjs`, so a new file runs on its own.
+- `.github/workflows/` — scrape + generate-pages pipeline, worker deploy, tests, zip
+- ~~`patch_dashboard.js` + `patch.yml`~~ — **deleted 2026-08-06.** All three of its targets
+  were already applied and `rep()` throws on a miss, so the manual "Patch dashboard"
+  dispatch failed immediately every time it was run. A committed patch script is a
+  single-use tool that becomes a landmine the moment it succeeds; write one-shot patches
+  outside the repo and let them die with the change.
 - `.nojekyll` — **do not delete**
 - `PROJECT.md` — this file
 
@@ -154,10 +197,15 @@ element.
   (solid muted gold primary, white ghost — no glossy gradients).
 
 ## 7. The Chrome extension (`extension/`)
-Manifest V3. Name "OfferAIO — Auto Apply", **v1.1.3** (1.0.0 → 1.1.0 licensing,
-→ 1.1.1 bridge licence relay, → 1.1.2 new logo, → 1.1.3 the three safety fixes below).
+Manifest V3. Name "OfferAIO — Auto Apply", **v1.2.0** (1.0.0 → 1.1.0 licensing,
+→ 1.1.1 bridge licence relay, → 1.1.2 new logo, → 1.1.3 the three safety fixes below,
+→ 1.2.0 the application tracker, the context-aware popup and the identity relay).
 
-### ⚠️ Three rules in `content.js` that must never regress (fixed 2026-08-05)
+**`manifest.json` is the single source of truth for the version.** It disagreed four ways
+(manifest `1.1.2`, landing `v3.1.0`, dashboard `build 2027.1`, this file `1.1.1`); the
+landing page and the dashboard sidebar now both read `v1.2.0`. Bump all three together.
+
+### ⚠️ Four rules in `content.js` that must never regress (1–3 fixed 2026-08-05, 4 on 08-06)
 
 1. **Never assert work authorisation.** `answerFor` used to return a flat `"Yes"` for any
    label matching `/authoriz|eligible to work|legally/`, and route anything containing
@@ -174,13 +222,65 @@ Manifest V3. Name "OfferAIO — Auto Apply", **v1.1.3** (1.0.0 → 1.1.0 licensi
 2. **Full-auto stops for a missing resume or a flagged question.** Browsers forbid scripts
    from attaching files, so auto-submitting past an empty file input sends a resume-less
    application in the user's name.
-3. **Quota is charged only after the form validates.** It used to count on `btn.click()`,
-   so a blocked submit burned a submission *and* reported "Submitted via OfferAIO" for an
-   application that never left the page. `doSubmit` runs `form.checkValidity()` first and
-   counts nothing if it fails.
+3. **Quota is charged only after the submission is evidenced.** It used to count on
+   `btn.click()`, so a blocked submit burned a submission *and* reported "Submitted via
+   OfferAIO" for an application that never left the page. `doSubmit` runs
+   `form.checkValidity()` before clicking **and** waits for a real success signal after
+   it — see the application tracker below.
+4. **`controlForLabel()` must refuse to guess.** It binds on `for=`, on a control nested
+   inside the label, or on a parent holding **exactly one** control, and otherwise binds
+   nothing. The old fallback took "the first input under the label's parent", so on a
+   dense form every label wrote into the first box and the answer to one question landed
+   in another. That is the same class of harm as rule 1: a false answer under the user's
+   name. Tests: `tests/content-tracker.test.mjs`.
+
+### The application tracker (added 2026-08-06) — the other half of §2
+
+`content.js` used to click Submit, increment the quota, and forget. Two things wrong with
+that: it counted a submission it had no evidence had happened, and it left the dashboard
+with nothing real to display. `doSubmit()` now waits for the page to prove the submission
+landed, and writes a record to `chrome.storage.local.applications`:
+
+```js
+{ company, role, url, ats, submittedAt, fieldsFilled, fieldsTotal, unfilledRequired[], confirmed, signal }
+```
+
+Three outcomes, and the distinction between them matters:
+- **Evidenced** — the page navigated, the form was replaced, or a confirmation appeared.
+  Recorded `confirmed:true`, quota charged, dashboard reads **Applied**.
+- **Bounced** — `form.checkValidity()` fails after the click. Nothing recorded, nothing
+  counted, and the bar says which field is missing.
+- **No signal in 9s** — recorded `confirmed:false`, quota **not** charged, dashboard reads
+  **Sent — not confirmed**. Undercounting is the safe direction: PROJECT.md's own rule is
+  that a metering bug must never stop someone applying for a job, and a guess that costs a
+  user one of their 50 submissions is worse than a quota that runs slightly cold.
+
+`bridge.js` answers `{type:"applications"}` and `{type:"identity"}` alongside the existing
+`license`, all behind the same `e.source !== window` guard. `license.js` is now loaded
+*before* `bridge.js` in the content-script list so identity reports the real plan through
+`OfferAIOLicense.status()` (cache + offline grace) rather than reading storage raw; it
+falls back to a raw read if absent, which is what the tests exercise.
+
+`extension/ats.js` is the one list of supported applicant tracking systems, shared by
+`content.js` (to label what it filled) and `popup.js` (to decide whether the Fill button
+can do anything). Keep it in step with `manifest.json`; a host here but not there is a
+button that lights up and does nothing.
+
+⚠️ **`jobs.lever.co` → `*.lever.co` in host permissions.** Lever and Greenhouse run EU
+instances (`jobs.eu.lever.co`, `job-boards.eu.greenhouse.io`) that carry **US** roles, and
+the old pattern didn't match the Lever one — the extension could not fill a posting the
+product was advertising. See §15 before "fixing" anything about `.eu.` hosts.
+
+### The popup says what it will do (2026-08-06)
+
+The Fill button was unconditional: identical on a Greenhouse form, on a new tab and on the
+dashboard, and it silently did nothing on two of those three — it injected two scripts and
+closed the window without ever running a fill. It now probes the active tab on open and is
+**disabled unless it can actually act**, and after filling it reports
+`Filled 11 of 14 fields · 3 need you` instead of vanishing.
 
 Files: `manifest.json`, `popup.html`, `popup.js`, `content.js`, `bridge.js`,
-`license.js`, `icons/icon16|48|128.png`.
+`license.js`, `ats.js`, `icons/icon16|48|128.png`.
 
 `bridge.js` relays the profile from offeraio.com into storage, and answers a
 `{type:"license"}` request from the dashboard with `{key, installId}`. It deliberately
@@ -230,6 +330,14 @@ scripts attaching files); the field is highlighted instead.
   way to get an exact 1280×800 PNG; a normal window screenshot comes out rescaled.
 - Privacy policy URL to enter: `https://offeraio.com/privacy.html`
 - **Remaining:** complete the Privacy tab + listing fields, then submit.
+- ⚠️ **The screenshots are stale as of 2026-08-06.** All three were regenerated from the
+  real UI on 08-04, but the UI has since changed substantially: the dashboard no longer
+  shows the simulated pipeline or the seeded stats, and the popup's Fill button is now
+  context-aware. Re-run `node store/regenerate.mjs` **before** submitting, or the listing
+  will show a product that no longer exists.
+- ⚠️ **`host_permissions` changed** (`jobs.lever.co` → `*.lever.co`, §7). The permission
+  justification in `store/OfferAIO-store-listing.md` should say the extension runs on
+  Lever's regional instances too, since EU-hosted boards carry US roles (§15).
 - **Submitting via API:** `node store/publish-extension.mjs` uploads the packaged zip and
   calls `:publish`. Needs `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET`, `CWS_REFRESH_TOKEN` and
   `CWS_PUBLISHER_ID` in the environment; `--dry-run` authenticates and reads status without
@@ -376,9 +484,17 @@ that matters.
 ## 12. Open TODOs
 
 **Everything left is blocked on a key or an account action only Toby can perform.** The
-code is done: 81 tests pass (`tests/license.test.mjs`, `tests/bridge.test.mjs`,
-`worker/test/billing.test.mjs`), the Worker is deployed and gating correctly, and the
-dashboard is wired to it. Nothing ships value until the four keys in §11 exist.
+code is done: **125 tests pass** (74 in `tests/`, 51 in `worker/test/`), the Worker is
+deployed and gating correctly, and the dashboard is wired to it. Nothing ships value until
+the four keys in §11 exist.
+
+⚠️ **The 2026-08-06 trust pass is committed but NOT deployed.** The dashboard rewrite (§2),
+the extension tracker (§7) and the listings hygiene work (§15) are all local. Deploying
+means: push to `main`, wait for Pages, then **purge the Cloudflare cache** — this pass
+changed `landing.html` and the dashboard, and it added no new `.js` file at the site root,
+but `/dashboard/index.html` is regenerated and served as HTML (`DYNAMIC`, no purge needed).
+Re-read §4 before assuming. Also **reload the unpacked extension** in any browser testing
+it: `ats.js` is a new file and `manifest.json` changed, so a stale load will fail.
 
 0. **The four keys (§11).** In the order that unlocks the most:
    - `OPENAI_API_KEY` → `npx wrangler secret put OPENAI_API_KEY` from `worker/`. Makes AI
@@ -481,3 +597,67 @@ was vendored from the live deployment, verified byte-for-byte (md5
   list, so `wrangler.toml` was reconstructed from what the code reads. Check the
   dashboard's Settings → Bindings first; any dashboard-added binding not referenced in
   code would be dropped.
+
+## 15. Listings hygiene (`scrape.js`, reworked 2026-08-06)
+
+### ⚠️⚠️ Do NOT block `.eu.` hostnames. This is a trap, and it looks like a fix.
+
+The dead link the founder hit was `job-boards.eu.greenhouse.io/veeamsoftware?error=true`.
+The obvious inference — "an EU link got into a US-only product" — is **wrong**, and acting
+on it deletes some of the best listings on the board.
+
+Every `.eu.`-hosted row is a **US role**. The EU is the *company's ATS account region*,
+not the job's location: IMC Trading is Amsterdam-headquartered, Cirrus Logic was founded
+in Edinburgh, Veeam is Swiss — so their Greenhouse and Lever instances live on the EU
+domain while they hire in Chicago, Austin and San Jose. `isUS()` reads the **location**
+and is working correctly on these rows.
+
+```
+Cirrus Logic   Austin, TX     Embedded Software Test Engineer Intern
+IMC Trading    Chicago   ×7   Quant Trader / Quant Research / SWE / Hardware ML
+Veeam Software San Jose, CA ×2 Software Engineering Intern   ← these two really did close
+```
+
+Blocking the domain would drop **7 IMC Trading Chicago quant roles** — a top-tier quant
+shop and precisely the highest-value listings for this product's audience. The geographic
+filter is location-based only. `tests/listings.test.mjs` asserts this explicitly, and one
+test fails if `scrape.js` so much as mentions an `.eu.` hostname.
+
+The Veeam failure had exactly one cause: **the req was closed.**
+
+### a) Closed postings are now detected
+
+Nothing was ever marked inactive — 0 of 394 rows — so a req that closed between refreshes
+stayed listed forever. `verifyStillOpen()` HEAD-checks Greenhouse / Lever / Ashby URLs and
+flags `active:false` on a 404/410 or an `?error=true` redirect. **On the first run it
+caught both dead Veeam reqs.**
+
+Budgeted for the 6-hourly job: newest 120 per run, plus anything unverified for 48h, 6
+concurrent. Anything ambiguous — a timeout, a 5xx, a 405 from a host that dislikes HEAD —
+**leaves the listing alone**. Dropping a live posting because their server hiccuped costs
+a user a job; leaving a dead one up for six more hours costs a wasted click.
+
+Closed rows **stay in `listings.json`** rather than being deleted: consumers skip
+`active === false`, and keeping the row is what stops the next run re-importing the same
+dead posting from a community feed that hasn't noticed yet. They're forgotten after 14
+days. ⚠️ **Any new consumer of `listings.json` must filter `active !== false`** —
+`generate_pages.js` needed exactly that fix, or the SEO pages would have advertised dead
+reqs. `data/meta.json` carries `checked` / `checkable` so shrinking coverage is visible.
+
+### b) Deduplication
+
+Both old keys were exact-match, so ~7% of the board was redundant (25 groups, 28 rows):
+`Chicago, IL` vs `Chicago, Illinois`, `… Intern` vs `… Intern, Summer 2027`. Now
+normalised on company + title + first location token. Live result: **394 → 364, zero
+duplicate groups**, all 10 EU rows and all 13 Wells Fargo roles intact.
+
+⚠️ **Strip a leading year token only, never the remainder.** Wells Fargo titles everything
+`2027 <Function> Summer Internship – Early Careers`. A rule that strips from the first year
+onwards collapses Audit, Finance, HR and Risk into one row and silently deletes three real
+internships. This is caught by a dedicated test — it fired during development.
+
+### c) `checked N ago` on every listing row
+
+`date_checked` rides on each listing and the dashboard shows how recently the pipeline
+confirmed the req was open. A user who hits a dead link should see that the product
+already knew, rather than being told it had applied.
