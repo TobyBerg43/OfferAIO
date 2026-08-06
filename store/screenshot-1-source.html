@@ -70,9 +70,9 @@
    license.js short-circuits on "no_key" and never touches the network. */
 const SEED = {
   profile: {
-    name: "Toby B.", email: "toby@school.edu", phone: "555-201-8830",
-    school: "State University", gradDate: "May 2028", major: "Finance",
-    minor: "", gpa: "3.8", linkedin: "linkedin.com/in/tobyberger",
+    name: "Ada Lovelace", email: "ada@berkeley.edu", phone: "555-201-8830",
+    school: "UC Berkeley", gradDate: "May 2028", major: "Computer Science",
+    minor: "", gpa: "3.8", linkedin: "linkedin.com/in/adalovelace",
     needsSponsorship: false, coverLetter: ""
   },
   mode: "semi",
@@ -90,8 +90,21 @@ window.chrome = {
     },
     set(o, cb) { if (cb) cb(); }
   } },
-  tabs: { query: () => Promise.resolve([{ id: 1 }]) },
-  scripting: { executeScript: () => Promise.resolve() }
+  // As of v1.2.0 the popup asks what the active tab is and whether it holds an
+  // application form, and stays DISABLED unless it can actually act. With no tab stubbed
+  // it therefore renders greyed out — accurate, but it makes the product's primary
+  // button look dead in the store listing. Stub a real Greenhouse posting so the capture
+  // shows the state a user sees when the button is worth pressing.
+  tabs: {
+    query: () => Promise.resolve([
+      { id: 1, url: "https://job-boards.greenhouse.io/stripe/jobs/4512883006" }
+    ])
+  },
+  scripting: {
+    executeScript: () => Promise.resolve([{ result: {
+      hasForm: true, company: "Stripe", role: "Software Engineering Intern"
+    } }])
+  }
 };
 <\/scr` + `ipt>`;
 

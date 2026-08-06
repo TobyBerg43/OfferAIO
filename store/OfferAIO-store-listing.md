@@ -53,6 +53,7 @@ OfferAIO fills internship application forms on supported job sites with the user
 - activeTab — Act on the application page the user is currently viewing when they click "Fill".
 - scripting — Inject the form-filler into that page on demand to complete the fields.
 - Host permissions (the job sites listed) — Fill application form fields on those application pages.
+- Regional applicant-tracking-system domains (`*.lever.co`, `*.greenhouse.io`) — Some employers run their job board on a provider's EU instance (`jobs.eu.lever.co`, `job-boards.eu.greenhouse.io`) while hiring in the United States: the region reflects where the *company's* recruiting account lives, not where the job is. Matching the provider's domain rather than one regional hostname is what lets the extension fill those postings. Nothing outside a job application page is touched.
 - offeraio.com — Let the OfferAIO dashboard sync the user's profile into the extension, and hand the dashboard the license key it needs to request a cover letter.
 - tobyberg43.github.io — The same dashboard served from its GitHub Pages origin, used for staging and as a fallback if the custom domain is unavailable.
 - offeraio-worker.tobybergerbusiness.workers.dev — Our own backend. Used only to verify that a paid license key is still active and to request an AI cover letter the user asked for. No browsing data is sent to it.

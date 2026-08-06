@@ -55,7 +55,11 @@ function load(initialStore = {}) {
     },
   };
 
+  // A content script's global is `self`; bridge.js reads self.OfferAIOLicense to get the
+  // real plan/quota when license.js is loaded alongside it (manifest.json declares both).
+  // Tests deliberately load bridge.js WITHOUT it, exercising the storage fallback.
   const sandbox = { window, chrome, crypto: webcrypto, console };
+  sandbox.self = sandbox;
   createContext(sandbox);
   runInContext(SRC, sandbox);
 
@@ -137,3 +141,95 @@ test("foreign messages are ignored", () => {
   send(null);
   assert.equal(posted.length, before);
 });
+
+/* ------------------------------------------------------- identity + applications
+ *
+ * The dashboard used to open with a hardcoded name, a plan nobody chose and 14
+ * applications nobody sent, while the extension popup simultaneously and correctly read
+ * "0 of 50 submissions used". These two relays are what let the dashboard show the same
+ * truth the popup does — there is no account system, so the extension IS the identity.
+ */
+
+const settle = () => new Promise((r) => setTimeout(r, 0));
+
+test("identity reports the saved profile and the real usage", async () => {
+  const { send, posted } = load({
+    profile: { name: "Ada Lovelace", email: "ada@school.edu" },
+    usage: { month: monthNow(), count: 12 },
+  });
+  send(site("identity"));
+  await settle();
+  const reply = lastOfType(posted, "identity");
+  assert.equal(reply.profile.name, "Ada Lovelace");
+  assert.equal(reply.usage.plan, "free");
+  assert.equal(reply.usage.used, 12);
+  assert.equal(reply.usage.quota, 50);
+});
+
+test("a licensed install reports Pro and the 250 quota", async () => {
+  const { send, posted } = load({
+    profile: { name: "Ada" },
+    license: { key: "OA-AAAA-BBBB-CCCC", cache: { active: true } },
+    usage: { month: monthNow(), count: 3 },
+  });
+  send(site("identity"));
+  await settle();
+  const reply = lastOfType(posted, "identity");
+  assert.equal(reply.usage.plan, "pro");
+  assert.equal(reply.usage.quota, 250);
+  assert.equal(reply.usage.used, 3);
+});
+
+test("last month's counter does not carry into this month", async () => {
+  const { send, posted } = load({ usage: { month: "2020-01", count: 49 } });
+  send(site("identity"));
+  await settle();
+  assert.equal(lastOfType(posted, "identity").usage.used, 0);
+});
+
+test("no profile yet reports null rather than inventing one", async () => {
+  const { send, posted } = load();
+  send(site("identity"));
+  await settle();
+  const reply = lastOfType(posted, "identity");
+  assert.equal(reply.profile, null);
+  assert.equal(reply.usage.used, 0);
+});
+
+test("applications are relayed verbatim", async () => {
+  const apps = [
+    { company: "Stripe", role: "SWE Intern", url: "https://x/1", submittedAt: 2, confirmed: true },
+    { company: "Ramp", role: "Backend Intern", url: "https://x/2", submittedAt: 1, confirmed: false },
+  ];
+  const { send, posted } = load({ applications: apps });
+  send(site("applications"));
+  await settle();
+  const reply = lastOfType(posted, "applications");
+  assert.deepEqual(reply.applications, apps);
+});
+
+test("no applications yet relays an empty list, never undefined", async () => {
+  const { send, posted } = load();
+  send(site("applications"));
+  await settle();
+  // The array is constructed inside the vm realm, so its prototype isn't this realm's
+  // Array — compare structurally rather than with deepEqual.
+  const got = lastOfType(posted, "applications").applications;
+  assert.ok(Array.isArray(got), "expected an array, not undefined");
+  assert.equal(got.length, 0);
+});
+
+test("identity and applications are refused to another window", async () => {
+  const { send, posted } = load({ profile: { name: "Ada" }, applications: [{ company: "Stripe" }] });
+  const before = posted.length;
+  const iframe = {};
+  send(site("identity"), iframe);
+  send(site("applications"), iframe);
+  await settle();
+  assert.equal(posted.length, before, "an embedded iframe must not be able to read either");
+});
+
+function monthNow() {
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+}

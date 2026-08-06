@@ -47,6 +47,22 @@
   .nav-badge{margin-left:auto;background:var(--orange);color:#100a02;font-size:10.5px;font-weight:700;border-radius:8px;padding:1px 7px;font-family:var(--mono)}
   .nav-badge:empty{display:none}
   .sidebar .spacer{flex:1}
+  /* Applications table — real records relayed from the extension. */
+  .app-row{display:flex;align-items:center;gap:11px;padding:9px 2px;border-bottom:1px solid var(--border)}
+  .app-row:last-child{border-bottom:none}
+  .ar-main{flex:1;min-width:0}
+  .rc-note{margin-top:9px;font-size:11.5px;color:var(--dim2);line-height:1.5}
+  /* Connect gate — shown until the extension answers over the bridge. */
+  #connectGate{position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px}
+  .cg-card{max-width:520px;width:100%;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:30px 32px;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+  .cg-card .cg-logo{width:44px;height:44px;border-radius:12px;background:url("/logo-96.png") center/contain no-repeat;margin-bottom:16px}
+  .cg-card h2{font-family:var(--display);font-weight:400;font-size:27px;letter-spacing:.01em;margin-bottom:10px}
+  .cg-card p{color:var(--dim);font-size:14px;line-height:1.6;margin-bottom:16px}
+  .cg-steps{list-style:none;margin:0 0 18px;padding:0;counter-reset:cg}
+  .cg-steps li{counter-increment:cg;position:relative;padding:5px 0 5px 28px;font-size:13.5px;color:var(--dim)}
+  .cg-steps li::before{content:counter(cg);position:absolute;left:0;top:5px;width:19px;height:19px;border-radius:6px;background:var(--panel2);border:1px solid var(--border2);color:var(--txt);font:700 10.5px var(--mono);display:flex;align-items:center;justify-content:center}
+  .cg-actions{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:15px}
+  .cg-wait{font:11.5px var(--mono);color:var(--dim2);border-top:1px solid var(--border);padding-top:13px}
   .userchip{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;background:var(--panel);border:1px solid var(--border)}
   .avatar{width:28px;height:28px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
   .userchip .un{font-size:12.5px;font-weight:600}.userchip .ue{font-size:10.5px;color:var(--dim2)}
@@ -87,7 +103,7 @@
   td{padding:10px;border-bottom:1px solid rgba(35,35,60,.5);vertical-align:middle}
   tr:hover td{background:rgba(60,48,30,.03)}
   .tid{font-family:var(--mono);color:var(--dim);font-size:11.5px}
-  .chip{display:inline-block;background:rgba(51,82,140,.14);border:1px solid rgba(51,82,140,.3);color:var(--violet);font-size:10px;padding:2px 7px;border-radius:6px;margin:1px 2px 1px 0;font-weight:600}
+  .chip{display:inline-block;max-width:100%;white-space:normal;overflow-wrap:anywhere;background:rgba(51,82,140,.14);border:1px solid rgba(51,82,140,.3);color:var(--violet);font-size:10px;padding:2px 7px;border-radius:6px;margin:1px 2px 1px 0;font-weight:600}
   .mode-b{font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;letter-spacing:.5px}
   .mode-auto{background:rgba(74,114,184,.15);color:var(--blue);border:1px solid rgba(74,114,184,.3)}
   .mode-semi{background:rgba(255,154,76,.13);color:var(--orange);border:1px solid rgba(255,154,76,.3)}
@@ -202,12 +218,35 @@
 </style>
 </head>
 <body>
+<!-- Shown until extension/bridge.js answers. A dashboard with no extension has no
+     identity, no usage and no application history to show — rendering it empty would
+     look broken, and rendering it with sample numbers is what caused this whole pass.
+     So: one card, one job. markConnected() hides it. -->
+<div id="connectGate">
+  <div class="cg-card">
+    <div class="cg-logo" role="img" aria-label="OfferAIO"></div>
+    <h2>Connect the OfferAIO extension</h2>
+    <p>This dashboard is a window onto your extension — the postings you queue here, and the
+       applications it has actually sent. It has no account and no server-side copy of
+       anything, so without the extension there is genuinely nothing to show.</p>
+    <ol class="cg-steps">
+      <li>Download the extension and load it in Chrome</li>
+      <li>Pin it to your toolbar</li>
+      <li>Come back to this page — it connects on its own</li>
+    </ol>
+    <div class="cg-actions">
+      <a class="btn primary" href="https://github.com/TobyBerg43/OfferAIO/releases/download/extension-latest/offeraio-extension.zip">Download the extension</a>
+      <a class="btn" href="/start.html">Full walkthrough →</a>
+    </div>
+    <div class="cg-wait" id="cgWait">◌ waiting for the extension…</div>
+  </div>
+</div>
 <div class="window">
   <div class="main">
     <div class="sidebar">
       <div class="logo">
         <div class="logo-icon" role="img" aria-label="OfferAIO"></div>
-        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver">build 2027.1</div></div>
+        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver" id="logoVer">v1.2.0</div></div>
       </div>
       <div class="nav-item active" data-page="dashboard">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
@@ -240,8 +279,8 @@
         <div class="conn" id="engStatus" style="color:var(--dim2);cursor:pointer" title="Click to connect the local OfferAIO Engine (desktop app). Off by default — no local-network access is used unless you turn it on.">ENGINE: OFF</div>
       </div>
       <div class="userchip">
-        <div class="avatar">T</div>
-        <div><div class="un" id="userName">Your profile</div><div class="ue" id="userPlan">Free · 50/mo</div></div>
+        <div class="avatar" id="userAvatar">·</div>
+        <div><div class="un" id="userName">Not connected</div><div class="ue" id="userPlan">—</div></div>
       </div>
     </div>
 
@@ -269,6 +308,11 @@
           </div>
         </div>
         <div class="card">
+          <h3>Applications <span class="page-sub" style="font-weight:400">— recorded by the extension when it actually submitted</span></h3>
+          <div id="appRows"></div>
+          <div class="empty" id="appEmpty">Nothing sent yet. Queue a posting on <b>Tasks</b>, open it, and the extension records it here the moment it submits.</div>
+        </div>
+        <div class="card">
           <h3>Live activity</h3>
           <div id="feed"></div>
         </div>
@@ -277,21 +321,20 @@
       <!-- TASKS -->
       <div class="page" id="page-tasks">
         <div class="page-head">
-          <div><h1>Tasks</h1><div class="page-sub">Each task hunts &amp; applies to one internship matching your filters · <span style="font-family:var(--mono);font-size:10.5px;color:var(--dim2)">N new · S start all · X stop all</span></div></div>
+          <div><h1>Tasks</h1><div class="page-sub">Each task queues one posting that matches your filters — you open it and the extension fills it · <span style="font-family:var(--mono);font-size:10.5px;color:var(--dim2)">N new · S match all · X reset</span></div></div>
           <div class="head-actions">
-            <button class="btn" onclick="startAll()">▶ Start All</button>
-            <button class="btn" onclick="stopAll()">⏸ Stop All</button>
-            <button class="btn danger" onclick="deleteFinished()">Clear Finished</button>
+            <button class="btn" onclick="findAllMatches()">▶ Match All</button>
+            <button class="btn" onclick="resetAll()">↺ Reset</button>
+            <button class="btn danger" onclick="deleteFinished()">Clear Applied</button>
             <button class="btn" onclick="openLinkModal()">🔗 Add Links</button>
             <button class="btn primary" onclick="openModal()">+ Create Tasks</button>
           </div>
         </div>
         <div style="display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap" id="taskTabs">
           <div class="cat on" data-f="all">Active</div>
-          <div class="cat" data-f="running">Running</div>
-          <div class="cat" data-f="ready">In Review</div>
-          <div class="cat" data-f="done">Submitted</div>
-          <div class="cat" data-f="resp">Responses</div>
+          <div class="cat" data-f="ready">Ready</div>
+          <div class="cat" data-f="opened">Opened</div>
+          <div class="cat" data-f="done">Applied</div>
         </div>
         <div class="card" style="padding:6px 14px">
           <table>
@@ -325,11 +368,11 @@
       <!-- REVIEW QUEUE -->
       <div class="page" id="page-review">
         <div class="page-head">
-          <div><h1>Review Queue</h1><div class="page-sub">Semi-auto tasks land here fully pre-filled — confirm to fire the application</div></div>
-          <div class="head-actions"><button class="btn green" onclick="submitAllReviews()">⚡ Submit All</button></div>
+          <div><h1>Review Queue</h1><div class="page-sub">Matched postings with a cover letter drafted — open each one and the extension fills it</div></div>
+          <div class="head-actions"></div>
         </div>
         <div id="reviewList"></div>
-        <div class="empty" id="reviewEmpty">Queue is empty. Semi-auto tasks will appear here when a match is filled &amp; ready.</div>
+        <div class="empty" id="reviewEmpty">Queue is empty. Matched tasks appear here with a cover letter ready to go.</div>
       </div>
 
       <!-- RESPONSE RADAR -->
@@ -377,7 +420,7 @@
               <label class="f-lbl">Resume (PDF)</label>
               <div class="drop" id="resumeDrop" onclick="fakeUpload()">Drop your resume here or click to upload</div>
               <label class="f-lbl">LinkedIn URL <span class="rec">· optional, strongly recommended</span></label>
-              <input type="url" placeholder="linkedin.com/in/toby" id="liUrl">
+              <input type="url" placeholder="linkedin.com/in/yourname" id="liUrl">
             </div>
             <div class="card">
               <h3>Bot defaults</h3>
@@ -540,34 +583,54 @@
 
 <script>
 /* ============ DATA ============ */
+/* The categories a task can filter on.
+ *
+ * Keys are persisted in localStorage.oa_presets and in every saved task, so they must
+ * never change; only the labels are for humans. Abbreviations are deliberately spelled
+ * out — "PE/VC" and "Inv. Banking" meant nothing to a first-year, and "Product" on its
+ * own read as a product, not a job.
+ *
+ * Each entry used to carry "roles" and "cos" — invented job titles and company names.
+ * Their only consumer was the fallback in advance() that fabricated a match when no real
+ * listing fit the filters, which is how "Blackstone — PE Summer Analyst" appeared on the
+ * screen of someone who had never applied anywhere. Matching now comes from the live
+ * database or returns nothing, so the pools are gone. */
 const CATS = {
-  /* Company pools are drawn from the real listings database, deliberately mixing the
-     household names with the mid-market and corporate employers that make up most of it
-     — Wells Fargo, Marsh McLennan, Fiserv, Micron, Core & Main and the like. Showing
-     only Jane Street and McKinsey told anyone without a 3.9 from a target school that
-     this product wasn't for them, which is both untrue and the opposite of the point:
-     volume matters most precisely when your resume isn't the one at the top of the pile. */
-  swe:{label:'SWE', roles:['Software Engineering Intern','Backend Intern','Full-Stack Intern'], cos:['Stripe','Databricks','Fiserv','GoDaddy','Micron','Netsmart','Datadog']},
-  ai:{label:'AI/ML', roles:['ML Engineering Intern','AI Research Intern','Applied AI Intern'], cos:['Scale AI','Perplexity','Tenstorrent','PathAI','Nvidia']},
-  ib:{label:'Inv. Banking', roles:['IB Summer Analyst','M&A Analyst Intern','Commercial Banking Intern'], cos:['Goldman Sachs','Morgan Stanley','Wells Fargo','PNC','Citi','Jefferies']},
-  quant:{label:'Quant', roles:['Quant Trading Intern','Quant Research Intern'], cos:['Jane Street','Citadel','DV Trading','Old Mission','TransMarket Group']},
-  consulting:{label:'Consulting', roles:['Consulting Summer Intern','Strategy Analyst Intern'], cos:['McKinsey','BCG','FTI Consulting','Oliver Wyman','H&CO']},
-  accounting:{label:'Accounting', roles:['Audit Intern','Tax Intern','Advisory Intern'], cos:['Deloitte','PwC','KPMG','Grant Thornton','Nelnet','Wells Fargo']},
-  pe:{label:'PE/VC', roles:['PE Summer Analyst','VC Analyst Intern','Growth Equity Intern'], cos:['Blackstone','KKR','Apollo','Vista','Insight Partners']},
-  re:{label:'Real Estate', roles:['RE Investment Intern','Acquisitions Intern','Property Ops Intern'], cos:['CBRE','JLL','WSP','Related','Hines']},
-  startup:{label:'Startups', roles:['Founding Team Intern','BizOps Intern','Growth Intern'], cos:['Ramp','Mercury','Vercel','Retool','Linear']},
-  product:{label:'Product', roles:['Product Management Intern','APM Intern'], cos:['Notion','Duolingo','Salesforce','Adobe','Uber']},
-  data:{label:'Data', roles:['Data Science Intern','Data Analytics Intern'], cos:['Palantir','Snowflake','Meta','Airbnb','Spotify']}
+  swe:{label:'Software Engineering'},
+  ai:{label:'AI & Machine Learning'},
+  ib:{label:'Investment Banking'},
+  quant:{label:'Quantitative Finance'},
+  consulting:{label:'Consulting'},
+  accounting:{label:'Accounting'},
+  pe:{label:'Private Equity & Venture Capital'},
+  re:{label:'Real Estate'},
+  startup:{label:'Startups'},
+  product:{label:'Product Management'},
+  data:{label:'Data Science & Analytics'}
 };
-const SOURCES=['Handshake','LinkedIn','Company Site','Greenhouse','Workday'];
 const LOGO_COLORS=['#33528c','#4a72b8','#e05c8f','#2fbf8f','#e0a02f','#5cc8e0','#a05ce0','#e0662f'];
+/* Every status a user can see, and the ONLY events that can produce it.
+ *
+ * There used to be ten of these, walked by a setTimeout chain: Monitoring… → Match Found
+ * → Filling Application → Writing Cover Letter → ✓ Submitted, on random timers, with a
+ * 65% dice roll for a reply and 45% for an interview. Nothing in that chain touched an
+ * employer. It printed "✓ Submitted" beside a real company pulled from the live database,
+ * which is how a closed Veeam req came to be marked as applied to.
+ *
+ * The dashboard queues and tracks; the extension applies. So:
+ *   idle    → nothing claimed yet
+ *   ready   → a real listing matched this task's filters (instant, no timer)
+ *   opened  → the user clicked Open & fill and the posting is open in a tab
+ *   applied → extension/content.js recorded a genuine submit against this URL
+ * There is no path from 'opened' to 'applied' that does not go through the extension. */
 const STATUS_META={
-  idle:{cls:'st-idle',txt:'Idle'}, monitoring:{cls:'st-mon',txt:'Monitoring…'},
-  match:{cls:'st-match',txt:'Match Found'}, filling:{cls:'st-fill',txt:'Filling Application'},
-  cover:{cls:'st-cover',txt:'Writing Cover Letter'}, ready:{cls:'st-ready',txt:'Ready — In Review Queue'},
-  submitted:{cls:'st-sub',txt:'✓ Submitted'}, reply:{cls:'st-reply',txt:'📬 Response Received'},
-  interview:{cls:'st-int',txt:'★ Interview Request'}, paced:{cls:'st-paced',txt:'⏳ Paced — daily cap hit'}
+  idle:{cls:'st-idle',txt:'Idle'},
+  ready:{cls:'st-ready',txt:'Ready to apply'},
+  opened:{cls:'st-mon',txt:'Opened — finish in the tab'},
+  applied:{cls:'st-sub',txt:'✓ Applied'},
+  unconfirmed:{cls:'st-cover',txt:'Sent — not confirmed'}
 };
+const LIVE_STATUSES=['idle','ready','opened','applied','unconfirmed'];
 const CL_TEMPLATES=[
 `Hi {company} team,
 
@@ -597,7 +660,7 @@ Best regards,
 /* ============ LIVE LISTINGS DB ============ */
 /* Pulls real Summer 2027 postings from community-maintained repos that
    auto-update daily via GitHub Actions. Zero backend needed for v1. */
-let LIVE=[]; const usedListings=new Set();
+let LIVE=[]; const usedListings=new Set(); let lastSyncCount=-1;
 const LISTING_SOURCES=[
   'https://raw.githubusercontent.com/TobyBerg43/OfferAIO/main/data/listings.json',
   'https://raw.githubusercontent.com/vanshb03/Summer2027-Internships/dev/.github/scripts/listings.json',
@@ -605,6 +668,20 @@ const LISTING_SOURCES=[
   'https://raw.githubusercontent.com/SimplifyJobs/Summer2027-Internships/dev/.github/scripts/listings.json',
   'https://raw.githubusercontent.com/SimplifyJobs/Summer2026-Internships/dev/.github/scripts/listings.json'
 ];
+/* What to call a listings source in the UI.
+ *
+ * The feed used to read "384 live postings from TobyBerg43" — the repo owner's GitHub
+ * handle, printed to every user, because the label was just the first path segment of the
+ * raw.githubusercontent URL. Users have no idea who that is, and it makes the product look
+ * like someone's side project running on a personal account. */
+function sourceLabel(url){
+  try{
+    const u=new URL(url), p=u.pathname;
+    if(/\/TobyBerg43\/OfferAIO\//.test(p))return 'the OfferAIO pipeline';
+    if(/vanshb03|SimplifyJobs/i.test(p))return 'the community Summer 2027 board';
+    return u.hostname.replace(/^www\./,'');
+  }catch(e){return 'your pipeline';}
+}
 function catForTitle(t){
   t=(t||'').toLowerCase();
   if(/quant|trading/.test(t))return 'quant';
@@ -628,7 +705,7 @@ function ingest(data,srcName){
     &&(!Array.isArray(l.terms)||!l.terms.length||l.terms.some(t=>/2027/.test(t)))
     &&!NON_US_RE.test(l.title+' '+((l.locations||[]).join(' '))));
   if(rows.length<10)return false;
-  LIVE=rows.map(l=>({company:l.company_name,role:l.title,url:l.url,
+  LIVE=rows.map(l=>({company:l.company_name,role:l.title,url:l.url,checked:l.date_checked||0,
     loc:(l.locations&&l.locations[0])||'',src:l.source==='workday'?'Workday':l.source==='greenhouse'?'Greenhouse':l.source==='lever'?'Lever':l.source==='ashby'?'Ashby':'Simplify DB',
     cat:catForTitle(l.title),posted:l.date_posted||0,
     pay:l.salary||l.compensation||l.pay||l.salary_range||''}));
@@ -639,7 +716,13 @@ function ingest(data,srcName){
   $('listCount').textContent=LIVE.length>999?(LIVE.length/1000).toFixed(1)+'k':LIVE.length;
   $('dbMeta').textContent=`${LIVE.length.toLocaleString()} jobs · updated ${now()}`;
   $('listSub').textContent=`${LIVE.length.toLocaleString()} live Summer 2027 postings · updates automatically`;
-  addFeed(`Listings DB synced — <b>${LIVE.length.toLocaleString()}</b> live postings from ${srcName}`,'var(--green)',new Date(Date.now()-3*60000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'}));
+  // Log a sync only when the count actually moved. loadListings() is called from boot,
+  // from two ⟳ Resync buttons and from saveCustomDb(), and every one of them used to add
+  // an identical "Listings DB synced" line — the feed showed it three times over.
+  if(LIVE.length!==lastSyncCount){
+    addFeed(`Listings DB synced — <b>${LIVE.length.toLocaleString()}</b> live postings from ${srcName}`,'var(--green)');
+    lastSyncCount=LIVE.length;
+  }
   try{localStorage.setItem('oa_dbcache',JSON.stringify({ts:Date.now(),rows:LIVE.slice(0,1500)}))}catch(e){}
   render();renderListings();
   return true;
@@ -654,7 +737,7 @@ async function loadListings(force){
       if(!r.ok)continue;
       const data=await r.json();
       if(!Array.isArray(data))continue;
-      if(ingest(data,custom&&url===custom?'your pipeline':new URL(url).pathname.split('/')[1]))return;
+      if(ingest(data,custom&&url===custom?'your pipeline':sourceLabel(url)))return;
     }catch(e){}
   }
   // offline fallback: cached copy
@@ -691,6 +774,16 @@ function fmtAgo(ts){
   if(days<30)return {txt:Math.floor(days/7)+'w ago',new:false};
   return {txt:Math.floor(days/30)+'mo ago',new:false};
 }
+/* "checked 2h ago" — how recently the pipeline confirmed this req was still open.
+   A user who lands on a dead posting should be able to see that we last looked three
+   days ago, rather than being told the product had applied to it. */
+function fmtChecked(ts){
+  if(!ts)return '';
+  const ms=(ts>1e12?ts:ts*1000), mins=Math.floor((Date.now()-ms)/60000);
+  if(mins<60)return Math.max(1,mins)+'m ago';
+  if(mins<1440)return Math.floor(mins/60)+'h ago';
+  return Math.floor(mins/1440)+'d ago';
+}
 function renderListings(){
   const q=(($('listSearch')||{}).value||'').toLowerCase();
   const cat=($('listCat')||{}).value||'';
@@ -707,6 +800,7 @@ function renderListings(){
           ${l.loc?`<span>📍 ${l.loc}</span>`:''}
           ${l.posted?`<span${fmtAgo(l.posted).new?' class="lr-new"':''}>🗓 ${fmtAgo(l.posted).txt}</span>`:''}
           ${l.pay?`<span class="lr-pay">💰 ${l.pay}</span>`:''}
+          ${l.checked?`<span title="When the pipeline last confirmed this req was still open">✓ checked ${fmtChecked(l.checked)}</span>`:''}
         </div>
       </div>
       <a class="icon-btn" style="text-decoration:none" title="Open posting" href="${l.url}" target="_blank" rel="noopener">↗</a>
@@ -726,20 +820,37 @@ function addTaskFromListing(i){
 }
 /* ---- CSV export ---- */
 function exportCSV(){
-  const rows=tasks.filter(t=>['submitted','reply','interview'].includes(t.status));
-  if(!rows.length){toast('','⚠️ Nothing submitted yet — nothing to export','warn');return;}
+  // Export what the extension actually sent, not what the dashboard queued.
+  const rows=applications;
+  if(!rows.length){toast('','⚠️ Nothing sent yet — nothing to export','warn');return;}
   const esc=s=>`"${String(s||'').replace(/"/g,'""')}"`;
-  const csv=['Task,Company,Role,Source,Status,URL',
-    ...rows.map(t=>[`OA-${pad(t.id)}`,esc(t.company),esc(t.role),esc(t.src),STATUS_META[t.status].txt.replace(/[^\w — ]/g,'').trim(),esc(t.url||'')].join(','))].join('\n');
+  const csv=['Company,Role,ATS,Submitted,Confirmed,FieldsFilled,FieldsTotal,URL',
+    ...rows.map(a=>[esc(a.company),esc(a.role),esc(a.ats),esc(new Date(a.submittedAt).toISOString()),
+      a.confirmed===false?'no':'yes',a.fieldsFilled|0,a.fieldsTotal|0,esc(a.url||'')].join(','))].join('\n');
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
   a.download='offeraio-applications.csv';a.click();
-  toast('',`Exported ${rows.length} applications to CSV`,'info');
+  toast('',`Exported ${rows.length} application${rows.length>1?'s':''} to CSV`,'info');
 }
-function pickListing(cats){
-  const pool=LIVE.filter(l=>cats.includes(l.cat)&&!usedListings.has(l.url));
+/* Match a task against the live database.
+ *
+ * This was `Math.random()` over the first 40 rows — no matching at all, which is why a
+ * task's "match" routinely had nothing to do with the filters the user set. Score against
+ * the task's own category, location and keyword filters, take the newest that qualifies
+ * (LIVE is already sorted newest-first), and claim it so two tasks can't both grab it. */
+function matchListing(t){
+  const kws=(t.filterKw||'').toLowerCase().split(/[,\s]+/).filter(Boolean);
+  const locs=(t.filterLoc||'').toLowerCase().split(/[,\/]+/).map(s=>s.trim()).filter(Boolean);
+  const pool=LIVE.filter(l=>{
+    if(usedListings.has(l.url))return false;
+    if(l.active===false)return false;
+    if(t.cats&&t.cats.length&&!t.cats.includes(l.cat))return false;
+    if(locs.length&&!locs.some(x=>(l.loc||'').toLowerCase().includes(x)))return false;
+    if(kws.length&&!kws.some(x=>(l.role+' '+l.company).toLowerCase().includes(x)))return false;
+    return true;
+  });
   if(!pool.length)return null;
-  const l=pool[Math.floor(Math.random()*Math.min(pool.length,40))];
+  const l=pool[0];
   usedListings.add(l.url);
   return l;
 }
@@ -860,9 +971,67 @@ setInterval(function(){if(engineOptedIn())checkEngine();},30000);
 
 /* ============ STATE ============ */
 let tasks=[]; let nextId=1; let feedItems=[]; let radarItems=[];
-let stats={sent:14,today:0,resp:3,int:1};
-let dayData=[2,0,3,1,4,2,5,3,1,6,4,2,7,0];
-let catCount={ib:4,quant:2,swe:3,consulting:2,pe:2,accounting:1};
+
+/* Applications the EXTENSION recorded, relayed over the bridge. This is the only source
+ * of truth for "what have I actually sent" — the three values below are derived from it
+ * and are never written to directly.
+ *
+ * They used to be seeded literals: 14 sent, 3 responses, 1 interview, a 14-day chart and
+ * a category breakdown, all invented. A brand-new user opened the dashboard to somebody
+ * else's results — a 21% response rate and an interview from Blackstone — while the
+ * extension popup correctly read 0 of 50 submissions used. */
+let applications=[];
+let stats={sent:0,today:0,resp:0,int:0};
+let dayData=new Array(14).fill(0);
+let catCount={};
+
+const startOfDay=ts=>{const d=new Date(ts);d.setHours(0,0,0,0);return d.getTime();};
+
+/** Recompute every headline number from the application records. */
+function recomputeDerived(){
+  const today=startOfDay(Date.now());
+  stats.sent=applications.length;
+  stats.today=applications.filter(a=>startOfDay(a.submittedAt)===today).length;
+  // Responses and interviews come only from the local engine's real Gmail scan. With no
+  // engine running these stay 0, which is the truth: nothing is watching an inbox.
+  stats.resp=radarItems.filter(r=>!/interview/i.test(r.type||'')).length;
+  stats.int=radarItems.filter(r=>/interview/i.test(r.type||'')).length;
+  dayData=new Array(14).fill(0);
+  applications.forEach(a=>{
+    const i=13-Math.round((today-startOfDay(a.submittedAt))/86400000);
+    if(i>=0&&i<14)dayData[i]++;
+  });
+  catCount={};
+  applications.forEach(a=>{
+    const c=a.cat||catForTitle(a.role);
+    catCount[c]=(catCount[c]||0)+1;
+  });
+}
+
+/** Same posting, ignoring query strings and trailing slashes. */
+function sameUrl(a,b){
+  const norm=u=>String(u||'').replace(/[?#].*$/,'').replace(/\/+$/,'').toLowerCase();
+  return !!a&&!!b&&norm(a)===norm(b);
+}
+
+/* The extension handed us its record of what it actually submitted. Mark any task
+ * pointed at that posting as applied — this is the ONLY way a task reaches 'applied'. */
+function syncApplications(list){
+  const before=applications.length;
+  applications=(Array.isArray(list)?list:[]).slice().sort((a,b)=>b.submittedAt-a.submittedAt);
+  tasks.forEach(t=>{
+    if(!t.url)return;
+    const rec=applications.find(a=>sameUrl(a.url,t.url));
+    if(!rec)return;
+    const next=rec.confirmed===false?'unconfirmed':'applied';
+    if(t.status!==next){
+      t.status=next;t.appliedAt=rec.submittedAt;
+      addFeed(`${rec.confirmed===false?'Sent (unconfirmed)':'✓ Applied'}: <b>${rec.role||t.role}</b> @ <b>${rec.company||t.company}</b> — recorded by the extension`,rec.confirmed===false?'var(--cyan)':'var(--green)');
+    }
+  });
+  recomputeDerived();
+  if(applications.length!==before)render(); else render();
+}
 
 /* ============ DURABLE STATE ============
  * Everything below used to live in memory only: one refresh and the user's profile,
@@ -873,7 +1042,9 @@ let catCount={ib:4,quant:2,swe:3,consulting:2,pe:2,accounting:1};
  * Writes are debounced because render() runs on every tick of the simulation, and a
  * synchronous localStorage write on each one would be visible jank.
  */
-const STORE_KEY='oa_state', PROFILE_KEY='oa_profile', STORE_VERSION=1;
+// Bumped to 2: v1 state carries the seeded demo tasks and invented stats, and the one
+// honest thing to do with those is drop them rather than migrate them forward.
+const STORE_KEY='oa_state', PROFILE_KEY='oa_profile', STORE_VERSION=2;
 const PROFILE_FIELDS=['setName','setEmail','setPhone','setSchool','setMajor','setMinor','setGrad','setWorkAuth','liUrl','dailyCap','customDb'];
 
 let saveTimer=null;
@@ -883,7 +1054,10 @@ function persist(){
     saveTimer=null;
     try{
       localStorage.setItem(STORE_KEY,JSON.stringify({
-        v:STORE_VERSION, nextId, stats, dayData, catCount,
+        // stats/dayData/catCount are NOT persisted — they are derived from the
+        // extension's application records on every load, so there is nowhere for a
+        // stale invented number to survive a refresh.
+        v:STORE_VERSION, nextId,
         // `timer` is a live setTimeout handle — meaningless once the page is gone.
         tasks:tasks.map(({timer,...rest})=>rest),
         feedItems:feedItems.slice(0,60), radarItems:radarItems.slice(0,40)
@@ -920,16 +1094,15 @@ function restoreState(){
   try{s=JSON.parse(localStorage.getItem(STORE_KEY)||'null');}catch(e){}
   if(!s||s.v!==STORE_VERSION)return false;
   nextId=s.nextId||1;
-  if(s.stats)stats=s.stats;
-  if(Array.isArray(s.dayData)&&s.dayData.length===14)dayData=s.dayData;
-  if(s.catCount)catCount=s.catCount;
   if(Array.isArray(s.feedItems))feedItems=s.feedItems;
   if(Array.isArray(s.radarItems))radarItems=s.radarItems;
   if(Array.isArray(s.tasks)){
-    // A task mid-run when the tab closed has no timer any more. Park it as idle rather
-    // than showing "Filling application…" for something that stopped hours ago.
-    const inFlight=['monitoring','match','filling','cover'];
-    tasks=s.tasks.map(t=>({...t,timer:null,status:inFlight.includes(t.status)?'idle':t.status}));
+    // Anything not in the current vocabulary came from the old simulation — park it as
+    // idle rather than restoring a status nothing can produce any more.
+    tasks=s.tasks.map(t=>({...t,timer:null,status:LIVE_STATUSES.includes(t.status)?t.status:'idle'}));
+    // Re-claim the listings already spoken for, or a second task would match the same
+    // posting after a refresh.
+    tasks.forEach(t=>{if(t.url)usedListings.add(t.url);});
   }
   return true;
 }
@@ -1028,8 +1201,8 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){closeModal();closeLinkModal();}
   else if(k==='n'){e.preventDefault();openModal();}
   else if(k==='l'){e.preventDefault();openLinkModal();}
-  else if(k==='s')startAll();
-  else if(k==='x')stopAll();
+  else if(k==='s')findAllMatches();
+  else if(k==='x')resetAll();
   else if(['1','2','3','4','5','6'].includes(e.key)){const items=document.querySelectorAll('.nav-item');const i=+e.key-1;if(items[i])items[i].click();}
 });
 
@@ -1038,98 +1211,84 @@ function createTasks(){
   const cats=[...catGrid.querySelectorAll('.cat.on')].map(d=>d.dataset.k);
   if(!cats.length){toast('','⚠️ Pick at least one category','warn');return;}
   const qty=+$('fQty').value, mode=segVal('modeSeg'), cl=segVal('clSeg'), clText=$('clText').value;
+  // The location and keyword boxes used to be collected by getFilterState() for presets
+  // and then thrown away when the task was created, so the only filter that ever reached
+  // matching was the category. Carry them onto the task.
+  const filterLoc=($('fLoc')||{}).value||'', filterKw=($('fKw')||{}).value||'';
   if(editingId){
     const t=tasks.find(x=>x.id===editingId);
-    if(t){Object.assign(t,{cats,mode,cl,clText});t.coverCache=null;addFeed(`Edited Task OA-${pad(t.id)}`,'var(--violet)');}
+    if(t){Object.assign(t,{cats,mode,cl,clText,filterLoc,filterKw});t.coverCache=null;addFeed(`Edited Task OA-${pad(t.id)}`,'var(--violet)');}
     editingId=null;closeModal();render();return;
   }
   for(let i=0;i<qty;i++){
-    tasks.push({id:nextId++,cats,mode,cl,clText,status:'idle',company:null,role:null,src:null,timer:null});
+    tasks.push({id:nextId++,cats,mode,cl,clText,filterLoc,filterKw,status:'idle',company:null,role:null,src:null,timer:null});
   }
   closeModal();render();
-  addFeed(`Created ${qty} task${qty>1?'s':''} · ${cats.map(c=>CATS[c].label).join(', ')} · ${mode==='auto'?'FULL AUTO':'SEMI-AUTO'}`,'var(--violet)');
+  // Match immediately — there is nothing to wait for.
+  tasks.filter(t=>t.status==='idle').forEach(findMatch);
+  addFeed(`Created ${qty} task${qty>1?'s':''} · ${cats.map(c=>(CATS[c]||{label:c}).label).join(', ')}`,'var(--violet)');
   document.querySelector('[data-page=tasks]').click();
 }
-function startTask(t){
-  if(['monitoring','match','filling','cover'].includes(t.status))return;
-  if(['submitted','reply','interview','ready'].includes(t.status))return;
-  setStatus(t,'monitoring');
-  t.timer=setTimeout(()=>advance(t),1500+Math.random()*5000);
-}
-function stopTask(t){
-  if(t.timer){clearTimeout(t.timer);t.timer=null;}
-  if(!['submitted','reply','interview','ready'].includes(t.status))setStatus(t,'idle');
-}
-function advance(t){
-  if(t.status==='monitoring'){
-    if(t.pinned){
-      setStatus(t,'match');
-      addFeed(`Pinned target locked: <b>${t.company}</b> (Task OA-${pad(t.id)})`,'var(--cyan)');
-    } else {
-      const live=pickListing(t.cats);
-      if(live){
-        t.company=live.company;t.role=live.role;t.src=live.src;t.url=live.url;t.cat=live.cat;t.loc=live.loc;
-      } else {
-        const cat=rand(t.cats), c=CATS[cat];
-        t.company=rand(c.cos);t.role=rand(c.roles);t.src=rand(SOURCES);t.cat=cat;t.url=null;
-      }
-      t.coverCache=null;
-      setStatus(t,'match');
-      addFeed(`Match: <b>${t.role}</b> @ <b>${t.company}</b> via ${t.src} (Task OA-${pad(t.id)})`,'var(--violet)');
-    }
-    t.timer=setTimeout(()=>advance(t),1200+Math.random()*1800);
-  } else if(t.status==='match'){
-    setStatus(t,'filling');
-    t.timer=setTimeout(()=>advance(t),2000+Math.random()*2500);
-  } else if(t.status==='filling'){
-    setStatus(t,'cover');
-    t.timer=setTimeout(()=>advance(t),1800+Math.random()*2200);
-  } else if(t.status==='cover'){
-    if(t.mode==='semi'){ setStatus(t,'ready'); addFeed(`Task OA-${pad(t.id)} ready for review — <b>${t.company}</b>`,'var(--orange)'); enhanceCover(t); }
-    else submit(t);
-  }
-}
-async function submit(t){
-  const cap=+(($('dailyCap')||{}).value||25);
-  if(stats.today>=cap){
-    setStatus(t,'paced');
-    toast('',`Daily cap of ${cap} hit — Task OA-${pad(t.id)} paced until tomorrow`,'warn');
+/* Find this task a posting. Instant and deterministic — matching against a database
+   already in memory takes no time, and pretending otherwise with a timer was the whole
+   problem. */
+function findMatch(t){
+  if(t.status==='applied'||t.status==='unconfirmed')return;
+  if(t.pinned&&t.url){setStatus(t,'ready');return;}
+  const live=matchListing(t);
+  if(!live){
+    if(t.status!=='ready')toast('',`No unclaimed listing matches Task OA-${pad(t.id)} — widen its filters or hit ⟳ Resync`,'warn');
     return;
   }
-  // real engine path: Greenhouse/Lever URLs get actually filled & submitted
-  if(engineOn&&t.url&&/greenhouse\.io|lever\.co/.test(t.url)){
-    setStatus(t,'filling');
-    const handled=await engineApply(t);
-    if(handled===false){setStatus(t,'ready');return;}  // filled, awaiting confirm in browser window
-    if(handled===null){/* engine failed — fall through to simulated submit */}
-  }
-  setStatus(t,'submitted');
-  stats.sent++;stats.today++;
-  catCount[t.cat]=(catCount[t.cat]||0)+1;dayData[13]++;
-  toast(t.company,`${t.role} — submitted via ${t.src}`,'success');
-  addFeed(`✓ Submitted: <b>${t.role}</b> @ <b>${t.company}</b>`,'var(--green)');
-  // schedule possible response detection
-  if(Math.random()<0.65){
-    setTimeout(()=>detectResponse(t),12000+Math.random()*35000);
-  }
-  render();
+  t.company=live.company;t.role=live.role;t.src=live.src;t.url=live.url;
+  t.cat=live.cat;t.loc=live.loc;t.checked=live.checked;t.coverCache=null;
+  setStatus(t,'ready');
+  addFeed(`Matched <b>${t.role}</b> @ <b>${t.company}</b> via ${t.src} (Task OA-${pad(t.id)})`,'var(--violet)');
+  // enhanceCover() lost its caller when advance() was deleted; a matched task is the
+  // right moment for it, and it degrades to the templated letter without a Pro key.
+  if(t.cl==='ai')enhanceCover(t);
 }
-function detectResponse(t){
-  const isInt=Math.random()<0.45;
-  const via=rand(['Gmail','Handshake','Gmail','LinkedIn']);
-  setStatus(t,isInt?'interview':'reply');
-  if(isInt){stats.int++;toast(t.company,`Interview request detected via ${via} 🎯`,'interview');}
-  else{stats.resp++;toast(t.company,`Response detected via ${via} — check Radar`,'reply');}
-  radarItems.unshift({co:t.company,role:t.role,via,type:isInt?'Interview invite':'Recruiter reply',time:now(),
-    msg:isInt?`"We'd like to invite you to a first-round interview for the ${t.role} position…"`:`"Thank you for applying to ${t.company}. A member of our recruiting team has reviewed…"`});
-  addFeed(`${isInt?'★ Interview request':'📬 Response'} from <b>${t.company}</b> · detected via ${via}`,isInt?'#ffd166':'#6ea8ff');
-  render();
+function findMatchById(id){const t=tasks.find(x=>x.id===id);if(t)findMatch(t);}
+
+/* The hand-off. This is the only "apply" action the dashboard has, and all it does is
+   open the real posting in a real tab, where the extension is running. Nothing here
+   claims the application was sent — only content.js can say that. */
+function openAndFill(id){
+  const t=tasks.find(x=>x.id===id);
+  if(!t||!t.url){toast('','That task has no posting URL yet','warn');return;}
+  window.open(t.url,'_blank','noopener');
+  t.openedAt=Date.now();
+  setStatus(t,'opened');
+  addFeed(`Opened <b>${t.company}</b> — fill and submit in the new tab, then it lands here`,'var(--cyan)');
+}
+function resetTask(t){
+  if(t.status==='applied'||t.status==='unconfirmed')return;
+  setStatus(t,'idle');
+}
+/* advance(), submit() and detectResponse() used to live here — a setTimeout chain that
+   walked a task to "✓ Submitted" without touching an employer, then rolled dice
+   (Math.random() < 0.65, then < 0.45) to decide it had received a reply and an interview.
+   They are gone. Applying happens in extension/content.js and nowhere else; responses
+   come from the local engine's real Gmail scan or not at all.
+
+   The local engine really does submit, so it keeps a path — but an explicit one the user
+   presses, and it records a genuine application record like the extension does. */
+async function applyViaEngine(id){
+  const t=tasks.find(x=>x.id===id);
+  if(!t||!t.url||!engineOn)return;
+  const handled=await engineApply(t);
+  if(handled!==true)return;             // filled-but-unconfirmed or failed: status unchanged
+  applications=[{company:t.company,role:t.role,url:t.url,ats:'Local engine',
+    submittedAt:Date.now(),fieldsFilled:0,fieldsTotal:0,unfilledRequired:[],confirmed:true,cat:t.cat},
+    ...applications];
+  t.status='applied';t.appliedAt=Date.now();
+  recomputeDerived();render();
 }
 function setStatus(t,s){t.status=s;render();}
-function startAll(){tasks.forEach(startTask);}
-function stopAll(){tasks.forEach(stopTask);}
-function deleteFinished(){tasks=tasks.filter(t=>!['submitted','reply','interview'].includes(t.status));render();}
-function delTask(id){const t=tasks.find(x=>x.id===id);if(t)stopTask(t);tasks=tasks.filter(x=>x.id!==id);render();}
+function findAllMatches(){tasks.filter(t=>t.status==='idle').forEach(findMatch);}
+function resetAll(){tasks.forEach(resetTask);}
+function deleteFinished(){tasks=tasks.filter(t=>!['applied','unconfirmed'].includes(t.status));render();}
+function delTask(id){tasks=tasks.filter(x=>x.id!==id);render();}
 function pad(n){return String(n).padStart(4,'0');}
 
 /* ============ REVIEW QUEUE ============ */
@@ -1145,18 +1304,22 @@ function signoff(){
   const who=((($('setName')||{}).value)||'').trim();
   return who?'\n'+who:'';
 }
-function submitReview(id){const t=tasks.find(x=>x.id===id);if(t)submit(t);}
-function discardReview(id){const t=tasks.find(x=>x.id===id);if(t){t.coverCache=null;t.company=null;t.role=null;setStatus(t,'idle');addFeed(`Discarded match for Task OA-${pad(t.id)}`,'var(--dim2)');}}
-function submitAllReviews(){tasks.filter(t=>t.status==='ready').forEach((t,i)=>setTimeout(()=>submit(t),i*600));}
+function discardReview(id){
+  const t=tasks.find(x=>x.id===id);
+  if(!t)return;
+  if(t.url)usedListings.delete(t.url);
+  t.coverCache=null;t.company=null;t.role=null;t.url=null;
+  setStatus(t,'idle');
+  addFeed(`Discarded match for Task OA-${pad(t.id)}`,'var(--dim2)');
+}
 
 /* ============ RENDER ============ */
 let taskFilter='all';
 const TASK_FILTERS={
-  all:t=>!['submitted','reply','interview'].includes(t.status),
-  running:t=>['monitoring','match','filling','cover'].includes(t.status),
+  all:t=>!['applied','unconfirmed'].includes(t.status),
   ready:t=>t.status==='ready',
-  done:t=>t.status==='submitted',
-  resp:t=>['reply','interview'].includes(t.status)
+  opened:t=>t.status==='opened',
+  done:t=>['applied','unconfirmed'].includes(t.status)
 };
 document.querySelectorAll('#taskTabs .cat').forEach(tab=>tab.onclick=()=>{
   document.querySelectorAll('#taskTabs .cat').forEach(x=>x.classList.remove('on'));
@@ -1166,30 +1329,31 @@ function render(){
   persist();   // every mutation path already ends in render(), so this is the one hook
   // tasks table
   const tb=$('taskBody');tb.innerHTML='';
-  const FLABELS={all:'Active',running:'Running',ready:'In Review',done:'Submitted',resp:'Responses'};
+  const FLABELS={all:'Active',ready:'Ready',opened:'Opened',done:'Applied'};
   document.querySelectorAll('#taskTabs .cat').forEach(x=>{const f=x.dataset.f;const fn=TASK_FILTERS[f];const c=fn?tasks.filter(fn).length:tasks.length;x.textContent=FLABELS[f]+(c?' '+c:'');});
   const visible=tasks.filter(TASK_FILTERS[taskFilter]||TASK_FILTERS.all);
   visible.forEach(t=>{
-    const m=STATUS_META[t.status];
-    const running=['monitoring','match','filling','cover'].includes(t.status);
+    const m=STATUS_META[t.status]||STATUS_META.idle;
     const tr=document.createElement('tr');
     tr.innerHTML=`
       <td class="tid">OA-${pad(t.id)}</td>
-      <td>${t.pinned?'<span class="chip" style="border-color:rgba(63,214,240,.4);color:var(--cyan);background:rgba(63,214,240,.08)">🔗 LINK</span>':t.cats.map(c=>`<span class="chip">${CATS[c].label}</span>`).join('')}</td>
+      <td>${t.pinned?'<span class="chip" style="border-color:rgba(63,214,240,.4);color:var(--cyan);background:rgba(63,214,240,.08)">🔗 LINK</span>':(t.cats||[]).map(c=>`<span class="chip">${(CATS[c]||{label:c}).label}</span>`).join('')}</td>
       <td>${t.company?`<div class="company-cell">${t.company}${t.url?` <a href="${t.url}" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none" title="Open posting">↗</a>`:''}<span class="role">${t.role} · <span class="src-tag">${t.src}</span></span></div>`:'<span style="color:var(--dim2)">—</span>'}</td>
       <td><span class="mode-b ${t.mode==='auto'?'mode-auto':'mode-semi'}">${t.mode==='auto'?'AUTO':'SEMI'}</span></td>
       <td><span class="cl-b">${t.cl==='ai'?'AI ✎':'CUSTOM'}</span></td>
       <td><div class="status ${m.cls}"><div class="sd"></div>${m.txt}</div></td>
       <td><div class="row-actions">
-        ${running?`<button class="icon-btn" title="Stop" onclick="stopTask(tasks.find(x=>x.id===${t.id}))">⏸</button>`
-                 :`<button class="icon-btn" title="Start" onclick="startTask(tasks.find(x=>x.id===${t.id}))">▶</button>`}
+        ${t.status==='idle'?`<button class="icon-btn" title="Find a matching posting" onclick="findMatchById(${t.id})">▶</button>`:''}
+        ${t.status==='ready'&&t.url?`<button class="btn sm primary" onclick="openAndFill(${t.id})">Open &amp; fill</button>`:''}
+        ${t.status==='opened'?`<button class="icon-btn" title="Open the posting again" onclick="openAndFill(${t.id})">↗</button>`:''}
+        ${t.status==='ready'&&t.url&&engineOn?`<button class="icon-btn" title="Apply with the local engine" onclick="applyViaEngine(${t.id})">⚙</button>`:''}
         <button class="icon-btn" title="Edit" onclick="editTask(${t.id})">✎</button>
         <button class="icon-btn" title="Delete" onclick="delTask(${t.id})">✕</button>
       </div></td>`;
     tb.appendChild(tr);
   });
   $('taskEmpty').style.display=visible.length?'none':'block';
-  $('taskEmpty').innerHTML=tasks.length?'No tasks in this filter.':'No tasks yet. Hit <b>+ Create Tasks</b> to start hunting.';
+  $('taskEmpty').innerHTML=tasks.length?'No tasks in this filter.':'No tasks yet. Hit <b>+ Create Tasks</b> to queue some postings.';
   $('taskCount').textContent=tasks.length||'';
   // review queue
   const ready=tasks.filter(t=>t.status==='ready');
@@ -1211,10 +1375,10 @@ function render(){
       </div>
       <div class="rc-cl" contenteditable="true" spellcheck="false">${t.coverCache}</div>
       <div class="rc-actions">
-        <button class="btn green sm" onclick="submitReview(${t.id})">⚡ Submit Application</button>
-        ${t.url?`<a class="btn sm" style="text-decoration:none" href="${t.url}" target="_blank" rel="noopener">Open posting ↗</a>`:''}
+        ${t.url?`<button class="btn green sm" onclick="openAndFill(${t.id})">Open &amp; fill →</button>`:''}
         <button class="btn sm danger" onclick="discardReview(${t.id})">Discard match</button>
-      </div>`;
+      </div>
+      <div class="rc-note">Opens the real posting in a new tab. The OfferAIO extension fills it there; you review and submit. Nothing is sent from this page.</div>`;
     rl.appendChild(div);
   });
   $('reviewEmpty').style.display=ready.length?'none':'block';
@@ -1233,12 +1397,38 @@ function render(){
   // stats
   $('stSent').textContent=stats.sent;
   $('stToday').textContent='+'+stats.today+' today';
-  $('stActive').textContent=tasks.filter(t=>['monitoring','match','filling','cover'].includes(t.status)).length;
+  $('stActive').textContent=tasks.filter(t=>['ready','opened'].includes(t.status)).length;
   $('stResp').textContent=stats.resp;
   $('stRespRate').textContent=Math.round(stats.resp/Math.max(stats.sent,1)*100)+'% response rate';
   $('stInt').textContent=stats.int;
-  renderChart();renderCats();renderFeed();
+  renderApplications();renderChart();renderCats();renderFeed();
 }
+/* The applications table. Every row here is a record extension/content.js wrote after a
+   submit it could actually evidence — a navigation, a confirmation screen, or the form
+   being replaced. Rows it could not evidence say so rather than being hidden or promoted. */
+function renderApplications(){
+  const el=$('appRows'); if(!el)return;
+  el.innerHTML=applications.slice(0,50).map(a=>{
+    const when=new Date(a.submittedAt);
+    const gaps=(a.unfilledRequired||[]).length;
+    return `<div class="app-row">
+      <div class="co-logo" style="width:30px;height:30px;font-size:12px;border-radius:8px;background:${LOGO_COLORS[((a.company||'?').length)%LOGO_COLORS.length]}">${esc((a.company||'?')[0])}</div>
+      <div class="ar-main">
+        <b>${esc(a.company||'Unknown')}</b> <span class="chip">${esc(a.ats||'')}</span>
+        ${a.confirmed===false?'<span class="chip" style="border-color:rgba(63,214,240,.4);color:var(--cyan);background:rgba(63,214,240,.08)" title="The click went through and the form validated, but the employer page never confirmed. Worth checking.">unconfirmed</span>':''}
+        <div class="lr-role">${esc(a.role||'')}</div>
+        <div class="lr-meta">
+          <span>🗓 ${when.toLocaleDateString()} ${when.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span>
+          ${a.fieldsTotal?`<span>✎ filled ${a.fieldsFilled} of ${a.fieldsTotal}</span>`:''}
+          ${gaps?`<span style="color:var(--amber)">${gaps} left for you</span>`:''}
+        </div>
+      </div>
+      ${a.url?`<a class="icon-btn" style="text-decoration:none" title="Open the posting" href="${esc(a.url)}" target="_blank" rel="noopener">↗</a>`:''}
+    </div>`;
+  }).join('');
+  $('appEmpty').style.display=applications.length?'none':'block';
+}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function renderChart(){
   const max=Math.max(...dayData,1),w=600,h=170,pad=10;
   const step=(w-pad*2)/(dayData.length-1);
@@ -1287,13 +1477,22 @@ function renderChart(){
 function renderCats(){
   const el=$('catBars');el.innerHTML='';
   const entries=Object.entries(catCount).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  if(!entries.length){el.innerHTML='<div class="empty" style="padding:14px 0">No applications yet — this fills in as you send them.</div>';return;}
   const max=Math.max(...entries.map(e=>e[1]),1);
   entries.forEach(([k,v])=>{
-    el.innerHTML+=`<div class="bar-row"><div class="bl">${CATS[k].label}</div>
+    el.innerHTML+=`<div class="bar-row"><div class="bl">${(CATS[k]||{label:k}).label}</div>
       <div class="bar-track"><div class="bar-fill" style="width:${v/max*100}%"></div></div><div class="bv">${v}</div></div>`;
   });
 }
+/* Collapse an identical repeat into the top entry instead of stacking it. The feed
+   showed "Listings DB synced" three times in a row because every caller logged its own. */
 function addFeed(html,color,atTime){
+  const top=feedItems[0];
+  if(top&&top.html===html){
+    top.time=atTime||now();
+    top.n=(top.n||1)+1;
+    renderFeed();return;
+  }
   feedItems.unshift({html,color,time:atTime||now()});
   feedItems=feedItems.slice(0,12);renderFeed();
 }
@@ -1301,7 +1500,7 @@ function renderFeed(){
   const f=$('feed');f.innerHTML='';
   if(!feedItems.length){f.innerHTML='<div class="empty" style="padding:20px 0">Waiting for activity…</div>';return;}
   feedItems.forEach(i=>{
-    f.innerHTML+=`<div class="feed-item"><div class="feed-dot" style="background:${i.color}"></div><div>${i.html}</div><div class="ft">${i.time}</div></div>`;
+    f.innerHTML+=`<div class="feed-item"><div class="feed-dot" style="background:${i.color}"></div><div>${i.html}${i.n>1?` <span class="chip">×${i.n}</span>`:''}</div><div class="ft">${i.time}</div></div>`;
   });
 }
 
@@ -1368,31 +1567,73 @@ function saveSettings(){
   paintUser();
   pushToExtension();
 }
-/* The sidebar chip used to read "toby · Pro · 1 profile" for everyone. Show whoever is
-   actually signed in on this browser, and their real plan. */
+/* Who is signed in, and on what.
+ *
+ * There is no account system and there should not be one — see PROJECT.md §2. The
+ * extension IS the identity: the profile the user saved into it, the plan their key
+ * entitles them to, and the submissions they have actually used this month. All three
+ * come over the bridge from chrome.storage.local, so "signed in" needs no server, no
+ * password and no user database.
+ *
+ * Everything here reads "—" until the extension answers. It must never invent a plan or
+ * a usage figure: the popup reading "0 of 50 used" beside a dashboard claiming 14 sent
+ * is exactly the contradiction that made the product look broken. */
 function paintUser(){
-  const who=((($('setName')||{}).value)||'').trim();
-  const nm=$('userName'), pl=$('userPlan');
-  if(nm)nm.textContent=who||'Your profile';
-  if(pl)pl.textContent=extLicense&&extLicense.key?'Pro · 250/mo':'Free · 50/mo';
+  const nm=$('userName'), pl=$('userPlan'), av=$('userAvatar');
+  const p=extIdentity&&extIdentity.profile;
+  const u=extIdentity&&extIdentity.usage;
+  const who=((p&&p.name)||'').trim()||((($('setName')||{}).value)||'').trim();
+  if(nm)nm.textContent=extConnected?(who||'Your profile'):'Not connected';
+  if(av)av.textContent=(who&&who[0]?who[0]:'·').toUpperCase();
+  if(pl){
+    if(!extConnected)pl.textContent='—';
+    else if(u)pl.textContent=`${u.plan==='pro'?'Pro':'Free'} · ${u.used} of ${u.quota} this month`;
+    else pl.textContent='connected';
+  }
 }
 // site <-> extension bridge
+let extIdentity=null, extConnected=false;
 window.addEventListener('message',e=>{
   if(e.source!==window)return;
   const d=e.data; if(!d||d.source!=='offeraio-ext')return;
-  const s=$('extStatus');
-  if((d.type==='ready'||d.type==='pong')&&s){s.textContent='● connected';s.style.color='var(--green)';askLicense();}
-  if(d.type==='saved')toast('','Profile pushed to the OfferAIO extension','info');
+  if(d.type==='ready'||d.type==='pong')markConnected();
+  if(d.type==='saved'){toast('','Profile saved to your OfferAIO extension','info');ask('identity');}
   if(d.type==='license')extLicense=d.key?{key:d.key,installId:d.installId}:null;
+  if(d.type==='identity'){extIdentity=d;markConnected();paintUser();}
+  if(d.type==='applications')syncApplications(d.applications||[]);
 });
-// Ask once the extension has announced itself; an older bridge.js simply won't answer,
-// and the dashboard falls back to templated letters exactly as it did before.
+const ask=type=>window.postMessage({source:'offeraio-site',type},'*');
+
+/* The extension answered, so this browser has an identity and a real history to show.
+ * Until then the dashboard shows the connect card and nothing else — an empty dashboard
+ * with no extension isn't a logged-out state, it's a broken one. */
+function markConnected(){
+  const s=$('extStatus');
+  if(s){s.textContent='● connected';s.style.color='var(--green)';}
+  if(extConnected)return;
+  extConnected=true;
+  const g=$('connectGate'); if(g)g.style.display='none';
+  askLicense();
+  ask('identity');
+  ask('applications');
+  // A submit happens in another tab, so poll for new records while this page is open.
+  setInterval(()=>{if(!document.hidden)ask('applications');},20000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)ask('applications');});
+  paintUser();
+}
 let licenseAsked=false;
 function askLicense(){
   if(licenseAsked)return; licenseAsked=true;
-  window.postMessage({source:'offeraio-site',type:'license'},'*');
+  ask('license');
 }
-setTimeout(()=>window.postMessage({source:'offeraio-site',type:'ping'},'*'),1200);
+/* bridge.js announces itself at document_idle, which is after this listener is attached,
+   so the usual path is the 'ready' message. Ping anyway in case the dashboard was loaded
+   from bfcache or the extension was installed with the tab already open. */
+[80,400,1200,2400].forEach(ms=>setTimeout(()=>{if(!extConnected)ask('ping');},ms));
+setTimeout(()=>{
+  const w=$('cgWait');
+  if(!extConnected&&w)w.innerHTML='No extension detected on this browser. Install it above, then <button class="btn sm" onclick="location.reload()">reload</button>.';
+},3000);
 let samples=0;
 function addSample(){
   samples++;
@@ -1409,35 +1650,22 @@ function bumpVoice(n){
   $('voiceVal').textContent=v+'%';$('voiceBar').style.width=v+'%';
 }
 
-/* ============ SEED ============ */
-(function seed(){
-  // Returning visitor: their own tasks, stats and profile come back instead of the demo.
-  const restored=restoreState();
+/* ============ START ============ */
+/* This used to seed five demo tasks, two radar entries and two feed lines — a submitted
+ * Jane Street application, an Evercore reply and a Blackstone interview — so a brand-new
+ * user's first screen was somebody else's fictional season. There is no seed any more.
+ * An empty dashboard is the correct first screen, and everything on it fills in from the
+ * extension. */
+(function start(){
+  restoreState();
   restoreProfile();
-  if(restored){
-    paintUser();
-    boot();
-    return;
-  }
-  const mk=(cats,mode,status,co,role,src,cat)=>{tasks.push({id:nextId++,cats,mode,cl:'ai',clText:'',status,company:co,role,src,cat,timer:null});};
-  mk(['quant'],'auto','submitted','Jane Street','Quant Trading Intern','Company Site','quant');
-  mk(['ib'],'auto','reply','Evercore','IB Summer Analyst','Handshake','ib');
-  mk(['pe','ib'],'semi','interview','Blackstone','PE Summer Analyst','LinkedIn','pe');
-  mk(['swe','ai'],'auto','idle',null,null,null,null);
-  mk(['consulting'],'semi','idle',null,null,null,null);
-  radarItems.push(
-    {co:'Blackstone',role:'PE Summer Analyst',via:'Gmail',type:'Interview invite',time:'09:41:22',msg:'"We\'d like to invite you to a first-round interview for the PE Summer Analyst position…"'},
-    {co:'Evercore',role:'IB Summer Analyst',via:'Handshake',type:'Recruiter reply',time:'08:15:03',msg:'"Thank you for applying to Evercore. A member of our recruiting team has reviewed your application…"'}
-  );
-  const ago=(mins)=>new Date(Date.now()-mins*60000).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  addFeed('★ Interview request from <b>Blackstone</b> · detected via Gmail','#ffd166',ago(47));
-  addFeed('✓ Submitted: <b>Quant Trading Intern</b> @ <b>Jane Street</b>','var(--green)',ago(12));
   boot();
 })();
 
 /* Everything that has to happen whether this is a first visit or a returning one.
    Hoisted, so the seed IIFE above can call it before this point in the file. */
 function boot(){
+  recomputeDerived();
   paintUser();
   refreshPresets();
   // listings category dropdown

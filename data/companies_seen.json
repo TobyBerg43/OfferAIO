@@ -37,17 +37,17 @@
  "drw": {
   "name": "DRW",
   "lastSeen": "2026-08-06",
-  "roles": 16
+  "roles": 11
  },
  "akuna-capital": {
   "name": "Akuna Capital",
   "lastSeen": "2026-08-06",
-  "roles": 16
+  "roles": 9
  },
  "anduril": {
   "name": "Anduril",
   "lastSeen": "2026-08-06",
-  "roles": 5
+  "roles": 4
  },
  "cloudflare": {
   "name": "Cloudflare",
@@ -57,12 +57,12 @@
  "point72": {
   "name": "Point72",
   "lastSeen": "2026-08-06",
-  "roles": 7
+  "roles": 5
  },
  "palantir": {
   "name": "Palantir",
   "lastSeen": "2026-08-06",
-  "roles": 16
+  "roles": 30
  },
  "optiver": {
   "name": "Optiver",
@@ -207,7 +207,7 @@
  "etched": {
   "name": "Etched",
   "lastSeen": "2026-08-06",
-  "roles": 10
+  "roles": 4
  },
  "susquehanna": {
   "name": "Susquehanna",
@@ -262,7 +262,7 @@
  "tesla": {
   "name": "Tesla",
   "lastSeen": "2026-08-06",
-  "roles": 29
+  "roles": 26
  },
  "apex-technology-inc": {
   "name": "Apex Technology, Inc.",
@@ -327,12 +327,12 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-08-06",
-  "roles": 34
+  "roles": 33
  },
  "notion": {
   "name": "Notion",
   "lastSeen": "2026-08-06",
-  "roles": 4
+  "roles": 3
  },
  "al-warren-oil-company": {
   "name": "Al Warren Oil Company",
@@ -352,7 +352,7 @@
  "atomic-semi": {
   "name": "Atomic Semi",
   "lastSeen": "2026-08-06",
-  "roles": 5
+  "roles": 4
  },
  "pinterest": {
   "name": "Pinterest",
@@ -542,7 +542,7 @@
  "jane-street": {
   "name": "Jane Street",
   "lastSeen": "2026-08-06",
-  "roles": 16
+  "roles": 15
  },
  "deepgram": {
   "name": "Deepgram",
@@ -557,7 +557,7 @@
  "appian": {
   "name": "Appian",
   "lastSeen": "2026-08-06",
-  "roles": 4
+  "roles": 3
  },
  "micron": {
   "name": "Micron",
@@ -672,7 +672,7 @@
  "chicago-trading-company": {
   "name": "Chicago Trading Company",
   "lastSeen": "2026-08-06",
-  "roles": 3
+  "roles": 2
  },
  "modal": {
   "name": "Modal",
@@ -831,6 +831,11 @@
  },
  "canva": {
   "name": "Canva",
+  "lastSeen": "2026-08-06",
+  "roles": 1
+ },
+ "cno-financial-group": {
+  "name": "CNO Financial Group",
   "lastSeen": "2026-08-06",
   "roles": 1
  }

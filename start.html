@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Get started · OfferAIO</title>
-<meta name="description" content="Set up OfferAIO in four steps: install the extension, pin it, add your profile, then fill any internship application in one click.">
+<meta name="description" content="Set up OfferAIO in five steps: install the extension, pin it, connect it to your dashboard, add your profile, then fill your first internship application.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://offeraio.com/start.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <style>
-  :root{--bg:#efe8d9;--ink:#2b2823;--soft:#5c5546;--dim:#786f5e;--card:#fffdf8;--line:rgba(88,74,52,.15);--line2:rgba(88,74,52,.28);--blue:#33528c;--blue2:#4a72b8;--green:#2e9d68;--gold:#b9822b;
+  :root{--bg:#efe8d9;--ink:#2b2823;--soft:#5c5546;--dim:#786f5e;--card:#fffdf8;--line:rgba(88,74,52,.15);--line2:rgba(88,74,52,.28);--blue:#33528c;--blue2:#4a72b8;--green:#2e9d68;--gold:#b9822b;--amber:#b9822b;--red:#b4442f;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;--mono:"SF Mono","Cascadia Code",Consolas,ui-monospace,Menlo,monospace;
   --display:"Anton",var(--sans);--serif:"Playfair Display",Georgia,serif;--ease:cubic-bezier(.22,.61,.36,1);
   --sh:0 8px 20px -8px rgba(74,58,34,.14),0 20px 48px -20px rgba(74,58,34,.18);--sheen:inset 0 1px 0 rgba(255,255,255,.75)}
@@ -34,11 +34,14 @@
   h1{margin-bottom:10px}
   h1 .d{display:block;font-family:var(--display);font-weight:400;font-size:clamp(34px,6vw,62px);line-height:1.02;letter-spacing:.004em}
   h1 .s{display:block;font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(30px,5.4vw,56px);line-height:1;color:var(--blue)}
-  .lede{color:var(--soft);font-size:18px;max-width:620px;margin-bottom:14px}
+  .lede{color:var(--soft);font-size:18px;max-width:640px;margin-bottom:14px}
   .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);background:var(--card);border-radius:999px;padding:7px 15px;font:12px var(--mono);color:var(--soft);margin-bottom:36px}
   .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(185,130,43,.18)}
-  .step{display:grid;grid-template-columns:52px 1fr;gap:20px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 28px;margin-bottom:16px;box-shadow:var(--sh),var(--sheen)}
-  .num{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;font:700 19px var(--mono);display:flex;align-items:center;justify-content:center}
+
+  .step{display:grid;grid-template-columns:52px 1fr;gap:20px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 28px;margin-bottom:16px;box-shadow:var(--sh),var(--sheen);transition:border-color .2s var(--ease)}
+  .step.done{border-color:rgba(46,157,104,.5)}
+  .num{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;font:700 19px var(--mono);display:flex;align-items:center;justify-content:center;transition:background .2s var(--ease)}
+  .step.done .num{background:linear-gradient(135deg,#2e9d68,#3cbd7f)}
   .step h2{font-size:20px;letter-spacing:-.015em;margin-bottom:6px}
   .step p{color:var(--soft);font-size:15.5px}
   .step .meta{margin-top:10px;font:11.5px var(--mono);color:var(--dim)}
@@ -47,15 +50,44 @@
   .btn-gold:hover{background:#a8731f;text-decoration:none}
   .btn-ghost{background:#fff;border:1px solid var(--line2);color:var(--ink)}
   .btn-ghost:hover{background:#faf6ee;text-decoration:none}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
   .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
   .note{background:rgba(185,130,43,.09);border:1px solid rgba(185,130,43,.3);border-radius:12px;padding:14px 16px;font-size:14.5px;color:var(--soft);margin-top:14px}
+
+  /* Each step reports its own state. Nothing here advances on a timer. */
+  .state{display:inline-flex;align-items:center;gap:8px;margin-top:13px;font:12.5px var(--mono);padding:7px 13px;border-radius:9px;border:1px solid var(--line2);background:#faf6ee;color:var(--dim)}
+  .state.ok{border-color:rgba(46,157,104,.45);background:rgba(46,157,104,.09);color:#1f6f4a}
+  .state.bad{border-color:rgba(180,68,47,.4);background:rgba(180,68,47,.08);color:var(--red)}
+  .state .sd{width:8px;height:8px;border-radius:50%;background:currentColor;flex:0 0 auto}
+  .state.waiting .sd{animation:blink 1.4s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+  /* The Developer-mode illustration: a drawn Chrome toolbar rather than a screenshot,
+     so it can't rot the way a captured PNG of someone else's Chrome build does. */
+  .shot{margin-top:14px;border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:#f6f2ea;max-width:460px}
+  .shot-bar{display:flex;align-items:center;gap:8px;padding:8px 11px;background:#e8e2d5;border-bottom:1px solid var(--line2);font:11px var(--mono);color:var(--dim)}
+  .shot-body{padding:13px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px}
+  .toggle{width:38px;height:20px;border-radius:999px;background:var(--blue);position:relative;flex:0 0 auto}
+  .toggle::after{content:"";position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:#fff}
+  .puzzle{width:26px;height:26px;border-radius:7px;border:1px solid var(--line2);background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex:0 0 auto}
+  .pin{margin-left:auto;font-size:12px;color:var(--dim)}
+
+  .f-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}
+  .f-row label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin-bottom:4px;font-weight:600}
+  .f-row input,.f-row select{width:100%;background:#fff;border:1px solid var(--line2);border-radius:8px;padding:9px 11px;font:14px var(--sans);color:var(--ink)}
+  .f-row input:focus,.f-row select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(51,82,140,.13)}
+  @media(max-width:600px){.step{grid-template-columns:1fr;gap:12px}.f-row{grid-template-columns:1fr}}
+
+  .job{margin-top:13px;border:1px solid var(--line2);border-radius:12px;padding:14px 16px;background:#faf6ee}
+  .job .jt{font-weight:600;font-size:15px}
+  .job .jm{font-size:13px;color:var(--dim);margin-top:2px}
+
   .safe{margin-top:34px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 28px;box-shadow:var(--sh),var(--sheen)}
   .safe h3{font-size:17px;margin-bottom:12px}
   .safe ul{list-style:none;color:var(--soft);font-size:15px}
   .safe li{padding:5px 0 5px 26px;position:relative}
   .safe li::before{content:"✓";position:absolute;left:2px;color:var(--green);font-weight:700}
   footer{border-top:1px solid var(--line);padding:32px 22px;text-align:center;color:var(--dim);font-size:13px}
-  @media(max-width:600px){.step{grid-template-columns:1fr;gap:12px}}
 </style>
 </head>
 <body>
@@ -66,49 +98,129 @@
 
 <main>
   <h1><span class="d">Let's get you</span><span class="s">set up.</span></h1>
-  <p class="lede">Four steps, about five minutes. Then every internship application is one click.</p>
-  <span class="pill"><span class="dot"></span>EXTENSION IN REVIEW · JOIN THE LIST FOR THE INSTALL LINK</span>
+  <p class="lede">Five steps, about ten minutes. Each one checks itself — nothing here says
+     "done" unless it actually is.</p>
+  <span class="pill"><span class="dot"></span>MANUAL INSTALL · NOT YET ON THE CHROME WEB STORE</span>
 
-  <div class="step">
+  <!-- 1 ------------------------------------------------------------------ -->
+  <div class="step" id="step1">
     <div class="num">1</div>
     <div>
       <h2>Install the OfferAIO extension</h2>
-      <p>OfferAIO runs as a Chrome extension so applications go out from your own browser, on your own logged-in sessions — never from our servers.</p>
-      <div class="note"><strong>Almost there:</strong> the extension is in review with the Chrome Web Store. Drop your email and we'll send the install link the moment it's approved.</div>
+      <p>OfferAIO runs as a Chrome extension so applications go out from your own browser,
+         on your own logged-in sessions — never from our servers.</p>
+      <!-- This block used to read "the extension is in review with the Chrome Web Store",
+           which was never true: it has never been submitted. Saying so cost nothing and
+           left people waiting for an email that was not coming. -->
+      <div class="note"><strong>Straight answer:</strong> OfferAIO isn't on the Chrome Web
+        Store yet — it hasn't been submitted, so there's no review to wait for. The download
+        below is the real extension and it works today; it just takes Chrome's Developer
+        mode to load. When the store listing goes live this step becomes one click.</div>
       <div class="row">
-        <a class="btn btn-gold" href="/#top">Get the install link →</a>
-        <a class="btn btn-ghost" href="https://github.com/TobyBerg43/OfferAIO/releases/download/extension-latest/offeraio-extension.zip">Download .zip (manual install)</a>
+        <a class="btn btn-gold" href="https://github.com/TobyBerg43/OfferAIO/releases/download/extension-latest/offeraio-extension.zip">Download the extension (.zip)</a>
       </div>
-      <div class="meta">manual install: chrome://extensions → enable Developer mode → Load unpacked</div>
+      <div class="shot">
+        <div class="shot-bar">chrome://extensions</div>
+        <div class="shot-body"><span>Developer mode</span><span class="toggle"></span></div>
+      </div>
+      <div class="meta">
+        1 · unzip it somewhere permanent — Chrome loads it from that folder every launch<br>
+        2 · open <b>chrome://extensions</b> · 3 · turn on <b>Developer mode</b> (top right)<br>
+        4 · click <b>Load unpacked</b> · 5 · pick the unzipped folder
+      </div>
+      <div class="state waiting" id="s1"><span class="sd"></span>Waiting for the extension…</div>
     </div>
   </div>
 
-  <div class="step">
+  <!-- 2 ------------------------------------------------------------------ -->
+  <div class="step" id="step2">
     <div class="num">2</div>
     <div>
       <h2>Pin it to your toolbar</h2>
-      <p>Click the puzzle-piece icon in Chrome's toolbar, find <strong>OfferAIO</strong>, and hit the pin. You'll want it one click away on every application page.</p>
-      <div class="meta">takes 5 seconds</div>
+      <p>Click the puzzle-piece icon in Chrome's toolbar, find <strong>OfferAIO</strong>,
+         and hit the pin. You'll want it one click away on every application page.</p>
+      <div class="shot">
+        <div class="shot-bar">Chrome toolbar</div>
+        <div class="shot-body">
+          <span class="puzzle">🧩</span>
+          <span style="flex:1">OfferAIO — Auto Apply</span>
+          <span class="pin">📌 pin</span>
+        </div>
+      </div>
+      <div class="meta">takes 5 seconds · we can't verify this one, it's a Chrome setting</div>
     </div>
   </div>
 
-  <div class="step">
+  <!-- 3 ------------------------------------------------------------------ -->
+  <div class="step" id="step3">
     <div class="num">3</div>
     <div>
-      <h2>Add your profile once</h2>
-      <p>Name, school, major, grad date, work authorization, LinkedIn, and an optional cover-letter template. Saved locally in your browser — it never touches our servers. Fill it in the extension popup, or set it up on your dashboard and it syncs across automatically.</p>
-      <a class="btn btn-ghost" href="/dashboard/">Open the dashboard</a>
-      <div class="meta">about 10 minutes, once per season</div>
+      <h2>Connect it to this site</h2>
+      <p>This is the "authorize" moment — except there's nothing to authorize, because
+         there's no account and no server. The extension simply answers this page when it's
+         installed, and that's what lets your dashboard show your real profile, plan and
+         application history. Nothing leaves your browser.</p>
+      <div class="state waiting" id="s3"><span class="sd"></span>Listening for the extension…</div>
+      <div class="row"><button class="btn btn-ghost" id="retry3">Check again</button></div>
     </div>
   </div>
 
-  <div class="step">
+  <!-- 4 ------------------------------------------------------------------ -->
+  <div class="step" id="step4">
     <div class="num">4</div>
     <div>
-      <h2>Open any posting and hit Fill</h2>
-      <p>On Greenhouse, Lever, Ashby, Workday, Handshake, LinkedIn — or any employer link you paste — click <strong>Fill this application</strong>. OfferAIO completes the fields, drafts your cover letter in your voice, and highlights the resume box for you. You review, then submit.</p>
-      <a class="btn btn-ghost" href="/internships/">Browse live Summer 2027 listings</a>
-      <div class="meta">1 click per application</div>
+      <h2>Add your profile once</h2>
+      <p>This is what gets typed into every application. It's saved straight into the
+         extension's own storage on this machine — it never touches our servers.</p>
+      <div class="f-row">
+        <div><label for="p-name">Full name</label><input id="p-name" autocomplete="name" placeholder="Your full name"></div>
+        <div><label for="p-email">Email</label><input id="p-email" type="email" autocomplete="email" placeholder="you@school.edu"></div>
+      </div>
+      <div class="f-row">
+        <div><label for="p-phone">Phone</label><input id="p-phone" autocomplete="tel" placeholder="555-555-5555"></div>
+        <div><label for="p-school">School</label><input id="p-school" placeholder="e.g. UC Berkeley"></div>
+      </div>
+      <div class="f-row">
+        <div><label for="p-major">Major</label><input id="p-major" placeholder="e.g. Finance / CS"></div>
+        <div><label for="p-grad">Graduation</label><input id="p-grad" placeholder="May 2028"></div>
+      </div>
+      <div class="f-row">
+        <div><label for="p-linkedin">LinkedIn</label><input id="p-linkedin" placeholder="linkedin.com/in/yourname"></div>
+        <div><label for="p-auth">Work authorization</label>
+          <select id="p-auth">
+            <option>US Citizen</option><option>Permanent Resident</option>
+            <option>F-1 (CPT/OPT)</option><option>Requires sponsorship</option>
+          </select>
+        </div>
+      </div>
+      <div class="row"><button class="btn btn-gold" id="saveProfile" disabled>Save to my extension</button></div>
+      <div class="state" id="s4"><span class="sd"></span>Install the extension first — there's nowhere to save this yet.</div>
+    </div>
+  </div>
+
+  <!-- 5 ------------------------------------------------------------------ -->
+  <div class="step" id="step5">
+    <div class="num">5</div>
+    <div>
+      <h2>Do your first application</h2>
+      <p>Here's a real Summer 2027 posting from the live board, checked open within the last
+         few hours. Open it, click the OfferAIO icon, and hit <strong>Fill this
+         application</strong>. The extension fills what it can and highlights whatever it
+         won't answer for you.</p>
+      <div class="job" id="jobCard">
+        <div class="jt" id="jobTitle">Loading a live posting…</div>
+        <div class="jm" id="jobMeta">from the OfferAIO board</div>
+      </div>
+      <div class="row">
+        <a class="btn btn-gold" id="jobLink" href="/internships/" target="_blank" rel="noopener">Open this posting →</a>
+        <a class="btn btn-ghost" href="/internships/">Browse all live listings</a>
+      </div>
+      <div class="meta">
+        The extension never attaches your resume — browsers forbid it, so that box is
+        highlighted for you. It never answers a work-authorization question it can't be
+        certain about. And it never submits: you press Submit.
+      </div>
+      <div class="row"><a class="btn btn-ghost" href="/dashboard/">Open the dashboard →</a></div>
     </div>
   </div>
 
@@ -118,11 +230,148 @@
       <li>Submit without you — you approve every application (full-auto is opt-in and clearly labelled)</li>
       <li>Bypass a CAPTCHA — if one appears, it's handed straight back to you</li>
       <li>Upload your resume for you — browsers forbid it, so you attach the file yourself</li>
+      <li>Answer a work-authorization question it isn't sure about — it leaves it blank and tells you</li>
       <li>Send your profile to our servers — it stays in your browser</li>
     </ul>
   </div>
 </main>
 
 <footer>© 2026 OfferAIO · <a href="/">Home</a> · <a href="/privacy.html">Privacy</a></footer>
+
+<script>
+/* Onboarding that verifies itself.
+ *
+ * Every step below is driven by something real: the extension answering over the bridge,
+ * a profile write being acknowledged, or a listing actually loading from the live board.
+ * Nothing advances on a setTimeout — a walkthrough that ticks its own boxes on a timer
+ * is how somebody ends up on step 5 without an extension installed.
+ */
+const $ = (id) => document.getElementById(id);
+
+function setState(el, stepEl, text, kind) {
+  el.className = 'state' + (kind ? ' ' + kind : '');
+  el.innerHTML = '<span class="sd"></span>' + text;
+  if (stepEl) stepEl.classList.toggle('done', kind === 'ok');
+}
+
+/* ---------------------------------------------------------------- the bridge */
+let connected = false;
+
+window.addEventListener('message', (e) => {
+  // Same guard the extension uses: only messages this page posted to itself.
+  if (e.source !== window) return;
+  const d = e.data;
+  if (!d || d.source !== 'offeraio-ext') return;
+
+  if (d.type === 'ready' || d.type === 'pong') markConnected();
+  if (d.type === 'identity' && d.profile) prefill(d.profile);
+  if (d.type === 'saved') {
+    setState($('s4'), $('step4'), 'Saved to your extension. Open any application and hit Fill.', 'ok');
+  }
+});
+
+function markConnected() {
+  if (connected) return;
+  connected = true;
+  setState($('s1'), $('step1'), 'Extension detected on this browser.', 'ok');
+  setState($('s3'), $('step3'), 'Connected. This page and your extension are talking.', 'ok');
+  $('saveProfile').disabled = false;
+  setState($('s4'), $('step4'), 'Ready — fill this in and save it into the extension.', '');
+  window.postMessage({ source: 'offeraio-site', type: 'identity' }, '*');
+}
+
+/* If the extension is already installed, bridge.js announces itself at document_idle and
+   the listener above catches it. Ping a few times as well, in case this tab was already
+   open when the extension was loaded. */
+[100, 500, 1200, 2500].forEach((ms) =>
+  setTimeout(() => { if (!connected) window.postMessage({ source: 'offeraio-site', type: 'ping' }, '*'); }, ms),
+);
+
+setTimeout(() => {
+  if (connected) return;
+  setState($('s1'), $('step1'), 'No extension detected yet — install it above, then reload this page.', 'bad');
+  setState($('s3'), $('step3'), 'Nothing to connect to yet. Finish step 1 first.', 'bad');
+}, 3500);
+
+$('retry3').onclick = () => {
+  if (connected) return;
+  setState($('s3'), $('step3'), 'Listening for the extension…', 'waiting');
+  window.postMessage({ source: 'offeraio-site', type: 'ping' }, '*');
+  setTimeout(() => {
+    if (!connected) setState($('s3'), $('step3'), 'Still nothing. Check chrome://extensions shows OfferAIO enabled, then reload this page.', 'bad');
+  }, 1200);
+};
+
+/* ------------------------------------------------------------------ profile */
+const FIELDS = { name: 'p-name', email: 'p-email', phone: 'p-phone', school: 'p-school',
+                 major: 'p-major', gradDate: 'p-grad', linkedin: 'p-linkedin' };
+
+function prefill(p) {
+  Object.entries(FIELDS).forEach(([k, id]) => { if (p[k] && !$(id).value) $(id).value = p[k]; });
+  if (p.workAuth) $('p-auth').value = p.workAuth;
+}
+
+$('saveProfile').onclick = () => {
+  const profile = {};
+  Object.entries(FIELDS).forEach(([k, id]) => { profile[k] = $(id).value.trim(); });
+  if (!profile.name || !profile.email) {
+    setState($('s4'), $('step4'), 'Name and email are the two the extension can’t work without.', 'bad');
+    return;
+  }
+  profile.workAuth = $('p-auth').value;
+  // The boolean content.js uses for sponsorship questions, alongside the full selection.
+  profile.needsSponsorship = $('p-auth').value === 'Requires sponsorship';
+  setState($('s4'), $('step4'), 'Saving…', 'waiting');
+  window.postMessage({ source: 'offeraio-site', type: 'profile', profile, mode: 'semi' }, '*');
+  // The extension replies 'saved'; if it doesn't, say so rather than showing a tick.
+  setTimeout(() => {
+    if (!$('step4').classList.contains('done')) {
+      setState($('s4'), $('step4'), 'No confirmation from the extension. Reload the page and try again.', 'bad');
+    }
+  }, 2500);
+};
+
+/* ------------------------------------------------------- a real live posting */
+/* Pulled from the same board the dashboard uses, and filtered to rows the pipeline has
+   confirmed are still open. A dead link here is the worst possible first impression —
+   it's the exact failure that prompted all of this. */
+(async function firstApplication() {
+  const SOURCES = [
+    'https://raw.githubusercontent.com/TobyBerg43/OfferAIO/main/data/listings.json',
+    '/data/listings.json',
+  ];
+  for (const url of SOURCES) {
+    try {
+      const r = await fetch(url);
+      if (!r.ok) continue;
+      const rows = await r.json();
+      if (!Array.isArray(rows)) continue;
+      const open = rows.filter((l) =>
+        l && l.url && l.title && l.company_name && l.active !== false && l.date_checked);
+      // Prefer the most recently verified posting, not merely the newest.
+      open.sort((a, b) => (b.date_checked || 0) - (a.date_checked || 0));
+      const pick = open[0] || rows.find((l) => l && l.url && l.active !== false);
+      if (!pick) continue;
+      $('jobTitle').textContent = pick.title;
+      const ago = pick.date_checked
+        ? ' · confirmed open ' + since(pick.date_checked)
+        : '';
+      $('jobMeta').textContent =
+        pick.company_name + ((pick.locations && pick.locations[0]) ? ' · ' + pick.locations[0] : '') + ago;
+      $('jobLink').href = pick.url;
+      return;
+    } catch (e) { /* try the next source */ }
+  }
+  $('jobTitle').textContent = 'Couldn’t reach the live board';
+  $('jobMeta').textContent = 'Browse the full list instead — the link below still works.';
+})();
+
+function since(ts) {
+  const mins = Math.floor((Date.now() - (ts > 1e12 ? ts : ts * 1000)) / 60000);
+  if (mins < 60) return Math.max(1, mins) + 'm ago';
+  if (mins < 1440) return Math.floor(mins / 60) + 'h ago';
+  return Math.floor(mins / 1440) + 'd ago';
+}
+</script>
 </body>
 </html>

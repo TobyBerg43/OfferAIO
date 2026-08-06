@@ -15,8 +15,12 @@ const path = require('path');
 const SITE = 'https://offeraio.com';
 const TODAY = new Date().toISOString().slice(0, 10);
 
+// `active === false` means scrape.js HEAD-checked the req and the ATS said it's gone.
+// Those rows stay in listings.json so the next scrape doesn't re-import them, but they
+// must never reach a public page — an SEO page advertising a closed req sends a visitor
+// to "The job you are looking for is no longer open."
 const listings = JSON.parse(fs.readFileSync('data/listings.json', 'utf8'))
-  .filter(l => l && l.company_name && l.title && l.url);
+  .filter(l => l && l.company_name && l.title && l.url && l.active !== false);
 
 const CATS = [
   { slug: 'software-engineering', name: 'Software Engineering', re: /(software|\bswe\b|engineer|developer|front.?end|back.?end|full.?stack|mobile|\bios\b|android|devops|security|infrastructure|platform)/i },

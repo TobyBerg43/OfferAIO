@@ -28,14 +28,128 @@ document.getElementById("save").onclick = () => {
   });
 };
 
-document.getElementById("fillPage").onclick = async () => {
+/* ------------------------------------------------------------- the Fill button
+ *
+ * This button used to read the same on a Greenhouse form, on a new tab and on the
+ * dashboard, inject two scripts, and close the popup — so on two of those three it
+ * silently did nothing and never said so. Now it answers three questions before the
+ * user clicks: is this an ATS we support, is there actually a form on it, and what
+ * exactly am I about to fill. And after filling it reports what it managed.
+ */
+
+const fillBtn = document.getElementById("fillPage");
+const fillNote = document.getElementById("fillNote");
+
+function note(html, kind) {
+  fillNote.innerHTML = html;
+  fillNote.className = "note" + (kind ? " " + kind : "");
+}
+
+const ATS = self.OfferAIOATS;
+const SUPPORTED_SUMMARY =
+  "Works on Greenhouse, Lever, Ashby, Workday and " + (ATS.count - 4) + " more.";
+
+/* Runs in the page. Deliberately self-contained rather than calling into content.js:
+   merely opening the popup must not inject the in-page bar onto someone's screen.
+   The form test mirrors content.js's buildBar() check so the two never disagree. */
+function probePage() {
+  const q = (s) => document.querySelector(s);
+  const hasForm = !!q(
+    'input[type="email"], input[name*="email" i], input[type="file"], input[name="name"]',
+  );
+  const clean = (s) => String(s || "").replace(/\s+/g, " ").trim().slice(0, 70);
+  const head = q(".app-title") || q(".posting-headline h2") || q("h1") || q("h2");
+  let company = "";
+  if (/lever\.co$/.test(location.hostname)) company = location.pathname.split("/")[1] || "";
+  if (!company) {
+    const c = q(".company-name") || q('[class*="company" i]');
+    company = (c && c.textContent) || document.title.split(/[-|@]/).pop() || "";
+  }
+  return { hasForm, company: clean(company), role: clean(head && head.textContent) };
+}
+
+let activeTabId = null;
+
+async function paintFillButton() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (!tab) return;
+  activeTabId = tab.id;
+
+  const ats = ATS.fromUrl(tab.url);
+  if (!ats) {
+    fillBtn.disabled = true;
+    note("Open a job application, then click here. " + SUPPORTED_SUMMARY);
+    return;
+  }
+
+  let probe = null;
   try {
-    // license.js first — content.js reads the quota through it.
-    await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["license.js", "content.js"] });
-  } catch (e) {}
-  window.close();
+    const [res] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: probePage });
+    probe = res && res.result;
+  } catch (e) {
+    // No access to this tab (a restricted page, or the user hasn't granted the host).
+  }
+
+  if (!probe || !probe.hasForm) {
+    fillBtn.disabled = true;
+    note("No application form on this page — open the Apply page first.");
+    return;
+  }
+
+  fillBtn.disabled = false;
+  fillBtn.textContent = "⚡ Fill this application";
+  const who = [probe.company, probe.role].filter(Boolean).join(" — ");
+  note("<b>" + ats.name + "</b>" + (who ? " · " + esc(who) : ""), "ready");
+}
+
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+}
+
+/** Drive content.js's fill and hand back what it achieved. */
+function runFill() {
+  return self.OfferAIOFill ? self.OfferAIOFill.run() : { ok: false, reason: "not_loaded" };
+}
+
+fillBtn.onclick = async () => {
+  if (fillBtn.disabled || activeTabId == null) return;
+  fillBtn.disabled = true;
+  note("Filling…");
+  try {
+    // ats.js and license.js first — content.js reads the ATS name and the quota through
+    // them, and an executeScript injection doesn't inherit the manifest's ordering.
+    await chrome.scripting.executeScript({
+      target: { tabId: activeTabId },
+      files: ["ats.js", "license.js", "content.js"],
+    });
+    const [res] = await chrome.scripting.executeScript({ target: { tabId: activeTabId }, func: runFill });
+    const r = (res && res.result) || {};
+
+    if (r.reason === "no_profile") {
+      note("Add your name and email below first — there's nothing to fill with yet.", "warn");
+      fillBtn.disabled = false;
+      return;
+    }
+    if (!r.ok) {
+      note("Couldn't fill this page. Try reloading it, then click again.", "warn");
+      fillBtn.disabled = false;
+      return;
+    }
+
+    const needs = (r.needsUser || []).length + (r.resumeMissing ? 1 : 0);
+    let msg = "Filled <b>" + r.fieldsFilled + " of " + r.fieldsTotal + "</b> fields";
+    msg += needs ? " · <b>" + needs + "</b> need you" : " · nothing left blank";
+    if (r.resumeMissing) msg += "<br>Attach your resume — browsers won't let us do that one.";
+    if ((r.needsUser || []).length) msg += "<br>Answer yourself: " + esc(r.needsUser.join("; "));
+    msg += "<br>Review the page, then hit Submit there.";
+    note(msg, needs ? "warn" : "done");
+  } catch (e) {
+    note("Couldn't reach that tab. Reload the page and try again.", "warn");
+    fillBtn.disabled = false;
+  }
 };
+
+paintFillButton();
 
 /* ---------------------------------------------------------------- licensing */
 
