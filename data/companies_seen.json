@@ -22,7 +22,7 @@
  "capital-one": {
   "name": "Capital One",
   "lastSeen": "2026-08-06",
-  "roles": 7
+  "roles": 6
  },
  "salesforce": {
   "name": "Salesforce",
@@ -91,7 +91,7 @@
  },
  "nvidia": {
   "name": "NVIDIA",
-  "lastSeen": "2026-08-03",
+  "lastSeen": "2026-08-06",
   "roles": 1
  },
  "jump-trading": {
@@ -401,8 +401,8 @@
  },
  "spacex": {
   "name": "SpaceX",
-  "lastSeen": "2026-08-03",
-  "roles": 2
+  "lastSeen": "2026-08-06",
+  "roles": 1
  },
  "poshmark": {
   "name": "Poshmark",
@@ -672,7 +672,7 @@
  "chicago-trading-company": {
   "name": "Chicago Trading Company",
   "lastSeen": "2026-08-06",
-  "roles": 2
+  "roles": 3
  },
  "modal": {
   "name": "Modal",
@@ -767,7 +767,7 @@
  "bytedance": {
   "name": "ByteDance",
   "lastSeen": "2026-08-06",
-  "roles": 3
+  "roles": 6
  },
  "yotta-labs": {
   "name": "Yotta Labs",
@@ -811,6 +811,26 @@
  },
  "roblox": {
   "name": "Roblox",
+  "lastSeen": "2026-08-06",
+  "roles": 1
+ },
+ "shopify": {
+  "name": "Shopify",
+  "lastSeen": "2026-08-06",
+  "roles": 1
+ },
+ "redwood-materials": {
+  "name": "Redwood Materials",
+  "lastSeen": "2026-08-06",
+  "roles": 1
+ },
+ "dv-group": {
+  "name": "DV Group",
+  "lastSeen": "2026-08-06",
+  "roles": 1
+ },
+ "canva": {
+  "name": "Canva",
   "lastSeen": "2026-08-06",
   "roles": 1
  }

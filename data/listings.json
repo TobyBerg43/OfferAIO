@@ -1,56 +1,5 @@
 [
  {
-  "company_name": "Citi",
-  "title": "Services - Summer Analyst Program, New York City - US, 2027",
-  "url": "https://citi.wd5.myworkdayjobs.com/2/job/New-York-New-York-United-States/Services---Summer-Analyst-Program--New-York-City---US--2027_26945311",
-  "locations": [
-   "New York New York United States"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004933,
-  "date_updated": 1786004933,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "citi::services - summer analyst program, new york city - us, 2027::new york new york united states"
- },
- {
-  "company_name": "Citi",
-  "title": "Markets - Quantitative Analysis, Summer Analyst - New York City - US, 2027",
-  "url": "https://citi.wd5.myworkdayjobs.com/2/job/New-York-New-York-United-States/Markets---Quantitative-Analysis--Summer-Analyst---New-York-City---US--2027_25928747",
-  "locations": [
-   "New York New York United States"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004933,
-  "date_updated": 1786004933,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "citi::markets - quantitative analysis, summer analyst - new york city - us, 2027::new york new york united states"
- },
- {
-  "company_name": "Citi",
-  "title": "Markets - Sales and Trading, Summer Analyst, New York City - US, 2027",
-  "url": "https://citi.wd5.myworkdayjobs.com/2/job/New-York-New-York-United-States/Markets---Sales-and-Trading--Summer-Analyst--New-York-City---US--2027_25928736",
-  "locations": [
-   "New York New York United States"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004933,
-  "date_updated": 1786004933,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "citi::markets - sales and trading, summer analyst, new york city - us, 2027::new york new york united states"
- },
- {
   "company_name": "Marsh McLennan",
   "title": "Summer 2027 Intern - Insurance",
   "url": "https://mmc.wd1.myworkdayjobs.com/MMC/job/Chesterfield---Maryville/Summer-2027-Intern---Insurance_R_359206",
@@ -59,8 +8,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004933,
-  "date_updated": 1786004933,
+  "date_posted": 1786024627,
+  "date_updated": 1786024627,
   "terms": [
    "Summer 2027"
   ],
@@ -76,13 +25,64 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004933,
-  "date_updated": 1786004933,
+  "date_posted": 1786024627,
+  "date_updated": 1786024627,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "marsh mclennan::oliver wyman actuarial - internship - summer 2027::13 locations"
+ },
+ {
+  "company_name": "Citi",
+  "title": "Services - Summer Analyst Program, New York City - US, 2027",
+  "url": "https://citi.wd5.myworkdayjobs.com/2/job/New-York-New-York-United-States/Services---Summer-Analyst-Program--New-York-City---US--2027_26945311",
+  "locations": [
+   "New York New York United States"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786024626,
+  "date_updated": 1786024626,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "citi::services - summer analyst program, new york city - us, 2027::new york new york united states"
+ },
+ {
+  "company_name": "Citi",
+  "title": "Markets - Quantitative Analysis, Summer Analyst - New York City - US, 2027",
+  "url": "https://citi.wd5.myworkdayjobs.com/2/job/New-York-New-York-United-States/Markets---Quantitative-Analysis--Summer-Analyst---New-York-City---US--2027_25928747",
+  "locations": [
+   "New York New York United States"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786024626,
+  "date_updated": 1786024626,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "citi::markets - quantitative analysis, summer analyst - new york city - us, 2027::new york new york united states"
+ },
+ {
+  "company_name": "Citi",
+  "title": "Markets - Sales and Trading, Summer Analyst, New York City - US, 2027",
+  "url": "https://citi.wd5.myworkdayjobs.com/2/job/New-York-New-York-United-States/Markets---Sales-and-Trading--Summer-Analyst--New-York-City---US--2027_25928736",
+  "locations": [
+   "New York New York United States"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786024626,
+  "date_updated": 1786024626,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "citi::markets - sales and trading, summer analyst, new york city - us, 2027::new york new york united states"
  },
  {
   "company_name": "Wells Fargo",
@@ -93,8 +93,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -110,8 +110,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -127,8 +127,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -144,8 +144,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -161,8 +161,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -178,8 +178,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -195,8 +195,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -212,8 +212,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -229,8 +229,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -246,8 +246,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -263,8 +263,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -280,8 +280,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -295,8 +295,8 @@
   "locations": [],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -312,8 +312,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004931,
-  "date_updated": 1786004931,
+  "date_posted": 1786024625,
+  "date_updated": 1786024625,
   "terms": [
    "Summer 2027"
   ],
@@ -329,30 +329,13 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004929,
-  "date_updated": 1786004929,
+  "date_posted": 1786024623,
+  "date_updated": 1786024623,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "capital one::technology internship program - summer 2027::3 locations"
- },
- {
-  "company_name": "Capital One",
-  "title": "Cyber Security Internship Program - Summer 2027",
-  "url": "https://capitalone.wd12.myworkdayjobs.com/Capital_One/job/McLean-VA/Cyber-Security-Internship-Program---Summer-2027_R244319",
-  "locations": [
-   "2 Locations"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004929,
-  "date_updated": 1786004929,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "capital one::cyber security internship program - summer 2027::2 locations"
  },
  {
   "company_name": "Capital One",
@@ -363,8 +346,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004929,
-  "date_updated": 1786004929,
+  "date_posted": 1786024623,
+  "date_updated": 1786024623,
   "terms": [
    "Summer 2027"
   ],
@@ -380,132 +363,13 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004929,
-  "date_updated": 1786004929,
+  "date_posted": 1786024623,
+  "date_updated": 1786024623,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "capital one::current master's - data science internship - summer 2027::8 locations"
- },
- {
-  "company_name": "Micron",
-  "title": "Intern - Process Pathfinding, DRAM Dry Etch",
-  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Pathfinding--DRAM-Dry-Etch_JR107347",
-  "locations": [
-   "Boise, ID - Main Site"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004928,
-  "date_updated": 1786004928,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "micron::intern - process pathfinding, dram dry etch::boise, id - main site"
- },
- {
-  "company_name": "Micron",
-  "title": "Intern - Process Development",
-  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development_JR107319",
-  "locations": [
-   "Boise, ID - Main Site"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004928,
-  "date_updated": 1786004928,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "micron::intern - process development::boise, id - main site"
- },
- {
-  "company_name": "Micron",
-  "title": "Intern - Process Development Engineer, 3D DRAM Photo",
-  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development-Engineer--3D-DRAM-Photo_JR107312",
-  "locations": [
-   "Boise, ID - Main Site"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004928,
-  "date_updated": 1786004928,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "micron::intern - process development engineer, 3d dram photo::boise, id - main site"
- },
- {
-  "company_name": "Micron",
-  "title": "Intern - Photolithography Process",
-  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Photolithography-Process_JR107508",
-  "locations": [
-   "Boise, ID - Main Site"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004928,
-  "date_updated": 1786004928,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "micron::intern - photolithography process::boise, id - main site"
- },
- {
-  "company_name": "Micron",
-  "title": "Intern – Process Development Engineer, 3D DRAM Wet Etch",
-  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development-Engineer--3D-DRAM-Wet-Etch_JR106729",
-  "locations": [
-   "Boise, ID - Main Site"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004928,
-  "date_updated": 1786004928,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "micron::intern – process development engineer, 3d dram wet etch::boise, id - main site"
- },
- {
-  "company_name": "Intel",
-  "title": "AI Engineer Intern",
-  "url": "https://intel.wd1.myworkdayjobs.com/External/job/Vietnam-Ho_Chi_Minh_City/AI-Engineer-Intern_JR0286108",
-  "locations": [
-   "Vietnam, Ho_Chi_Minh_City"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004928,
-  "date_updated": 1786004928,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "intel::ai engineer intern::vietnam, ho_chi_minh_city"
- },
- {
-  "company_name": "Intel",
-  "title": "MBA Internship – Ecosystem Development Specialist",
-  "url": "https://intel.wd1.myworkdayjobs.com/External/job/PRC-Shanghai/MBA-Internship---Ecosystem-Development-Specialist_JR0285771",
-  "locations": [
-   "3 Locations"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004928,
-  "date_updated": 1786004928,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "intel::mba internship – ecosystem development specialist::3 locations"
  },
  {
   "company_name": "HP",
@@ -516,8 +380,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004928,
-  "date_updated": 1786004928,
+  "date_posted": 1786024622,
+  "date_updated": 1786024622,
   "terms": [
    "Summer 2027"
   ],
@@ -533,30 +397,13 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004928,
-  "date_updated": 1786004928,
+  "date_posted": 1786024622,
+  "date_updated": 1786024622,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "hp::enterprise operations engineering internship::spring, texas, united states of america"
- },
- {
-  "company_name": "JLL",
-  "title": "Analyst - 2027 INTERN CONVERSION",
-  "url": "https://jll.wd1.myworkdayjobs.com/jllcareers/job/Pittsburgh-PA/Analyst---2027-INTERN-CONVERSION_REQ526660",
-  "locations": [
-   "Pittsburgh, PA"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786004927,
-  "date_updated": 1786004927,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "jll::analyst - 2027 intern conversion::pittsburgh, pa"
  },
  {
   "company_name": "Salesforce",
@@ -567,8 +414,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004927,
-  "date_updated": 1786004927,
+  "date_posted": 1786024621,
+  "date_updated": 1786024621,
   "terms": [
    "Summer 2027"
   ],
@@ -584,13 +431,149 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004927,
-  "date_updated": 1786004927,
+  "date_posted": 1786024621,
+  "date_updated": 1786024621,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "adobe::2027 intern - adobe sales academy bdr::4 locations"
+ },
+ {
+  "company_name": "Intel",
+  "title": "AI Engineer Intern",
+  "url": "https://intel.wd1.myworkdayjobs.com/External/job/Vietnam-Ho_Chi_Minh_City/AI-Engineer-Intern_JR0286108",
+  "locations": [
+   "Vietnam, Ho_Chi_Minh_City"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786024621,
+  "date_updated": 1786024621,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "intel::ai engineer intern::vietnam, ho_chi_minh_city"
+ },
+ {
+  "company_name": "Intel",
+  "title": "MBA Internship – Ecosystem Development Specialist",
+  "url": "https://intel.wd1.myworkdayjobs.com/External/job/PRC-Shanghai/MBA-Internship---Ecosystem-Development-Specialist_JR0285771",
+  "locations": [
+   "3 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786024621,
+  "date_updated": 1786024621,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "intel::mba internship – ecosystem development specialist::3 locations"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Process Pathfinding, DRAM Dry Etch",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Pathfinding--DRAM-Dry-Etch_JR107347",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786024621,
+  "date_updated": 1786024621,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - process pathfinding, dram dry etch::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Process Development",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development_JR107319",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786024621,
+  "date_updated": 1786024621,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - process development::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Process Development Engineer, 3D DRAM Photo",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development-Engineer--3D-DRAM-Photo_JR107312",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786024621,
+  "date_updated": 1786024621,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - process development engineer, 3d dram photo::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Photolithography Process",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Photolithography-Process_JR107508",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786024621,
+  "date_updated": 1786024621,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - photolithography process::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern – Process Development Engineer, 3D DRAM Wet Etch",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development-Engineer--3D-DRAM-Wet-Etch_JR106729",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786024621,
+  "date_updated": 1786024621,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern – process development engineer, 3d dram wet etch::boise, id - main site"
+ },
+ {
+  "company_name": "JLL",
+  "title": "Analyst - 2027 INTERN CONVERSION",
+  "url": "https://jll.wd1.myworkdayjobs.com/jllcareers/job/Pittsburgh-PA/Analyst---2027-INTERN-CONVERSION_REQ526660",
+  "locations": [
+   "Pittsburgh, PA"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786024620,
+  "date_updated": 1786024620,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "jll::analyst - 2027 intern conversion::pittsburgh, pa"
  },
  {
   "company_name": "PwC",
@@ -601,8 +584,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004924,
-  "date_updated": 1786004924,
+  "date_posted": 1786024617,
+  "date_updated": 1786024617,
   "terms": [
    "Summer 2027"
   ],
@@ -618,8 +601,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004924,
-  "date_updated": 1786004924,
+  "date_posted": 1786024617,
+  "date_updated": 1786024617,
   "terms": [
    "Summer 2027"
   ],
@@ -635,13 +618,183 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786004924,
-  "date_updated": 1786004924,
+  "date_posted": 1786024617,
+  "date_updated": 1786024617,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "pwc::etic, summer internship - applied ai::cairo - etic"
+ },
+ {
+  "date_updated": 1786024349,
+  "url": "https://www.shopify.com/careers/software-engineering-internships-winter-2027_404bb82e-37f3-4a78-b0f3-12923a7c4856?ashby_jid=404bb82e-37f3-4a78-b0f3-12923a7c4856",
+  "locations": [
+   "Remote"
+  ],
+  "sponsorship": "Does Not Offer Sponsorship",
+  "active": true,
+  "company_name": "Shopify",
+  "title": "Software Engineering Intern",
+  "source": "vanshb03",
+  "id": "12011286-0eca-4688-8c69-aa283024575d",
+  "date_posted": 1786024349,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Winter"
+ },
+ {
+  "date_updated": 1786024339,
+  "url": "https://job-boards.greenhouse.io/spacex/jobs/8621756002",
+  "locations": [
+   "Remote"
+  ],
+  "sponsorship": "U.S. Citizenship is Required",
+  "active": true,
+  "company_name": "SpaceX",
+  "title": "Software Engineer Intern, Fleet Health Instrumentation",
+  "source": "vanshb03",
+  "id": "9602c975-7f35-4932-9b25-39983c85cffd",
+  "date_posted": 1786024339,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Spring"
+ },
+ {
+  "date_updated": 1786024318,
+  "url": "https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/job/US-CA-Santa-Clara/Software-Engineering-Intern--Dynamo---Fall-2026_JR2022295",
+  "locations": [
+   "Santa Clara, CA"
+  ],
+  "sponsorship": "Other",
+  "active": true,
+  "company_name": "NVIDIA",
+  "title": "Software Engineering Intern, Dynamo",
+  "source": "vanshb03",
+  "id": "8e13a875-b5b1-46d1-ada8-cdc1dfa8b485",
+  "date_posted": 1786024318,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Fall"
+ },
+ {
+  "date_updated": 1786024313,
+  "url": "https://job-boards.greenhouse.io/redwoodmaterials/jobs/6126785004",
+  "locations": [
+   "San Francisco, CA"
+  ],
+  "sponsorship": "Other",
+  "active": true,
+  "company_name": "Redwood Materials",
+  "title": "Test Automation Engineer Intern",
+  "source": "vanshb03",
+  "id": "79567ab3-e9e0-4674-b4fd-69e074938ada",
+  "date_posted": 1786024313,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Fall"
+ },
+ {
+  "date_updated": 1786024274,
+  "url": "https://job-boards.greenhouse.io/dvtrading/jobs/4719118005",
+  "locations": [
+   "Chicago, IL"
+  ],
+  "sponsorship": "Other",
+  "active": true,
+  "company_name": "DV Group",
+  "title": "Quantitative Risk Intern",
+  "source": "vanshb03",
+  "id": "41aedd07-28e8-4be6-a6ad-0ffb8a16d770",
+  "date_posted": 1786024274,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Summer"
+ },
+ {
+  "date_updated": 1786024271,
+  "url": "https://job-boards.greenhouse.io/chicagotradingcampus/jobs/4716930005",
+  "locations": [
+   "Chicago, IL"
+  ],
+  "sponsorship": "Other",
+  "active": true,
+  "company_name": "Chicago Trading Company",
+  "title": "Quant Trading Intern",
+  "source": "vanshb03",
+  "id": "0aafe188-f297-42d5-a9af-a9e537e53cea",
+  "date_posted": 1786024271,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Summer"
+ },
+ {
+  "date_updated": 1786024267,
+  "url": "https://jobs.smartrecruiters.com/Canva/6000000001291655-phd-research-scientist-intern",
+  "locations": [
+   "San Francisco, CA"
+  ],
+  "sponsorship": "Other",
+  "active": true,
+  "company_name": "Canva",
+  "title": "PhD Research Scientist Intern",
+  "source": "vanshb03",
+  "id": "ad16efe4-edab-4c1c-b35a-72ed02b5f2df",
+  "date_posted": 1786024267,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Fall"
+ },
+ {
+  "date_updated": 1786024264,
+  "url": "https://joinbytedance.com/search/7670009669494704437",
+  "locations": [
+   "San Jose, CA"
+  ],
+  "sponsorship": "Other",
+  "active": true,
+  "company_name": "ByteDance",
+  "title": "Applied Machine Learning Production Engineer Intern",
+  "source": "vanshb03",
+  "id": "d9c62743-b0d5-4a65-9696-3d4f8600d21d",
+  "date_posted": 1786024264,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Summer"
+ },
+ {
+  "date_updated": 1786024261,
+  "url": "https://joinbytedance.com/search/7668464504736876853",
+  "locations": [
+   "San Jose, CA"
+  ],
+  "sponsorship": "Other",
+  "active": true,
+  "company_name": "ByteDance",
+  "title": "GPU/AI Application System Software Engineer Intern",
+  "source": "vanshb03",
+  "id": "050d8f29-405d-4cc1-90fc-e22d1fe78151",
+  "date_posted": 1786024261,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Summer"
+ },
+ {
+  "date_updated": 1786024258,
+  "url": "https://joinbytedance.com/search/7670690923748870405",
+  "locations": [
+   "San Jose, CA"
+  ],
+  "sponsorship": "Other",
+  "active": true,
+  "company_name": "ByteDance",
+  "title": "AI Network Automation Engineer Intern, Global Physical Network Infra",
+  "source": "vanshb03",
+  "id": "eeb1da07-cb17-4419-8406-da3eaf5ee961",
+  "date_posted": 1786024258,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Summer"
  },
  {
   "date_updated": 1785965318,
@@ -670,29 +823,12 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785962341,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "akuna capital::quantitative development & strategy intern, summer 2027::chicago, il"
- },
- {
-  "company_name": "DV Trading",
-  "title": "Quantitative Risk Intern - Summer 2027",
-  "url": "https://job-boards.greenhouse.io/dvtrading/jobs/4719118005",
-  "locations": [
-   "Chicago"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1785942874,
-  "date_updated": 1786004921,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "greenhouse",
-  "id": "dv trading::quantitative risk intern - summer 2027::chicago"
  },
  {
   "company_name": "Optiver",
@@ -704,7 +840,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785940647,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -1568,7 +1704,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785819900,
-  "date_updated": 1786004919,
+  "date_updated": 1786024611,
   "terms": [
    "Summer 2027"
   ],
@@ -1585,7 +1721,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785819877,
-  "date_updated": 1786004919,
+  "date_updated": 1786024611,
   "terms": [
    "Summer 2027"
   ],
@@ -1602,7 +1738,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -1619,7 +1755,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -1636,7 +1772,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -1653,7 +1789,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -1670,7 +1806,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -1687,7 +1823,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -1721,7 +1857,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785776684,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -1775,7 +1911,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785768835,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -1898,7 +2034,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785533737,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -2171,7 +2307,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785513463,
-  "date_updated": 1786004921,
+  "date_updated": 1786024614,
   "terms": [
    "Summer 2027"
   ],
@@ -2188,7 +2324,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785493365,
-  "date_updated": 1786004921,
+  "date_updated": 1786024614,
   "terms": [
    "Summer 2027"
   ],
@@ -2239,7 +2375,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785427008,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2256,7 +2392,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426926,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2273,7 +2409,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426820,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2290,7 +2426,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426793,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2307,7 +2443,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426725,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2324,7 +2460,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426549,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2341,7 +2477,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426084,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2358,7 +2494,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785425971,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2375,7 +2511,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2392,29 +2528,12 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "optiver::fpga engineer intern (summer 2027 - chicago)::chicago, illinois, united states"
- },
- {
-  "company_name": "Optiver",
-  "title": "Quantitative Research Intern, PhD (Summer 2027)",
-  "url": "https://www.optiver.com/join-us/jobs/8451782002/?gh_jid=8451782002",
-  "locations": [
-   "Austin, Texas, United States"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1785347004,
-  "date_updated": 1786004921,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "greenhouse",
-  "id": "optiver::quantitative research intern, phd (summer 2027)::austin, texas, united states"
  },
  {
   "company_name": "Optiver",
@@ -2426,12 +2545,29 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "optiver::quantitative research intern, phd (summer 2027)::chicago, illinois, united states"
+ },
+ {
+  "company_name": "Optiver",
+  "title": "Quantitative Research Intern, PhD (Summer 2027)",
+  "url": "https://www.optiver.com/join-us/jobs/8451782002/?gh_jid=8451782002",
+  "locations": [
+   "Austin, Texas, United States"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1785347004,
+  "date_updated": 1786024615,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "greenhouse",
+  "id": "optiver::quantitative research intern, phd (summer 2027)::austin, texas, united states"
  },
  {
   "company_name": "Optiver",
@@ -2443,7 +2579,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2460,7 +2596,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2477,7 +2613,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -2494,7 +2630,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785319268,
-  "date_updated": 1786004921,
+  "date_updated": 1786024614,
   "terms": [
    "Summer 2027"
   ],
@@ -2579,7 +2715,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785248614,
-  "date_updated": 1786004921,
+  "date_updated": 1786024614,
   "terms": [
    "Summer 2027"
   ],
@@ -2596,7 +2732,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785193071,
-  "date_updated": 1786004919,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -2613,7 +2749,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785193071,
-  "date_updated": 1786004919,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -2630,7 +2766,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785193071,
-  "date_updated": 1786004919,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -2647,7 +2783,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785193071,
-  "date_updated": 1786004919,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -2664,7 +2800,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785186740,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -2681,7 +2817,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785186726,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -2698,7 +2834,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785186701,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -3076,7 +3212,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784935726,
-  "date_updated": 1786004919,
+  "date_updated": 1786024614,
   "terms": [
    "Summer 2027"
   ],
@@ -3093,7 +3229,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784935201,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -4247,7 +4383,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784825196,
-  "date_updated": 1786004921,
+  "date_updated": 1786024614,
   "terms": [
    "Summer 2027"
   ],
@@ -4264,7 +4400,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784771551,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -4281,7 +4417,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784771551,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -4298,7 +4434,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784771551,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -4315,7 +4451,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784771551,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -4332,7 +4468,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784639414,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -4349,7 +4485,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784054274,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -4366,7 +4502,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053828,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -4383,7 +4519,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053813,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -4400,7 +4536,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053791,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -4417,7 +4553,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053760,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -4434,7 +4570,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053732,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -4451,7 +4587,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053713,
-  "date_updated": 1786004921,
+  "date_updated": 1786024613,
   "terms": [
    "Summer 2027"
   ],
@@ -4468,7 +4604,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1783958135,
-  "date_updated": 1786004921,
+  "date_updated": 1786024615,
   "terms": [
    "Summer 2027"
   ],
@@ -4717,7 +4853,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1782328394,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -5521,7 +5657,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1776979025,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -5820,7 +5956,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1774033655,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -5837,7 +5973,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1774033522,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -5854,7 +5990,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1774033367,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -5871,7 +6007,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1765492275,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -5888,7 +6024,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1765491974,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -6239,7 +6375,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1755596487,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -6377,7 +6513,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1755023487,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -6639,7 +6775,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1724059335,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -6656,7 +6792,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1722899672,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -6673,7 +6809,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1656624050,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -6690,7 +6826,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1625177563,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -6707,7 +6843,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1570669230,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
@@ -6724,7 +6860,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1475793251,
-  "date_updated": 1786004923,
+  "date_updated": 1786024616,
   "terms": [
    "Summer 2027"
   ],
