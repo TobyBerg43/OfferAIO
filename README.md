@@ -92,8 +92,10 @@ Push to `main` → GitHub Pages rebuilds (~1 min) → live. That is the whole de
 ⚠️ Deploy from `worker/` when touching the Worker — a mis-pathed `wrangler deploy` from the
 repo root once auto-created a static worker serving the whole repo.
 
-⚠️ CI did not fire on the last merge to `main` despite active `push` triggers; only the
-Pages build ran. Check **Actions** after merging rather than assuming tests ran.
+ℹ️ Actions can lag well behind a push — the 2026-08-06 merge queued its runs **24 minutes**
+later, so "no runs yet" a minute after merging means nothing. And if you query the API,
+`head_sha` needs the **full** 40-character SHA: an abbreviated one returns zero runs
+instead of an error, which looks exactly like CI never firing.
 
 ## Status
 
