@@ -1,0 +1,7 @@
+# Local test harness (dev/mock-application.html) — a fake application form used to test
+# the extension end to end without submitting to a real employer.
+#
+# Deliberately never committed. GitHub Pages publishes the whole repo, so a tracked dev/
+# would put a convincing fake job posting live on offeraio.com. Keep it on disk, keep it
+# off the site. See dev/README.md.
+dev/
