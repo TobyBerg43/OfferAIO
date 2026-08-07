@@ -742,7 +742,7 @@
  "pnc": {
   "name": "PNC",
   "lastSeen": "2026-08-07",
-  "roles": 1
+  "roles": 2
  },
  "microsoft": {
   "name": "Microsoft",
@@ -836,6 +836,11 @@
  },
  "cno-financial-group": {
   "name": "CNO Financial Group",
+  "lastSeen": "2026-08-07",
+  "roles": 1
+ },
+ "epic-games": {
+  "name": "Epic Games",
   "lastSeen": "2026-08-07",
   "roles": 1
  }
