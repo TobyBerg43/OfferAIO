@@ -90,7 +90,7 @@ dashboard can talk to on `http://127.0.0.1:7717` for real (non-simulated) applyi
 - **CDN/DNS:** Cloudflare. Account id `4062b706ecb83a30bdfcabc85c6f22be`, zone `offeraio.com`.
 - **Waitlist:** Web3Forms (hero email form on the landing page).
 - **Cover letters + ranking:** Cloudflare Worker (`offeraio-worker`) calling the OpenAI
-  API. Needs secret `OPENAI_API_KEY` — **still unset** (see TODOs). Source lives in
+  API. Needs secret `OPENAI_API_KEY` — **set as of 2026-08-08** (§11). Source lives in
   `worker/` and deploys from `main`; see §14.
 - **AI vendor: OpenAI only.** One key covers both paths — chat for `/cover`, embeddings
   for `/rank`. Anthropic was dropped 2026-07-20 because it has no embeddings API, so
@@ -517,13 +517,14 @@ that matters.
 - **Never commit secrets.** API keys belong only in Cloudflare Worker secrets or GitHub
   Actions secrets.
 
-**The complete key inventory — there are exactly four.** All four re-verified unset on
-2026-08-04 (`wrangler secret list` → `[]`, `gh secret list` → empty).
+**The complete key inventory — there are exactly four.** Re-verified 2026-08-08:
+`wrangler secret list` from `worker/` returns `OPENAI_API_KEY` and `STRIPE_WEBHOOK_SECRET`;
+`gh secret list` is still empty.
 
 | Key | Lives in | Purpose | Status |
 | --- | --- | --- | --- |
 | `CLOUDFLARE_API_TOKEN` | GitHub Actions secret | lets CI run `wrangler deploy` | **unset — blocking the Worker deploy** |
-| `OPENAI_API_KEY` | Cloudflare Worker secret | chat for `/cover`, embeddings for `/rank` | unset |
+| `OPENAI_API_KEY` | Cloudflare Worker secret | chat for `/cover`, embeddings for `/rank` | **set — confirmed present 2026-08-08.** Never exercised end to end: `/cover` needs an active licence first, and nobody has bought yet, so the OpenAI call itself is still untested |
 | `STRIPE_SECRET_KEY` | Cloudflare Worker secret | reserved; **the code does not use it** — every field needed arrives in the webhook payloads | unset |
 | `STRIPE_WEBHOOK_SECRET` | Cloudflare Worker secret | webhook signature verification | **set 2026-08-04** — verified live: forged events get 400, unsigned get 400, nothing provisions |
 
@@ -531,10 +532,11 @@ that matters.
 
 ## 12. Open TODOs
 
-**Everything left is blocked on a key or an account action only Toby can perform.** The
-code is done: **143 tests pass** (92 in `tests/`, 51 in `worker/test/`), the Worker is
-deployed and gating correctly, and the dashboard is wired to it. Nothing ships value until
-the four keys in §11 exist.
+**Everything left is an account action only Toby can perform — the key blockers are gone.**
+The code is done: **143 tests pass** (92 in `tests/`, 51 in `worker/test/`), the Worker is
+deployed and gating correctly, the dashboard is wired to it, and as of 2026-08-08 three of
+the four keys in §11 are set. What remains is a Web Store submission, a first real
+purchase to exercise the Stripe path, and the `/rank` decision below.
 
 ✅ **The 2026-08-06 trust pass is deployed.** It merged as PR #1 and Pages rebuilt the same
 day; the live dashboard no longer simulates applying. (This section said otherwise until
@@ -549,13 +551,14 @@ Also **reload the unpacked extension** in any browser testing it: `manifest.json
 will answer the dashboard's `ats` request with nothing and every listing will show as
 unknown rather than as fillable.
 
-0. **The four keys (§11).** In the order that unlocks the most:
-   - `OPENAI_API_KEY` → `npx wrangler secret put OPENAI_API_KEY` from `worker/`. Makes AI
-     cover letters actually work. Safe to set now — the endpoints are gated (§14).
+0. **The keys (§11) — three of four are done.** Only one is left:
+   - ~~`OPENAI_API_KEY`~~ — **set** (confirmed 2026-08-08). Untested end to end; see §11.
    - ~~Stripe Pro product + Payment Link~~ — **done 2026-08-04**, see §10.
    - ~~`STRIPE_WEBHOOK_SECRET`~~ — **done 2026-08-04.**
    - `CLOUDFLARE_API_TOKEN` → GitHub Actions secret. Until set, every push touching
-     `worker/**` fails the Deploy Worker job and deploys stay local-only.
+     `worker/**` fails the Deploy Worker job. **This is a convenience, not a blocker** —
+     `npx wrangler deploy` from `worker/` works today on this machine, so the only cost is
+     that Worker deploys stay manual.
 1. **Chrome Web Store:** the only remaining work is in the Developer Dashboard itself —
    upload the three screenshots from `store/`, complete the Privacy tab, and hit Submit.
    Everything feeding that is prepared and current as of 2026-08-08: listing copy
@@ -566,9 +569,9 @@ unknown rather than as fillable.
    data-transfer question — the honest answer changed once Pro started sending data
    off-device, and a mismatch with privacy.html is a common rejection reason.
 2. **Cloudflare Worker** — deployed and verified (§14). Confirmed still healthy
-   2026-08-04: `/health` 200, and `/cover` returns 402 `unknown` for a bogus key and 400
-   `install_id_required` with no install id. `wrangler secret list` returns `[]`, so
-   **no Worker secret is set yet** — that is item 0, not a code problem.
+   2026-08-08: `/health` returns `{"ok":true,"service":"offeraio-worker/1.0"}`, and
+   `/cover` returns **402** for a bogus key, so the licence gate is live and
+   `OPENAI_API_KEY` cannot be drained by an unlicensed caller.
 3. **Dashboard UI polish** — **done 2026-07-22.** The fake titlebar is removed entirely
    (the ENGINE/DB/CONNECTED status chips moved to the sidebar bottom, ids unchanged so
    the JS kept working), Live-activity timestamps are staggered, the 14-day chart has
