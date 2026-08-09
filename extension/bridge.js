@@ -22,6 +22,7 @@ window.addEventListener("message", (e) => {
   if (d.type === "license") sendLicense();
   if (d.type === "identity") sendIdentity();
   if (d.type === "applications") sendApplications();
+  if (d.type === "ats") sendAts();
 });
 
 /* Everything below answers the dashboard's "who is signed in and what have they
@@ -73,6 +74,26 @@ function sendApplications() {
       "*",
     );
   });
+}
+
+/** Reply with the applicant tracking systems this build can actually fill.
+ *
+ * The dashboard lists postings from a community board, and roughly half of them sit on
+ * hosts no extension content script runs on — company career sites, TikTok, Rippling.
+ * Before this, every one of those rows offered "Open & fill" and the fill silently never
+ * happened, which is the same lie the 2026-08-06 pass took out of the task list.
+ *
+ * It answers from `ats.js` rather than letting the dashboard keep its own copy, so the
+ * page describes the extension the user has installed instead of the one that was
+ * current when the page shipped. An older extension answers with an older list and the
+ * dashboard is still right; one that predates this message never answers, and the
+ * dashboard falls back to promising nothing (see canFill() in OfferAIO.html). */
+function sendAts() {
+  const A = typeof self !== "undefined" && self.OfferAIOATS;
+  window.postMessage(
+    { source: "offeraio-ext", type: "ats", ats: (A && A.list) || [] },
+    "*",
+  );
 }
 
 /** Reply with {key, installId}, minting the install id if it doesn't exist yet.

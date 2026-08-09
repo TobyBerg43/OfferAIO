@@ -2,12 +2,15 @@
 
 Single source of truth for the OfferAIO project. Any assistant or person should be
 able to read this file and pick up the work without re-discovering anything.
-**Last updated: 2026-08-06.** (Latest change: the **trust & clarity pass**. The dashboard
-no longer simulates applying — the `setTimeout` chain that walked tasks to "✓ Submitted"
-and rolled dice for replies and interviews is gone, and every number on screen is now
-derived from applications the extension genuinely recorded. See **§2**, which is the
-important one; then §7 for the extension-side tracker and §15 for listings hygiene.
-Extension at **v1.2.0**. 125 tests pass, up from 81.)
+**Last updated: 2026-08-08.** (Latest change: the **coverage pass** — the dashboard now
+says which postings the extension can actually fill. Roughly **half the board cannot be
+filled**, and every one of those rows used to offer "Open & fill". See **§16**, then §7
+for the `ats` bridge message and §8 for the listing copy that claimed otherwise.
+Extension at **v1.3.0**. 143 tests pass, up from 125.
+The previous pass — 2026-08-06, the **trust & clarity pass** — removed the simulated
+applying: the `setTimeout` chain that walked tasks to "✓ Submitted" and rolled dice for
+replies and interviews is gone, and every number on screen derives from applications the
+extension genuinely recorded. **§2** is still the one to read first.)
 
 ⚠️ Standing hazard, still true: a mis-pathed `wrangler deploy` from the repo root once
 auto-created a static worker "ffer" serving the whole repo. Always deploy from `worker/`.
@@ -73,6 +76,9 @@ mean a user database, sessions, password reset and a privacy-policy rewrite — 
 work to solve a feeling, and it would cost the "nothing leaves your browser" claim that
 currently helps sell the product. Do not build them.
 
+**And it cannot fill every posting it lists.** About half the board is on hosts no content
+script runs on. The dashboard now says so per row rather than offering to fill them — §16.
+
 There is also an optional **local desktop engine** (Electron, `desktop/`) that the
 dashboard can talk to on `http://127.0.0.1:7717` for real (non-simulated) applying.
 
@@ -137,8 +143,15 @@ session re-uploading old files. After any extension change, verify the raw file 
 - `worker/` — Cloudflare Worker source (`src/index.js`, `wrangler.toml`) — see §14
 - `tests/` — Node tests for extension + pipeline logic (`license.test.mjs`,
   `bridge.test.mjs`, `content-workauth.test.mjs`, `content-tracker.test.mjs`,
-  `listings.test.mjs`). Deliberately outside `extension/`, which `zip-extension.yml` ships
-  wholesale to the store. `test.yml` globs `tests/*.test.mjs`, so a new file runs on its own.
+  `listings.test.mjs`, and from 2026-08-08 `ats-manifest.test.mjs`,
+  `dashboard-canfill.test.mjs`, `version-sync.test.mjs`). Deliberately outside
+  `extension/`, which `zip-extension.yml` ships wholesale to the store. `test.yml` globs
+  `tests/*.test.mjs`, so a new file runs on its own.
+  ⚠️ The last three are **consistency** tests: they read `manifest.json`, `OfferAIO.html`
+  and `data/listings.json` off disk and assert the repo agrees with itself. They fail on a
+  half-finished change (a version bumped in one file, a dashboard copy not regenerated)
+  rather than on broken logic — which is the point, since every rule they check was
+  written down in this file first and drifted anyway.
 - `.github/workflows/` — scrape + generate-pages pipeline, worker deploy, tests, zip
 - ~~`patch_dashboard.js` + `patch.yml`~~ — **deleted 2026-08-06.** All three of its targets
   were already applied and `rep()` throws on a miss, so the manual "Patch dashboard"
@@ -206,13 +219,17 @@ element.
   (solid muted gold primary, white ghost — no glossy gradients).
 
 ## 7. The Chrome extension (`extension/`)
-Manifest V3. Name "OfferAIO — Auto Apply", **v1.2.0** (1.0.0 → 1.1.0 licensing,
+Manifest V3. Name "OfferAIO — Auto Apply", **v1.3.0** (1.0.0 → 1.1.0 licensing,
 → 1.1.1 bridge licence relay, → 1.1.2 new logo, → 1.1.3 the three safety fixes below,
-→ 1.2.0 the application tracker, the context-aware popup and the identity relay).
+→ 1.2.0 the application tracker, the context-aware popup and the identity relay,
+→ 1.3.0 the ATS relay and the `*.wellfound.com` host fix, §16).
 
 **`manifest.json` is the single source of truth for the version.** It disagreed four ways
 (manifest `1.1.2`, landing `v3.1.0`, dashboard `build 2027.1`, this file `1.1.1`); the
-landing page and the dashboard sidebar now both read `v1.2.0`. Bump all three together.
+landing page and the dashboard sidebar now both read `v1.3.0`. Bump all three together —
+**`tests/version-sync.test.mjs` fails if you don't**, and it also fails if
+`dashboard/index.html` is out of date with `OfferAIO.html`. The rule was written here
+before and drifted anyway; a comment cannot enforce a convention.
 
 ### ⚠️ Four rules in `content.js` that must never regress (1–3 fixed 2026-08-05, 4 on 08-06)
 
@@ -264,16 +281,18 @@ Three outcomes, and the distinction between them matters:
   that a metering bug must never stop someone applying for a job, and a guess that costs a
   user one of their 50 submissions is worse than a quota that runs slightly cold.
 
-`bridge.js` answers `{type:"applications"}` and `{type:"identity"}` alongside the existing
-`license`, all behind the same `e.source !== window` guard. `license.js` is now loaded
+`bridge.js` answers `{type:"applications"}`, `{type:"identity"}` and `{type:"ats"}`
+(§16) alongside the existing `license`, all behind the same `e.source !== window` guard. `license.js` is now loaded
 *before* `bridge.js` in the content-script list so identity reports the real plan through
 `OfferAIOLicense.status()` (cache + offline grace) rather than reading storage raw; it
 falls back to a raw read if absent, which is what the tests exercise.
 
 `extension/ats.js` is the one list of supported applicant tracking systems, shared by
-`content.js` (to label what it filled) and `popup.js` (to decide whether the Fill button
-can do anything). Keep it in step with `manifest.json`; a host here but not there is a
-button that lights up and does nothing.
+`content.js` (to label what it filled), `popup.js` (to decide whether the Fill button can
+do anything) and, over the bridge, the dashboard. Keep it in step with `manifest.json`; a
+host here but not there is a button that lights up and does nothing — which is exactly
+what happened on `www.wellfound.com`. **`tests/ats-manifest.test.mjs` now enforces the
+agreement in all three directions**; see §16.
 
 ⚠️ **`jobs.lever.co` → `*.lever.co` in host permissions.** Lever and Greenhouse run EU
 instances (`jobs.eu.lever.co`, `job-boards.eu.greenhouse.io`) that carry **US** roles, and
@@ -355,9 +374,18 @@ scripts attaching files); the field is highlighted instead.
     the product honestly shows with no local engine watching an inbox. **Do not pad these.**
     Inventing a response rate in a store listing is the same failure this pass removed from
     the app, in a more public place.
-- ⚠️ **`host_permissions` changed** (`jobs.lever.co` → `*.lever.co`, §7). The permission
-  justification in `store/OfferAIO-store-listing.md` should say the extension runs on
-  Lever's regional instances too, since EU-hosted boards carry US roles (§15).
+- ✅ **Permission justifications are current** (re-checked 2026-08-08). Both items this
+  section used to flag as outstanding are already written into
+  `store/OfferAIO-store-listing.md`: the regional-ATS entry explaining `*.lever.co` /
+  `*.greenhouse.io` and EU-hosted boards carrying US roles (§15), and the Worker-origin
+  entry for licence verification (§7 rule 4). `*.wellfound.com` (§16) is covered by the
+  generic "Host permissions (the job sites listed)" line and needs no new text.
+- ✅ **Listing copy corrected 2026-08-08.** The detailed description claimed OfferAIO works
+  on the listed ATSes "**plus any employer link you paste**" — it does not, and cannot: a
+  pasted tesla.com link is one of the 49% no content script runs on (§16). That sentence is
+  gone, replaced with a line saying employers who run their own careers site can't be
+  filled and that the dashboard marks them. A store description that overstates what an
+  extension does is a rejection reason on its own, quite apart from being untrue.
 - **Submitting via API:** `node store/publish-extension.mjs` uploads the packaged zip and
   calls `:publish`. Needs `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET`, `CWS_REFRESH_TOKEN` and
   `CWS_PUBLISHER_ID` in the environment; `--dry-run` authenticates and reads status without
@@ -504,17 +532,22 @@ that matters.
 ## 12. Open TODOs
 
 **Everything left is blocked on a key or an account action only Toby can perform.** The
-code is done: **125 tests pass** (74 in `tests/`, 51 in `worker/test/`), the Worker is
+code is done: **143 tests pass** (92 in `tests/`, 51 in `worker/test/`), the Worker is
 deployed and gating correctly, and the dashboard is wired to it. Nothing ships value until
 the four keys in §11 exist.
 
-⚠️ **The 2026-08-06 trust pass is committed but NOT deployed.** The dashboard rewrite (§2),
-the extension tracker (§7) and the listings hygiene work (§15) are all local. Deploying
-means: push to `main`, wait for Pages, then **purge the Cloudflare cache** — this pass
-changed `landing.html` and the dashboard, and it added no new `.js` file at the site root,
-but `/dashboard/index.html` is regenerated and served as HTML (`DYNAMIC`, no purge needed).
-Re-read §4 before assuming. Also **reload the unpacked extension** in any browser testing
-it: `ats.js` is a new file and `manifest.json` changed, so a stale load will fail.
+✅ **The 2026-08-06 trust pass is deployed.** It merged as PR #1 and Pages rebuilt the same
+day; the live dashboard no longer simulates applying. (This section said otherwise until
+2026-08-08 — it was written before the merge and never updated.)
+
+⚠️ **The 2026-08-08 coverage pass (§16) is committed but NOT deployed.** Deploying means:
+push to `main`, wait for Pages, then check §4 — this pass changed `landing.html`,
+`OfferAIO.html` and the regenerated `dashboard/index.html`, all served as HTML
+(`DYNAMIC`), and added no new `.js` at the site root, so **no Cloudflare purge is needed**.
+Also **reload the unpacked extension** in any browser testing it: `manifest.json` changed
+(version, `*.wellfound.com`, and `ats.js` now loads on offeraio.com too), so a stale load
+will answer the dashboard's `ats` request with nothing and every listing will show as
+unknown rather than as fillable.
 
 0. **The four keys (§11).** In the order that unlocks the most:
    - `OPENAI_API_KEY` → `npx wrangler secret put OPENAI_API_KEY` from `worker/`. Makes AI
@@ -525,9 +558,10 @@ it: `ats.js` is a new file and `manifest.json` changed, so a stale load will fai
      `worker/**` fails the Deploy Worker job and deploys stay local-only.
 1. **Chrome Web Store:** the only remaining work is in the Developer Dashboard itself —
    upload the three screenshots from `store/`, complete the Privacy tab, and hit Submit.
-   Everything feeding that is prepared and current as of 2026-08-04: listing copy,
-   permission justifications, screenshots (all three regenerated from the real UI), and
-   the packaged zip (v1.1.1, rebuilt automatically on every `extension/` change).
+   Everything feeding that is prepared and current as of 2026-08-08: listing copy
+   (corrected, §8), permission justifications (re-checked, §8), screenshots (regenerated
+   2026-08-06 from the real UI), and the packaged zip — now **v1.3.0**, rebuilt
+   automatically on every `extension/` change, so push §16 before uploading.
    ⚠️ Read the warning in `store/OfferAIO-store-listing.md` before answering the
    data-transfer question — the honest answer changed once Pro started sending data
    off-device, and a mismatch with privacy.html is a common rejection reason.
@@ -676,8 +710,101 @@ duplicate groups**, all 10 EU rows and all 13 Wells Fargo roles intact.
 onwards collapses Audit, Finance, HR and Risk into one row and silently deletes three real
 internships. This is caught by a dedicated test — it fired during development.
 
-### c) `checked N ago` on every listing row
+### c) `checked N ago` on every listing row (see also §16)
 
 `date_checked` rides on each listing and the dashboard shows how recently the pipeline
 confirmed the req was open. A user who hits a dead link should see that the product
 already knew, rather than being told it had applied.
+
+## 16. What the extension can actually fill (added 2026-08-08)
+
+### The number: about half
+
+Measured against the live board on 2026-08-08, with `extension/ats.js` classifying every
+row in `data/listings.json`:
+
+```
+active listings   364
+fillable          186   (51.1%)
+NOT fillable      178   (48.9%)
+```
+
+The 178 are not junk. They are Tesla (26), TikTok (33), Jane Street (15), Y Combinator's
+Work at a Startup (13), Optiver (11), Akuna (8), Rippling's own ATS (8), ByteDance, IMC,
+DRW, Snowflake, Apple, Amazon, Microsoft — employers who run their own careers site
+instead of buying Greenhouse or Lever. Several are the most sought-after names on the board.
+
+Every one of those rows used to render **"Open & fill"** and a note reading *"The OfferAIO
+extension fills it there"*. Clicking it opened the posting and nothing else ever happened,
+because `content.js` is not injected on those hosts at all — there is no error, no bar, no
+message. This is the §2 failure again in a quieter form: an application that is never
+filled is indistinguishable from a user who got distracted, so it generates no bug report
+and never gets fixed.
+
+### The fix: the extension is asked, not guessed at
+
+`bridge.js` answers a new `{type:"ats"}` message with the list from `ats.js`. The dashboard
+holds **no copy** of that list — a copy goes stale the first time an ATS is added, and the
+page would then be confidently wrong about a build it does not ship. `canFill()` in
+`OfferAIO.html` applies the list and returns **true / false / null**, and the third one is
+the point: an extension older than this message never answers, and *unknown must read as
+unknown*. Guessing "yes" restores the lie; guessing "no" tells users their working
+extension is broken.
+
+Where it shows up: an amber **"✋ manual apply"** on the listing row, **"Open"** instead of
+**"Open & fill"** on the button, an honest note on the review card, and a feed line saying
+you will be filling this one by hand. `matchListing()` also *prefers* a fillable posting
+when two equally qualify — but never filters the others out. A Jane Street role you have to
+type by hand is still a Jane Street role, and hiding half the board to make the product
+look more capable is the same dishonesty pointed the other way.
+
+⚠️ **`canFill()` is a second implementation of `ats.fromUrl()`'s matching rules**, in a
+different file, over a wire format. Those drift. `tests/dashboard-canfill.test.mjs` lifts
+`canFill` straight out of the HTML and asserts the two agree on **every URL on the live
+board** plus the edges, and that the split is neither 0% nor 100% — a regression returning
+one answer for everything would otherwise keep every other test green.
+
+### `ats.js` entries are plain data now
+
+They were regexes; they are `{id, name, suffix}` (or `exactHost`), with the matching derived
+once. Regexes do not survive `postMessage` — they arrive as `{}` — so the bridge could not
+have sent them, and fifteen hand-written copies of one pattern was fifteen chances to typo
+one. `tests/ats-manifest.test.mjs` asserts the list stays JSON-serialisable.
+
+### ⚠️ The two lists must agree, and now something checks
+
+`ats.js` has always said it must stay in step with `manifest.json`. It wasn't: it matched
+any subdomain of `wellfound.com` and of `linkedin.com`, while the manifest granted only
+`wellfound.com` and `www.linkedin.com/jobs/*`. On `www.wellfound.com` the popup's Fill
+button therefore lit up, injected nothing and closed — exactly the failure the v1.2.0 popup
+work existed to end. Resolved in the cheaper direction each time: **manifest widened** to
+`*.wellfound.com` (same site, negligible review cost), **`ats.js` narrowed** to
+`www.linkedin.com` (claiming `*.linkedin.com` would request a huge site's worth of
+permission for regional hosts a US-only product never needs).
+
+`tests/ats-manifest.test.mjs` now fails if an ATS is supported but not granted, granted but
+not supported, or granted but not injected. All three directions were mutation-tested.
+
+### Two other things this pass removed
+
+- **The review card's field checklist was hardcoded.** Every card printed *"✓ resume
+  attached · ✓ contact info · ✓ education · ✓ work auth"* regardless of what the profile
+  held. There is no resume anywhere in the profile and browsers forbid a script attaching a
+  file (§7), so "resume attached" told users the one thing they still had to do was already
+  done; and "work auth" reads as a promise to answer the question §7 rule 1 deliberately
+  refuses to answer. `reviewFields()` now ticks only what the profile really carries, says
+  plainly what is missing, and never ticks the resume.
+- **A raw NUL byte in `content.js`.** The `NEEDS_USER` sentinel had the control character
+  written literally into the source. Harmless at runtime — it is compared by identity and
+  never written to a field — but ripgrep classifies the file as **binary** and silently
+  returns nothing, so the extension's largest and most safety-critical file was invisible to
+  search. It is now the `\u0000` escape: same value, greppable file. **Do not paste a raw
+  control character into source.**
+
+### Where the remaining half could come from
+
+Not attempted here, in rough order of return: `ats.rippling.com` (8 rows, a real
+multi-tenant ATS on one host), `*.oraclecloud.com` and `*.successfactors.com` / `sapsf.com`
+(enterprise ATSes, several rows each), `workatastartup.com` (13). The long tail —
+tesla.com, janestreet.com, lifeattiktok.com — is one bespoke careers site per employer,
+each needing its own selectors, which is a different kind of work from adding an ATS.

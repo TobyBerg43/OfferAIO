@@ -22,8 +22,10 @@ English (United States)
 **Detailed description**
 OfferAIO fills out internship applications for you — in your own browser, on your own logged-in sessions. Save your details once, then click "Fill" on any supported application page and OfferAIO completes the fields in seconds. You always review and submit.
 
-Works across the major applicant tracking systems, plus any employer link you paste:
+Works across the major applicant tracking systems:
 Greenhouse, Lever, Ashby, Workday, SmartRecruiters, iCIMS, Workable, Jobvite, BambooHR, Breezy, Taleo, Handshake, LinkedIn Jobs, ZipRecruiter, Indeed, and Wellfound.
+
+Some employers run their own careers site instead of one of these, and OfferAIO cannot fill those — your dashboard marks them so you know before you open one.
 
 How it works
 • Save your profile — name, school, major, grad date, work authorization, LinkedIn, and an optional cover-letter template. Or sync it from your OfferAIO dashboard at offeraio.com.

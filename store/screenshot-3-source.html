@@ -104,6 +104,14 @@ const SAMPLE = {
       url: "https://jobs.ashbyhq.com/snowflake/4", hoursAgo: 30,
       fieldsFilled: 9, fieldsTotal: 12, unfilledRequired: ["Resume", "Start date"], confirmed: true },
   ],
+  // The four the sample applications above were filed through — enough for the bridge
+  // reply to be well-formed. The real list lives in extension/ats.js.
+  ats: [
+    { id: "greenhouse", name: "Greenhouse", suffix: "greenhouse.io" },
+    { id: "lever", name: "Lever", suffix: "lever.co" },
+    { id: "ashby", name: "Ashby", suffix: "ashbyhq.com" },
+    { id: "workday", name: "Workday", suffix: "myworkdayjobs.com" },
+  ],
 };
 
 document.getElementById("dash").addEventListener("load", (e) => {
@@ -116,6 +124,12 @@ document.getElementById("dash").addEventListener("load", (e) => {
     { source: "offeraio-ext", type: "ready" },
     { source: "offeraio-ext", type: "identity", profile: SAMPLE.profile, usage: SAMPLE.usage },
     { source: "offeraio-ext", type: "applications", applications: apps },
+    // The dashboard also asks the extension which applicant tracking systems it can fill,
+    // so it can mark the postings it can't. This capture is the Dashboard page, which
+    // shows neither listings nor review cards, so the answer changes nothing on screen —
+    // it is here so the stub stays a faithful copy of the bridge, which is the whole
+    // reason these sources render the real UI instead of a drawing of it.
+    { source: "offeraio-ext", type: "ats", ats: SAMPLE.ats },
   ];
   const s = doc.createElement("script");
   s.textContent =

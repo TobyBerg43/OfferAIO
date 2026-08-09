@@ -12,35 +12,53 @@
  * nothing.
  */
 (() => {
+  /* Entries are plain data — a domain suffix, and for the whole-site hosts a path
+   * prefix — rather than hand-written regexes. Two reasons. The regexes were all the
+   * same shape, so writing them out fifteen times was fifteen chances to typo one.
+   * And plain data survives postMessage: bridge.js hands this list to the dashboard so
+   * offeraio.com can tell the user which postings we can actually fill, without keeping
+   * a third copy of the list that drifts from this one.
+   *
+   * `suffix` matches the domain itself and any subdomain. `exactHost` pins to one
+   * hostname where a wildcard would claim more of a site than the manifest grants. */
   const ATS = [
-    { id: "greenhouse", name: "Greenhouse", host: /(^|\.)greenhouse\.io$/ },
+    { id: "greenhouse", name: "Greenhouse", suffix: "greenhouse.io" },
     // Lever and Greenhouse both run regional instances — jobs.eu.lever.co,
     // job-boards.eu.greenhouse.io. Those carry US roles (the company's ATS
     // account is in the EU, the job is in Chicago), so the match must not be
     // pinned to the single US hostname.
-    { id: "lever", name: "Lever", host: /(^|\.)lever\.co$/ },
-    { id: "ashby", name: "Ashby", host: /(^|\.)ashbyhq\.com$/ },
-    { id: "workday", name: "Workday", host: /(^|\.)myworkdayjobs\.com$/ },
-    { id: "smartrecruiters", name: "SmartRecruiters", host: /(^|\.)smartrecruiters\.com$/ },
-    { id: "icims", name: "iCIMS", host: /(^|\.)icims\.com$/ },
-    { id: "workable", name: "Workable", host: /(^|\.)workable\.com$/ },
-    { id: "jobvite", name: "Jobvite", host: /(^|\.)jobvite\.com$/ },
-    { id: "bamboohr", name: "BambooHR", host: /(^|\.)bamboohr\.com$/ },
-    { id: "breezy", name: "Breezy", host: /(^|\.)breezy\.hr$/ },
-    { id: "taleo", name: "Taleo", host: /(^|\.)taleo\.net$/ },
-    { id: "handshake", name: "Handshake", host: /(^|\.)joinhandshake\.com$/ },
-    // LinkedIn and Indeed are whole sites; only their job paths are ours.
-    { id: "linkedin", name: "LinkedIn", host: /(^|\.)linkedin\.com$/, path: /^\/jobs\// },
-    { id: "ziprecruiter", name: "ZipRecruiter", host: /(^|\.)ziprecruiter\.com$/ },
-    { id: "indeed", name: "Indeed", host: /(^|\.)indeed\.com$/ },
-    { id: "wellfound", name: "Wellfound", host: /(^|\.)wellfound\.com$/ },
+    { id: "lever", name: "Lever", suffix: "lever.co" },
+    { id: "ashby", name: "Ashby", suffix: "ashbyhq.com" },
+    { id: "workday", name: "Workday", suffix: "myworkdayjobs.com" },
+    { id: "smartrecruiters", name: "SmartRecruiters", suffix: "smartrecruiters.com" },
+    { id: "icims", name: "iCIMS", suffix: "icims.com" },
+    { id: "workable", name: "Workable", suffix: "workable.com" },
+    { id: "jobvite", name: "Jobvite", suffix: "jobvite.com" },
+    { id: "bamboohr", name: "BambooHR", suffix: "bamboohr.com" },
+    { id: "breezy", name: "Breezy", suffix: "breezy.hr" },
+    { id: "taleo", name: "Taleo", suffix: "taleo.net" },
+    { id: "handshake", name: "Handshake", suffix: "joinhandshake.com" },
+    // LinkedIn and Indeed are whole sites; only their job paths are ours. LinkedIn is
+    // pinned to www because that is all the manifest asks for — claiming *.linkedin.com
+    // would request a much larger site's worth of permission for regional hosts this
+    // US-only product never needs.
+    { id: "linkedin", name: "LinkedIn", exactHost: "www.linkedin.com", pathPrefix: "/jobs/" },
+    { id: "ziprecruiter", name: "ZipRecruiter", suffix: "ziprecruiter.com" },
+    { id: "indeed", name: "Indeed", suffix: "indeed.com" },
+    { id: "wellfound", name: "Wellfound", suffix: "wellfound.com" },
   ];
+
+  /** Does `host` sit on this entry's domain (or a subdomain of it)? */
+  function hostMatches(a, h) {
+    if (a.exactHost) return h === a.exactHost;
+    return h === a.suffix || h.endsWith("." + a.suffix);
+  }
 
   /** The ATS serving `host`/`pathname`, or null. */
   function fromHost(host, pathname) {
     const h = String(host || "").toLowerCase();
     const p = String(pathname || "/");
-    return ATS.find((a) => a.host.test(h) && (!a.path || a.path.test(p))) || null;
+    return ATS.find((a) => hostMatches(a, h) && (!a.pathPrefix || p.startsWith(a.pathPrefix))) || null;
   }
 
   /** The ATS serving a full URL, or null. Never throws on a junk URL. */

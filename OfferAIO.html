@@ -246,7 +246,7 @@
     <div class="sidebar">
       <div class="logo">
         <div class="logo-icon" role="img" aria-label="OfferAIO"></div>
-        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver" id="logoVer">v1.2.0</div></div>
+        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver" id="logoVer">v1.3.0</div></div>
       </div>
       <div class="nav-item active" data-page="dashboard">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
@@ -368,7 +368,7 @@
       <!-- REVIEW QUEUE -->
       <div class="page" id="page-review">
         <div class="page-head">
-          <div><h1>Review Queue</h1><div class="page-sub">Matched postings with a cover letter drafted — open each one and the extension fills it</div></div>
+          <div><h1>Review Queue</h1><div class="page-sub">Matched postings with a cover letter drafted — open each one to apply. Each card says whether the extension can fill it</div></div>
           <div class="head-actions"></div>
         </div>
         <div id="reviewList"></div>
@@ -661,6 +661,34 @@ Best regards,
 /* Pulls real Summer 2027 postings from community-maintained repos that
    auto-update daily via GitHub Actions. Zero backend needed for v1. */
 let LIVE=[]; const usedListings=new Set(); let lastSyncCount=-1;
+
+/* ---- can the extension actually fill this posting? ----
+ *
+ * About half the board sits on hosts the extension is not injected into: company career
+ * sites, lifeattiktok.com, Rippling, Oracle, SuccessFactors. Every one of those rows used
+ * to offer "Open & fill", and the fill never happened — the posting just opened and
+ * nothing else. That is the same failure as the simulated task list PROJECT.md §2 exists
+ * to prevent, only quieter, because an application that is never filled looks exactly
+ * like a user who got distracted.
+ *
+ * The list comes from the extension over the bridge (bridge.js `ats`), never from a copy
+ * kept here — a copy would go stale the first time the extension added an ATS, and the
+ * dashboard would be confidently wrong about a build it isn't shipping.
+ *
+ * Three answers, and the third one matters: null means "we have not been told", which
+ * happens on an extension older than this message. Unknown must read as unknown. Guessing
+ * "yes" re-creates the lie; guessing "no" tells users their working extension is broken. */
+let extAts=null;
+function canFill(url){
+  if(!extAts||!extAts.length)return null;
+  let u; try{u=new URL(url);}catch(e){return false;}
+  if(u.protocol!=='https:'&&u.protocol!=='http:')return false;
+  const h=u.hostname.toLowerCase();
+  return extAts.some(a=>{
+    const hostOk=a.exactHost?h===a.exactHost:(h===a.suffix||h.endsWith('.'+a.suffix));
+    return hostOk&&(!a.pathPrefix||u.pathname.startsWith(a.pathPrefix));
+  });
+}
 const LISTING_SOURCES=[
   'https://raw.githubusercontent.com/TobyBerg43/OfferAIO/main/data/listings.json',
   'https://raw.githubusercontent.com/vanshb03/Summer2027-Internships/dev/.github/scripts/listings.json',
@@ -801,6 +829,7 @@ function renderListings(){
           ${l.posted?`<span${fmtAgo(l.posted).new?' class="lr-new"':''}>🗓 ${fmtAgo(l.posted).txt}</span>`:''}
           ${l.pay?`<span class="lr-pay">💰 ${l.pay}</span>`:''}
           ${l.checked?`<span title="When the pipeline last confirmed this req was still open">✓ checked ${fmtChecked(l.checked)}</span>`:''}
+          ${canFill(l.url)===false?`<span style="color:var(--amber)" title="This posting is on a careers site the extension doesn't run on, so it can't fill the form for you. The job is real — you'd be applying by hand.">✋ manual apply</span>`:''}
         </div>
       </div>
       <a class="icon-btn" style="text-decoration:none" title="Open posting" href="${l.url}" target="_blank" rel="noopener">↗</a>
@@ -850,7 +879,12 @@ function matchListing(t){
     return true;
   });
   if(!pool.length)return null;
-  const l=pool[0];
+  // Of two equally-qualified postings, hand the user the one the extension can fill.
+  // Not a filter: a Jane Street role the user has to type out by hand is still a Jane
+  // Street role, and silently withholding half the board to make the product look more
+  // capable would be the same dishonesty in the other direction. Newest-first otherwise,
+  // since `pool` preserves LIVE's ordering.
+  const l=pool.find(x=>canFill(x.url)===true)||pool[0];
   usedListings.add(l.url);
   return l;
 }
@@ -1250,6 +1284,41 @@ function findMatch(t){
 }
 function findMatchById(id){const t=tasks.find(x=>x.id===id);if(t)findMatch(t);}
 
+/* What the extension is carrying into the form — read off the profile it actually holds.
+ *
+ * This row used to be five hardcoded ticks: "✓ resume attached · ✓ contact info · ✓
+ * education · ✓ work auth · ✓ availability: Summer 2027". It survived the 2026-08-06
+ * pass because it looks like a summary rather than a claim, but every tick was printed
+ * whether or not the field existed, and two of them could never be true:
+ *
+ *   - There is no resume anywhere in the profile (see collectProfile), and browsers
+ *     forbid a script from attaching a file at all (§7). "Resume attached" was telling
+ *     users the one thing they still have to do themselves was already done.
+ *   - "Work auth" reads as "we'll answer that for you", which content.js rule 1 exists
+ *     specifically to not do — on an ambiguous sponsorship question it leaves the field
+ *     blank on purpose rather than assert something false on a legal declaration.
+ *
+ * So: tick what the profile really has, say plainly what is missing, and never tick the
+ * resume. Empty profile, empty row — no ticks at all is the correct output. */
+function reviewFields(){
+  const p=(extIdentity&&extIdentity.profile)||collectProfile();
+  const has=k=>!!(p&&String(p[k]||'').trim());
+  const out=[];
+  const tick=(ok,label)=>out.push(ok
+    ? `<span class="rc-field">✓ ${label}</span>`
+    : `<span class="rc-field" style="opacity:.55">◦ ${label} — not set</span>`);
+  tick(has('name')&&has('email'),'contact info');
+  tick(has('school')&&has('major'),'education');
+  if(has('linkedin'))tick(true,'linkedin');
+  // Stated, not answered. The extension carries the selection; whether it may safely use
+  // it on a given question is content.js's call, not the dashboard's.
+  out.push(has('workAuth')
+    ? `<span class="rc-field">✓ work auth: ${p.workAuth}</span>`
+    : `<span class="rc-field" style="opacity:.55">◦ work auth — not set</span>`);
+  out.push('<span class="rc-field" style="color:var(--amber)" title="Browsers do not let any extension attach a file to a form. You upload the resume yourself on the posting.">✋ resume — you attach it</span>');
+  return out.join('');
+}
+
 /* The hand-off. This is the only "apply" action the dashboard has, and all it does is
    open the real posting in a real tab, where the extension is running. Nothing here
    claims the application was sent — only content.js can say that. */
@@ -1259,7 +1328,12 @@ function openAndFill(id){
   window.open(t.url,'_blank','noopener');
   t.openedAt=Date.now();
   setStatus(t,'opened');
-  addFeed(`Opened <b>${t.company}</b> — fill and submit in the new tab, then it lands here`,'var(--cyan)');
+  // Say which of the two things is about to happen. On a careers site we don't run on,
+  // "fill and submit in the new tab" describes a fill that never comes, and the user is
+  // left waiting on an extension that was never going to touch the page.
+  addFeed(canFill(t.url)===false
+    ? `Opened <b>${t.company}</b> — this one's on their own careers site, so you'll be filling it by hand`
+    : `Opened <b>${t.company}</b> — fill and submit in the new tab, then it lands here`,'var(--cyan)');
 }
 function resetTask(t){
   if(t.status==='applied'||t.status==='unconfirmed')return;
@@ -1344,7 +1418,7 @@ function render(){
       <td><div class="status ${m.cls}"><div class="sd"></div>${m.txt}</div></td>
       <td><div class="row-actions">
         ${t.status==='idle'?`<button class="icon-btn" title="Find a matching posting" onclick="findMatchById(${t.id})">▶</button>`:''}
-        ${t.status==='ready'&&t.url?`<button class="btn sm primary" onclick="openAndFill(${t.id})">Open &amp; fill</button>`:''}
+        ${t.status==='ready'&&t.url?`<button class="btn sm primary" onclick="openAndFill(${t.id})" title="${canFill(t.url)===false?'Opens the posting. This employer is on their own careers site, so you fill it yourself.':'Opens the posting; the extension fills it there.'}">Open${canFill(t.url)===false?'':' &amp; fill'}</button>`:''}
         ${t.status==='opened'?`<button class="icon-btn" title="Open the posting again" onclick="openAndFill(${t.id})">↗</button>`:''}
         ${t.status==='ready'&&t.url&&engineOn?`<button class="icon-btn" title="Apply with the local engine" onclick="applyViaEngine(${t.id})">⚙</button>`:''}
         <button class="icon-btn" title="Edit" onclick="editTask(${t.id})">✎</button>
@@ -1368,17 +1442,15 @@ function render(){
         <div><div class="co">${t.company}</div><div class="ro">${t.role} · via ${t.src}</div></div>
         <div class="rc-meta">Task OA-${pad(t.id)}<br>${t.cl==='ai'?'AI cover letter':'your cover letter'}</div>
       </div>
-      <div class="rc-fields">
-        <span class="rc-field">✓ resume attached</span><span class="rc-field">✓ contact info</span>
-        <span class="rc-field">✓ education</span><span class="rc-field">✓ work auth</span>
-        <span class="rc-field">✓ availability: Summer 2027</span>${$('liUrl')&&$('liUrl').value?'<span class="rc-field">✓ linkedin</span>':''}
-      </div>
+      <div class="rc-fields">${reviewFields()}</div>
       <div class="rc-cl" contenteditable="true" spellcheck="false">${t.coverCache}</div>
       <div class="rc-actions">
-        ${t.url?`<button class="btn green sm" onclick="openAndFill(${t.id})">Open &amp; fill →</button>`:''}
+        ${t.url?`<button class="btn green sm" onclick="openAndFill(${t.id})">Open${canFill(t.url)===false?' posting':' &amp; fill'} →</button>`:''}
         <button class="btn sm danger" onclick="discardReview(${t.id})">Discard match</button>
       </div>
-      <div class="rc-note">Opens the real posting in a new tab. The OfferAIO extension fills it there; you review and submit. Nothing is sent from this page.</div>`;
+      <div class="rc-note">${canFill(t.url)===false
+        ? 'Opens the real posting in a new tab. This employer runs their own careers site, which the extension does not fill — you complete this one by hand. Nothing is sent from this page.'
+        : 'Opens the real posting in a new tab. The OfferAIO extension fills it there; you review and submit. Nothing is sent from this page.'}</div>`;
     rl.appendChild(div);
   });
   $('reviewEmpty').style.display=ready.length?'none':'block';
@@ -1601,6 +1673,7 @@ window.addEventListener('message',e=>{
   if(d.type==='license')extLicense=d.key?{key:d.key,installId:d.installId}:null;
   if(d.type==='identity'){extIdentity=d;markConnected();paintUser();}
   if(d.type==='applications')syncApplications(d.applications||[]);
+  if(d.type==='ats'&&Array.isArray(d.ats)&&d.ats.length){extAts=d.ats;renderListings();render();}
 });
 const ask=type=>window.postMessage({source:'offeraio-site',type},'*');
 
@@ -1616,6 +1689,7 @@ function markConnected(){
   askLicense();
   ask('identity');
   ask('applications');
+  ask('ats');
   // A submit happens in another tab, so poll for new records while this page is open.
   setInterval(()=>{if(!document.hidden)ask('applications');},20000);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)ask('applications');});
