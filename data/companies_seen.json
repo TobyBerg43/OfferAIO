@@ -12,7 +12,7 @@
  "citi": {
   "name": "Citi",
   "lastSeen": "2026-08-10",
-  "roles": 3
+  "roles": 4
  },
  "wells-fargo": {
   "name": "Wells Fargo",
@@ -22,7 +22,7 @@
  "capital-one": {
   "name": "Capital One",
   "lastSeen": "2026-08-10",
-  "roles": 6
+  "roles": 5
  },
  "salesforce": {
   "name": "Salesforce",
