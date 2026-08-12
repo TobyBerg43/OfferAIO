@@ -2,12 +2,16 @@
 
 Single source of truth for the OfferAIO project. Any assistant or person should be
 able to read this file and pick up the work without re-discovering anything.
-**Last updated: 2026-08-08.** (Latest change: the **coverage pass** — the dashboard now
+**Last updated: 2026-08-12.** (Latest change: **§8 — the store listing is published at
+v1.1.2, not a draft.** That build predates every safety fix in §7 and cannot drive the
+deployed dashboard, which makes the store update the top priority in the file. Read §8
+first, then §12 item 1.
+The previous pass — 2026-08-08 — was the **coverage pass** — the dashboard now
 says which postings the extension can actually fill. Roughly **half the board cannot be
 filled**, and every one of those rows used to offer "Open & fill". See **§16**, then §7
 for the `ats` bridge message and §8 for the listing copy that claimed otherwise.
 Extension at **v1.3.0**. 143 tests pass, up from 125.
-The previous pass — 2026-08-06, the **trust & clarity pass** — removed the simulated
+Before that — 2026-08-06, the **trust & clarity pass** — removed the simulated
 applying: the `setTimeout` chain that walked tasks to "✓ Submitted" and rolled dice for
 replies and interviews is gone, and every number on screen derives from applications the
 extension genuinely recorded. **§2** is still the one to read first.)
@@ -343,9 +347,31 @@ session. **CAPTCHAs are never bypassed.** Resume upload stays manual (browsers f
 scripts attaching files); the field is highlighted instead.
 
 ## 8. Chrome Web Store status
+
+### 🔴 v1.1.2 IS PUBLISHED AND LIVE, and it is three releases behind (learned 2026-08-12)
+
+This section said "Draft" until 2026-08-12. It is not a draft — `OfferAIO — Auto Apply`
+is **published on the Chrome Web Store at v1.1.2**, so real installs are running the
+2026-08-04 build. Everything the last two passes fixed is missing from it:
+
+- **All four `content.js` safety rules (§7).** v1.1.2 predates them — `git show
+  b5cfe6b:extension/content.js` contains no `workAuthAnswer`, no `NEEDS_USER`, no
+  `controlForLabel` guard. Installed users are asserting work authorisation they may not
+  hold on a legal declaration, can auto-submit past an empty resume field, are charged
+  quota for submits that never landed, and have label→input misbinding writing answers
+  into the wrong questions.
+- **The dashboard does not work for them at all.** `bridge.js` at v1.1.2 answers only
+  `profile`, `ping` and `license` — not `identity`. The deployed dashboard hides
+  `#connectGate` only on `d.type==='identity'` (verified on `origin/main`), so every store
+  installer who opens offeraio.com/dashboard/ sees the connect card forever. The product's
+  main entry point is broken for exactly the people who found it the official way.
+
+Shipping v1.3.0 to the store is therefore the **highest-priority open item in this file**,
+ahead of everything in §12. The store submission is not "the last step before launch" — it
+is a fix for users who already have the product.
+
 - Developer account: **tobybergerbusiness@gmail.com** — registered, dashboard accessible.
-- Item created as **Draft**: `OfferAIO — Auto Apply`, item id
-  **`hcbchgpjladdfmcammhgbbmkdagcfcgd`**. Zip uploaded, title/summary auto-filled.
+- Item id **`hcbchgpjladdfmcammhgbbmkdagcfcgd`**, published at **v1.1.2**.
 - Listing copy, category, permission justifications and data disclosures live in
   `store/OfferAIO-store-listing.md`.
 - Screenshots (1280×800) in `store/` — popup, in-page fill bar, dashboard. **Regenerate
@@ -357,7 +383,10 @@ scripts attaching files); the field is highlighted instead.
   `chrome.storage.local` stubbed. The script drives headless Chrome, which is the only
   way to get an exact 1280×800 PNG; a normal window screenshot comes out rescaled.
 - Privacy policy URL to enter: `https://offeraio.com/privacy.html`
-- **Remaining:** complete the Privacy tab + listing fields, then submit.
+- **Remaining:** upload the v1.3.0 zip as an **update** to the published item, complete the
+  Privacy tab + listing fields, then submit for review. Note this is an update to a live
+  listing, not a first submission — a rejection now leaves v1.1.2 serving users, so the
+  permission justifications (§7 rule 4, §15, §16) matter more than they did as a draft.
 - ✅ **Screenshots regenerated 2026-08-06** against the v1.2.0 UI. Two of the three sources
   needed changes first, because rendering the *real* UI means the sources break when the
   UI's preconditions change:
@@ -559,8 +588,12 @@ unknown rather than as fillable.
      `worker/**` fails the Deploy Worker job. **This is a convenience, not a blocker** —
      `npx wrangler deploy` from `worker/` works today on this machine, so the only cost is
      that Worker deploys stay manual.
-1. **Chrome Web Store:** the only remaining work is in the Developer Dashboard itself —
-   upload the three screenshots from `store/`, complete the Privacy tab, and hit Submit.
+1. 🔴 **Chrome Web Store — this is now the top item, see §8.** The listing is **published
+   at v1.1.2**, not a draft, so users are running a build without any of the four
+   `content.js` safety rules and with a `bridge.js` that cannot answer the deployed
+   dashboard. Remaining work is in the Developer Dashboard itself — upload the v1.3.0 zip
+   as an update, upload the three screenshots from `store/`, complete the Privacy tab, and
+   hit Submit.
    Everything feeding that is prepared and current as of 2026-08-08: listing copy
    (corrected, §8), permission justifications (re-checked, §8), screenshots (regenerated
    2026-08-06 from the real UI), and the packaged zip — now **v1.3.0**, rebuilt
