@@ -1,11 +1,11 @@
 {
-  "updated": "2026-08-12T07:18:46.723Z",
-  "total": 372,
-  "closed": 0,
-  "checked": 124,
-  "checkable": 124,
+  "updated": "2026-08-12T12:59:53.395Z",
+  "total": 373,
+  "closed": 2,
+  "checked": 126,
+  "checkable": 126,
   "bySource": {
-    "workday": 44,
+    "workday": 45,
     "greenhouse": 60,
     "AMcSo1000": 1,
     "vanshb03": 215,
