@@ -1,9 +1,9 @@
 {
-  "updated": "2026-08-12T01:29:28.212Z",
+  "updated": "2026-08-12T07:18:46.723Z",
   "total": 372,
-  "closed": 2,
-  "checked": 126,
-  "checkable": 126,
+  "closed": 0,
+  "checked": 124,
+  "checkable": 124,
   "bySource": {
     "workday": 44,
     "greenhouse": 60,
