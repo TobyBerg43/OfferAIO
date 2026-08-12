@@ -22,7 +22,7 @@
  "capital-one": {
   "name": "Capital One",
   "lastSeen": "2026-08-12",
-  "roles": 6
+  "roles": 7
  },
  "salesforce": {
   "name": "Salesforce",
@@ -562,7 +562,7 @@
  "micron": {
   "name": "Micron",
   "lastSeen": "2026-08-12",
-  "roles": 8
+  "roles": 9
  },
  "pdt-partners": {
   "name": "PDT Partners",
