@@ -28,6 +28,72 @@ document.getElementById("save").onclick = () => {
   });
 };
 
+/* ------------------------------------------------------------------- the résumé
+ *
+ * Stored as base64 in chrome.storage.local alongside the profile, and attached to the
+ * page by content.js's attachResume(). It never leaves the browser — there is no upload
+ * here, which is what keeps privacy.html's promise intact.
+ *
+ * The 2 MB cap is not arbitrary. chrome.storage.local allows ~10 MB without the
+ * `unlimitedStorage` permission, base64 inflates by a third, and asking for a bigger
+ * storage permission at Web Store review to hold a document that is almost always under
+ * 500 KB is a bad trade. A cap we enforce with a clear message beats a quota error the
+ * user cannot interpret. */
+const RESUME_MAX = 2 * 1024 * 1024;
+const resumeFile = document.getElementById("resumeFile");
+const resumeState = document.getElementById("resumeState");
+const resumeRemove = document.getElementById("resumeRemove");
+
+const kb = (n) => (n < 1024 * 1024 ? Math.round(n / 1024) + " KB" : (n / 1048576).toFixed(1) + " MB");
+
+function paintResume(r, err) {
+  if (err) {
+    resumeState.textContent = err;
+    resumeRemove.style.display = "none";
+    resumeState.parentElement.className = "res-row bad";
+    return;
+  }
+  const has = !!(r && r.data);
+  resumeState.textContent = has ? "✓ " + r.name + " · " + kb(r.size) : "No résumé saved";
+  resumeRemove.style.display = has ? "inline" : "none";
+  resumeState.parentElement.className = "res-row" + (has ? " has" : "");
+}
+
+chrome.storage.local.get(["resume"], (d) => paintResume(d.resume));
+
+resumeFile.onchange = () => {
+  const f = resumeFile.files && resumeFile.files[0];
+  if (!f) return;
+  if (f.size > RESUME_MAX) {
+    resumeFile.value = "";
+    paintResume(null, "That file is " + kb(f.size) + " — the limit is 2 MB.");
+    return;
+  }
+  const fr = new FileReader();
+  fr.onerror = () => paintResume(null, "Couldn't read that file. Try again.");
+  fr.onload = () => {
+    // readAsDataURL gives "data:<type>;base64,<payload>" — store the payload only, so
+    // content.js never has to parse a prefix it might get wrong.
+    const comma = String(fr.result).indexOf(",");
+    const resume = {
+      name: f.name,
+      type: f.type || "application/pdf",
+      size: f.size,
+      data: String(fr.result).slice(comma + 1),
+      savedAt: Date.now(),
+    };
+    chrome.storage.local.set({ resume }, () => {
+      resumeFile.value = "";
+      paintResume(resume);
+    });
+  };
+  fr.readAsDataURL(f);
+};
+
+resumeRemove.onclick = () => {
+  chrome.storage.local.remove("resume", () => paintResume(null));
+};
+
 /* ------------------------------------------------------------- the Fill button
  *
  * This button used to read the same on a Greenhouse form, on a new tab and on the
@@ -139,7 +205,10 @@ fillBtn.onclick = async () => {
     const needs = (r.needsUser || []).length + (r.resumeMissing ? 1 : 0);
     let msg = "Filled <b>" + r.fieldsFilled + " of " + r.fieldsTotal + "</b> fields";
     msg += needs ? " · <b>" + needs + "</b> need you" : " · nothing left blank";
-    if (r.resumeMissing) msg += "<br>Attach your resume — browsers won't let us do that one.";
+    if (r.resumeAttached) msg += "<br>Résumé attached.";
+    else if (r.resumeMissing && r.resumeStored)
+      msg += "<br>This form's uploader wouldn't take the résumé — attach it yourself (highlighted).";
+    else if (r.resumeMissing) msg += "<br>Attach your résumé, or save one here so we can do it next time.";
     if ((r.needsUser || []).length) msg += "<br>Answer yourself: " + esc(r.needsUser.join("; "));
     msg += "<br>Review the page, then hit Submit there.";
     note(msg, needs ? "warn" : "done");

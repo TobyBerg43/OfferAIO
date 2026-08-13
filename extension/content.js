@@ -3,8 +3,8 @@
  * SmartRecruiters, iCIMS, Workable, Handshake, LinkedIn, ZipRecruiter, Indeed and more)
  * by matching fields on standard autocomplete/name/label attributes rather than
  * hardcoding one site. Runs in YOUR browser (your IP, your session). Never bypasses
- * CAPTCHAs. Resume upload stays manual (browsers forbid scripts from attaching files) —
- * the field is highlighted for you. */
+ * CAPTCHAs. Attaches the resume you saved in the popup, and highlights the field for you
+ * when a form's custom uploader won't accept it. */
 (() => {
   const HOST = location.hostname;
   const isLever = /lever\.co$/.test(HOST);
@@ -202,10 +202,53 @@
 
   const findCover = () => q('#cover_letter_text, textarea[name*="cover" i], textarea[name="comments"], textarea[id*="cover" i]');
   const findResume = () => q('input[type="file"]');
-  /* True when the page wants a file and none is attached. Browsers forbid scripts from
-     attaching files, so this is always the user's step — full-auto must not race past it
-     and send a resume-less application. */
+  /* True when the page wants a file and none is attached — after attachResume() has had
+     its go. Full-auto must not race past this and send a resume-less application. */
   const resumeMissing = () => { const rf = findResume(); return !!rf && rf.files.length === 0; };
+
+  const b64ToBytes = (b64) => {
+    const s = atob(b64);
+    const a = new Uint8Array(s.length);
+    for (let i = 0; i < s.length; i++) a[i] = s.charCodeAt(i);
+    return a;
+  };
+
+  /* Attach the stored resume to the page's file input.
+   *
+   * This file used to say browsers forbid it. They do not, and that misconception cost the
+   * product its most-requested feature. What is forbidden is setting `input.value` to a
+   * path — a script cannot reach into the filesystem. But a File built from bytes we
+   * already hold can be handed over through a DataTransfer, and `input.files` has been
+   * assignable for years. Verified against a real form: the file lands, `change` fires,
+   * checkValidity() passes, and it appears in the form's FormData — so it is genuinely
+   * submitted, not just displayed.
+   *
+   * The bytes are ours legitimately: the user picked the file in our own popup. Nothing is
+   * read from disk without them choosing it, and nothing leaves the browser.
+   *
+   * Returns whether it actually worked, and never assumes. A custom drag-and-drop uploader
+   * that posts to S3 itself, a sandboxed iframe, or a cross-origin form can all leave the
+   * input untouched — and a resume we merely *believe* we attached is worse than one we
+   * know is missing, because full-auto would submit on the strength of it. */
+  function attachResume(rf, resume) {
+    if (!rf || !resume || !resume.data) return false;
+    if (rf.files && rf.files.length) return true; // the user already attached one
+    try {
+      if (typeof DataTransfer !== "function" || typeof File !== "function") return false;
+      const file = new File([b64ToBytes(resume.data)], resume.name || "resume.pdf", {
+        type: resume.type || "application/pdf",
+      });
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      rf.files = dt.files;
+      // React and friends listen for one or the other; send both.
+      rf.dispatchEvent(new Event("input", { bubbles: true }));
+      rf.dispatchEvent(new Event("change", { bubbles: true }));
+      return rf.files.length === 1 && rf.files[0].size === file.size;
+    } catch (e) {
+      return false;
+    }
+  }
   const findSubmit = () =>
     q("#submit_app") || q("#btn-submit") ||
     qa('button, input[type="submit"], [role="button"]').find((b) => /submit application|submit|apply now|send application/i.test((b.textContent || b.value || "")));
@@ -245,7 +288,7 @@
   }
   const status = (t) => { const s = document.getElementById("oa-status"); if (s) s.textContent = t; };
 
-  const getData = () => new Promise((r) => chrome.storage.local.get(["profile", "mode"], (d) => r(d)));
+  const getData = () => new Promise((r) => chrome.storage.local.get(["profile", "mode", "resume"], (d) => r(d)));
 
   async function run() {
     const d = await getData();
@@ -261,11 +304,25 @@
     if (cl && profile.coverLetter)
       setValue(cl, profile.coverLetter.split("{company}").join(companyName()).split("{role}").join(roleName()));
     const rf = findResume();
+    let resumeAttached = false;
     if (rf) {
-      rf.style.outline = "3px solid #33528c";
-      (rf.closest("div,section,fieldset") || rf).scrollIntoView({ behavior: "smooth", block: "center" });
+      resumeAttached = attachResume(rf, d.resume);
+      if (resumeAttached) {
+        // Green, not blue: blue means "your turn". Marking a done thing as outstanding is
+        // the same class of dishonesty as the reverse.
+        rf.style.outline = "3px solid #2e9d68";
+      } else {
+        rf.style.outline = "3px solid #33528c";
+        (rf.closest("div,section,fieldset") || rf).scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     }
-    let tail = rf ? " - attach your resume (highlighted), then Submit" : " - review, then Submit";
+    let tail = !rf
+      ? " - review, then Submit"
+      : resumeAttached
+        ? " - resume attached, review then Submit"
+        : d.resume
+          ? " - this form needs you to attach the resume yourself (highlighted)"
+          : " - attach your resume (highlighted), then Submit";
     if (needsUser.length) tail += " - answer yourself: " + needsUser.join("; ");
     if (LIC()) {
       const s = await LIC().status();
@@ -280,14 +337,18 @@
       fieldsTotal: total,
       needsUser: needsUser.slice(),
       resumeMissing: resumeMissing(),
+      resumeAttached,
+      resumeStored: !!d.resume,
       at: Date.now(),
     };
 
     if (mode === "auto") {
       // Full-auto still stops for the two things it must never decide alone: a legal
-      // question we deliberately declined to answer, and a resume the browser will not
-      // let us attach. Auto-submitting either sends an application that is wrong or
-      // incomplete, in the user's name, with no chance for them to catch it.
+      // question we deliberately declined to answer, and a resume that is not on the form.
+      // attachResume() means the second is now usually handled — but it reports honestly
+      // when it failed, and this check reads the input itself rather than trusting it.
+      // Auto-submitting either sends an application that is wrong or incomplete, in the
+      // user's name, with no chance for them to catch it.
       if (needsUser.length) {
         status("Full-auto paused - answer these yourself, then Submit: " + needsUser.join("; "));
         return { ok: true, ...lastFill, paused: "needs_user" };
@@ -489,6 +550,7 @@
     unfilledRequired,
     fillableFields,
     atsName,
+    attachResume,
   };
 
   // SPA forms can render late — retry building the bar for a few seconds.

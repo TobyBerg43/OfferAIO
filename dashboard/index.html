@@ -246,7 +246,7 @@
     <div class="sidebar">
       <div class="logo">
         <div class="logo-icon" role="img" aria-label="OfferAIO"></div>
-        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver" id="logoVer">v1.3.1</div></div>
+        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver" id="logoVer">v1.4.0</div></div>
       </div>
       <div class="nav-item active" data-page="dashboard">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
@@ -1303,9 +1303,11 @@ function findMatchById(id){const t=tasks.find(x=>x.id===id);if(t)findMatch(t);}
  * pass because it looks like a summary rather than a claim, but every tick was printed
  * whether or not the field existed, and two of them could never be true:
  *
- *   - There is no resume anywhere in the profile (see collectProfile), and browsers
- *     forbid a script from attaching a file at all (§7). "Resume attached" was telling
- *     users the one thing they still have to do themselves was already done.
+ *   - There was no resume anywhere in the profile (see collectProfile). "Resume attached"
+ *     was telling users the one thing they still had to do themselves was already done.
+ *     As of v1.4.0 the extension does hold one and does attach it, so the tick can be
+ *     true — but it is now driven by what the extension reports over the bridge, which is
+ *     the difference between a fact and the decoration this row used to be.
  *   - "Work auth" reads as "we'll answer that for you", which content.js rule 1 exists
  *     specifically to not do — on an ambiguous sponsorship question it leaves the field
  *     blank on purpose rather than assert something false on a legal declaration.
@@ -1327,7 +1329,14 @@ function reviewFields(){
   out.push(has('workAuth')
     ? `<span class="rc-field">✓ work auth: ${p.workAuth}</span>`
     : `<span class="rc-field" style="opacity:.55">◦ work auth — not set</span>`);
-  out.push('<span class="rc-field" style="color:var(--amber)" title="Browsers do not let any extension attach a file to a form. You upload the resume yourself on the posting.">✋ resume — you attach it</span>');
+  // The résumé is real now — the extension attaches it. Still reported from what the
+  // extension actually holds, never assumed: no résumé saved means no tick, and a form
+  // whose custom uploader refuses the file is reported by the extension at fill time,
+  // not guessed at here.
+  const r=extIdentity&&extIdentity.resume;
+  out.push(r
+    ? `<span class="rc-field" title="Saved in your extension and attached automatically where the form allows it.">✓ résumé: ${esc(r.name)}</span>`
+    : '<span class="rc-field" style="color:var(--amber)" title="Save a résumé in the OfferAIO popup and the extension will attach it for you.">✋ résumé — none saved, you attach it</span>');
   return out.join('');
 }
 

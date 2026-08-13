@@ -77,6 +77,8 @@ class El {
   closest() { return null; }
   scrollIntoView() {}
   click() { if (this.onclick) this.onclick(); }
+  addEventListener(t, fn) { (this._ls ||= {})[t] = (this._ls[t] || []).concat(fn); }
+  dispatchEvent(e) { ((this._ls || {})[e.type] || []).forEach((fn) => fn(e)); return true; }
 }
 
 function makeDoc() {
@@ -109,6 +111,21 @@ function load({ url = "https://job-boards.greenhouse.io/stripe/jobs/1", store = 
     clearTimeout,
     Event: class { constructor(t) { this.type = t; } },
     CSS: { escape: (s) => s },
+    atob: (b) => Buffer.from(b, "base64").toString("binary"),
+    // Minimal File/DataTransfer. Real ones are browser-only, and attachResume's whole job
+    // is the handoff between them, so stubs that record what they were given are what let
+    // the assertions below check the handoff rather than the browser.
+    File: class {
+      constructor(parts, name, opts) {
+        this.name = name;
+        this.type = (opts && opts.type) || "";
+        this.size = parts.reduce((n, p) => n + (p.length || p.byteLength || 0), 0);
+      }
+    },
+    DataTransfer: class {
+      constructor() { this._f = []; this.items = { add: (f) => this._f.push(f) }; }
+      get files() { return this._f; }
+    },
     HTMLInputElement: { prototype: {} },
     HTMLTextAreaElement: { prototype: {} },
     chrome: {
@@ -338,4 +355,67 @@ test("unfilledRequired still ignores fields that are filled", () => {
   form.append(input);
   doc.body.append(form);
   assert.deepEqual([...api.unfilledRequired()], []);
+});
+
+/* --------------------------------------------------------------- attachResume
+
+   content.js claimed for its whole life that "browsers forbid scripts from attaching
+   files", and the resume field was left highlighted for the user on every application.
+   That is a misconception: what browsers forbid is setting input.value to a path. A File
+   built from bytes we already hold goes on through a DataTransfer, and input.files has
+   been assignable for years. Verified in a real browser against the dev harness form —
+   the file lands, change fires, and it shows up in the form's FormData.
+
+   These tests cover the decision logic around that handoff. The part that can only be
+   checked in a browser is whether a given ATS's uploader accepts it, which is exactly why
+   attachResume re-reads input.files afterwards instead of assuming. */
+
+const RESUME = {
+  name: "priya-raman-resume.pdf",
+  type: "application/pdf",
+  data: Buffer.from("%PDF-1.4\nfake resume bytes").toString("base64"),
+  size: 26,
+};
+
+test("a stored resume is attached to the form's file input", () => {
+  const { api } = load();
+  const rf = new El("input", { type: "file" });
+  assert.equal(api.attachResume(rf, RESUME), true);
+  assert.equal(rf.files.length, 1);
+  assert.equal(rf.files[0].name, "priya-raman-resume.pdf");
+  assert.equal(rf.files[0].type, "application/pdf");
+});
+
+test("it verifies the attach landed rather than assuming", () => {
+  // A custom uploader that ignores the assignment must be reported as a failure, not a
+  // success — full-auto decides whether to submit on this answer.
+  const { api } = load();
+  const rf = new El("input", { type: "file" });
+  Object.defineProperty(rf, "files", { get: () => [], set() {}, configurable: true });
+  assert.equal(api.attachResume(rf, RESUME), false);
+});
+
+test("a resume the user already attached is left alone", () => {
+  const { api } = load();
+  const rf = new El("input", { type: "file", files: [{ name: "their-own.pdf", size: 9 }] });
+  assert.equal(api.attachResume(rf, RESUME), true);
+  assert.equal(rf.files[0].name, "their-own.pdf", "overwrote the user's own file");
+});
+
+test("no stored resume, no file input, and junk data all fail honestly", () => {
+  const { api } = load();
+  const rf = new El("input", { type: "file" });
+  assert.equal(api.attachResume(rf, null), false);
+  assert.equal(api.attachResume(rf, {}), false);
+  assert.equal(api.attachResume(rf, { name: "x.pdf", data: "" }), false);
+  assert.equal(api.attachResume(null, RESUME), false);
+  assert.equal(rf.files.length, 0);
+});
+
+test("resumeMissing stays true when the attach failed, so full-auto still stops", () => {
+  const { api } = load();
+  const rf = new El("input", { type: "file" });
+  Object.defineProperty(rf, "files", { get: () => [], set() {}, configurable: true });
+  assert.equal(api.attachResume(rf, RESUME), false);
+  assert.equal(rf.files.length, 0, "an unattached resume must read as missing");
 });

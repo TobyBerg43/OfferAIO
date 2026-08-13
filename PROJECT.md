@@ -263,7 +263,13 @@ before and drifted anyway; a comment cannot enforce a convention.
    which caught exactly that ordering bug mid-fix). F-1 is deliberately never
    auto-answered: CPT/OPT may authorise work, but the right answer varies by question and
    by stage — precisely the judgement not to make on someone's behalf.
-2. **Full-auto stops for a missing resume or a flagged question.** Browsers forbid scripts
+2. **Full-auto stops for a missing resume or a flagged question.** ⚠️ **The premise under
+   this rule was wrong for the product's whole life, and it was corrected in v1.4.0 — see
+   §17.** Browsers do not forbid attaching a file; they forbid setting `input.value` to a
+   path. The rule itself still stands, because `attachResume()` can fail on a custom
+   uploader and reports honestly when it does — full-auto reads `input.files` rather than
+   trusting the attempt. What follows is the original reasoning, kept because it is still
+   why the stop exists: browsers forbid scripts
    from attaching files, so auto-submitting past an empty file input sends a resume-less
    application in the user's name.
 3. **Quota is charged only after the submission is evidenced.** It used to count on
@@ -368,8 +374,8 @@ applying for a job). Tests: `node --test tests/license.test.mjs` — kept outsid
 Behaviour: fills fields across Greenhouse, Lever, Ashby, Workday, SmartRecruiters, iCIMS,
 Workable, Jobvite, BambooHR, Breezy, Taleo, Handshake, LinkedIn, ZipRecruiter, Indeed,
 Wellfound — matching on autocomplete/name/label attributes. Runs on the user's IP and
-session. **CAPTCHAs are never bypassed.** Resume upload stays manual (browsers forbid
-scripts attaching files); the field is highlighted instead.
+session. **CAPTCHAs are never bypassed.** The resume is saved in the popup and attached
+automatically (§17); the field is highlighted only when a form's own uploader refuses it.
 
 ## 8. Chrome Web Store status
 
@@ -896,10 +902,11 @@ not supported, or granted but not injected. All three directions were mutation-t
 
 - **The review card's field checklist was hardcoded.** Every card printed *"✓ resume
   attached · ✓ contact info · ✓ education · ✓ work auth"* regardless of what the profile
-  held. There is no resume anywhere in the profile and browsers forbid a script attaching a
-  file (§7), so "resume attached" told users the one thing they still had to do was already
-  done; and "work auth" reads as a promise to answer the question §7 rule 1 deliberately
-  refuses to answer. `reviewFields()` now ticks only what the profile really carries, says
+  held. At the time there was no resume anywhere in the profile, so "resume attached" told
+  users the one thing they still had to do was already done; and "work auth" reads as a
+  promise to answer the question §7 rule 1 deliberately refuses to answer. As of v1.4.0 the
+  resume tick can be true — but it is driven by what the extension reports over the bridge
+  (§17), never assumed. `reviewFields()` now ticks only what the profile really carries, says
   plainly what is missing, and never ticks the resume.
 - **A raw NUL byte in `content.js`.** The `NEEDS_USER` sentinel had the control character
   written literally into the source. Harmless at runtime — it is compared by identity and
@@ -915,3 +922,78 @@ multi-tenant ATS on one host), `*.oraclecloud.com` and `*.successfactors.com` / 
 (enterprise ATSes, several rows each), `workatastartup.com` (13). The long tail —
 tesla.com, janestreet.com, lifeattiktok.com — is one bespoke careers site per employer,
 each needing its own selectors, which is a different kind of work from adding an ATS.
+
+## 17. The résumé is attached, not highlighted (added 2026-08-13, v1.4.0)
+
+### ⚠️ "Browsers forbid scripts from attaching files" was wrong, and it cost the product its most-requested feature
+
+That sentence appeared in **eleven places** — `content.js`'s header, `resumeMissing()`'s
+comment, §7 rule 2, §7's behaviour list, the dashboard's `reviewFields()`, `privacy.html`
+twice, `start.html` twice, the mock form and `dev/README.md`. It shaped the product: the
+résumé field was highlighted and handed back to the user on **every single application**,
+which is the one manual step in a tool whose whole pitch is "auto apply while in class".
+
+It is a misconception. What browsers forbid is setting `input.value` to a filesystem path —
+a script cannot reach into your disk. But a `File` built from bytes the extension already
+holds can be handed over through a `DataTransfer`, and **`input.files` has been assignable
+for years**. Verified in Chrome against `dev/mock-application.html` before any code changed:
+
+```
+attachedFromEmpty: true
+onForm:      { count: 1, name: "priya-raman-resume.pdf" }
+inFormData:  ["resume=priya-raman-resume.pdf"]     ← genuinely submitted, not just displayed
+changeFired: true,  validityNowOk: true
+```
+
+The `FormData` line is the one that matters. A file that merely *appears* attached but is
+absent from the form's payload would be the §2 failure all over again, in the worst possible
+place — the user submits believing their résumé went, and it did not.
+
+### How it works
+
+- **Saved in the popup** (`popup.html` / `popup.js`) as base64 in `chrome.storage.local`
+  under `resume` = `{name, type, size, data, savedAt}`. **Capped at 2 MB**: `storage.local`
+  allows ~10 MB without the `unlimitedStorage` permission, base64 inflates by a third, and
+  requesting a larger storage permission at review to hold a document that is nearly always
+  under 500 KB is a bad trade. The cap is enforced with a plain message rather than left to
+  surface as an uninterpretable quota error.
+- **Attached by `content.js` `attachResume()`**, which dispatches both `input` and `change`
+  (React listens for one or the other).
+- **The field turns green, not blue.** Blue means "your turn"; marking a finished thing as
+  outstanding is the same class of dishonesty as the reverse.
+
+### ⚠️ It verifies; it never assumes
+
+`attachResume()` re-reads `input.files` afterwards and returns whether the file is genuinely
+there. **Nothing downstream trusts the attempt.** A custom drag-and-drop uploader that posts
+to S3 itself, a sandboxed iframe, or a cross-origin form can all leave the input untouched —
+and a résumé we *believe* we attached is worse than one we know is missing, because full-auto
+would submit on the strength of it. §7 rule 2 therefore still stands unchanged: `resumeMissing()`
+reads the input, so full-auto still stops when the attach failed. The popup and the in-page
+bar both distinguish "attached", "this form wouldn't take it", and "none saved".
+
+It also refuses to overwrite a file the user attached themselves.
+
+### Privacy — the claim changed, and the policy had to change with it
+
+`privacy.html` said the résumé "is never uploaded or transmitted". That is no longer the
+right sentence: the extension now attaches it to **the employer's** form, so submitting sends
+it to that employer — which is the entire point, and exactly what happens when a user picks
+the file by hand. What remains true, and is now what the policy says, is that it is **never
+sent to OfferAIO**: it lives in `chrome.storage.local`, there is no server that receives it,
+and it is never part of a `/cover` request. The Web Store data disclosure in
+`store/OfferAIO-store-listing.md` was updated to match — §8's warning about privacy.html and
+the Privacy tab disagreeing applies directly here.
+
+This also **strengthens** the §12 item 6 argument against wiring `/rank` as designed: the
+extension now holds an actual résumé file, so "we never send your résumé anywhere" is a
+sharper promise than it was, and sending résumé *text* to the Worker would break it more
+visibly.
+
+### Not verified
+
+The browser check above ran in a normal page. Content scripts run in an **isolated world**,
+and while Chrome permits this handoff there, it has not been confirmed on a real ATS. The
+design makes that safe rather than risky — the verify-don't-assume rule means an isolated-world
+failure reports as "couldn't attach" and falls back to the old highlight behaviour — but the
+first real Greenhouse or Lever fill is what proves it. Test with `dev/local-mode.mjs on`.

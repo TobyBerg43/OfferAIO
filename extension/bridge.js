@@ -37,7 +37,7 @@ const monthKey = (d = new Date()) => d.getFullYear() + "-" + String(d.getMonth()
 
 /** Reply with {profile, usage:{plan,used,quota}}. */
 function sendIdentity() {
-  chrome.storage.local.get(["profile", "license", "usage"], async (s) => {
+  chrome.storage.local.get(["profile", "license", "usage", "resume"], async (s) => {
     // license.js is loaded alongside this script, so prefer its answer — it knows about
     // the 24h verify cache and the offline grace period. Fall back to reading storage
     // directly if it isn't there, rather than reporting nothing.
@@ -56,7 +56,16 @@ function sendIdentity() {
       usage = { plan: pro ? "pro" : "free", used, quota: pro ? PRO_QUOTA : FREE_QUOTA };
     }
     window.postMessage(
-      { source: "offeraio-ext", type: "identity", profile: s.profile || null, usage },
+      {
+        source: "offeraio-ext",
+        type: "identity",
+        profile: s.profile || null,
+        usage,
+        // Presence and name only. The bytes stay in the extension: postMessage to the page
+        // is readable by anything else running on it, and the dashboard has no use for the
+        // file itself — it only needs to know whether the review card can tick it.
+        resume: s.resume ? { name: s.resume.name, size: s.resume.size } : null,
+      },
       "*",
     );
   });

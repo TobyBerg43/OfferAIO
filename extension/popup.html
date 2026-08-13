@@ -42,6 +42,10 @@
   .meter i.hot{background:linear-gradient(135deg,#c8862f,#d0654a)}
   .usage{font-size:10.5px;color:var(--dim);white-space:nowrap}
   .lic-row{display:flex;gap:6px;margin-top:4px}
+  .res-row{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:5px;font-size:12px;color:#726a5c}
+  .res-row.has{color:#2e9d68;font-weight:600}
+  .res-row.bad{color:#c0392b;font-weight:600}
+  .res-row button{padding:3px 8px;font-size:11px;flex:0 0 auto}
   .lic-row input{flex:1;font-family:ui-monospace,Consolas,monospace;letter-spacing:.5px;text-transform:uppercase}
   .lic-row button{border:none;border-radius:8px;padding:0 12px;font-weight:700;font-size:12px;cursor:pointer;background:linear-gradient(135deg,var(--blue1),var(--blue2));color:#fff}
   .lic-msg{font-size:10.5px;margin-top:6px;line-height:1.45;display:none}
@@ -95,6 +99,14 @@
     <label>LinkedIn</label><input id="linkedin" placeholder="linkedin.com/in/you">
     <label>Cover letter template</label>
     <textarea id="coverLetter" placeholder="Hi {company} team, I am applying for {role}..."></textarea>
+
+    <label>Résumé</label>
+    <input type="file" id="resumeFile" accept=".pdf,.doc,.docx,application/pdf">
+    <div class="res-row">
+      <span id="resumeState">No résumé saved</span>
+      <button type="button" id="resumeRemove" style="display:none">Remove</button>
+    </div>
+
     <button class="save" id="save">Save profile</button>
     <div class="ok" id="ok">Saved</div>
   </details>

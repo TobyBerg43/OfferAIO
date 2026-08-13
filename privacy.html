@@ -47,7 +47,7 @@
     <ul>
       <li>The details you enter (your application profile) are stored <strong>locally in your browser</strong>, not on our servers.</li>
       <li>The extension only runs on the job-application sites it supports and on the OfferAIO dashboard.</li>
-      <li>You review and submit every application. CAPTCHAs are never bypassed. Your resume is never uploaded or transmitted by the extension.</li>
+      <li>You review and submit every application. CAPTCHAs are never bypassed. Your resume is stored in your browser and attached to the employer's own form — it is never sent to OfferAIO.</li>
       <li>If you ask for an AI cover letter, that one request — and only that request — leaves your device. Everything else stays local.</li>
       <li>We never see your card details. Payment is handled entirely by Stripe.</li>
       <li>We do not sell or share your personal information.</li>
@@ -81,7 +81,9 @@
   <p>On the free plan none of this applies — there is no account, no key, and nothing to verify.</p>
 
   <h2>Your resume</h2>
-  <p>For your security, browsers do not allow extensions to attach files. OfferAIO never uploads or transmits your resume — it simply highlights the file field so you can attach it yourself directly to the employer.</p>
+  <p>If you save a resume in the extension, the file is stored in your own browser (<code>chrome.storage.local</code>) and nowhere else. When you fill an application, the extension attaches that file to the employer's own form, in your browser — so submitting the application sends it to <strong>that employer</strong>, exactly as it would if you had picked the file by hand. That is the only place it ever goes.</p>
+  <p><strong>Your resume is never sent to OfferAIO, and never forms part of an AI cover-letter request.</strong> We have no server that receives it and no copy of it. Remove it at any time from the extension popup, which deletes it from your browser immediately.</p>
+  <p>Some employers use a custom uploader that will not accept a file placed this way. When that happens the extension highlights the field and tells you it could not attach it, rather than letting you submit an application you believe carries a resume.</p>
 
   <h2>Permissions the extension requests, and why</h2>
   <ul>

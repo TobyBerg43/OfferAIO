@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "OfferAIO — Auto Apply",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Auto-fills Summer 2027 internship applications across the major job platforms — in your own browser. You review and submit.",
   "homepage_url": "https://offeraio.com",
   "icons": {

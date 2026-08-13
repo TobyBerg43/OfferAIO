@@ -61,7 +61,10 @@ OfferAIO fills internship application forms on supported job sites with the user
 - offeraio-worker.tobybergerbusiness.workers.dev — Our own backend. Used only to verify that a paid license key is still active and to request an AI cover letter the user asked for. No browsing data is sent to it.
 
 **Data collected / usage disclosures** (check these in the form)
-- Personally identifiable information (name, email address, phone number): YES — collected.
+- Personally identifiable information (name, email address, phone number, and the résumé
+  file if the user saves one): YES — collected. All of it is stored in the user's own
+  browser via chrome.storage.local. The résumé is attached to the employer's form locally;
+  it is never sent to us and is never included in a cover-letter request.
 - Web history / location / financial / health / authentication info: NO.
 - The profile is stored locally on the user's device and is used only for the single purpose above.
 - Transferred to third parties only for a feature the user actively invokes: OpenAI, to generate a cover letter they requested; and Stripe, to process a subscription payment. **Not sold.**
