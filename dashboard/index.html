@@ -246,7 +246,7 @@
     <div class="sidebar">
       <div class="logo">
         <div class="logo-icon" role="img" aria-label="OfferAIO"></div>
-        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver" id="logoVer">v1.3.0</div></div>
+        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver" id="logoVer">v1.3.1</div></div>
       </div>
       <div class="nav-item active" data-page="dashboard">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
@@ -688,6 +688,18 @@ function canFill(url){
     const hostOk=a.exactHost?h===a.exactHost:(h===a.suffix||h.endsWith('.'+a.suffix));
     return hostOk&&(!a.pathPrefix||u.pathname.startsWith(a.pathPrefix));
   });
+}
+/* Render the three states as three states. Every call site used to test `=== false`, so
+ * null — "the extension never told us" — fell through to the true branch and printed
+ * "Open & fill" on a posting we have no idea we can fill. That is precisely the promise
+ * §16 exists to stop making, restored by a ternary. Only `true` earns the fill promise;
+ * only `false` earns "manual apply"; null says plainly that we don't know. */
+function fillSuffix(url){return canFill(url)===true?' &amp; fill':'';}
+function fillTitle(url){
+  const c=canFill(url);
+  if(c===true)return 'Opens the posting; the extension fills it there.';
+  if(c===false)return 'Opens the posting. This employer is on their own careers site, so you fill it yourself.';
+  return "Opens the posting. Your extension hasn't told us which sites it can fill — update it to find out.";
 }
 const LISTING_SOURCES=[
   'https://raw.githubusercontent.com/TobyBerg43/OfferAIO/main/data/listings.json',
@@ -1418,7 +1430,7 @@ function render(){
       <td><div class="status ${m.cls}"><div class="sd"></div>${m.txt}</div></td>
       <td><div class="row-actions">
         ${t.status==='idle'?`<button class="icon-btn" title="Find a matching posting" onclick="findMatchById(${t.id})">▶</button>`:''}
-        ${t.status==='ready'&&t.url?`<button class="btn sm primary" onclick="openAndFill(${t.id})" title="${canFill(t.url)===false?'Opens the posting. This employer is on their own careers site, so you fill it yourself.':'Opens the posting; the extension fills it there.'}">Open${canFill(t.url)===false?'':' &amp; fill'}</button>`:''}
+        ${t.status==='ready'&&t.url?`<button class="btn sm primary" onclick="openAndFill(${t.id})" title="${fillTitle(t.url)}">Open${fillSuffix(t.url)}</button>`:''}
         ${t.status==='opened'?`<button class="icon-btn" title="Open the posting again" onclick="openAndFill(${t.id})">↗</button>`:''}
         ${t.status==='ready'&&t.url&&engineOn?`<button class="icon-btn" title="Apply with the local engine" onclick="applyViaEngine(${t.id})">⚙</button>`:''}
         <button class="icon-btn" title="Edit" onclick="editTask(${t.id})">✎</button>
@@ -1445,7 +1457,7 @@ function render(){
       <div class="rc-fields">${reviewFields()}</div>
       <div class="rc-cl" contenteditable="true" spellcheck="false">${t.coverCache}</div>
       <div class="rc-actions">
-        ${t.url?`<button class="btn green sm" onclick="openAndFill(${t.id})">Open${canFill(t.url)===false?' posting':' &amp; fill'} →</button>`:''}
+        ${t.url?`<button class="btn green sm" onclick="openAndFill(${t.id})" title="${fillTitle(t.url)}">Open${fillSuffix(t.url)||' posting'} →</button>`:''}
         <button class="btn sm danger" onclick="discardReview(${t.id})">Discard match</button>
       </div>
       <div class="rc-note">${canFill(t.url)===false

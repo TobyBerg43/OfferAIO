@@ -59,8 +59,13 @@ class El {
     const s = sel.trim();
     if (s === "input" || s === "textarea" || s === "select") return this.tagName === s.toUpperCase();
     if (s.startsWith("#")) return this.attrs.id === s.slice(1);
-    const m = s.match(/^(\w+)\[type="([^"]+)"\]$/);
-    if (m) return this.tagName === m[1].toUpperCase() && this.type === m[2];
+    // tag[attr="value"] — `type` is a property on this fake element, everything else
+    // (notably label[for=…], which fieldLabel resolves) is a real attribute.
+    const m = s.match(/^(\w+)\[([\w-]+)="([^"]+)"\]$/);
+    if (m) {
+      if (this.tagName !== m[1].toUpperCase()) return false;
+      return m[2] === "type" ? this.type === m[3] : this.getAttribute(m[2]) === m[3];
+    }
     return false;
   }
   querySelectorAll(sel) {
@@ -291,4 +296,46 @@ test("hidden and submit controls don't count toward ambiguity", () => {
   wrap.append(lab, input, hidden, submit);
   doc.body.append(wrap);
   assert.equal(fields.controlForLabel(lab), input);
+});
+
+/* ------------------------------------------------- fieldLabel / CSS shadowing
+
+   content.js declares `const CSS = [ ...stylesheet... ].join("")` at IIFE scope, which
+   shadows the global CSS object for the whole file. fieldLabel() then calls
+   CSS.escape(el.id) — a TypeError on a string.
+
+   It hides well. `el.id && ...` short-circuits, so any field without an id skips the call
+   entirely, and every test here happened to use unnamed elements. The two real call sites
+   both matter:
+
+     - doSubmit's invalid-form branch, where the throw kills the status() line that tells
+       the user WHICH field still needs them. They get a silent amber box.
+     - unfilledRequired(), which runs on the success path BEFORE btn.click(). A field that
+       is aria-required but not required, empty, and has an id passes checkValidity() and
+       reaches it — so the throw eats the click and the submission never happens at all.
+       Workday and Ashby both lean on aria-required. */
+
+test("unfilledRequired names an aria-required field that has an id", () => {
+  const { api, doc } = load();
+  const form = new El("form");
+  const lab = new El("label", { textContent: "Why do you want to work here?" });
+  lab.setAttribute("for", "why");
+  const input = new El("textarea", { id: "why" });
+  input.setAttribute("aria-required", "true");
+  form.append(lab, input);
+  doc.body.append(form);
+
+  // Throws TypeError: CSS.escape is not a function while the stylesheet shadows the global.
+  // Spread first: the array is built inside the vm context, so its prototype is that
+  // realm's Array.prototype and deepEqual rejects it as not reference-equal.
+  assert.deepEqual([...api.unfilledRequired()], ["Why do you want to work here?"]);
+});
+
+test("unfilledRequired still ignores fields that are filled", () => {
+  const { api, doc } = load();
+  const form = new El("form");
+  const input = new El("input", { id: "email", value: "a@b.com", required: true });
+  form.append(input);
+  doc.body.append(form);
+  assert.deepEqual([...api.unfilledRequired()], []);
 });

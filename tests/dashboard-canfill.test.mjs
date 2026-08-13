@@ -106,3 +106,48 @@ test("the board is not silently all-manual or all-fillable", () => {
   assert.ok(yes > rows.length * 0.2, `only ${yes}/${rows.length} fillable — matching looks broken`);
   assert.ok(yes < rows.length * 0.95, `${yes}/${rows.length} fillable — matching looks too permissive`);
 });
+
+/* ---- what the row actually RENDERS, not just what canFill() returns ----
+
+   Every test above asserts canFill()'s return value, and all of them passed while the
+   three call sites rendered `canFill(url) === false ? '' : ' & fill'` — so null, the
+   "we were never told" state, printed the fill promise. canFill() was right and the page
+   still lied. That is why these assert the rendered strings. */
+
+vm.runInContext(extractFn(read("OfferAIO.html"), "fillSuffix"), dashCtx);
+vm.runInContext(extractFn(read("OfferAIO.html"), "fillTitle"), dashCtx);
+const fillSuffix = (url) => vm.runInContext("fillSuffix", dashCtx)(url);
+const fillTitle = (url) => vm.runInContext("fillTitle", dashCtx)(url);
+
+const GH = "https://job-boards.greenhouse.io/acme/jobs/1";
+const TESLA = "https://www.tesla.com/careers/search/job/123";
+
+test("a fillable posting promises the fill", () => {
+  liveList();
+  assert.equal(fillSuffix(GH), " &amp; fill");
+  assert.match(fillTitle(GH), /extension fills it there/);
+});
+
+test("a posting we cannot fill promises nothing", () => {
+  liveList();
+  assert.equal(fillSuffix(TESLA), "");
+  assert.match(fillTitle(TESLA), /you fill it yourself/);
+});
+
+test("an extension that never sent its ATS list promises nothing either", () => {
+  // The null state: canFill() returns null for every URL, including Greenhouse. The button
+  // must not offer to fill, and must not claim "manual apply" — we do not know either way.
+  dashCtx.extAts = null;
+  assert.equal(canFill(GH), null);
+  assert.equal(fillSuffix(GH), "", "null rendered the fill promise — §16 regression");
+  assert.equal(fillSuffix(TESLA), "");
+  assert.match(fillTitle(GH), /hasn't told us/);
+  assert.doesNotMatch(fillTitle(GH), /fills it there/);
+});
+
+test("an empty ATS list is treated as unknown, not as 'nothing is fillable'", () => {
+  dashCtx.extAts = [];
+  assert.equal(canFill(GH), null);
+  assert.equal(fillSuffix(GH), "");
+  assert.match(fillTitle(GH), /hasn't told us/);
+});

@@ -2,16 +2,21 @@
 
 Single source of truth for the OfferAIO project. Any assistant or person should be
 able to read this file and pick up the work without re-discovering anything.
-**Last updated: 2026-08-13.** (Latest change: **§8 — v1.3.0 is submitted and pending
+**Last updated: 2026-08-13.** (Two changes today. **§8 — v1.3.0 is submitted and pending
 review.** The listing turned out to be *published* at v1.1.2 rather than a draft, and that
 build predates every safety fix in §7 and cannot drive the deployed dashboard; it was
 submitted via the API the same day. Users stay on v1.1.2 until review clears. Read §8
 first, then §12 item 1.
-The previous pass — 2026-08-08 — was the **coverage pass** — the dashboard now
-says which postings the extension can actually fill. Roughly **half the board cannot be
-filled**, and every one of those rows used to offer "Open & fill". See **§16**, then §7
-for the `ats` bridge message and §8 for the listing copy that claimed otherwise.
-Extension at **v1.3.0**. 143 tests pass, up from 125.
+Then a **verification pass against the local harness** found two real bugs in the build
+that was *already submitted*, so the repo is now **v1.3.1** and v1.3.0 must not be the
+next thing published: a `CSS` global shadowed in `content.js` that silently ate the
+"here's what still needs you" message and, worse, could eat the submit click entirely
+(**new §7 rule 5**), and a dashboard ternary that rendered "Open & fill" for the *unknown*
+state §16 exists to keep honest. **149 tests pass, up from 143.**
+The 2026-08-08 **coverage pass** — the dashboard now says which postings the extension can
+actually fill. Roughly **half the board cannot be filled**, and every one of those rows
+used to offer "Open & fill". See **§16**, then §7 for the `ats` bridge message and §8 for
+the listing copy that claimed otherwise.
 Before that — 2026-08-06, the **trust & clarity pass** — removed the simulated
 applying: the `setTimeout` chain that walked tasks to "✓ Submitted" and rolled dice for
 replies and interviews is gone, and every number on screen derives from applications the
@@ -174,6 +179,14 @@ session re-uploading old files. After any extension change, verify the raw file 
   file in the repo, so a tracked `dev/` would put a convincing fake job posting live on
   offeraio.com; and using it needs temporary `127.0.0.1`/`localhost` host permissions in the
   extension that must never reach the Web Store. Setup in that branch's `dev/README.md`.
+  ⚠️ **That branch's `dev/README.md` is stale in three places** and cost a verification pass
+  real time on 2026-08-13: it names version 1.2.0, it claims `manifest.json`/`ats.js` already
+  carry local-only host entries (they never were committed — they were working-tree edits),
+  and it said the "without sponsorship" question must be left blank, which contradicts both
+  `content.js` and `tests/content-workauth.test.mjs`. The on-disk copy was corrected, and
+  `dev/local-mode.mjs` now writes the host entries; **the copy on `dev-harness` still has
+  all three errors.** A doc that describes an uncommitted working tree rots the moment that
+  tree is discarded.
 
 ## 6. Design system
 
@@ -236,7 +249,7 @@ landing page and the dashboard sidebar now both read `v1.3.0`. Bump all three to
 `dashboard/index.html` is out of date with `OfferAIO.html`. The rule was written here
 before and drifted anyway; a comment cannot enforce a convention.
 
-### ⚠️ Four rules in `content.js` that must never regress (1–3 fixed 2026-08-05, 4 on 08-06)
+### ⚠️ Five rules in `content.js` that must never regress (1–3 fixed 2026-08-05, 4 on 08-06, 5 on 08-13)
 
 1. **Never assert work authorisation.** `answerFor` used to return a flat `"Yes"` for any
    label matching `/authoriz|eligible to work|legally/`, and route anything containing
@@ -258,6 +271,17 @@ before and drifted anyway; a comment cannot enforce a convention.
    OfferAIO" for an application that never left the page. `doSubmit` runs
    `form.checkValidity()` before clicking **and** waits for a real success signal after
    it — see the application tracker below.
+5. **Never shadow a browser global in `content.js`.** `const CSS = [...stylesheet...]` shadowed
+   the global `CSS` object for the whole IIFE, so `fieldLabel()`'s `CSS.escape(el.id)` threw
+   `TypeError` — and `doSubmit` is `async`, so it died as a silent unhandled rejection. Two
+   consequences, both user-facing: the invalid-form branch set the amber outline and then
+   threw before `status()` ran, so the user got a highlighted box and **no explanation**; and
+   `unfilledRequired()`, which runs *before* `btn.click()`, threw on any empty
+   `aria-required` field carrying an id — eating the click entirely, with no message at all.
+   Workday and Ashby both lean on `aria-required`. Renamed to `BAR_CSS` (renaming beats
+   `self.CSS.escape` — it removes the shadow for anything added later). Found by the
+   2026-08-13 verification pass; guarded by `tests/content-tracker.test.mjs`, which had to
+   grow a `label[for=]` selector in its fake DOM to reach the call at all.
 4. **`controlForLabel()` must refuse to guess.** It binds on `for=`, on a control nested
    inside the label, or on a parent holding **exactly one** control, and otherwise binds
    nothing. The old fallback took "the first input under the label's parent", so on a
@@ -381,6 +405,11 @@ Shipping v1.3.0 to the store was therefore the highest-priority item in this fil
 everything in §12. The store submission is not "the last step before launch" — it is a fix
 for users who already have the product. **Submitted 2026-08-13 via the API** (below); the
 remaining work is waiting for review, and re-submitting if it bounces.
+
+⚠️ **v1.3.0 is what is in review, and it has two known bugs — see §7 rule 5 and §16.** The
+repo is at **v1.3.1**. If review approves v1.3.0 it ships with them; that is still strictly
+better than the v1.1.2 users have now, so the submission was left alone rather than pulled.
+Publish v1.3.1 as soon as v1.3.0 clears (or immediately, if it is rejected).
 
 ⚠️ **The API path turned out to be enough, contrary to what this file predicted.** The
 worry was that `:publish` would reject an incomplete listing — but the fields were filled
