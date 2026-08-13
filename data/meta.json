@@ -1,12 +1,12 @@
 {
-  "updated": "2026-08-12T18:57:00.356Z",
-  "total": 375,
-  "closed": 0,
-  "checked": 124,
-  "checkable": 124,
+  "updated": "2026-08-13T01:40:08.401Z",
+  "total": 376,
+  "closed": 2,
+  "checked": 126,
+  "checkable": 126,
   "bySource": {
     "workday": 47,
-    "greenhouse": 60,
+    "greenhouse": 61,
     "AMcSo1000": 1,
     "vanshb03": 215,
     "lever": 30,

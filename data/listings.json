@@ -1,39 +1,5 @@
 [
  {
-  "company_name": "Marsh McLennan",
-  "title": "Summer 2027 Intern - Insurance",
-  "url": "https://mmc.wd1.myworkdayjobs.com/MMC/job/Chesterfield---Maryville/Summer-2027-Intern---Insurance_R_359206",
-  "locations": [
-   "2 Locations"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786561011,
-  "date_updated": 1786561011,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "marsh mclennan::summer 2027 intern - insurance::2 locations"
- },
- {
-  "company_name": "Marsh McLennan",
-  "title": "Oliver Wyman Actuarial - Internship - Summer 2027",
-  "url": "https://mmc.wd1.myworkdayjobs.com/MMC/job/New-York---1166/Oliver-Wyman-Actuarial---Internship---Summer-2027_R_356561",
-  "locations": [
-   "13 Locations"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786561011,
-  "date_updated": 1786561011,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "marsh mclennan::oliver wyman actuarial - internship - summer 2027::13 locations"
- },
- {
   "company_name": "Citi",
   "title": "Services - Summer Analyst Program, New York City - US, 2027",
   "url": "https://citi.wd5.myworkdayjobs.com/2/job/New-York-New-York-United-States/Services---Summer-Analyst-Program--New-York-City---US--2027_26945311",
@@ -42,8 +8,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561008,
-  "date_updated": 1786561008,
+  "date_posted": 1786585201,
+  "date_updated": 1786585201,
   "terms": [
    "Summer 2027"
   ],
@@ -59,8 +25,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561008,
-  "date_updated": 1786561008,
+  "date_posted": 1786585201,
+  "date_updated": 1786585201,
   "terms": [
    "Summer 2027"
   ],
@@ -76,13 +42,47 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561008,
-  "date_updated": 1786561008,
+  "date_posted": 1786585201,
+  "date_updated": 1786585201,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "citi::markets - sales and trading, summer analyst, new york city - us, 2027::new york new york united states"
+ },
+ {
+  "company_name": "Marsh McLennan",
+  "title": "Summer 2027 Intern - Insurance",
+  "url": "https://mmc.wd1.myworkdayjobs.com/MMC/job/Chesterfield---Maryville/Summer-2027-Intern---Insurance_R_359206",
+  "locations": [
+   "2 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786585201,
+  "date_updated": 1786585201,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "marsh mclennan::summer 2027 intern - insurance::2 locations"
+ },
+ {
+  "company_name": "Marsh McLennan",
+  "title": "Oliver Wyman Actuarial - Internship - Summer 2027",
+  "url": "https://mmc.wd1.myworkdayjobs.com/MMC/job/New-York---1166/Oliver-Wyman-Actuarial---Internship---Summer-2027_R_356561",
+  "locations": [
+   "13 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786585201,
+  "date_updated": 1786585201,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "marsh mclennan::oliver wyman actuarial - internship - summer 2027::13 locations"
  },
  {
   "company_name": "Wells Fargo",
@@ -93,8 +93,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -110,8 +110,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -127,13 +127,30 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "wells fargo::2027 audit summer internship – early careers::3 locations"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Wealth & Investment Management Summer Internship - Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Wealth---Investment-Management-Summer-Internship---Early-Careers_R-556103",
+  "locations": [
+   "2 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 wealth & investment management summer internship - early careers::2 locations"
  },
  {
   "company_name": "Wells Fargo",
@@ -144,8 +161,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -161,30 +178,13 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "wells fargo::2027 global payments & liquidity internship – early careers::2 locations"
- },
- {
-  "company_name": "Wells Fargo",
-  "title": "2027 Wealth & Investment Management Summer Internship - Early Careers",
-  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Wealth---Investment-Management-Summer-Internship---Early-Careers_R-556103",
-  "locations": [
-   "2 Locations"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "wells fargo::2027 wealth & investment management summer internship - early careers::2 locations"
  },
  {
   "company_name": "Wells Fargo",
@@ -195,8 +195,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -212,8 +212,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -229,8 +229,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -246,8 +246,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -263,8 +263,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -280,8 +280,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -295,8 +295,8 @@
   "locations": [],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -312,8 +312,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -329,8 +329,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -346,8 +346,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561007,
-  "date_updated": 1786561007,
+  "date_posted": 1786585199,
+  "date_updated": 1786585199,
   "terms": [
    "Summer 2027"
   ],
@@ -363,8 +363,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561004,
-  "date_updated": 1786561004,
+  "date_posted": 1786585198,
+  "date_updated": 1786585198,
   "terms": [
    "Summer 2027"
   ],
@@ -380,8 +380,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561003,
-  "date_updated": 1786561003,
+  "date_posted": 1786585197,
+  "date_updated": 1786585197,
   "terms": [
    "Summer 2027"
   ],
@@ -397,8 +397,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561003,
-  "date_updated": 1786561003,
+  "date_posted": 1786585197,
+  "date_updated": 1786585197,
   "terms": [
    "Summer 2027"
   ],
@@ -414,8 +414,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561003,
-  "date_updated": 1786561003,
+  "date_posted": 1786585197,
+  "date_updated": 1786585197,
   "terms": [
    "Summer 2027"
   ],
@@ -431,8 +431,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561003,
-  "date_updated": 1786561003,
+  "date_posted": 1786585197,
+  "date_updated": 1786585197,
   "terms": [
    "Summer 2027"
   ],
@@ -448,8 +448,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -465,8 +465,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -482,8 +482,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -499,8 +499,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -516,8 +516,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -533,8 +533,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -550,8 +550,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -567,8 +567,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -584,8 +584,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -601,8 +601,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -618,8 +618,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -635,8 +635,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -652,8 +652,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
@@ -669,47 +669,13 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786561000,
-  "date_updated": 1786561000,
+  "date_posted": 1786585196,
+  "date_updated": 1786585196,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "hp::technology & innovation organization electrical engineering internship::corvallis, oregon, united states of amer"
- },
- {
-  "company_name": "Intel",
-  "title": "AI Engineer Intern",
-  "url": "https://intel.wd1.myworkdayjobs.com/External/job/Vietnam-Ho_Chi_Minh_City/AI-Engineer-Intern_JR0286108",
-  "locations": [
-   "Vietnam, Ho_Chi_Minh_City"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786560999,
-  "date_updated": 1786560999,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "intel::ai engineer intern::vietnam, ho_chi_minh_city"
- },
- {
-  "company_name": "Intel",
-  "title": "MBA Internship – Ecosystem Development Specialist",
-  "url": "https://intel.wd1.myworkdayjobs.com/External/job/PRC-Shanghai/MBA-Internship---Ecosystem-Development-Specialist_JR0285771",
-  "locations": [
-   "3 Locations"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1786560999,
-  "date_updated": 1786560999,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "workday",
-  "id": "intel::mba internship – ecosystem development specialist::3 locations"
  },
  {
   "company_name": "Salesforce",
@@ -720,8 +686,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786560998,
-  "date_updated": 1786560998,
+  "date_posted": 1786585195,
+  "date_updated": 1786585195,
   "terms": [
    "Summer 2027"
   ],
@@ -737,13 +703,47 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786560998,
-  "date_updated": 1786560998,
+  "date_posted": 1786585195,
+  "date_updated": 1786585195,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "adobe::2027 intern - adobe sales academy bdr::4 locations"
+ },
+ {
+  "company_name": "Intel",
+  "title": "AI Engineer Intern",
+  "url": "https://intel.wd1.myworkdayjobs.com/External/job/Vietnam-Ho_Chi_Minh_City/AI-Engineer-Intern_JR0286108",
+  "locations": [
+   "Vietnam, Ho_Chi_Minh_City"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786585195,
+  "date_updated": 1786585195,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "intel::ai engineer intern::vietnam, ho_chi_minh_city"
+ },
+ {
+  "company_name": "Intel",
+  "title": "MBA Internship – Ecosystem Development Specialist",
+  "url": "https://intel.wd1.myworkdayjobs.com/External/job/PRC-Shanghai/MBA-Internship---Ecosystem-Development-Specialist_JR0285771",
+  "locations": [
+   "3 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786585195,
+  "date_updated": 1786585195,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "intel::mba internship – ecosystem development specialist::3 locations"
  },
  {
   "company_name": "PwC",
@@ -754,8 +754,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786560990,
-  "date_updated": 1786560990,
+  "date_posted": 1786585191,
+  "date_updated": 1786585191,
   "terms": [
    "Summer 2027"
   ],
@@ -771,8 +771,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786560990,
-  "date_updated": 1786560990,
+  "date_posted": 1786585191,
+  "date_updated": 1786585191,
   "terms": [
    "Summer 2027"
   ],
@@ -788,13 +788,30 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786560990,
-  "date_updated": 1786560990,
+  "date_posted": 1786585191,
+  "date_updated": 1786585191,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "pwc::etic, summer internship - applied ai::cairo - etic"
+ },
+ {
+  "company_name": "Epic Games",
+  "title": "Gameplay Programmer Intern",
+  "url": "https://epicgames.com/careers/jobs/6141180004?gh_jid=6141180004",
+  "locations": [
+   "Cary,North Carolina,United States"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786581026,
+  "date_updated": 1786585188,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "greenhouse",
+  "id": "epic games::gameplay programmer intern::cary,north carolina,united states"
  },
  {
   "company_name": "Roblox",
@@ -806,7 +823,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786559650,
-  "date_updated": 1786560983,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -823,7 +840,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786475276,
-  "date_updated": 1786561020,
+  "date_updated": 1786585187,
   "terms": [
    "Summer 2027"
   ],
@@ -841,7 +858,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786475276,
-  "date_updated": 1786561020,
+  "date_updated": 1786585187,
   "terms": [
    "Summer 2027"
   ],
@@ -859,7 +876,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786475276,
-  "date_updated": 1786561020,
+  "date_updated": 1786585187,
   "terms": [
    "Summer 2027"
   ],
@@ -877,7 +894,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786474469,
-  "date_updated": 1786560981,
+  "date_updated": 1786585187,
   "terms": [
    "Summer 2027"
   ],
@@ -894,7 +911,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786467022,
-  "date_updated": 1786560982,
+  "date_updated": 1786585187,
   "terms": [
    "Summer 2027"
   ],
@@ -912,13 +929,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786401674,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "dv trading::software engineer intern - summer 2027 (dv commodities)::new york",
-  "date_checked": 1786411248
+  "date_checked": 1786585208
  },
  {
   "company_name": "DV Trading",
@@ -930,7 +947,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786384956,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -948,7 +965,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786384748,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -965,7 +982,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786343698,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -983,7 +1000,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786343698,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -1001,7 +1018,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786343698,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -1019,7 +1036,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786343698,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -1037,7 +1054,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786343698,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -1055,7 +1072,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786343698,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -1073,7 +1090,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786343698,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -1091,7 +1108,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786343667,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -1108,7 +1125,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786119174,
-  "date_updated": 1786560983,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -1125,7 +1142,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786048273,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -1299,7 +1316,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785962341,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -1316,7 +1333,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785940647,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -1333,7 +1350,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785939233,
-  "date_updated": 1786560982,
+  "date_updated": 1786585187,
   "terms": [
    "Summer 2027"
   ],
@@ -2169,7 +2186,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785819877,
-  "date_updated": 1786560982,
+  "date_updated": 1786585187,
   "terms": [
    "Summer 2027"
   ],
@@ -2187,7 +2204,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2205,7 +2222,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2223,7 +2240,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2241,7 +2258,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2276,7 +2293,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785776684,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2330,7 +2347,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785768835,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -2441,7 +2458,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785533737,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -2650,7 +2667,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785513463,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -2668,7 +2685,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785513316,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -2703,7 +2720,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785427008,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2721,7 +2738,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426926,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2739,7 +2756,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426793,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2757,7 +2774,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426549,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2775,7 +2792,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426084,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2793,7 +2810,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785425971,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2811,7 +2828,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2828,29 +2845,12 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "optiver::fpga engineer intern (summer 2027 - chicago)::chicago, illinois, united states"
- },
- {
-  "company_name": "Optiver",
-  "title": "Quantitative Research Intern, PhD (Summer 2027)",
-  "url": "https://www.optiver.com/join-us/jobs/8451781002/?gh_jid=8451781002",
-  "locations": [
-   "Chicago, Illinois, United States"
-  ],
-  "active": true,
-  "is_visible": true,
-  "date_posted": 1785347004,
-  "date_updated": 1786560985,
-  "terms": [
-   "Summer 2027"
-  ],
-  "source": "greenhouse",
-  "id": "optiver::quantitative research intern, phd (summer 2027)::chicago, illinois, united states"
  },
  {
   "company_name": "Optiver",
@@ -2862,12 +2862,29 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "optiver::quantitative research intern, phd (summer 2027)::austin, texas, united states"
+ },
+ {
+  "company_name": "Optiver",
+  "title": "Quantitative Research Intern, PhD (Summer 2027)",
+  "url": "https://www.optiver.com/join-us/jobs/8451781002/?gh_jid=8451781002",
+  "locations": [
+   "Chicago, Illinois, United States"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1785347004,
+  "date_updated": 1786585188,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "greenhouse",
+  "id": "optiver::quantitative research intern, phd (summer 2027)::chicago, illinois, united states"
  },
  {
   "company_name": "Optiver",
@@ -2879,7 +2896,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2896,7 +2913,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2913,7 +2930,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -2930,7 +2947,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785319268,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -3018,7 +3035,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785248614,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -3356,7 +3373,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784935201,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -3374,7 +3391,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784935161,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -4114,7 +4131,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784825196,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -4132,7 +4149,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784639414,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -4149,7 +4166,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784054274,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -4166,7 +4183,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053828,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -4183,7 +4200,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053813,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -4200,7 +4217,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053791,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -4217,7 +4234,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053760,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -4234,7 +4251,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053732,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -4251,7 +4268,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053713,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -4268,7 +4285,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1783958135,
-  "date_updated": 1786560985,
+  "date_updated": 1786585188,
   "terms": [
    "Summer 2027"
   ],
@@ -4521,7 +4538,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1782933745,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -4539,7 +4556,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1782849666,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -4557,7 +4574,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1782328394,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -4575,7 +4592,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1780499906,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -4593,7 +4610,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1780413263,
-  "date_updated": 1786560986,
+  "date_updated": 1786585189,
   "terms": [
    "Summer 2027"
   ],
@@ -5069,6 +5086,44 @@
   "season": "Fall"
  },
  {
+  "date_updated": 1778312558,
+  "url": "https://job-boards.eu.greenhouse.io/veeamsoftware/jobs/4857828101",
+  "locations": [
+   "San Jose, CA"
+  ],
+  "sponsorship": "Other",
+  "active": false,
+  "company_name": "Veeam Software",
+  "title": "Software Engineering Intern, Policy Engineering",
+  "source": "vanshb03",
+  "id": "ac03b5ba-a4b7-46cb-9584-489169070127",
+  "date_posted": 1778312558,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Summer",
+  "date_checked": 1786585208,
+  "date_closed": 1786585208
+ },
+ {
+  "date_updated": 1778312442,
+  "url": "https://job-boards.eu.greenhouse.io/veeamsoftware/jobs/4857832101",
+  "locations": [
+   "San Jose, CA"
+  ],
+  "sponsorship": "Other",
+  "active": false,
+  "company_name": "Veeam Software",
+  "title": "Software Engineering Intern, Platform, Security & AI",
+  "source": "vanshb03",
+  "id": "6e774273-b1d2-40b1-9be7-02f49e4aafd8",
+  "date_posted": 1778312442,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Summer",
+  "date_checked": 1786585208,
+  "date_closed": 1786585208
+ },
+ {
   "date_updated": 1778311951,
   "url": "https://www.amazon.jobs/en/jobs/10412530/software-development-engineer-intern-aws-data-services-fall-2026-us",
   "locations": [
@@ -5219,7 +5274,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1776979025,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -5527,7 +5582,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1774033655,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -5545,7 +5600,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1774033522,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -5563,7 +5618,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1774033367,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -5581,7 +5636,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1765492275,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -5599,7 +5654,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1765491974,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -5952,7 +6007,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1755596923,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -5970,7 +6025,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1755596487,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6110,7 +6165,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1755023487,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6323,7 +6378,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1750968313,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6341,7 +6396,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1750968274,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6359,7 +6414,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1750950062,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6430,7 +6485,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1724906088,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6448,7 +6503,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1724059335,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6466,7 +6521,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1722900428,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6484,7 +6539,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1722900402,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6502,7 +6557,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1722900376,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6520,7 +6575,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1722899672,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6538,7 +6593,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1656624050,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6556,7 +6611,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1656623940,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6574,7 +6629,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1625177563,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6592,7 +6647,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1625176840,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6610,7 +6665,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1625176335,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6628,7 +6683,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1570669230,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6646,7 +6701,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1475793251,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
@@ -6664,7 +6719,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1456357025,
-  "date_updated": 1786560987,
+  "date_updated": 1786585190,
   "terms": [
    "Summer 2027"
   ],
