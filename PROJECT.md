@@ -415,12 +415,33 @@ is a fix for users who already have the product.
   gone, replaced with a line saying employers who run their own careers site can't be
   filled and that the dashboard marks them. A store description that overstates what an
   extension does is a rejection reason on its own, quite apart from being untrue.
-- **Submitting via API:** `node store/publish-extension.mjs` uploads the packaged zip and
-  calls `:publish`. Needs `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET`, `CWS_REFRESH_TOKEN` and
-  `CWS_PUBLISHER_ID` in the environment; `--dry-run` authenticates and reads status without
-  changing anything. ⚠️ **The API cannot fill the listing.** There is no method for the
-  description, category, screenshots, store icon or the Privacy practices tab — those are
-  dashboard-only, and `:publish` fails naming them if they're blank.
+- **Submitting via API:** `node store/publish-extension.mjs` uploads the packaged zip
+  (pulled straight from the `extension-latest` release) and calls `:publish`. Needs
+  `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET`, `CWS_REFRESH_TOKEN` and `CWS_PUBLISHER_ID` in the
+  environment; `--dry-run` authenticates and reads status without changing anything.
+  **Mint the token with `node store/mint-cws-token.mjs <client-id> <client-secret>`** — it
+  runs the loopback OAuth flow and writes all four values to `~/.offeraio-cws.env`, outside
+  the repo, rather than printing the secret into a terminal transcript.
+- ⚠️ **The API cannot fill the listing.** There is no method for the description, category,
+  screenshots, store icon or the Privacy practices tab — those are dashboard-only.
+  **But that mattered more as a draft than it does now (re-read 2026-08-12).** A published
+  item already has all of those populated, because Chrome will not publish without them, so
+  for a *version update* `:publish` can plausibly succeed on its own. Two things it still
+  cannot do, and both are real:
+  - **Screenshots stay whatever v1.1.2 uploaded.** The current `store/store-screenshot-*.png`
+    were regenerated against the v1.2.0 UI (§8 above) and the API cannot replace them. An
+    API-only publish therefore ships v1.3.0 code behind older screenshots. Acceptable — the
+    code fix is what users need — but it means the dashboard visit is deferred, not avoided.
+  - **The Privacy practices tab may now be answered wrongly.** Those answers date from the
+    v1.1.2 submission, before Pro started sending data off-device; see the warning in
+    `store/OfferAIO-store-listing.md`. A stale data-transfer answer is a compliance problem
+    and a common rejection reason, and no API call can correct it.
+  - Also expect **extended review**: host permissions have widened since v1.1.2
+    (`*.lever.co`/`*.greenhouse.io` per §15, `*.wellfound.com` per §16, the Worker origin per
+    §7 rule 4), and new permissions on an established item are re-reviewed by hand.
+- ⚠️ **Leaving the OAuth consent screen in "Testing" expires the refresh token after 7
+  days**, and every later publish fails with `invalid_grant`. Set it to "In production"
+  before minting. This is the most common way the credential path breaks.
 - ⚠️ **The dashboard cannot be automated at all.** Verified 2026-08-04: Chrome refuses
   extension scripting on `chrome.google.com/webstore/*` — a screenshot attempt returns
   "The extensions gallery cannot be scripted". This applies to the dev console, not just
