@@ -167,7 +167,7 @@
  "transmarket-group": {
   "name": "TransMarket Group",
   "lastSeen": "2026-08-14",
-  "roles": 3
+  "roles": 4
  },
  "stoke-space": {
   "name": "Stoke Space",
@@ -456,7 +456,7 @@
  },
  "jll": {
   "name": "JLL",
-  "lastSeen": "2026-08-07",
+  "lastSeen": "2026-08-14",
   "roles": 1
  },
  "radix-trading": {
@@ -848,5 +848,10 @@
   "name": "Mastercard",
   "lastSeen": "2026-08-14",
   "roles": 1
+ },
+ "blackstone": {
+  "name": "Blackstone",
+  "lastSeen": "2026-08-14",
+  "roles": 2
  }
 }
