@@ -1,5 +1,428 @@
 [
  {
+  "company_name": "Marsh McLennan",
+  "title": "Summer 2027 Intern - Insurance",
+  "url": "https://mmc.wd1.myworkdayjobs.com/MMC/job/Chesterfield---Maryville/Summer-2027-Intern---Insurance_R_359206",
+  "locations": [
+   "2 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796981,
+  "date_updated": 1786796981,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "marsh mclennan::summer 2027 intern - insurance::2 locations"
+ },
+ {
+  "company_name": "Marsh McLennan",
+  "title": "Oliver Wyman Actuarial - Internship - Summer 2027",
+  "url": "https://mmc.wd1.myworkdayjobs.com/MMC/job/New-York---1166/Oliver-Wyman-Actuarial---Internship---Summer-2027_R_356561",
+  "locations": [
+   "13 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796981,
+  "date_updated": 1786796981,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "marsh mclennan::oliver wyman actuarial - internship - summer 2027::13 locations"
+ },
+ {
+  "company_name": "Citi",
+  "title": "Services - Summer Analyst Program, New York City - US, 2027",
+  "url": "https://citi.wd5.myworkdayjobs.com/2/job/New-York-New-York-United-States/Services---Summer-Analyst-Program--New-York-City---US--2027_26945311",
+  "locations": [
+   "New York New York United States"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796980,
+  "date_updated": 1786796980,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "citi::services - summer analyst program, new york city - us, 2027::new york new york united states"
+ },
+ {
+  "company_name": "Citi",
+  "title": "Markets - Quantitative Analysis, Summer Analyst - New York City - US, 2027",
+  "url": "https://citi.wd5.myworkdayjobs.com/2/job/New-York-New-York-United-States/Markets---Quantitative-Analysis--Summer-Analyst---New-York-City---US--2027_25928747",
+  "locations": [
+   "New York New York United States"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796980,
+  "date_updated": 1786796980,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "citi::markets - quantitative analysis, summer analyst - new york city - us, 2027::new york new york united states"
+ },
+ {
+  "company_name": "Citi",
+  "title": "Markets - Sales and Trading, Summer Analyst, New York City - US, 2027",
+  "url": "https://citi.wd5.myworkdayjobs.com/2/job/New-York-New-York-United-States/Markets---Sales-and-Trading--Summer-Analyst--New-York-City---US--2027_25928736",
+  "locations": [
+   "New York New York United States"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796980,
+  "date_updated": 1786796980,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "citi::markets - sales and trading, summer analyst, new york city - us, 2027::new york new york united states"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Finance Summer Internship - Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Finance-Summer-Internship---Early-Careers_R-555860",
+  "locations": [
+   "3 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 finance summer internship - early careers::3 locations"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Human Resources Internship – Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Human-Resources-Internship---Early-Careers_R-555463-1",
+  "locations": [
+   "CHARLOTTE, NC"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 human resources internship – early careers::charlotte, nc"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Audit Summer Internship – Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Audit-Summer-Internship---Early-Careers_R-556216",
+  "locations": [
+   "3 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 audit summer internship – early careers::3 locations"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Commercial Banking Summer Internship – Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Summer-Internship--Early-Careers---Commercial-Banking_R-555720",
+  "locations": [
+   "8 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 commercial banking summer internship – early careers::8 locations"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Global Payments & Liquidity Internship – Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Global-Payments---Liquidity-Internship---Early-Careers_R-555489",
+  "locations": [
+   "2 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 global payments & liquidity internship – early careers::2 locations"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Commercial Banking Summer Internship – Early Careers (NY)",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/NEW-YORK-NY/XMLNAME-2027-Summer-Internship--Early-Careers---Commercial-Banking--NY-_R-555736",
+  "locations": [
+   "NEW YORK, NY"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 commercial banking summer internship – early careers (ny)::new york, ny"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Wealth & Investment Management Summer Internship - Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Wealth---Investment-Management-Summer-Internship---Early-Careers_R-556103",
+  "locations": [
+   "2 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 wealth & investment management summer internship - early careers::2 locations"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 COO Global Operations Summer Internship - Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-COO-Global-Operations-Summer-Internship---Early-Careers_R-556448",
+  "locations": [
+   "6 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 coo global operations summer internship - early careers::6 locations"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Commercial Banking Summer Internship – Early Careers (CA/CO)",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/LOS-ANGELES-CA/XMLNAME-2027-Summer-Internship--Early-Careers---Commercial-Banking--CA-CO-_R-555721",
+  "locations": [
+   "4 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 commercial banking summer internship – early careers (ca/co)::4 locations"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Consumer Banking and Lending Summer Internship – Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Consumer-Banking-and-Lending-Summer-Internship---Early-Careers_R-556017",
+  "locations": [
+   "CHARLOTTE, NC"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 consumer banking and lending summer internship – early careers::charlotte, nc"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 COO Chief Administrative Office Summer Internship - Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-COO-Chief-Administrative-Office-Summer-Internship---Early-Careers_R-556474",
+  "locations": [
+   "CHARLOTTE, NC"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 coo chief administrative office summer internship - early careers::charlotte, nc"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Quantitative Analytics Summer Internship Capital Markets (PhD) – Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Quantitative-Analytics-Summer-Internship-Capital-Markets--PhD----Early-Careers_R-568279",
+  "locations": [
+   "CHARLOTTE, NC"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 quantitative analytics summer internship capital markets (phd) – early careers::charlotte, nc"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Quantitative Analytics Summer Internship Capital Markets (Masters) – Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Quantitative-Analytics-Summer-Internship-Capital-Markets--Masters----Early-Careers_R-568270",
+  "locations": [
+   "CHARLOTTE, NC"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 quantitative analytics summer internship capital markets (masters) – early careers::charlotte, nc"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Corporate Risk Development Program Summer Internship (Core Risk) - Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Corporate-Risk-Development-Program-Summer-Internship--Core-Risk----Early-Careers_R-556123",
+  "locations": [
+   "CHARLOTTE, NC"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 corporate risk development program summer internship (core risk) - early careers::charlotte, nc"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 COO Business Risk Control and Regulatory Oversight Summer Internship - Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/XMLNAME-2027-COO-Business-Risk-Control-and-Regulatory-Oversight-Summer-Internship---Early-Careers_R-556488",
+  "locations": [],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 coo business risk control and regulatory oversight summer internship - early careers::"
+ },
+ {
+  "company_name": "Wells Fargo",
+  "title": "2027 Quantitative Analytics Summer Internship Risk Analytics and Decision Sciences (Masters) – Early Careers",
+  "url": "https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs/job/CHARLOTTE-NC/XMLNAME-2027-Quantitative-Analytics-Summer-Internship-Risk-Analytics-and-Decision-Sciences--Masters----Early-Careers_R-568259",
+  "locations": [
+   "CHARLOTTE, NC"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "wells fargo::2027 quantitative analytics summer internship risk analytics and decision sciences (masters) – early careers::charlotte, nc"
+ },
+ {
+  "company_name": "PNC",
+  "title": "Corporate & Institutional Banking Undergraduate Summer 2027 Intern - Capital Markets",
+  "url": "https://pnc.wd5.myworkdayjobs.com/External/job/PA---Pittsburgh-15222/Corporate---Institutional-Banking-Undergraduate-Summer-2027-Intern---Capital-Markets_R218205-1",
+  "locations": [
+   "7 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "pnc::corporate & institutional banking undergraduate summer 2027 intern - capital markets::7 locations"
+ },
+ {
+  "company_name": "PNC",
+  "title": "Corporate Finance & Accounting Undergraduate Intern",
+  "url": "https://pnc.wd5.myworkdayjobs.com/External/job/PA---Pittsburgh-15222/Corporate-Finance---Accounting-Undergraduate-Intern_R231489-1",
+  "locations": [
+   "PA - Pittsburgh (15222)"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "pnc::corporate finance & accounting undergraduate intern::pa - pittsburgh (15222)"
+ },
+ {
+  "company_name": "Citi",
+  "title": "Banking - Commercial Banking - Natural Resources & Energy,  Summer Analyst, Houston - US, 2027",
+  "url": "https://citi.wd5.myworkdayjobs.com/2/job/Houston-Texas-United-States/Banking---Commercial-Banking--Summer-Analyst--Houston---US--2027_25926681",
+  "locations": [
+   "Houston Texas United States"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796978,
+  "date_updated": 1786796978,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "citi::banking - commercial banking - natural resources & energy,  summer analyst, houston - us, 2027::houston texas united states"
+ },
+ {
+  "company_name": "Mastercard",
+  "title": "Internship Program, Americas, 2027 – Dominican Republic",
+  "url": "https://mastercard.wd1.myworkdayjobs.com/CorporateCareers/job/Santo-Domingo-Dominican-Republic/Internship-Program--Americas--2027---Dominican-Republic_R-288238-1",
+  "locations": [
+   "Santo Domingo, Dominican Republic"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796977,
+  "date_updated": 1786796977,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "mastercard::internship program, americas, 2027 – dominican republic::santo domingo, dominican republic"
+ },
+ {
   "company_name": "Capital One",
   "title": "Analyst Early Internship Program - Summer 2027",
   "url": "https://capitalone.wd12.myworkdayjobs.com/Capital_One/job/McLean-VA/Analyst-Early-Internship-Program---Summer-2027_R244231",
@@ -8,8 +431,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786775469,
-  "date_updated": 1786775469,
+  "date_posted": 1786796976,
+  "date_updated": 1786796976,
   "terms": [
    "Summer 2027"
   ],
@@ -25,8 +448,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786775469,
-  "date_updated": 1786775469,
+  "date_posted": 1786796976,
+  "date_updated": 1786796976,
   "terms": [
    "Summer 2027"
   ],
@@ -42,8 +465,8 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786775469,
-  "date_updated": 1786775469,
+  "date_posted": 1786796976,
+  "date_updated": 1786796976,
   "terms": [
    "Summer 2027"
   ],
@@ -59,13 +482,98 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786775469,
-  "date_updated": 1786775469,
+  "date_posted": 1786796976,
+  "date_updated": 1786796976,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "capital one::current master's - data science internship - summer 2027::8 locations"
+ },
+ {
+  "company_name": "HP",
+  "title": "Enterprise Operations Software Internship",
+  "url": "https://hp.wd5.myworkdayjobs.com/ExternalCareerSite/job/Spring-Texas-United-States-of-America/Enterprise-Operations-Software-Internship_3167271-2",
+  "locations": [
+   "Spring, Texas, United States of America"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796975,
+  "date_updated": 1786796975,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "hp::enterprise operations software internship::spring, texas, united states of america"
+ },
+ {
+  "company_name": "HP",
+  "title": "Enterprise Operations Business Internship",
+  "url": "https://hp.wd5.myworkdayjobs.com/ExternalCareerSite/job/Spring-Texas-United-States-of-America/Enterprise-Operations-Business-Internship_3166959-2",
+  "locations": [
+   "Spring, Texas, United States of America"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796975,
+  "date_updated": 1786796975,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "hp::enterprise operations business internship::spring, texas, united states of america"
+ },
+ {
+  "company_name": "HP",
+  "title": "Enterprise Operations Engineering Internship",
+  "url": "https://hp.wd5.myworkdayjobs.com/ExternalCareerSite/job/Spring-Texas-United-States-of-America/Enterprise-Operations-Engineering-Internship_3166958-1",
+  "locations": [
+   "Spring, Texas, United States of America"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796975,
+  "date_updated": 1786796975,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "hp::enterprise operations engineering internship::spring, texas, united states of america"
+ },
+ {
+  "company_name": "HP",
+  "title": "College Intern - Engineering",
+  "url": "https://hp.wd5.myworkdayjobs.com/ExternalCareerSite/job/Batu-Kawan-Pulau-Pinang-Penang-Malaysia/College-Intern---Engineering_3167498-1",
+  "locations": [
+   "Batu Kawan, Pulau Pinang (Penang), Malaysia"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796975,
+  "date_updated": 1786796975,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "hp::college intern - engineering::batu kawan, pulau pinang (penang), malay"
+ },
+ {
+  "company_name": "HP",
+  "title": "Technology & Innovation Organization Electrical Engineering Internship",
+  "url": "https://hp.wd5.myworkdayjobs.com/ExternalCareerSite/job/Corvallis-Oregon-United-States-of-America/Technology---Innovation-Organization-Electrical-Engineering-Internship_3167270-1",
+  "locations": [
+   "Corvallis, Oregon, United States of America"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796975,
+  "date_updated": 1786796975,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "hp::technology & innovation organization electrical engineering internship::corvallis, oregon, united states of amer"
  },
  {
   "company_name": "Salesforce",
@@ -76,13 +584,336 @@
   ],
   "active": true,
   "is_visible": true,
-  "date_posted": 1786775463,
-  "date_updated": 1786775463,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
   "terms": [
    "Summer 2027"
   ],
   "source": "workday",
   "id": "salesforce::summer 2027 intern - software engineer::2 locations"
+ },
+ {
+  "company_name": "Intel",
+  "title": "AI Engineer Intern",
+  "url": "https://intel.wd1.myworkdayjobs.com/External/job/Vietnam-Ho_Chi_Minh_City/AI-Engineer-Intern_JR0286108",
+  "locations": [
+   "Vietnam, Ho_Chi_Minh_City"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "intel::ai engineer intern::vietnam, ho_chi_minh_city"
+ },
+ {
+  "company_name": "Intel",
+  "title": "MBA Internship – Ecosystem Development Specialist",
+  "url": "https://intel.wd1.myworkdayjobs.com/External/job/PRC-Shanghai/MBA-Internship---Ecosystem-Development-Specialist_JR0285771",
+  "locations": [
+   "3 Locations"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "intel::mba internship – ecosystem development specialist::3 locations"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Process Development Engineer, Planar DRAM CMP",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development-Engineer--Planar-DRAM-CMP_JR108060",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - process development engineer, planar dram cmp::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - DRAM Process Integration",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---DRAM-Process-Integration_JR108075",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - dram process integration::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Process Pathfinding, DRAM Dry Etch",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Pathfinding--DRAM-Dry-Etch_JR107347",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - process pathfinding, dram dry etch::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Corporate Labs",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Corporate-Labs_JR108442",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - corporate labs::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Process Development Engineer, 3D DRAM Metals",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development-Engineer--3D-DRAM-Metals_JR107311",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - process development engineer, 3d dram metals::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Process Development Engineer, 3D DRAM CMP",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development-Engineer--3D-DRAM-CMP_JR107848",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - process development engineer, 3d dram cmp::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - DRAM Design Engineer",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---DRAM-Design-Engineer_JR108468",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - dram design engineer::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern – Process Development Engineer, 3D DRAM Wet Etch",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development-Engineer--3D-DRAM-Wet-Etch_JR106729",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern – process development engineer, 3d dram wet etch::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Process Development",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development_JR107319",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - process development::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Process Development Engineer, 3D DRAM Photo",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Process-Development-Engineer--3D-DRAM-Photo_JR107312",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - process development engineer, 3d dram photo::boise, id - main site"
+ },
+ {
+  "company_name": "Micron",
+  "title": "Intern - Photolithography Process",
+  "url": "https://micron.wd1.myworkdayjobs.com/External/job/Boise-ID---Main-Site/Intern---Photolithography-Process_JR107508",
+  "locations": [
+   "Boise, ID - Main Site"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796974,
+  "date_updated": 1786796974,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "micron::intern - photolithography process::boise, id - main site"
+ },
+ {
+  "company_name": "JLL",
+  "title": "Capital Markets Summer 2027 Internship - New York",
+  "url": "https://jll.wd1.myworkdayjobs.com/jllcareers/job/New-York-NY/Capital-Markets-Summer-2027-Internship---New-York_REQ528322",
+  "locations": [
+   "New York, NY"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796973,
+  "date_updated": 1786796973,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "jll::capital markets summer 2027 internship - new york::new york, ny"
+ },
+ {
+  "company_name": "PwC",
+  "title": "ETIC, Summer Internship - Custom Development",
+  "url": "https://pwc.wd3.myworkdayjobs.com/Global_Experienced_Careers/job/Cairo---ETIC/ETIC--Summer-Internship---Custom-Development_735640WD-1",
+  "locations": [
+   "Cairo - ETIC"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796971,
+  "date_updated": 1786796971,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "pwc::etic, summer internship - custom development::cairo - etic"
+ },
+ {
+  "company_name": "PwC",
+  "title": "ETIC, Summer Internship - Quality & Testing",
+  "url": "https://pwc.wd3.myworkdayjobs.com/Global_Experienced_Careers/job/Cairo---ETIC/ETIC--Summer-Internship---Quality---Testing_735647WD",
+  "locations": [
+   "Cairo - ETIC"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796971,
+  "date_updated": 1786796971,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "pwc::etic, summer internship - quality & testing::cairo - etic"
+ },
+ {
+  "company_name": "PwC",
+  "title": "ETIC, Summer Internship - Applied AI",
+  "url": "https://pwc.wd3.myworkdayjobs.com/Global_Experienced_Careers/job/Cairo---ETIC/ETIC--Summer-Internship---Applied-AI_735623WD",
+  "locations": [
+   "Cairo - ETIC"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796971,
+  "date_updated": 1786796971,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "pwc::etic, summer internship - applied ai::cairo - etic"
+ },
+ {
+  "company_name": "Blackstone",
+  "title": "2027 Blackstone Real Estate Debt Strategies Portfolio Strategy Summer Analyst",
+  "url": "https://blackstone.wd1.myworkdayjobs.com/Blackstone_Campus_Careers/job/New-York/XMLNAME-2027-Blackstone-Real-Estate-Debt-Strategies-Portfolio-Strategy-Summer-Analyst_44725",
+  "locations": [
+   "New York"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796970,
+  "date_updated": 1786796970,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "blackstone::2027 blackstone real estate debt strategies portfolio strategy summer analyst::new york"
+ },
+ {
+  "company_name": "Blackstone",
+  "title": "2027 Blackstone Real Estate Sustainability Summer Analyst",
+  "url": "https://blackstone.wd1.myworkdayjobs.com/Blackstone_Campus_Careers/job/New-York/XMLNAME-2027-Blackstone-Real-Estate-Sustainability-Summer-Analyst_44724",
+  "locations": [
+   "New York"
+  ],
+  "active": true,
+  "is_visible": true,
+  "date_posted": 1786796970,
+  "date_updated": 1786796970,
+  "terms": [
+   "Summer 2027"
+  ],
+  "source": "workday",
+  "id": "blackstone::2027 blackstone real estate sustainability summer analyst::new york"
  },
  {
   "company_name": "Roblox",
@@ -94,7 +925,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786732539,
-  "date_updated": 1786775455,
+  "date_updated": 1786796967,
   "terms": [
    "Summer 2027"
   ],
@@ -111,13 +942,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786723862,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "imc trading::quantitative research intern (phd) - summer 2027::chicago, united states",
-  "date_checked": 1786605629
+  "date_checked": 1786796987
  },
  {
   "company_name": "IMC Trading",
@@ -129,13 +960,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786723816,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "imc trading::quantitative research intern (bs/ms) - summer 2027::chicago, united states",
-  "date_checked": 1786605629
+  "date_checked": 1786796987
  },
  {
   "company_name": "IMC Trading",
@@ -147,13 +978,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786723698,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "imc trading::machine learning research intern - summer 2027 - chicago::chicago, united states",
-  "date_checked": 1786605629
+  "date_checked": 1786796987
  },
  {
   "company_name": "TransMarket Group",
@@ -165,7 +996,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786720683,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -183,13 +1014,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786718719,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "imc trading::software engineer intern - summer 2027::chicago, united states",
-  "date_checked": 1786605629
+  "date_checked": 1786796987
  },
  {
   "company_name": "IMC Trading",
@@ -201,13 +1032,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786718450,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "imc trading::quantitative trader intern - summer 2027::chicago, united states",
-  "date_checked": 1786605629
+  "date_checked": 1786796987
  },
  {
   "company_name": "IMC Trading",
@@ -219,13 +1050,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786717791,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "imc trading::hardware engineer intern - summer 2027::chicago, united states",
-  "date_checked": 1786605628
+  "date_checked": 1786796987
  },
  {
   "company_name": "Samsara",
@@ -237,7 +1068,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786713174,
-  "date_updated": 1786775455,
+  "date_updated": 1786796967,
   "terms": [
    "Summer 2027"
   ],
@@ -254,7 +1085,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786641217,
-  "date_updated": 1786775455,
+  "date_updated": 1786796967,
   "terms": [
    "Summer 2027"
   ],
@@ -271,7 +1102,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786641217,
-  "date_updated": 1786775455,
+  "date_updated": 1786796967,
   "terms": [
    "Summer 2027"
   ],
@@ -288,13 +1119,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786629460,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "drw::quantitative trading analyst intern::chicago, illinois",
-  "date_checked": 1786605631
+  "date_checked": 1786796987
  },
  {
   "company_name": "Anduril",
@@ -306,13 +1137,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786475276,
-  "date_updated": 1786775455,
+  "date_updated": 1786796967,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "anduril::2027 electrical engineer intern::atlanta, georgia, united states; boston,",
-  "date_checked": 1786605636
+  "date_checked": 1786796987
  },
  {
   "company_name": "Anduril",
@@ -324,13 +1155,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786475276,
-  "date_updated": 1786775455,
+  "date_updated": 1786796967,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "anduril::2027 manufacturing engineer intern::atlanta, georgia, united states; boston,",
-  "date_checked": 1786605628
+  "date_checked": 1786796987
  },
  {
   "company_name": "Anduril",
@@ -342,13 +1173,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786475276,
-  "date_updated": 1786775455,
+  "date_updated": 1786796967,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "anduril::2027 mechanical engineer intern::atlanta, georgia, united states; boston,",
-  "date_checked": 1786605628
+  "date_checked": 1786796987
  },
  {
   "company_name": "Databricks",
@@ -360,7 +1191,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786474469,
-  "date_updated": 1786775455,
+  "date_updated": 1786796966,
   "terms": [
    "Summer 2027"
   ],
@@ -377,13 +1208,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786467022,
-  "date_updated": 1786775455,
+  "date_updated": 1786796967,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "scale ai::ai builder intern::san francisco, ca",
-  "date_checked": 1786605628
+  "date_checked": 1786796987
  },
  {
   "company_name": "DV Trading",
@@ -395,7 +1226,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786401674,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -413,13 +1244,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786384956,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "dv trading::quantitative risk intern - summer 2027::chicago",
-  "date_checked": 1786605628
+  "date_checked": 1786796988
  },
  {
   "company_name": "Old Mission",
@@ -431,7 +1262,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786384748,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -448,13 +1279,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786343698,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "imc trading::hardware machine learning phd research internship::chicago, united states",
-  "date_checked": 1786605628
+  "date_checked": 1786796988
  },
  {
   "company_name": "Tower Research",
@@ -466,7 +1297,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786343667,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -483,13 +1314,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1786048273,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "drw::software developer intern::chicago",
-  "date_checked": 1786605629
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1786024702,
@@ -542,7 +1373,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Spring",
-  "date_checked": 1786605629
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1786024318,
@@ -577,7 +1408,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605629
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1786024267,
@@ -657,7 +1488,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785962341,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -674,7 +1505,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785940647,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -744,7 +1575,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605629
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1785853484,
@@ -1374,7 +2205,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605629
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1785852872,
@@ -1410,7 +2241,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605629
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1785852859,
@@ -1428,7 +2259,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605629
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1785852846,
@@ -1463,7 +2294,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605629
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1785852837,
@@ -1481,7 +2312,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605637
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1785852828,
@@ -1510,13 +2341,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785819877,
-  "date_updated": 1786775455,
+  "date_updated": 1786796967,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "scale ai::technical advisor specialist (part-time internship) ::san francisco, ca",
-  "date_checked": 1786605630
+  "date_checked": 1786796988
  },
  {
   "company_name": "Point72",
@@ -1528,13 +2359,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "point72::machine learning researcher - intern::new york",
-  "date_checked": 1786605630
+  "date_checked": 1786796988
  },
  {
   "company_name": "Point72",
@@ -1546,13 +2377,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "point72::quantitative researcher intern::new york",
-  "date_checked": 1786605630
+  "date_checked": 1786796988
  },
  {
   "company_name": "Point72",
@@ -1564,13 +2395,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "point72::quantitative research intern::new york, seattle",
-  "date_checked": 1786605630
+  "date_checked": 1786796988
  },
  {
   "company_name": "Point72",
@@ -1582,13 +2413,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785801988,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "point72::quantitative research intern (nlp)::new york",
-  "date_checked": 1786605630
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1785791371,
@@ -1617,7 +2448,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785776684,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -1671,13 +2502,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785768835,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "transmarket group::algorithmic trader intern::chicago, illinois, united states",
-  "date_checked": 1786605630
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1785741445,
@@ -1695,7 +2526,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605630
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1785741377,
@@ -1713,7 +2544,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605630
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1785741371,
@@ -1731,7 +2562,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605630
+  "date_checked": 1786796988
  },
  {
   "date_updated": 1785741368,
@@ -1770,7 +2601,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605630
+  "date_checked": 1786796988
  },
  {
   "company_name": "Palantir",
@@ -1782,13 +2613,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785533737,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::product designer, internship - us government::palo alto, ca",
-  "date_checked": 1786605630
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785529818,
@@ -1806,7 +2637,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605638
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785516765,
@@ -1825,7 +2656,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605630
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785516753,
@@ -1843,7 +2674,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605631
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785516564,
@@ -1991,13 +2822,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785513463,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "virtu financial::2027 internship- hardware engineer (fpga)::austin, tx",
-  "date_checked": 1786605630
+  "date_checked": 1786796989
  },
  {
   "company_name": "Virtu Financial",
@@ -2009,13 +2840,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785513316,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "virtu financial::2027 internship - frontend engineer (ui)::new york",
-  "date_checked": 1786605633
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785449184,
@@ -2044,13 +2875,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785427008,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "drw::strategy intern::chicago, il",
-  "date_checked": 1786605631
+  "date_checked": 1786796989
  },
  {
   "company_name": "DRW",
@@ -2062,13 +2893,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426926,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "drw::trade support intern::chicago, il",
-  "date_checked": 1786605631
+  "date_checked": 1786796989
  },
  {
   "company_name": "DRW",
@@ -2080,13 +2911,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426549,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "drw::fpga intern::chicago",
-  "date_checked": 1786605631
+  "date_checked": 1786796989
  },
  {
   "company_name": "DRW",
@@ -2098,13 +2929,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785426084,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "drw::venture capital analyst intern::chicago, il",
-  "date_checked": 1786605631
+  "date_checked": 1786796989
  },
  {
   "company_name": "DRW",
@@ -2116,13 +2947,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785425971,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "drw::platform engineer intern::chicago",
-  "date_checked": 1786605631
+  "date_checked": 1786796989
  },
  {
   "company_name": "Optiver",
@@ -2134,7 +2965,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -2151,7 +2982,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -2168,7 +2999,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -2185,7 +3016,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -2202,7 +3033,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -2219,7 +3050,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -2236,7 +3067,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785347004,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -2253,13 +3084,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785319268,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "flow traders::quantitative trading intern summer 2027::new york",
-  "date_checked": 1786605632
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785260118,
@@ -2294,7 +3125,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605632
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785252811,
@@ -2312,7 +3143,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605632
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785252694,
@@ -2341,13 +3172,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1785248614,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "virtu financial::2027 internship - quantitative researcher (undergrad)::new york",
-  "date_checked": 1786605632
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785180886,
@@ -2365,7 +3196,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605632
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785180883,
@@ -2383,7 +3214,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605632
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785180800,
@@ -2418,7 +3249,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605633
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785180712,
@@ -2436,7 +3267,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605633
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785180627,
@@ -2471,7 +3302,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605633
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785147502,
@@ -2523,7 +3354,7 @@
   "date_posted": 1785129703,
   "company_url": "",
   "is_visible": true,
-  "date_checked": 1786605633
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785124745,
@@ -2577,7 +3408,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605633
+  "date_checked": 1786796989
  },
  {
   "date_updated": 1785124708,
@@ -2596,7 +3427,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605633
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1785124692,
@@ -2631,7 +3462,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605633
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1785124669,
@@ -2649,7 +3480,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605633
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1785124659,
@@ -2667,7 +3498,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605634
+  "date_checked": 1786796990
  },
  {
   "company_name": "PDT Partners",
@@ -2679,13 +3510,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784935201,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "pdt partners::summer 2027 systems engineering intern::new york, ny",
-  "date_checked": 1786605634
+  "date_checked": 1786796990
  },
  {
   "company_name": "PDT Partners",
@@ -2697,13 +3528,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784935161,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "pdt partners::summer 2027 software engineering intern::new york, ny",
-  "date_checked": 1786605634
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1784916800,
@@ -2806,7 +3637,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605634
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1784881873,
@@ -3080,7 +3911,7 @@
   "date_posted": 1784881730,
   "company_url": "",
   "is_visible": true,
-  "date_checked": 1786605634
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1784881161,
@@ -3098,7 +3929,7 @@
   "date_posted": 1784881161,
   "company_url": "",
   "is_visible": true,
-  "date_checked": 1786605634
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1784880696,
@@ -3116,7 +3947,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Winter",
-  "date_checked": 1786605634
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1784880689,
@@ -3134,7 +3965,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Winter",
-  "date_checked": 1786605634
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1784879137,
@@ -3152,7 +3983,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605635
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1784879117,
@@ -3170,7 +4001,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605634
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1784879113,
@@ -3326,7 +4157,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605634
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1784878899,
@@ -3344,7 +4175,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Winter",
-  "date_checked": 1786605635
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1784878893,
@@ -3379,7 +4210,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605635
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1784878468,
@@ -3437,13 +4268,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784825196,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "virtu financial::2027 internship - quantitative researcher (phd)::new york",
-  "date_checked": 1786605635
+  "date_checked": 1786796990
  },
  {
   "company_name": "AQR",
@@ -3455,7 +4286,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784639414,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -3472,7 +4303,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784054274,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -3489,7 +4320,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053828,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -3506,7 +4337,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053813,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -3523,7 +4354,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053791,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -3540,7 +4371,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053760,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -3557,7 +4388,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053732,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -3574,7 +4405,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1784053713,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
@@ -3591,13 +4422,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1783958135,
-  "date_updated": 1786775456,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "drw::leadership rotation network intern::chicago, il",
-  "date_checked": 1786605635
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1783642670,
@@ -3615,7 +4446,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605635
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1783642656,
@@ -3691,7 +4522,7 @@
   "date_posted": 1783427800,
   "company_url": "",
   "is_visible": true,
-  "date_checked": 1786605635
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1783427706,
@@ -3726,7 +4557,7 @@
   "date_posted": 1783427123,
   "company_url": "",
   "is_visible": true,
-  "date_checked": 1786605635
+  "date_checked": 1786796990
  },
  {
   "date_updated": 1783426662,
@@ -3844,13 +4675,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1782933745,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::forward deployed software engineer, internship - intel::washington, d.c.",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "company_name": "Palantir",
@@ -3862,13 +4693,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1782849666,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::forward deployed software engineer, internship - commercial::chicago, il",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "company_name": "Palantir",
@@ -3880,13 +4711,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1782328394,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::year at palantir - forward deployed software engineer, internship - commercial::chicago, il",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "company_name": "TransMarket Group",
@@ -3898,13 +4729,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1780499906,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "transmarket group::quantitative trader intern::chicago, illinois, united states",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "company_name": "TransMarket Group",
@@ -3916,13 +4747,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1780413263,
-  "date_updated": 1786775457,
+  "date_updated": 1786796968,
   "terms": [
    "Summer 2027"
   ],
   "source": "greenhouse",
   "id": "transmarket group::devops/sre intern::chicago, illinois, united states",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1779504071,
@@ -3957,7 +4788,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1779501421,
@@ -4026,7 +4857,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1779485706,
@@ -4044,7 +4875,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1779485552,
@@ -4062,7 +4893,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1779485539,
@@ -4080,7 +4911,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1779484585,
@@ -4236,7 +5067,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1778324488,
@@ -4392,6 +5223,44 @@
   "season": "Fall"
  },
  {
+  "date_updated": 1778312558,
+  "url": "https://job-boards.eu.greenhouse.io/veeamsoftware/jobs/4857828101",
+  "locations": [
+   "San Jose, CA"
+  ],
+  "sponsorship": "Other",
+  "active": false,
+  "company_name": "Veeam Software",
+  "title": "Software Engineering Intern, Policy Engineering",
+  "source": "vanshb03",
+  "id": "ac03b5ba-a4b7-46cb-9584-489169070127",
+  "date_posted": 1778312558,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Summer",
+  "date_checked": 1786796991,
+  "date_closed": 1786796991
+ },
+ {
+  "date_updated": 1778312442,
+  "url": "https://job-boards.eu.greenhouse.io/veeamsoftware/jobs/4857832101",
+  "locations": [
+   "San Jose, CA"
+  ],
+  "sponsorship": "Other",
+  "active": false,
+  "company_name": "Veeam Software",
+  "title": "Software Engineering Intern, Platform, Security & AI",
+  "source": "vanshb03",
+  "id": "6e774273-b1d2-40b1-9be7-02f49e4aafd8",
+  "date_posted": 1778312442,
+  "company_url": "",
+  "is_visible": true,
+  "season": "Summer",
+  "date_checked": 1786796991,
+  "date_closed": 1786796991
+ },
+ {
   "date_updated": 1778311951,
   "url": "https://www.amazon.jobs/en/jobs/10412530/software-development-engineer-intern-aws-data-services-fall-2026-us",
   "locations": [
@@ -4477,7 +5346,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1777366779,
@@ -4496,7 +5365,7 @@
   "date_posted": 1777366779,
   "company_url": "",
   "is_visible": true,
-  "date_checked": 1786605636
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1777084447,
@@ -4542,13 +5411,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1776979025,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::year at palantir - forward deployed software engineer, internship - usg::washington, d.c.",
-  "date_checked": 1786605637
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1776914902,
@@ -4585,7 +5454,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605637
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1776894215,
@@ -4604,7 +5473,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605637
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1776894212,
@@ -4623,7 +5492,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Fall",
-  "date_checked": 1786605637
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1776727865,
@@ -4817,7 +5686,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Summer",
-  "date_checked": 1786605637
+  "date_checked": 1786796991
  },
  {
   "date_updated": 1776617707,
@@ -4850,13 +5719,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1774033655,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::year at palantir - software engineer, internship::new york, ny",
-  "date_checked": 1786605637
+  "date_checked": 1786796991
  },
  {
   "company_name": "Palantir",
@@ -4868,13 +5737,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1774033522,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::year at palantir - forward deployed software engineer, internship - usg::new york, ny",
-  "date_checked": 1786605637
+  "date_checked": 1786796991
  },
  {
   "company_name": "Palantir",
@@ -4886,13 +5755,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1774033367,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::year at palantir - forward deployed software engineer, internship - commercial::new york, ny",
-  "date_checked": 1786605637
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -4904,13 +5773,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1765492275,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::deployment strategist, internship - us government::honolulu, hi",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -4922,13 +5791,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1765491974,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::forward deployed software engineer, internship - us government::honolulu, hi",
-  "date_checked": 1786605637
+  "date_checked": 1786796992
  },
  {
   "date_updated": 1765307179,
@@ -5178,7 +6047,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Winter",
-  "date_checked": 1786605637
+  "date_checked": 1786796992
  },
  {
   "date_updated": 1757733987,
@@ -5275,13 +6144,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1755596923,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::software engineer, internship - infrastructure::palo alto, ca",
-  "date_checked": 1786605637
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -5293,13 +6162,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1755596487,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::software engineer, internship - production infrastructure::washington, d.c.",
-  "date_checked": 1786605637
+  "date_checked": 1786796992
  },
  {
   "date_updated": 1755550213,
@@ -5335,7 +6204,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Winter",
-  "date_checked": 1786605637
+  "date_checked": 1786796992
  },
  {
   "date_updated": 1755262300,
@@ -5433,13 +6302,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1755023487,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::product designer, internship - us government::new york, ny",
-  "date_checked": 1786605637
+  "date_checked": 1786796992
  },
  {
   "date_updated": 1754805657,
@@ -5475,7 +6344,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Winter",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "date_updated": 1754803849,
@@ -5494,7 +6363,7 @@
   "company_url": "",
   "is_visible": true,
   "season": "Winter",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "date_updated": 1754696114,
@@ -5513,7 +6382,7 @@
   "date_posted": 1754696114,
   "company_url": "",
   "is_visible": true,
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "date_updated": 1754666243,
@@ -5646,13 +6515,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1750968313,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::software engineer, internship - production infrastructure::seattle, wa",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -5664,13 +6533,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1750968274,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::software engineer, internship - production infrastructure::new york, ny",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -5682,13 +6551,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1750950062,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::software engineer, internship - infrastructure::new york, ny",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "date_updated": 1749262000,
@@ -5753,13 +6622,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1724906088,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::software engineer, internship::denver, co",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -5771,13 +6640,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1724059335,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::product designer, internship - us government::washington, d.c.",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -5789,13 +6658,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1722900428,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::software engineer, internship - defense tech::new york, ny",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -5807,13 +6676,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1722900402,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::software engineer, internship - defense tech::palo alto, ca",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -5825,13 +6694,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1722900376,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::software engineer, internship - defense tech::washington, d.c.",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -5843,13 +6712,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1722899672,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::forward deployed software engineer, internship - defense tech::washington, d.c.",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -5861,13 +6730,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1656624050,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::forward deployed software engineer, internship - us government::new york, ny",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -5879,13 +6748,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1656623940,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::software engineer, internship::new york, ny",
-  "date_checked": 1786605638
+  "date_checked": 1786796993
  },
  {
   "company_name": "Palantir",
@@ -5897,13 +6766,13 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1625177563,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
   "source": "lever",
   "id": "palantir::forward deployed software engineer, internship - us government::washington, d.c.",
-  "date_checked": 1786605638
+  "date_checked": 1786796992
  },
  {
   "company_name": "Palantir",
@@ -5915,7 +6784,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1625176840,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
@@ -5933,7 +6802,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1625176335,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
@@ -5951,7 +6820,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1570669230,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
@@ -5969,7 +6838,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1475793251,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
@@ -5987,7 +6856,7 @@
   "active": true,
   "is_visible": true,
   "date_posted": 1456357025,
-  "date_updated": 1786775458,
+  "date_updated": 1786796970,
   "terms": [
    "Summer 2027"
   ],
