@@ -76,7 +76,27 @@ console.log("auth ok");
 // Status first — it is a read, and it tells us whether a submission is already in flight.
 const status = await fetch(`${base}:fetchStatus`, { headers: { authorization: "Bearer " + token } })
   .then(async (r) => ({ status: r.status, body: await r.text() }));
-console.log("fetchStatus:", status.status, status.body.slice(0, 500));
+console.log("fetchStatus:", status.status);
+
+/* Print the two revision blocks, not the raw body. The body leads with a ~400-character
+ * publicKey, so any fixed-length slice of it shows nothing but the key — which made
+ * --dry-run useless for the one job PROJECT.md §12 asks it to do, reporting whether a
+ * submission is in flight. An *absent* submittedItemRevisionStatus is the answer meaning
+ * "nothing pending", so say so rather than printing nothing. */
+function describeRevision(rev) {
+  if (!rev) return "— none —";
+  const ch = (rev.distributionChannels || [])
+    .map((c) => `crx ${c.crxVersion ?? "?"} @ ${c.deployPercentage ?? "?"}%`)
+    .join(", ");
+  return [rev.state ?? "?", ch].filter(Boolean).join("  ");
+}
+try {
+  const j = JSON.parse(status.body);
+  console.log("  published:", describeRevision(j.publishedItemRevisionStatus));
+  console.log("  submitted:", describeRevision(j.submittedItemRevisionStatus));
+} catch {
+  console.log("  (unparseable response)", status.body.slice(0, 500));
+}
 
 if (dryRun) {
   console.log("\n--dry-run: authenticated and read status. Nothing was uploaded or submitted.");

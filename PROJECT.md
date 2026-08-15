@@ -2,17 +2,22 @@
 
 Single source of truth for the OfferAIO project. Any assistant or person should be
 able to read this file and pick up the work without re-discovering anything.
-**Last updated: 2026-08-13.** (Two changes today. **§8 — v1.3.0 is submitted and pending
-review.** The listing turned out to be *published* at v1.1.2 rather than a draft, and that
-build predates every safety fix in §7 and cannot drive the deployed dashboard; it was
-submitted via the API the same day. Users stay on v1.1.2 until review clears. Read §8
-first, then §12 item 1.
-Then a **verification pass against the local harness** found two real bugs in the build
-that was *already submitted*, so the repo is now **v1.3.1** and v1.3.0 must not be the
-next thing published: a `CSS` global shadowed in `content.js` that silently ate the
-"here's what still needs you" message and, worse, could eat the submit click entirely
-(**new §7 rule 5**), and a dashboard ternary that rendered "Open & fill" for the *unknown*
-state §16 exists to keep honest. **149 tests pass, up from 143.**
+**Last updated: 2026-08-15.** (**§8 — review cleared. The store is PUBLISHED at v1.3.1, at
+100%, with nothing pending.** Verified against `:fetchStatus` on 2026-08-15: there is no
+`submittedItemRevisionStatus` at all. The blocker that led this file for three days — real
+installs stuck on the 2026-08-04 v1.1.2 build, without any of the §7 safety rules and with a
+`bridge.js` that could not answer the deployed dashboard — **is gone.** Users now have the
+work through §16. What they do *not* have is **§17, the résumé auto-attach**: the repo and
+the `extension-latest` zip are at **v1.4.0** and the store is not. That is the open item,
+and it is a feature, not a correctness fix, so it is no longer urgent in the way §8 was.
+**154 tests pass** (103 in `tests/`, 51 in `worker/test/`), up from 149.
+
+Before that, 2026-08-13: a **verification pass against the local harness** found two real
+bugs in the build that had already been submitted, which is why the published version is
+v1.3.1 rather than the v1.3.0 that was sent first: a `CSS` global shadowed in `content.js`
+that silently ate the "here's what still needs you" message and, worse, could eat the submit
+click entirely (**new §7 rule 5**), and a dashboard ternary that rendered "Open & fill" for
+the *unknown* state §16 exists to keep honest.
 The 2026-08-08 **coverage pass** — the dashboard now says which postings the extension can
 actually fill. Roughly **half the board cannot be filled**, and every one of those rows
 used to offer "Open & fill". See **§16**, then §7 for the `ats` bridge message and §8 for
@@ -237,14 +242,15 @@ element.
   (solid muted gold primary, white ghost — no glossy gradients).
 
 ## 7. The Chrome extension (`extension/`)
-Manifest V3. Name "OfferAIO — Auto Apply", **v1.3.0** (1.0.0 → 1.1.0 licensing,
-→ 1.1.1 bridge licence relay, → 1.1.2 new logo, → 1.1.3 the three safety fixes below,
-→ 1.2.0 the application tracker, the context-aware popup and the identity relay,
-→ 1.3.0 the ATS relay and the `*.wellfound.com` host fix, §16).
+Manifest V3. Name "OfferAIO — Auto Apply", **v1.4.0 in the repo, v1.3.1 on the store**
+(1.0.0 → 1.1.0 licensing, → 1.1.1 bridge licence relay, → 1.1.2 new logo, → 1.1.3 the three
+safety fixes below, → 1.2.0 the application tracker, the context-aware popup and the identity
+relay, → 1.3.0 the ATS relay and the `*.wellfound.com` host fix, §16, → 1.3.1 the two bugs
+the harness pass found, → 1.4.0 the résumé auto-attach, §17).
 
 **`manifest.json` is the single source of truth for the version.** It disagreed four ways
 (manifest `1.1.2`, landing `v3.1.0`, dashboard `build 2027.1`, this file `1.1.1`); the
-landing page and the dashboard sidebar now both read `v1.3.0`. Bump all three together —
+landing page and the dashboard sidebar now both read the manifest's version. Bump all three together —
 **`tests/version-sync.test.mjs` fails if you don't**, and it also fails if
 `dashboard/index.html` is out of date with `OfferAIO.html`. The rule was written here
 before and drifted anyway; a comment cannot enforce a convention.
@@ -379,53 +385,55 @@ automatically (§17); the field is highlighted only when a form's own uploader r
 
 ## 8. Chrome Web Store status
 
-### 🟡 v1.3.0 is in review; users are still on v1.1.2 until it clears (2026-08-13)
+### ✅ Review cleared. PUBLISHED at v1.3.1, 100%, nothing pending (2026-08-15)
 
-Verified against `:fetchStatus`, which reports both revisions at once:
+Verified against `:fetchStatus`:
 
 ```
-publishedItemRevisionStatus  PUBLISHED       crxVersion 1.1.2   deployPercentage 100
-submittedItemRevisionStatus  PENDING_REVIEW  crxVersion 1.3.0   deployPercentage 100
+publishedItemRevisionStatus  PUBLISHED  crxVersion 1.3.1  deployPercentage 100
+submittedItemRevisionStatus  — absent —
 ```
 
-**Nothing has reached users yet.** Everything below about v1.1.2 stays true until Google
-approves the submission, and stays true permanently if it is rejected.
+The absent second block is the whole story: nothing is in review, so the 1.3.1 that went in
+after the 2026-08-13 harness pass is what installs now get. **Every problem this section
+described for three days is fixed for real users**: the §7 safety rules, the tracker, the
+`identity` bridge message the deployed dashboard needs, the ATS coverage of §16. The
+extended review predicted below for the widened host permissions either did not happen or
+did not take long.
 
-This section said "Draft" until 2026-08-12. It was not a draft — `OfferAIO — Auto Apply`
-was **published at v1.1.2**, so real installs run the 2026-08-04 build. Everything the last
-two passes fixed is missing from it:
+⚠️ **The store is at v1.3.1; the repo and the `extension-latest` zip are at v1.4.0.** The gap
+is §17 — the résumé is saved in the popup and attached to the form automatically. Store
+users still get the old behaviour: the résumé field highlighted and handed back on every
+application, which is the one manual step in a tool that sells itself on not having any.
+Shipping it is the open item. Two things to weigh first, neither of them blocking:
 
-- **All four `content.js` safety rules (§7).** v1.1.2 predates them — `git show
-  b5cfe6b:extension/content.js` contains no `workAuthAnswer`, no `NEEDS_USER`, no
-  `controlForLabel` guard. Installed users are asserting work authorisation they may not
-  hold on a legal declaration, can auto-submit past an empty resume field, are charged
-  quota for submits that never landed, and have label→input misbinding writing answers
-  into the wrong questions.
-- **The dashboard does not work for them at all.** `bridge.js` at v1.1.2 answers only
-  `profile`, `ping` and `license` — not `identity`. The deployed dashboard hides
-  `#connectGate` only on `d.type==='identity'` (verified on `origin/main`), so every store
-  installer who opens offeraio.com/dashboard/ sees the connect card forever. The product's
-  main entry point is broken for exactly the people who found it the official way.
+- **§17's "Not verified" is still not verified.** The `input.files` handoff was proven in a
+  normal page, not from a content script's isolated world, and never on a real ATS. The
+  design fails safe — `attachResume()` re-reads `input.files` and an isolated-world failure
+  reports as "couldn't attach" and falls back to the highlight — so shipping it unproven
+  costs users nothing they have today. Proving it first is still cheaper than a rejection:
+  `dev/local-mode.mjs on`, then one real Greenhouse or Lever fill.
+- **The data disclosure changed with §17** and the Privacy practices tab is dashboard-only.
+  v1.4.0 is the first build that stores a résumé file, so the answers dating from v1.1.2 are
+  now describing a different extension. See the warning in `store/OfferAIO-store-listing.md`
+  — `privacy.html` was already rewritten to match, and a listing that disagrees with the
+  policy it links to is a standard rejection reason.
 
-Shipping v1.3.0 to the store was therefore the highest-priority item in this file, ahead of
-everything in §12. The store submission is not "the last step before launch" — it is a fix
-for users who already have the product. **Submitted 2026-08-13 via the API** (below); the
-remaining work is waiting for review, and re-submitting if it bounces.
+For history, and because it explains why the published version is 1.3.1 and not the 1.3.0
+this file said was submitted: the listing was **published at v1.1.2** from 2026-08-04, not a
+draft as this section claimed until 2026-08-12. v1.3.0 was submitted via the API on 08-13,
+the harness pass then found two bugs in that exact build (§7 rule 5, §16), and v1.3.1 went
+in behind it. Google approved the later one.
 
-⚠️ **v1.3.0 is what is in review, and it has two known bugs — see §7 rule 5 and §16.** The
-repo is at **v1.3.1**. If review approves v1.3.0 it ships with them; that is still strictly
-better than the v1.1.2 users have now, so the submission was left alone rather than pulled.
-Publish v1.3.1 as soon as v1.3.0 clears (or immediately, if it is rejected).
-
-⚠️ **The API path turned out to be enough, contrary to what this file predicted.** The
-worry was that `:publish` would reject an incomplete listing — but the fields were filled
-by the original v1.1.2 submission and are inherited by the update, so it went straight to
-`PENDING_REVIEW`. The screenshots on the live listing are still whatever v1.1.2 uploaded;
-the regenerated v1.2.0-era ones in `store/` are **not** on the listing and cannot be put
-there through the API. Upload them by hand next time the dashboard is open.
+⚠️ **The API path was enough, contrary to what this file predicted** — twice now. The worry
+was that `:publish` would reject an incomplete listing, but the fields were filled by the
+original v1.1.2 submission and are inherited by every update. What it still cannot touch:
+**the screenshots on the live listing are whatever v1.1.2 uploaded**, and the regenerated
+v1.2.0-era ones in `store/` cannot be put there through the API. Upload them by hand next
+time the dashboard is open.
 
 - Developer account: **tobybergerbusiness@gmail.com** — registered, dashboard accessible.
-- Item id **`hcbchgpjladdfmcammhgbbmkdagcfcgd`**, published at **v1.1.2**.
+- Item id **`hcbchgpjladdfmcammhgbbmkdagcfcgd`**, published at **v1.3.1**.
 - Listing copy, category, permission justifications and data disclosures live in
   `store/OfferAIO-store-listing.md`.
 - Screenshots (1280×800) in `store/` — popup, in-page fill bar, dashboard. **Regenerate
@@ -437,10 +445,12 @@ there through the API. Upload them by hand next time the dashboard is open.
   `chrome.storage.local` stubbed. The script drives headless Chrome, which is the only
   way to get an exact 1280×800 PNG; a normal window screenshot comes out rescaled.
 - Privacy policy URL to enter: `https://offeraio.com/privacy.html`
-- **Remaining:** upload the v1.3.0 zip as an **update** to the published item, complete the
-  Privacy tab + listing fields, then submit for review. Note this is an update to a live
-  listing, not a first submission — a rejection now leaves v1.1.2 serving users, so the
-  permission justifications (§7 rule 4, §15, §16) matter more than they did as a draft.
+- **Remaining:** submit the **v1.4.0** zip as an update (`node store/publish-extension.mjs`,
+  which pulls it from the `extension-latest` release), and answer the Privacy practices tab
+  again in the dashboard now that a résumé file is stored (§17). A rejection leaves v1.3.1
+  serving users, which is a good build — so this is a low-stakes submission, unlike the last
+  one. The permission justifications (§7 rule 4, §15, §16) are unchanged since v1.3.1 cleared
+  review with them, and v1.4.0 adds no host permissions.
 - ✅ **Screenshots regenerated 2026-08-06** against the v1.2.0 UI. Two of the three sources
   needed changes first, because rendering the *real* UI means the sources break when the
   UI's preconditions change:
@@ -478,21 +488,22 @@ there through the API. Upload them by hand next time the dashboard is open.
   the repo, rather than printing the secret into a terminal transcript.
 - ⚠️ **The API cannot fill the listing.** There is no method for the description, category,
   screenshots, store icon or the Privacy practices tab — those are dashboard-only.
-  **But that mattered more as a draft than it does now (re-read 2026-08-12).** A published
-  item already has all of those populated, because Chrome will not publish without them, so
-  for a *version update* `:publish` can plausibly succeed on its own. Two things it still
-  cannot do, and both are real:
+  **But that mattered less than this file feared — proven twice now.** A published item
+  already has all of those populated, because Chrome will not publish without them, and for
+  a *version update* `:publish` inherits them: the 1.3.x submissions went straight to
+  `PENDING_REVIEW` and one of them is live. Two things it still cannot do, and both are real:
   - **Screenshots stay whatever v1.1.2 uploaded.** The current `store/store-screenshot-*.png`
-    were regenerated against the v1.2.0 UI (§8 above) and the API cannot replace them. An
-    API-only publish therefore ships v1.3.0 code behind older screenshots. Acceptable — the
-    code fix is what users need — but it means the dashboard visit is deferred, not avoided.
+    were regenerated against the v1.2.0 UI (§8 above) and the API cannot replace them. So the
+    live listing shows v1.1.2-era pictures of v1.3.1 code. Acceptable — the code is what users
+    need — but it means the dashboard visit is deferred, not avoided.
   - **The Privacy practices tab may now be answered wrongly.** Those answers date from the
-    v1.1.2 submission, before Pro started sending data off-device; see the warning in
+    v1.1.2 submission, before Pro started sending data off-device — and **v1.4.0 makes this
+    sharper**, since it is the first build to store a résumé file (§17). See the warning in
     `store/OfferAIO-store-listing.md`. A stale data-transfer answer is a compliance problem
     and a common rejection reason, and no API call can correct it.
-  - Also expect **extended review**: host permissions have widened since v1.1.2
-    (`*.lever.co`/`*.greenhouse.io` per §15, `*.wellfound.com` per §16, the Worker origin per
-    §7 rule 4), and new permissions on an established item are re-reviewed by hand.
+  - ~~Also expect **extended review** for the widened host permissions~~ — it did not
+    materialise: `*.lever.co`/`*.greenhouse.io` (§15), `*.wellfound.com` (§16) and the Worker
+    origin (§7 rule 4) all cleared with v1.3.1. v1.4.0 adds no new host permissions at all.
 - ⚠️ **Leaving the OAuth consent screen in "Testing" expires the refresh token after 7
   days**, and every later publish fails with `invalid_grant`. Set it to "In production"
   before minting. This is the most common way the credential path breaks.
@@ -637,23 +648,21 @@ that matters.
 ## 12. Open TODOs
 
 **Everything left is an account action only Toby can perform — the key blockers are gone.**
-The code is done: **143 tests pass** (92 in `tests/`, 51 in `worker/test/`), the Worker is
-deployed and gating correctly, the dashboard is wired to it, and as of 2026-08-08 three of
-the four keys in §11 are set. What remains is a Web Store submission, a first real
-purchase to exercise the Stripe path, and the `/rank` decision below.
+The code is done: **154 tests pass** (103 in `tests/`, 51 in `worker/test/`), the Worker is
+deployed and gating correctly, the dashboard is wired to it, three of the four keys in §11
+are set, and **the store listing is published and current through v1.3.1** (§8). What
+remains is shipping v1.4.0 to the store, a first real purchase to exercise the Stripe path,
+and the `/rank` decision below.
 
 ✅ **The 2026-08-06 trust pass is deployed.** It merged as PR #1 and Pages rebuilt the same
 day; the live dashboard no longer simulates applying. (This section said otherwise until
 2026-08-08 — it was written before the merge and never updated.)
 
-⚠️ **The 2026-08-08 coverage pass (§16) is committed but NOT deployed.** Deploying means:
-push to `main`, wait for Pages, then check §4 — this pass changed `landing.html`,
-`OfferAIO.html` and the regenerated `dashboard/index.html`, all served as HTML
-(`DYNAMIC`), and added no new `.js` at the site root, so **no Cloudflare purge is needed**.
-Also **reload the unpacked extension** in any browser testing it: `manifest.json` changed
-(version, `*.wellfound.com`, and `ats.js` now loads on offeraio.com too), so a stale load
-will answer the dashboard's `ats` request with nothing and every listing will show as
-unknown rather than as fillable.
+✅ **The 2026-08-08 coverage pass (§16) and the 2026-08-13 résumé pass (§17) are both on
+`main` and deployed.** (This section said the coverage pass was undeployed until 2026-08-15;
+it was merged days earlier and never ticked off. Check `git merge-base --is-ancestor` before
+believing a "not deployed" note in this file.) Remember to **reload the unpacked extension**
+in any browser testing it after either pass — `manifest.json` changed in both.
 
 0. **The keys (§11) — three of four are done.** Only one is left:
    - ~~`OPENAI_API_KEY`~~ — **set** (confirmed 2026-08-08). Untested end to end; see §11.
@@ -663,21 +672,24 @@ unknown rather than as fillable.
      `worker/**` fails the Deploy Worker job. **This is a convenience, not a blocker** —
      `npx wrangler deploy` from `worker/` works today on this machine, so the only cost is
      that Worker deploys stay manual.
-1. 🟡 **Chrome Web Store — v1.3.0 submitted 2026-08-13, awaiting review (§8).** Users are
-   still on v1.1.2 until it clears, so the four `content.js` safety rules and the
-   dashboard-compatible `bridge.js` have not reached anyone yet. Poll with
-   `node store/publish-extension.mjs --dry-run`. Expect a slower-than-usual review: host
-   permissions widened since v1.1.2 (`*.lever.co`/`*.greenhouse.io` §15, `*.wellfound.com`
-   §16, the Worker origin §7 rule 4), and new permissions on an established item are
-   reviewed by hand. If it bounces, the rejection names the reason — fix and re-run
-   `--publish-only`. Still owed by hand: the three regenerated screenshots in `store/`.
-   Everything feeding that is prepared and current as of 2026-08-08: listing copy
-   (corrected, §8), permission justifications (re-checked, §8), screenshots (regenerated
-   2026-08-06 from the real UI), and the packaged zip — now **v1.3.0**, rebuilt
-   automatically on every `extension/` change, so push §16 before uploading.
-   ⚠️ Read the warning in `store/OfferAIO-store-listing.md` before answering the
-   data-transfer question — the honest answer changed once Pro started sending data
-   off-device, and a mismatch with privacy.html is a common rejection reason.
+1. ✅ **Chrome Web Store — published at v1.3.1, review cleared (§8).** Confirmed 2026-08-15:
+   `publishedItemRevisionStatus` is `PUBLISHED` at 100% and there is no submitted revision.
+   Every safety rule in §7, the tracker, the `identity` bridge message and §16's coverage
+   honesty have reached real installs. Poll any future submission with
+   `node store/publish-extension.mjs --dry-run`, which now prints both revision blocks
+   directly (it used to slice the raw response at 500 chars, and the ~400-char `publicKey`
+   ate the whole window, so the one thing the poll exists to report was never visible).
+   **Two things still owed, neither urgent:**
+   - **Ship v1.4.0** (§17, the résumé auto-attach) — `node store/publish-extension.mjs`.
+     The zip is already built on the `extension-latest` release. Worth proving §17's
+     isolated-world handoff on one real ATS first (`dev/local-mode.mjs on`), since it has
+     never run outside a normal page. A rejection is cheap now: v1.3.1 keeps serving.
+   - **A dashboard visit**, for the two things the API cannot touch: the three regenerated
+     screenshots in `store/` (the live listing still shows v1.1.2's), and the Privacy
+     practices tab. ⚠️ Read the warning in `store/OfferAIO-store-listing.md` before
+     answering the data-transfer question — the honest answer changed when Pro started
+     sending data off-device and again when §17 started storing a résumé file, and a
+     mismatch with privacy.html is a common rejection reason.
 2. **Cloudflare Worker** — deployed and verified (§14). Confirmed still healthy
    2026-08-08: `/health` returns `{"ok":true,"service":"offeraio-worker/1.0"}`, and
    `/cover` returns **402** for a bogus key, so the licence gate is live and
