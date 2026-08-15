@@ -640,6 +640,16 @@ run on Workers — use `constructEventAsync`, or hand-roll HMAC-SHA256 over
 `` `${timestamp}.${payload}` `` with `crypto.subtle` (preferred: no SDK, no bundler). And
 the webhook must read the **raw** body before any `.json()`, or signature checks fail.
 
+**Minting a key by hand: `node worker/mint-license.mjs`.** Prints a key in the Worker's
+own format; `--write` puts it in KV and verifies it against the live Worker. For
+dogfooding (the owner needs Pro to exercise `/cover`), for support (§10's KV race, whose
+first symptom is a key that stops working a month after purchase), and for comps.
+⚠️ A hand-minted key has **no subscription behind it** — nothing renews or cancels it, it
+just expires at `periodEnd`. And it **does not test the purchase path**: it skips exactly
+the checkout → webhook → key → `license.html` chain that has never run (§12 item 4).
+⚠️ `--check`, and the verify that follows `--write`, each consume one of the three install
+slots.
+
 **No email in v1.** Emailing the key needs Resend/Postmark plus SPF/DKIM on offeraio.com.
 Instead: the success page shows the key, and recovery goes through the `session_id` on the
 Stripe receipt the customer already has. Known weak spot — revisit when it hurts.
@@ -1129,6 +1139,23 @@ blank is indistinguishable from a user who got distracted, so it generates no bu
   outline: we do not know which box it is).
 - **A dropdown with no option matching our answer was left empty without a word** — "Yes"
   against options reading "Yes, I am authorized to work". Now flagged like anything else.
+
+### `tests/browser-real-ats.mjs`
+
+The same machinery pointed at **live** Greenhouse, Lever and Ashby postings, filling real
+forms and reporting what landed. `browser-endtoend.mjs` proves the mechanism against a form
+we wrote, which means it proves the mechanism and assumes the market; this closes §17's last
+caveat with evidence.
+
+⚠️ **It never submits.** It calls `run()` and reads the DOM back; `doSubmit` is never called
+and no button is ever clicked. Keep it that way — the moment it can submit, running it costs
+somebody a real application under their name. The profile it seeds is a throwaway
+(`nobody@example.invalid`), because these are real employers' pages.
+
+`node tests/browser-real-ats.mjs [url…]`. With no arguments it samples one posting per ATS.
+The line to watch is **`report disagrees with the DOM`**: §17's whole safety argument is that
+`attachResume()` never claims an attachment it cannot see, so that warning firing is the one
+result that would actually matter.
 
 ### `tests/browser-endtoend.mjs`
 
