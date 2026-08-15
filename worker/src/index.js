@@ -88,16 +88,43 @@ export default {
   },
 };
 
+/* Read a secret the way a header needs it.
+ *
+ * ⚠️ This is not defensive programming for its own sake. `OPENAI_API_KEY` was set on
+ * 2026-08-08 with a **UTF-8 BOM** on the front of it — PowerShell's `>` and `Out-File`
+ * both write one by default, and `wrangler secret put` faithfully stored it. The secret
+ * was present, `wrangler secret list` showed it, and every `/cover` call returned
+ *
+ *     500  Incorrect API key provided: ï»¿sk-pr…      ← EF BB BF, mis-decoded
+ *
+ * for a week, undetected, because nothing had ever called it: `/cover` needs an active
+ * licence and nobody had bought. The first person to find it would have been a paying
+ * customer. A BOM and a trailing newline are invisible in every UI that would show you
+ * this value, so strip them here rather than trusting the next person to paste cleanly. */
+const secret = (v) => {
+  if (typeof v !== "string") return v;
+  // 65279 is U+FEFF. Compared by code point on purpose: a pasted BOM is invisible in
+  // source and makes ripgrep treat the file as binary, which is how content.js went
+  // missing from every search in section 16. (JS trim() happens to strip U+FEFF too,
+  // since it counts as whitespace - too subtle to rely on silently.)
+  const s = v.trim();
+  return (s.charCodeAt(0) === 65279 ? s.slice(1) : s).trim();
+};
+
 async function llm(system, user, env) {
-  if (!env.OPENAI_API_KEY) {
+  const apiKey = secret(env.OPENAI_API_KEY);
+  if (!apiKey) {
     throw new Error("No API key set. Add OPENAI_API_KEY as a secret in Settings > Variables.");
   }
   const r = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
-    headers: { authorization: "Bearer " + env.OPENAI_API_KEY, "content-type": "application/json" },
+    headers: { authorization: "Bearer " + apiKey, "content-type": "application/json" },
     body: JSON.stringify({
       model: COVER_MODEL,
-      max_tokens: 700,
+      // NOT max_tokens. Current OpenAI chat models reject it outright — "Unsupported
+      // parameter: 'max_tokens' is not supported with this model" — with a 400 that this
+      // Worker surfaces as a 500. The second reason /cover had never once succeeded.
+      max_completion_tokens: 700,
       messages: [{ role: "system", content: system }, { role: "user", content: user }],
     }),
   });
@@ -124,12 +151,13 @@ async function writeCover({ company, role, description, profile }, env) {
 }
 
 async function rank(resumeText, listings, env) {
-  if (!env.OPENAI_API_KEY) throw new Error("Ranking needs OPENAI_API_KEY (embeddings).");
+  const apiKey = secret(env.OPENAI_API_KEY);
+  if (!apiKey) throw new Error("Ranking needs OPENAI_API_KEY (embeddings).");
   if (!resumeText || !listings.length) return [];
   const embed = async (input) => {
     const r = await fetch("https://api.openai.com/v1/embeddings", {
       method: "POST",
-      headers: { authorization: "Bearer " + env.OPENAI_API_KEY, "content-type": "application/json" },
+      headers: { authorization: "Bearer " + apiKey, "content-type": "application/json" },
       body: JSON.stringify({ model: EMBED_MODEL, input }),
     });
     const j = await r.json();

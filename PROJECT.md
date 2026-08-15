@@ -674,11 +674,39 @@ that matters.
 | Key | Lives in | Purpose | Status |
 | --- | --- | --- | --- |
 | `CLOUDFLARE_API_TOKEN` | GitHub Actions secret | lets CI run `wrangler deploy` | **unset — blocking the Worker deploy** |
-| `OPENAI_API_KEY` | Cloudflare Worker secret | chat for `/cover`, embeddings for `/rank` | **set — confirmed present 2026-08-08.** Never exercised end to end: `/cover` needs an active licence first, and nobody has bought yet, so the OpenAI call itself is still untested |
+| `OPENAI_API_KEY` | Cloudflare Worker secret | chat for `/cover`, embeddings for `/rank` | **set, and as of 2026-08-15 genuinely working** — see the warning below. It was set with a **UTF-8 BOM** and had never once succeeded |
 | `STRIPE_SECRET_KEY` | Cloudflare Worker secret | reserved; **the code does not use it** — every field needed arrives in the webhook payloads | unset |
 | `STRIPE_WEBHOOK_SECRET` | Cloudflare Worker secret | webhook signature verification | **set 2026-08-04** — verified live: forged events get 400, unsigned get 400, nothing provisions |
 
 `ANTHROPIC_API_KEY` is **not** on this list and should never be set — see §3.
+
+### ⚠️ "The secret is set" is not the same as "the secret works" (2026-08-15)
+
+`OPENAI_API_KEY` was set on 2026-08-08 and this file recorded it as done. It was broken
+from that moment, in two independent ways, and **`/cover` had never once succeeded**:
+
+1. **A UTF-8 BOM in front of the key.** PowerShell's `>` and `Out-File` both write one by
+   default; `wrangler secret put` stored it faithfully. Every call came back
+   `500 Incorrect API key provided: <BOM>sk-pr…`. `wrangler secret list` shows names, not
+   values, so every check anyone could run said the key was fine.
+2. **`max_tokens`.** Current OpenAI chat models reject it — *"Unsupported parameter:
+   'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead."*
+
+Neither was noticed because **nothing had ever called it.** `/cover` requires an active
+licence, nobody had bought, and this file's own note — "never exercised end to end" — was
+filed as a curiosity rather than as the risk it was. The first person to run this code
+would have been a customer who had just paid $30.
+
+Fixed: `secret()` in `worker/src/index.js` strips a leading BOM and surrounding whitespace
+from any secret, `/rank` was reading the raw value too and now shares it, and the request
+uses `max_completion_tokens`. Guarded by `worker/test/secret.test.mjs` and
+`worker/test/cover-request.test.mjs`. **Verified live on 2026-08-15**: a real letter, 3.6s,
+metered 1 of 250.
+
+The general lesson is worth more than the fix. **An untested path is not a low-severity
+item just because it has no users — it is a bug you have decided a customer will find.**
+Anything gated behind a purchase should be exercised with a hand-minted key (§10) the day
+it ships, not the day it sells.
 
 ## 12. Open TODOs
 

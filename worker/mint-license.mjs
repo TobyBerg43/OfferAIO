@@ -29,7 +29,8 @@
 
 import { randomBytes } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -117,8 +118,15 @@ const rec = {
 };
 
 const nsId = namespaceId();
-const args = ["wrangler", "kv", "key", "put", `key:${key}`, JSON.stringify(rec),
-  "--namespace-id", nsId, "--remote"];
+
+/* The record goes to KV via --path, not as an argv value. Two reasons, both real on
+   Windows: the JSON is full of double quotes and a shell would eat them, and a licence
+   record on a command line ends up in shell history. */
+const recPath = join(mkdtempSync(join(tmpdir(), "offeraio-mint-")), "record.json");
+writeFileSync(recPath, JSON.stringify(rec));
+
+const args = ["wrangler", "kv", "key", "put", `key:${key}`,
+  "--path", recPath, "--namespace-id", nsId, "--remote"];
 
 console.log("key:      " + key);
 console.log("plan:     pro · 250/month");
@@ -127,16 +135,26 @@ console.log("email:    " + (rec.email || "(none)"));
 console.log("");
 
 if (!has("write")) {
-  console.log("Nothing was written. To write it:\n");
-  console.log("  npx " + args.map((a) => (/[\s{"]/.test(a) ? `'${a}'` : a)).join(" "));
-  console.log("\nOr re-run this with --write.");
+  console.log("Nothing was written. Re-run with --write, or do it by hand:\n");
+  console.log("  cd worker && npx " + args.join(" "));
+  console.log("\n(the record is already staged at that path)");
   process.exit(0);
 }
 
 console.log("writing to KV " + nsId + " …");
-const res = spawnSync("npx", args, { stdio: "inherit", shell: process.platform === "win32", cwd: HERE });
+/* shell:true is required, not sloppiness: on Windows `npx` is `npx.cmd`, and since
+   CVE-2024-27980 Node refuses to spawn a .cmd without a shell — it throws EINVAL before
+   the command runs, which looks exactly like "wrangler failed" if you don't check
+   res.error. Safe here only because the record went to a file: the arguments left are a
+   key, a path and a hex id. The path is quoted anyway, since %TEMP% can contain spaces. */
+const quoted = args.map((a) => (/\s/.test(a) ? `"${a}"` : a));
+const res = spawnSync("npx", quoted, { stdio: "inherit", shell: true, cwd: HERE });
+if (res.error) {
+  console.error("\ncould not run npx: " + res.error.message);
+  process.exit(1);
+}
 if (res.status !== 0) {
-  console.error("\nwrangler failed. Is this machine logged in? `npx wrangler whoami`");
+  console.error("\nwrangler exited " + res.status + ". Is this machine logged in? `npx wrangler whoami`");
   process.exit(res.status || 1);
 }
 
