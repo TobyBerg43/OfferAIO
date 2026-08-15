@@ -2,7 +2,25 @@
 
 Single source of truth for the OfferAIO project. Any assistant or person should be
 able to read this file and pick up the work without re-discovering anything.
-**Last updated: 2026-08-15.** (**§8 — review cleared. The store is PUBLISHED at v1.3.1, at
+**Last updated: 2026-08-15.** (Two things today.
+
+**§18 — the work-authorisation bug that hid inside the rule against it, fixed in v1.4.1.**
+Rule 1 stopped `answerFor` asserting work authorisation and left a guard for "we don't
+know". The guard could never fire, because **neither profile UI could produce that state**:
+both derived `needsSponsorship = (workAuth === "Requires sponsorship")`, so picking
+**"F-1 (CPT/OPT)" stored `false`** and the extension answered **"Yes"** to *"authorized to
+work without sponsorship?"* — the exact false declaration rule 1 exists to prevent, for
+exactly the students it exists to protect. Neither select had a blank option either, so a
+user who never touched the control still shipped an answer they never gave. Read §18, then
+§7 rule 1.
+
+**§17 is verified.** The résumé handoff genuinely works from a content script's isolated
+world, on a real form, in a real Chrome — including the part that matters, that the file is
+in the form's `FormData` and not merely displayed. `tests/browser-endtoend.mjs` is the
+harness; it is also what found the bug above and two silences beside it. **154 tests pass**
+(115 in `tests/`, up from 103; 51 in `worker/test/`), plus 32 browser assertions.
+
+**§8 — review cleared. The store is PUBLISHED at v1.3.1, at
 100%, with nothing pending.** Verified against `:fetchStatus` on 2026-08-15: there is no
 `submittedItemRevisionStatus` at all. The blocker that led this file for three days — real
 installs stuck on the 2026-08-04 v1.1.2 build, without any of the §7 safety rules and with a
@@ -159,7 +177,10 @@ session re-uploading old files. After any extension change, verify the raw file 
 - `tests/` — Node tests for extension + pipeline logic (`license.test.mjs`,
   `bridge.test.mjs`, `content-workauth.test.mjs`, `content-tracker.test.mjs`,
   `listings.test.mjs`, and from 2026-08-08 `ats-manifest.test.mjs`,
-  `dashboard-canfill.test.mjs`, `version-sync.test.mjs`). Deliberately outside
+  `dashboard-canfill.test.mjs`, `version-sync.test.mjs`, and from 2026-08-15
+  `profile-contract.test.mjs` (§18) plus `browser-endtoend.mjs` — the last of which is
+  **not** a `.test.mjs` on purpose, so CI's glob skips it: it drives a real Chrome.
+  Deliberately outside
   `extension/`, which `zip-extension.yml` ships wholesale to the store. `test.yml` globs
   `tests/*.test.mjs`, so a new file runs on its own.
   ⚠️ The last three are **consistency** tests: they read `manifest.json`, `OfferAIO.html`
@@ -269,6 +290,11 @@ before and drifted anyway; a comment cannot enforce a convention.
    which caught exactly that ordering bug mid-fix). F-1 is deliberately never
    auto-answered: CPT/OPT may authorise work, but the right answer varies by question and
    by stage — precisely the judgement not to make on someone's behalf.
+   ⚠️ **This rule was correct and still shipped the harm it forbids for a week.** The
+   guard it relies on, `typeof p.needsSponsorship !== "boolean"`, was unreachable: the
+   writers of the profile could not produce a non-boolean. Reading `sponsorshipNeed()` in
+   `content.js` is now the rule; **§18** is why, and `tests/profile-contract.test.mjs`
+   is what keeps the writers honest. A rule enforced only on the reader is half a rule.
 2. **Full-auto stops for a missing resume or a flagged question.** ⚠️ **The premise under
    this rule was wrong for the product's whole life, and it was corrected in v1.4.0 — see
    §17.** Browsers do not forbid attaching a file; they forbid setting `input.value` to a
@@ -445,12 +471,11 @@ time the dashboard is open.
   `chrome.storage.local` stubbed. The script drives headless Chrome, which is the only
   way to get an exact 1280×800 PNG; a normal window screenshot comes out rescaled.
 - Privacy policy URL to enter: `https://offeraio.com/privacy.html`
-- **Remaining:** submit the **v1.4.0** zip as an update (`node store/publish-extension.mjs`,
-  which pulls it from the `extension-latest` release), and answer the Privacy practices tab
-  again in the dashboard now that a résumé file is stored (§17). A rejection leaves v1.3.1
-  serving users, which is a good build — so this is a low-stakes submission, unlike the last
-  one. The permission justifications (§7 rule 4, §15, §16) are unchanged since v1.3.1 cleared
-  review with them, and v1.4.0 adds no host permissions.
+- **Remaining:** the Privacy practices tab, in the dashboard, now that a résumé file is
+  stored (§17). **v1.4.1 was submitted 2026-08-15** via `node store/publish-extension.mjs`.
+  A rejection leaves v1.3.1 serving users, which is a good build — so this was a low-stakes
+  submission, unlike the last one. The permission justifications (§7 rule 4, §15, §16) are
+  unchanged since v1.3.1 cleared review with them, and v1.4.x adds no host permissions.
 - ✅ **Screenshots regenerated 2026-08-06** against the v1.2.0 UI. Two of the three sources
   needed changes first, because rendering the *real* UI means the sources break when the
   UI's preconditions change:
@@ -679,11 +704,9 @@ in any browser testing it after either pass — `manifest.json` changed in both.
    `node store/publish-extension.mjs --dry-run`, which now prints both revision blocks
    directly (it used to slice the raw response at 500 chars, and the ~400-char `publicKey`
    ate the whole window, so the one thing the poll exists to report was never visible).
-   **Two things still owed, neither urgent:**
-   - **Ship v1.4.0** (§17, the résumé auto-attach) — `node store/publish-extension.mjs`.
-     The zip is already built on the `extension-latest` release. Worth proving §17's
-     isolated-world handoff on one real ATS first (`dev/local-mode.mjs on`), since it has
-     never run outside a normal page. A rejection is cheap now: v1.3.1 keeps serving.
+   **v1.4.1 was submitted 2026-08-15** (§17 the résumé auto-attach, §18 the work-auth fix)
+   after `tests/browser-endtoend.mjs` verified §17's isolated-world handoff. A rejection is
+   cheap now: v1.3.1 keeps serving. **One thing still owed:**
    - **A dashboard visit**, for the two things the API cannot touch: the three regenerated
      screenshots in `store/` (the live listing still shows v1.1.2's), and the Privacy
      practices tab. ⚠️ Read the warning in `store/OfferAIO-store-listing.md` before
@@ -1002,10 +1025,130 @@ extension now holds an actual résumé file, so "we never send your résumé any
 sharper promise than it was, and sending résumé *text* to the Worker would break it more
 visibly.
 
-### Not verified
+### ✅ Verified in the isolated world (2026-08-15)
 
-The browser check above ran in a normal page. Content scripts run in an **isolated world**,
-and while Chrome permits this handoff there, it has not been confirmed on a real ATS. The
-design makes that safe rather than risky — the verify-don't-assume rule means an isolated-world
-failure reports as "couldn't attach" and falls back to the old highlight behaviour — but the
-first real Greenhouse or Lever fill is what proves it. Test with `dev/local-mode.mjs on`.
+This section used to end "Not verified" — the check had only ever run in a normal page, and
+content scripts run in an **isolated world** with its own `File`, `DataTransfer` and
+`FileList` constructors. `tests/browser-endtoend.mjs` now settles it, against a real Chrome
+with the real extension installed:
+
+```
+attachResume() returns true · file on the input · bytes survive the base64 round trip
+in the form's FormData: ada-lovelace-resume.pdf, exact byte length
+the page's OWN world sees the same file  ← a wrapper that existed only in the isolated
+                                            world would pass every other assertion here
+input and change both fire · the required file input now validates
+a file the user attached themselves is left alone
+```
+
+The page's-own-world assertion is the one worth keeping. Everything else could be satisfied
+by an object visible only to us, which is precisely the failure mode that would let a user
+submit believing their résumé went.
+
+Still unproven on a **real ATS**, and that is a different claim: Greenhouse and Lever may
+use custom uploaders, sandboxed iframes, or post to S3 themselves. The design already fails
+safe there — `attachResume()` re-reads `input.files` and reports honestly — so the residual
+risk is a résumé we correctly report as not attached, not one we wrongly report as attached.
+
+## 18. The profile is a contract, and only one side of it was tested (added 2026-08-15, v1.4.1)
+
+### ⚠️ Rule 1 was right, was tested, and shipped the exact harm it forbids anyway
+
+`answerFor` no longer asserts work authorisation — §7 rule 1, eight tests, all green since
+2026-08-05. It leaves ambiguous questions blank, and its guard for "we don't know" is
+`typeof p.needsSponsorship !== "boolean"`.
+
+**Nothing could reach that guard.** The profile has two writers and one reader:
+
+| | writes the profile |
+| --- | --- |
+| `extension/popup.html` + `popup.js` | what the user types into the extension |
+| `OfferAIO.html` | what the user types into the website, pushed over the bridge |
+| `extension/content.js` | the only reader — on somebody's job application |
+
+Both writers derived the flag the same wrong way:
+
+```js
+needsSponsorship = (workAuth === "Requires sponsorship")   // four answers into two
+```
+
+Two consequences, both live from the day rule 1 was written until 2026-08-15:
+
+1. **"F-1 (CPT/OPT)" stored `false`.** So on *"Are you authorized to work in the United
+   States without sponsorship?"* the reader took the boolean at face value and answered
+   **"Yes"**. That is the false legal declaration rule 1 exists to prevent, made on behalf
+   of precisely the students it exists to protect, by the code written to protect them.
+2. **Neither select had a blank option.** The dashboard's defaulted to "US Citizen", the
+   popup's to "Sponsorship? No". A user who never touched the control still shipped a
+   confident answer they had never given — and the reader could not tell that from a
+   deliberate one.
+
+`tests/content-workauth.test.mjs` was green throughout, and its own fixtures show why:
+`const f1 = { needsSponsorship: true, workAuth: "F-1 (CPT/OPT)" }` — a shape **no writer
+ever produced**. The reader was tested exhaustively against a profile the product did not
+build. **Test the writers, or the reader's tests are fiction.**
+
+### The fix
+
+`sponsorshipNeed(p)` in `content.js` returns **true / false / null**, and reads the explicit
+selection rather than the derived boolean:
+
+| selection | stored | read as |
+| --- | --- | --- |
+| US Citizen, Permanent Resident | `needsSponsorship: false` | false — answerable |
+| Requires sponsorship | `needsSponsorship: true` | true — answerable |
+| **F-1 (CPT/OPT)** | **key absent** | **null — ask the user** |
+| blank (the default) | key absent | null — ask the user |
+
+A stored `false` with no selection behind it is **not trusted** — that was the old default on
+both UIs, a value nobody chose. A stored `true` is, because it only ever came from a
+deliberate pick and over-declaring a need for sponsorship is not the dangerous direction.
+Dashboard profiles written before the blank option existed drop a stored "US Citizen" on
+load (`PROFILE_VERSION` 2): it costs a citizen one dropdown, and it stops an international
+student's applications declaring something they never said.
+
+Both UIs now offer the same five choices with the blank one selected, and the popup's binary
+"Sponsorship?" select is gone — it could express neither F-1 nor silence.
+
+⚠️ **The derivation now exists three times** — `content.js`, `popup.js`, `OfferAIO.html` —
+in files that cannot import each other. That is the §16 problem again.
+**`tests/profile-contract.test.mjs`** holds them together: same options in both UIs, blank
+first and selected, identical derivation for every option either offers, and the reader's
+conclusion matching what the writers stored. It also asserts every key `popup.js` saves has
+a matching id in `popup.html` — `document.getElementById(k).value` throws inside the Save
+handler, so renaming a control without renaming its key silently kills the whole button.
+
+### Two silences fixed beside it
+
+Both found by the browser harness, both the §16 failure in miniature — a question left
+blank is indistinguishable from a user who got distracted, so it generates no bug report:
+
+- **A label whose control could not be resolved was dropped without a word.** `controlForLabel`
+  refuses to guess on a dense form (§7 rule 4), which is right — but when we *had* an answer
+  and nowhere provably safe to put it, nothing was said. It is now named in the bar (no
+  outline: we do not know which box it is).
+- **A dropdown with no option matching our answer was left empty without a word** — "Yes"
+  against options reading "Yes, I am authorized to work". Now flagged like anything else.
+
+### `tests/browser-endtoend.mjs`
+
+A real Chrome, the real extension, the real content script in its real isolated world.
+32 assertions covering §17's handoff, §7 rules 1/3/4/5, and the tracker's three outcomes.
+
+- **Run it before any store submission.** It is not in CI — `test.yml` globs
+  `tests/*.test.mjs`, which this deliberately is not, because it needs a Chrome binary.
+  `node tests/browser-endtoend.mjs`, or `--head` to watch it.
+- ⚠️ **`--load-extension` and `--disable-extensions-except` are ignored by branded Google
+  Chrome** ("not allowed in Google Chrome"), silently apart from one stderr warning — the
+  symptom is simply that no isolated world ever appears. The extension is installed over
+  CDP instead: `Extensions.loadUnpacked`, which `--enable-unsafe-extension-debugging`
+  unlocks. Do not "fix" this back to the flags.
+- The mock form is **generated into a temp dir at runtime**, not committed. GitHub Pages
+  publishes every file in this repo, so a tracked `dev/mock-application.html` would put a
+  convincing fake job posting live on offeraio.com — the reason `dev-harness` exists and
+  stays unmerged. The extension is copied to a temp dir too and given its `127.0.0.1` host
+  permission *there*, so a local-only host entry cannot leak into the store zip.
+- It found the work-auth bug within a minute of first running green, by the plain mechanism
+  of using the profile shape the product actually stores. The first version of the harness
+  used `firstName`/`lastName`, "found" a name-filling bug that did not exist, and that false
+  positive is itself the argument for `profile-contract.test.mjs`.
