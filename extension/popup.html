@@ -94,7 +94,16 @@
     </div>
     <div class="row">
       <div><label>GPA</label><input id="gpa" placeholder="3.8"></div>
-      <div><label>Sponsorship?</label><select id="needsSponsorship"><option value="false">No</option><option value="true">Yes</option></select></div>
+      <!-- Was a binary "Sponsorship? No/Yes" defaulting to No — a confident answer from a
+           control the user never touched, and with no way to say "F-1". Now it mirrors the
+           dashboard's selection exactly, blank default included. -->
+      <div><label>Work authorization</label><select id="workAuth">
+        <option value="" selected>— Select —</option>
+        <option>US Citizen</option>
+        <option>Permanent Resident</option>
+        <option>F-1 (CPT/OPT)</option>
+        <option>Requires sponsorship</option>
+      </select></div>
     </div>
     <label>LinkedIn</label><input id="linkedin" placeholder="linkedin.com/in/you">
     <label>Cover letter template</label>

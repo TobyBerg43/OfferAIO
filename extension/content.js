@@ -44,31 +44,59 @@
    * rule here is: answer only the phrasings whose meaning is unambiguous, and leave every
    * other one blank for the user.
    */
+  /* What the profile really says about sponsorship: true, false, or null for "we do not
+   * know". The third state is the whole point, and a boolean cannot hold it.
+   *
+   * ⚠️ This function is the fix for a bug that survived rule 1 by hiding inside it. Both
+   * profile UIs used to derive `needsSponsorship = (workAuth === "Requires sponsorship")`,
+   * which collapses four answers into two and gets two of them wrong:
+   *   - **F-1 (CPT/OPT) stored `false`**, so "Are you authorized to work without
+   *     sponsorship?" was answered **"Yes"** — the precise false declaration rule 1 was
+   *     written to stop, for precisely the students it was written to protect.
+   *   - **Neither UI had a blank option**, so a user who never touched the control stored
+   *     a confident answer they had never given.
+   * The old guard, `typeof p.needsSponsorship !== "boolean"`, could therefore never fire
+   * for a real profile: it was only ever reachable by a profile saved before the field
+   * existed. tests/content-workauth.test.mjs was green throughout, because its fixtures
+   * described a shape the product never built.
+   *
+   * So: read the explicit selection, and treat the derived boolean as corroboration only.
+   * A stored `false` with no selection behind it was the old default on both UIs and is
+   * not trusted. A stored `true` is, because it only ever came from a deliberate pick —
+   * and over-declaring that you need sponsorship is not the dangerous direction. */
+  function sponsorshipNeed(p) {
+    const auth = String(p.workAuth || "").trim().toLowerCase();
+    if (/citizen|permanent resident/.test(auth)) return false;
+    if (/requires? sponsorship|need(s)? sponsorship/.test(auth)) return true;
+    // F-1 and anything else we do not recognise: CPT/OPT may authorise work now, but the
+    // right answer differs by question and by stage. Not our judgement to make.
+    if (auth) return null;
+    return p.needsSponsorship === true ? true : null;
+  }
+
   function workAuthAnswer(l, p) {
-    const auth = String(p.workAuth || "").toLowerCase();
-    // Definitely authorised with no sponsorship needed. Note F-1 is deliberately NOT in
-    // this set: CPT/OPT may authorise work now but the answer differs per question and
-    // per stage, which is exactly the judgement we must not make on someone's behalf.
-    const clearlyUnrestricted = /citizen|permanent resident/.test(auth) || p.needsSponsorship === false;
+    const need = sponsorshipNeed(p);
 
     // "...without sponsorship?" — the inverse phrasing, and it MUST be tested first.
     // "Can you work in the U.S. without requiring sponsorship?" contains "requiring
     // sponsorship", so checking the require-rule first inverts the answer on exactly the
     // question this whole function exists to get right.
     if (/without[^.?]{0,30}sponsor/.test(l)) {
-      if (typeof p.needsSponsorship !== "boolean") return NEEDS_USER;
-      return p.needsSponsorship ? "No" : "Yes";
+      if (need === null) return NEEDS_USER;
+      return need ? "No" : "Yes";
     }
 
     // "Will you now or in the future require sponsorship?" — needing it means Yes.
     if (/(requir|need|seek|request)\w*[^.?]{0,40}sponsor/.test(l) || /sponsor\w*[^.?]{0,30}(now or in the future)/.test(l)) {
-      if (typeof p.needsSponsorship !== "boolean") return NEEDS_USER;
-      return p.needsSponsorship ? "Yes" : "No";
+      if (need === null) return NEEDS_USER;
+      return need ? "Yes" : "No";
     }
 
     // A plain "are you legally authorized to work in the US?" with no sponsorship clause.
+    // Answered only for someone who said citizen or permanent resident — needing no
+    // sponsorship is what makes this one unambiguous, and nothing else implies it.
     if (/authoriz|eligible to work|work authorization|legally/.test(l) && !/sponsor|visa/.test(l)) {
-      return clearlyUnrestricted ? "Yes" : NEEDS_USER;
+      return need === false ? "Yes" : NEEDS_USER;
     }
 
     // Anything else touching sponsorship or visas: too many phrasings to be confident.
@@ -170,8 +198,21 @@
       if (!ans) return;
       const inp = controlForLabel(lab);
       if (ans === NEEDS_USER) { flagField(inp, lab.textContent); return; }
-      if (inp && inp.tagName === "SELECT") { n += selectOption(inp, ans); return; }
-      if (inp && (inp.tagName === "INPUT" || inp.tagName === "TEXTAREA")) n += setValue(inp, ans);
+      /* We have an answer and nowhere provably safe to put it: controlForLabel refused to
+         guess (rule 4). Refusing is right; going quiet about it is not. Silence here is
+         §16's failure in miniature — a question left blank looks exactly like a user who
+         got distracted, so it generates no bug report and the user finds out at the
+         employer's error page. No outline, because we do not know which box it is; but it
+         gets named in the bar like anything else we could not do for them. */
+      if (!inp) { flagField(null, lab.textContent); return; }
+      if (inp.tagName === "SELECT") {
+        // A dropdown whose options don't contain our answer — "Yes" against
+        // "Yes, I am authorized to work" — used to leave the field empty and say nothing.
+        const got = selectOption(inp, ans);
+        if (got) n += got; else flagField(inp, lab.textContent);
+        return;
+      }
+      if (inp.tagName === "INPUT" || inp.tagName === "TEXTAREA") n += setValue(inp, ans);
     });
     return n;
   }
@@ -540,7 +581,7 @@
      decisions directly, and so popup.js can drive a fill and read back what it achieved.
      Content scripts run in an isolated world, so nothing on the employer's page can see
      or call either of these. */
-  self.OfferAIOFields = { answerFor, workAuthAnswer, NEEDS_USER, controlForLabel };
+  self.OfferAIOFields = { answerFor, workAuthAnswer, sponsorshipNeed, NEEDS_USER, controlForLabel };
   self.OfferAIOFill = {
     run,
     doSubmit,

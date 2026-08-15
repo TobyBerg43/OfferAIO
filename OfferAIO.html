@@ -246,7 +246,7 @@
     <div class="sidebar">
       <div class="logo">
         <div class="logo-icon" role="img" aria-label="OfferAIO"></div>
-        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver" id="logoVer">v1.4.0</div></div>
+        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver" id="logoVer">v1.4.1</div></div>
       </div>
       <div class="nav-item active" data-page="dashboard">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
@@ -411,7 +411,7 @@
               </div>
               <div class="row2">
                 <div><label class="f-lbl">Grad year</label><select id="setGrad"><option>2026</option><option>2027</option><option selected>2028</option><option>2029</option><option>2030</option></select></div>
-                <div><label class="f-lbl">Work authorization</label><select id="setWorkAuth"><option>US Citizen</option><option>Permanent Resident</option><option>F-1 (CPT/OPT)</option><option>Requires sponsorship</option></select></div>
+                <div><label class="f-lbl">Work authorization</label><select id="setWorkAuth"><option value="" selected>— Select —</option><option>US Citizen</option><option>Permanent Resident</option><option>F-1 (CPT/OPT)</option><option>Requires sponsorship</option></select></div>
               </div>
               <div class="row2">
                 <div><label class="f-lbl">Extension</label><div id="extStatus" style="font-family:var(--mono);font-size:11.5px;color:var(--dim2);padding:9px 0">◌ not detected</div></div>
@@ -1092,6 +1092,10 @@ function syncApplications(list){
 // honest thing to do with those is drop them rather than migrate them forward.
 const STORE_KEY='oa_state', PROFILE_KEY='oa_profile', STORE_VERSION=2;
 const PROFILE_FIELDS=['setName','setEmail','setPhone','setSchool','setMajor','setMinor','setGrad','setWorkAuth','liUrl','dailyCap','customDb'];
+/* Bumped when a stored profile can no longer be read at face value. 2 = the work-auth
+   select gained a blank default, so a stored "US Citizen" from before it existed may be
+   a value nobody chose — see restoreProfile(). */
+const PROFILE_VERSION=2;
 
 let saveTimer=null;
 function persist(){
@@ -1119,6 +1123,7 @@ function saveProfile(){
     const modeSeg=$('defModeSeg'),clSeg=$('defClSeg');
     if(modeSeg)p._mode=segVal('defModeSeg');
     if(clSeg)p._cl=segVal('defClSeg');
+    p._v=PROFILE_VERSION;
     localStorage.setItem(PROFILE_KEY,JSON.stringify(p));
   }catch(e){}
 }
@@ -1127,6 +1132,12 @@ function restoreProfile(){
   try{
     const p=JSON.parse(localStorage.getItem(PROFILE_KEY)||'null');
     if(!p)return;
+    /* Profiles written before the work-auth select had a blank option carry whatever it
+       happened to be showing, and what it showed by default was "US Citizen". That is
+       indistinguishable from a deliberate pick, so it is dropped rather than trusted: it
+       costs a citizen one dropdown, and it stops an international student's applications
+       declaring something they never said. Anything else they chose is kept. */
+    if(p._v!==PROFILE_VERSION&&p.setWorkAuth==='US Citizen')p.setWorkAuth='';
     PROFILE_FIELDS.forEach(id=>{const el=$(id);if(el&&p[id]!=null)el.value=p[id];});
     [['defModeSeg',p._mode],['defClSeg',p._cl]].forEach(([seg,v])=>{
       const s=$(seg); if(!s||!v)return;
@@ -1305,7 +1316,8 @@ function findMatchById(id){const t=tasks.find(x=>x.id===id);if(t)findMatch(t);}
  *
  *   - There was no resume anywhere in the profile (see collectProfile). "Resume attached"
  *     was telling users the one thing they still had to do themselves was already done.
- *     As of v1.4.0 the extension does hold one and does attach it, so the tick can be
+ *     Since the résumé pass (PROJECT.md section 17) the extension does hold one and does
+ *     attach it, so the tick can be
  *     true — but it is now driven by what the extension reports over the bridge, which is
  *     the difference between a fact and the decoration this row used to be.
  *   - "Work auth" reads as "we'll answer that for you", which content.js rule 1 exists
@@ -1641,13 +1653,27 @@ function collectProfile(){
     name:v('setName'), email:v('setEmail'), phone:v('setPhone'),
     school:v('setSchool'), major:v('setMajor'), minor:v('setMinor'),
     gradDate:(($('setGrad')||{}).value)||'',
-    needsSponsorship:((($('setWorkAuth')||{}).value)||'')==='Requires sponsorship',
     // The full selection, not just the boolean. content.js can answer a plain "are you
     // authorized to work?" for a citizen or permanent resident, but must decline for
     // F-1 and for anyone needing sponsorship — a distinction the boolean throws away.
     workAuth:(($('setWorkAuth')||{}).value)||'',
+    // …and this is why the boolean is derived here rather than compared here. It used to
+    // be `value === 'Requires sponsorship'`, which stored **false** for F-1 (CPT/OPT) —
+    // so content.js answered "Yes" to "authorized to work without sponsorship?" for
+    // exactly the students the rule protects. Undefined, not false, is the honest value
+    // for "we don't know"; the select now has a blank default so it can be reached.
+    ...sponsorshipFlag((($('setWorkAuth')||{}).value)||''),
     linkedin:v('liUrl')
   };
+}
+/* Mirror of sponsorshipNeed() in extension/content.js. Two implementations of one rule in
+   two files that cannot share code — guarded by tests/profile-contract.test.mjs, which
+   lifts both out and asserts they agree on every option either UI offers. */
+function sponsorshipFlag(auth){
+  const a=String(auth||'').trim().toLowerCase();
+  if(/citizen|permanent resident/.test(a))return{needsSponsorship:false};
+  if(/requires? sponsorship|need(s)? sponsorship/.test(a))return{needsSponsorship:true};
+  return {};   // F-1, blank, anything unrecognised: the key is absent, not false
 }
 function pushToExtension(){
   const mode=(($('defModeSeg')&&$('defModeSeg').querySelector('button.on'))||{}).dataset?

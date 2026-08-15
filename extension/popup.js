@@ -1,4 +1,16 @@
-const F = ["name","email","phone","school","major","minor","gradDate","gpa","linkedin","needsSponsorship","coverLetter"];
+const F = ["name","email","phone","school","major","minor","gradDate","gpa","linkedin","workAuth","coverLetter"];
+
+/* Mirror of sponsorshipNeed() in content.js and of sponsorshipFlag() in the dashboard.
+   The boolean is derived from the selection and omitted when the selection does not
+   settle it — "F-1 (CPT/OPT)" and blank both mean "ask the user", and storing `false` for
+   either is how an international student ended up declaring they need no sponsorship.
+   Guarded by tests/profile-contract.test.mjs. */
+function sponsorshipFlag(auth) {
+  const a = String(auth || "").trim().toLowerCase();
+  if (/citizen|permanent resident/.test(a)) return { needsSponsorship: false };
+  if (/requires? sponsorship|need(s)? sponsorship/.test(a)) return { needsSponsorship: true };
+  return {};
+}
 const seg = document.getElementById("modeSeg");
 
 seg.querySelectorAll("button").forEach((b) => {
@@ -19,7 +31,7 @@ chrome.storage.local.get(["profile","mode"], (d) => {
 document.getElementById("save").onclick = () => {
   const profile = {};
   F.forEach((k) => profile[k] = document.getElementById(k).value.trim());
-  profile.needsSponsorship = document.getElementById("needsSponsorship").value === "true";
+  Object.assign(profile, sponsorshipFlag(profile.workAuth));
   const mode = seg.querySelector("button.on").dataset.v;
   chrome.storage.local.set({ profile, mode }, () => {
     const ok = document.getElementById("ok");
