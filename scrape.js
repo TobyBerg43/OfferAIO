@@ -20,11 +20,68 @@ const OUT_FILE = path.join(OUT_DIR, "listings.json");
 const EXTRA_FILE = path.join(OUT_DIR, "listings-extra.json");
 const COMPANIES = JSON.parse(fs.readFileSync(path.join(__dirname, "companies.json"), "utf8"));
 
-const COMMUNITY_SOURCES = [
-  "https://raw.githubusercontent.com/vanshb03/Summer2027-Internships/dev/.github/scripts/listings.json",
-  "https://raw.githubusercontent.com/vanshb03/Summer2027-Internships/main/.github/scripts/listings.json",
-  "https://raw.githubusercontent.com/SimplifyJobs/Summer2027-Internships/dev/.github/scripts/listings.json",
+/* ---------------- Phase 1 feeds ----------------
+ *
+ * ⚠️ These used to be a fallback chain, not a merge: `communityListings()` took the FIRST
+ * reachable source and `return`ed. vanshb03 is reachable, so SimplifyJobs — 46k stars, the
+ * largest Summer 2027 list there is — was listed here for weeks and **never once read**.
+ * Measured 2026-08-16: vanshb03 carries 401 rows, SimplifyJobs 14,286 (919 tagged Summer
+ * 2027), and merging the two adds **291 listings the board did not have**.
+ *
+ * So: every feed is fetched, every feed is merged, and dedupe sorts it out downstream —
+ * which it can, because the dedupe below is URL-first and therefore catches the same
+ * posting arriving from three different aggregators under three spellings of the company
+ * name.
+ *
+ * Each feed has its own parser, because they are not the same shape: two serve the
+ * Simplify JSON schema, one a CSV, one a markdown table. `mirrors` are tried in order
+ * until one answers — that IS a fallback chain, correctly, because they are copies of one
+ * source rather than different sources.
+ */
+const COMMUNITY_FEEDS = [
+  {
+    name: "vanshb03",
+    mirrors: [
+      "https://raw.githubusercontent.com/vanshb03/Summer2027-Internships/dev/.github/scripts/listings.json",
+      "https://raw.githubusercontent.com/vanshb03/Summer2027-Internships/main/.github/scripts/listings.json",
+    ],
+    parse: parseSimplifySchema,
+  },
+  {
+    name: "SimplifyJobs",
+    mirrors: [
+      "https://raw.githubusercontent.com/SimplifyJobs/Summer2027-Internships/dev/.github/scripts/listings.json",
+      "https://raw.githubusercontent.com/SimplifyJobs/Summer2027-Internships/main/.github/scripts/listings.json",
+    ],
+    parse: parseSimplifySchema,
+  },
+  {
+    // Aggregates ~4,300 employer boards every 30 minutes and publishes a clean CSV with a
+    // season column, so it needs no season guessing. Smaller than the others but the
+    // highest fillable share of any feed here (72%), because its rows come from ATS hosts
+    // rather than from employer careers pages.
+    name: "zshah101",
+    mirrors: ["https://raw.githubusercontent.com/zshah101/Automated-List-Of-Summer-2027-and-Fall-2026-Tech-Internships/main/data/internships.csv"],
+    text: true,
+    parse: parseZshahCsv,
+  },
+  {
+    // 8.8k stars, updated daily. Its generator reads a private API, so the only public
+    // copy of the data is the markdown table in the README — hence the fragile parser and
+    // the sanity gate in fetchFeed(). 75% fillable.
+    name: "speedyapply",
+    mirrors: ["https://raw.githubusercontent.com/speedyapply/2027-SWE-College-Jobs/main/README.md"],
+    text: true,
+    parse: parseSpeedyapplyTable,
+  },
 ];
+
+/* A feed is discarded wholesale unless it looks like what we expect. A parser pointed at a
+ * changed format does not fail loudly — it returns rows with the columns shifted, which is
+ * far worse than returning nothing, because junk would reach the board and every row of it
+ * would be a posting we advertise and cannot open. */
+const FEED_MIN_ROWS = 20;
+const FEED_MIN_INTERN_RATIO = 0.5;
 
 const INTERN_RE = /\bintern(ship)?\b|\bsummer analyst\b/i;
 const EXCLUDE_RE = /\binternal\b/i;
@@ -54,6 +111,100 @@ async function getJSON(url, opts = {}, retries = 2) {
       await sleep(800 * (i + 1) + Math.random() * 500); // backoff + jitter
     }
   }
+}
+
+async function getText(url, retries = 2) {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const r = await fetch(url, { headers: { "User-Agent": "OfferAIO-pipeline/1.0" } });
+      if (r.status === 404) return null;
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return await r.text();
+    } catch (e) {
+      if (i === retries) { console.warn(`  ! ${url} — ${e.message}`); return null; }
+      await sleep(800 * (i + 1) + Math.random() * 500);
+    }
+  }
+}
+
+/* ---------------- Phase 1 parsers ----------------
+ *
+ * Each takes the raw body and returns rows in the listing schema. None of them filter for
+ * season or country — that is one job done once, in fetchFeed(), so a new feed cannot
+ * quietly apply weaker rules than the others.
+ */
+
+/** vanshb03 and SimplifyJobs both publish the Simplify listings.json schema. */
+function parseSimplifySchema(data, feedName) {
+  if (!Array.isArray(data)) return [];
+  return data
+    .filter((l) => l && l.active !== false && l.is_visible !== false && l.url && l.title && l.company_name)
+    // When the entry states its terms, at least one must mention 2027. Rows with no terms
+    // at all are kept and left to the title rules — vanshb03 tags nothing, so requiring a
+    // term here would discard that feed entirely.
+    .filter((l) => !Array.isArray(l.terms) || !l.terms.length || l.terms.some((t) => /2027/.test(t)))
+    .map((l) => ({ ...l, source: l.source || feedName }));
+}
+
+/** Minimal RFC4180 reader: quoted fields, embedded commas, doubled quotes. */
+function parseCSVRows(text) {
+  const rows = [];
+  let row = [], cell = "", quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (quoted) {
+      if (c === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else quoted = false; }
+      else cell += c;
+    } else if (c === '"') quoted = true;
+    else if (c === ",") { row.push(cell); cell = ""; }
+    else if (c === "\n") { row.push(cell); cell = ""; if (row.length > 1) rows.push(row); row = []; }
+    else if (c !== "\r") cell += c;
+  }
+  if (cell || row.length) { row.push(cell); if (row.length > 1) rows.push(row); }
+  const head = rows.shift();
+  if (!head) return [];
+  return rows.map((r) => Object.fromEntries(head.map((h, i) => [h.trim(), (r[i] ?? "").trim()])));
+}
+
+/** zshah101's data/internships.csv — carries an explicit season, and sometimes a salary. */
+function parseZshahCsv(text, feedName) {
+  return parseCSVRows(text)
+    .filter((r) => r.url && r.title && r.company)
+    // This feed states the season outright, so trust it rather than re-deriving it. Its
+    // "Not stated" and "Fall 2026" rows are exactly the ones we do not want.
+    .filter((r) => /2027/.test(r.season) && /summer/i.test(r.season))
+    .map((r) => listing({
+      company: r.company,
+      title: r.title,
+      url: r.url,
+      locations: r.location ? [r.location] : [],
+      source: feedName,
+      posted: r.posted_at ? Math.floor(Date.parse(r.posted_at) / 1000) || null : null,
+    }));
+}
+
+/** speedyapply's README table. Rows carry the apply URL inside an <img> anchor. */
+function parseSpeedyapplyTable(text, feedName) {
+  const out = [];
+  for (const line of text.split("\n")) {
+    if (!line.startsWith("|")) continue;
+    const cells = line.split("|").slice(1, -1).map((c) => c.trim());
+    if (cells.length < 4) continue;
+    const company = (cells[0].match(/<strong>(.*?)<\/strong>/) || [])[1];
+    if (!company) continue;                       // header, separator, or a prose row
+    const href = (cells.find((c) => /<img/.test(c)) || "").match(/href="([^"]+)"/);
+    if (!href) continue;                          // no apply link = nothing to offer
+    const strip = (s) => s.replace(/<br\s*\/?>/gi, ", ").replace(/<[^>]+>/g, "")
+      .replace(/&amp;/g, "&").replace(/&nbsp;/g, " ").trim();
+    out.push(listing({
+      company: strip(cells[0]),
+      title: strip(cells[1]),
+      url: href[1],
+      locations: cells[2] ? [strip(cells[2])] : [],
+      source: feedName,
+    }));
+  }
+  return out;
 }
 
 // month-range programs like "Jan to Jun 2027" that aren't summer terms
@@ -292,27 +443,70 @@ async function verifyStillOpen(rows) {
 
 /* ---------------- Phase 1 aggregation ---------------- */
 
-async function communityListings() {
-  for (const url of COMMUNITY_SOURCES) {
-    const data = await getJSON(url);
-    if (Array.isArray(data) && data.length > 50) {
-      console.log(`Phase 1: ${data.length} listings from ${url.split("/")[3]}`);
-      return data
-        .filter((l) => l.active !== false && l.is_visible !== false && l.url && l.title && l.company_name)
-        // Summer 2027 double-check: title must pass season rules AND, when the
-        // entry carries explicit terms, at least one must mention 2027
-        .filter((l) => isIntern(l.title) &&
-          (!Array.isArray(l.terms) || !l.terms.length || l.terms.some((t) => /2027/.test(t))))
-        .map((l) => ({ ...l, source: l.source || "community" }));
-    }
+/** Fetch and parse one feed, or return [] — never throw, never half-apply. */
+async function fetchFeed(feed) {
+  let body = null, used = null;
+  for (const url of feed.mirrors) {
+    body = feed.text ? await getText(url) : await getJSON(url);
+    if (body) { used = url; break; }
   }
-  console.warn("Phase 1: no community source reachable");
-  return [];
+  if (!body) { console.warn(`  ! ${feed.name}: no mirror reachable`); return []; }
+
+  let rows;
+  try {
+    rows = feed.parse(body, feed.name) || [];
+  } catch (e) {
+    console.warn(`  ! ${feed.name}: parser threw — ${e.message}`);
+    return [];
+  }
+
+  /* The sanity gate. A parser aimed at a format that has moved on returns rows with the
+   * columns shifted rather than an error, and that is worse than nothing: every junk row
+   * becomes a posting we advertise and the user cannot open. So require a plausible volume
+   * AND that most titles actually look like internships before trusting any of it. */
+  if (rows.length < FEED_MIN_ROWS) {
+    console.warn(`  ! ${feed.name}: only ${rows.length} rows (< ${FEED_MIN_ROWS}) — discarded, format may have changed`);
+    return [];
+  }
+  const internish = rows.filter((l) => l.title && isIntern(l.title)).length;
+  const ratio = internish / rows.length;
+  if (ratio < FEED_MIN_INTERN_RATIO) {
+    console.warn(`  ! ${feed.name}: only ${(ratio * 100).toFixed(0)}% of ${rows.length} rows look like internships — discarded`);
+    return [];
+  }
+
+  const kept = rows.filter((l) => l.title && isIntern(l.title) && isUS(l));
+  console.log(`  ${feed.name}: ${rows.length} rows → ${kept.length} kept   (${used.split("/")[3]})`);
+  return kept;
 }
 
-/* ---------------- main ---------------- */
+/**
+ * Every feed, merged. Not a fallback chain — see the note on COMMUNITY_FEEDS for why that
+ * distinction cost the board 291 listings.
+ */
+async function communityListings() {
+  console.log("Phase 1: aggregating community feeds");
+  const results = await Promise.all(COMMUNITY_FEEDS.map((f) => fetchFeed(f)));
+  const all = results.flat();
+  if (!all.length) console.warn("Phase 1: every feed failed — falling back to Phase 2 and the previous run");
+  else console.log(`Phase 1: ${all.length} listings from ${results.filter((r) => r.length).length}/${COMMUNITY_FEEDS.length} feeds`);
+  return all;
+}
 
-(async () => {
+/* ---------------- main ----------------
+ *
+ * Guarded so this file can be required by a test without running the pipeline. The Phase 1
+ * parsers are the fragile part of this program — one reads a CSV, one reads a markdown
+ * table somebody else maintains — and until 2026-08-16 nothing in the repo exercised any of
+ * it. That is how a feed listed in this very file went unread for weeks.
+ */
+module.exports = {
+  COMMUNITY_FEEDS, FEED_MIN_ROWS, FEED_MIN_INTERN_RATIO,
+  parseSimplifySchema, parseZshahCsv, parseSpeedyapplyTable, parseCSVRows,
+  isIntern, isUS, dedupeKey, normUrl, normTitle, normCompany, normLoc, listing,
+};
+
+if (require.main === module) (async () => {
   console.log(`OfferAIO pipeline — ${new Date().toISOString()}`);
   const all = [];
 

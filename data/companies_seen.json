@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-08-16",
-  "roles": 16
+  "roles": 18
  },
  "capital-one": {
   "name": "Capital One",
@@ -47,7 +47,7 @@
  "anduril": {
   "name": "Anduril",
   "lastSeen": "2026-08-16",
-  "roles": 4
+  "roles": 5
  },
  "cloudflare": {
   "name": "Cloudflare",
@@ -62,7 +62,7 @@
  "palantir": {
   "name": "Palantir",
   "lastSeen": "2026-08-16",
-  "roles": 30
+  "roles": 34
  },
  "optiver": {
   "name": "Optiver",
@@ -82,7 +82,7 @@
  "abb": {
   "name": "ABB",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 3
  },
  "datasite": {
   "name": "Datasite",
@@ -142,17 +142,17 @@
  "citadel": {
   "name": "Citadel",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 2
  },
  "tower-research": {
   "name": "Tower Research",
   "lastSeen": "2026-08-16",
-  "roles": 2
+  "roles": 1
  },
  "databricks": {
   "name": "Databricks",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 2
  },
  "aqr": {
   "name": "AQR",
@@ -162,7 +162,7 @@
  "virtu-financial": {
   "name": "Virtu Financial",
   "lastSeen": "2026-08-16",
-  "roles": 5
+  "roles": 6
  },
  "transmarket-group": {
   "name": "TransMarket Group",
@@ -207,7 +207,7 @@
  "etched": {
   "name": "Etched",
   "lastSeen": "2026-08-16",
-  "roles": 4
+  "roles": 5
  },
  "susquehanna": {
   "name": "Susquehanna",
@@ -262,7 +262,7 @@
  "tesla": {
   "name": "Tesla",
   "lastSeen": "2026-08-16",
-  "roles": 26
+  "roles": 34
  },
  "apex-technology-inc": {
   "name": "Apex Technology, Inc.",
@@ -317,7 +317,7 @@
  "intel": {
   "name": "Intel",
   "lastSeen": "2026-08-16",
-  "roles": 2
+  "roles": 4
  },
  "homebase": {
   "name": "Homebase",
@@ -327,12 +327,12 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-08-16",
-  "roles": 33
+  "roles": 106
  },
  "notion": {
   "name": "Notion",
   "lastSeen": "2026-08-16",
-  "roles": 3
+  "roles": 4
  },
  "al-warren-oil-company": {
   "name": "Al Warren Oil Company",
@@ -402,7 +402,7 @@
  "spacex": {
   "name": "SpaceX",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 2
  },
  "poshmark": {
   "name": "Poshmark",
@@ -447,7 +447,7 @@
  "rippling": {
   "name": "Rippling",
   "lastSeen": "2026-08-16",
-  "roles": 3
+  "roles": 6
  },
  "old-mission": {
   "name": "Old Mission",
@@ -466,7 +466,7 @@
  },
  "copart": {
   "name": "Copart",
-  "lastSeen": "2026-07-30",
+  "lastSeen": "2026-08-16",
   "roles": 1
  },
  "fab2": {
@@ -500,19 +500,19 @@
   "roles": 2
  },
  "moog": {
-  "name": "Moog",
-  "lastSeen": "2026-07-30",
+  "name": "Moog ",
+  "lastSeen": "2026-08-16",
   "roles": 1
  },
  "hudson-river-trading": {
   "name": "Hudson River Trading",
   "lastSeen": "2026-08-16",
-  "roles": 2
+  "roles": 3
  },
  "five-rings": {
   "name": "Five Rings",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 2
  },
  "netic": {
   "name": "Netic",
@@ -532,7 +532,7 @@
  "walleye-capital": {
   "name": "Walleye Capital",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 3
  },
  "palantir-technologies": {
   "name": "Palantir Technologies",
@@ -542,7 +542,7 @@
  "jane-street": {
   "name": "Jane Street",
   "lastSeen": "2026-08-16",
-  "roles": 15
+  "roles": 16
  },
  "deepgram": {
   "name": "Deepgram",
@@ -557,7 +557,7 @@
  "appian": {
   "name": "Appian",
   "lastSeen": "2026-08-16",
-  "roles": 3
+  "roles": 4
  },
  "micron": {
   "name": "Micron",
@@ -572,7 +572,7 @@
  "stevens-capital-management": {
   "name": "Stevens Capital Management",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 2
  },
  "sentara-health": {
   "name": "Sentara Health",
@@ -607,7 +607,7 @@
  "anthelion-capital": {
   "name": "Anthelion Capital",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 2
  },
  "quadrillion-labs": {
   "name": "Quadrillion Labs",
@@ -661,7 +661,7 @@
  },
  "apptronik": {
   "name": "Apptronik",
-  "lastSeen": "2026-07-31",
+  "lastSeen": "2026-08-16",
   "roles": 1
  },
  "touchdown-labs": {
@@ -672,7 +672,7 @@
  "chicago-trading-company": {
   "name": "Chicago Trading Company",
   "lastSeen": "2026-08-16",
-  "roles": 2
+  "roles": 4
  },
  "modal": {
   "name": "Modal",
@@ -682,7 +682,7 @@
  "general-dynamics-information-technology": {
   "name": "General Dynamics Information Technology",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 5
  },
  "cirrus-logic": {
   "name": "Cirrus Logic",
@@ -692,12 +692,12 @@
  "castleton-commodities-international": {
   "name": "Castleton Commodities International",
   "lastSeen": "2026-08-16",
-  "roles": 3
+  "roles": 4
  },
  "fti-consulting": {
   "name": "FTI Consulting",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 7
  },
  "sk-hynix-memory-solution": {
   "name": "SK Hynix Memory Solution",
@@ -712,7 +712,7 @@
  "heliux": {
   "name": "Heliux",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 2
  },
  "astera": {
   "name": "Astera",
@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 8
  },
  "postman": {
   "name": "Postman",
@@ -762,12 +762,12 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-16",
-  "roles": 2
+  "roles": 21
  },
  "bytedance": {
   "name": "ByteDance",
   "lastSeen": "2026-08-16",
-  "roles": 6
+  "roles": 39
  },
  "yotta-labs": {
   "name": "Yotta Labs",
@@ -782,7 +782,7 @@
  "melius": {
   "name": "Melius",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 2
  },
  "bot-auto": {
   "name": "Bot Auto",
@@ -797,12 +797,12 @@
  "american-express": {
   "name": "American Express",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 9
  },
  "boeing": {
   "name": "Boeing",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 16
  },
  "hp": {
   "name": "HP",
@@ -837,7 +837,7 @@
  "cno-financial-group": {
   "name": "CNO Financial Group",
   "lastSeen": "2026-08-16",
-  "roles": 1
+  "roles": 4
  },
  "epic-games": {
   "name": "Epic Games",
@@ -857,6 +857,616 @@
  "replit": {
   "name": "Replit",
   "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "hendrick-motorsports": {
+  "name": "Hendrick Motorsports",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "university-of-texas-at-austin": {
+  "name": "University of Texas at Austin",
+  "lastSeen": "2026-08-16",
+  "roles": 14
+ },
+ "uline": {
+  "name": "Uline",
+  "lastSeen": "2026-08-16",
+  "roles": 40
+ },
+ "pentair": {
+  "name": "Pentair",
+  "lastSeen": "2026-08-16",
+  "roles": 8
+ },
+ "genworth-financial": {
+  "name": "Genworth Financial",
+  "lastSeen": "2026-08-16",
+  "roles": 4
+ },
+ "chamberlain-group": {
+  "name": "Chamberlain Group",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "lpl-financial-holdings": {
+  "name": "LPL Financial Holdings",
+  "lastSeen": "2026-08-16",
+  "roles": 6
+ },
+ "conocophillips": {
+  "name": "ConocoPhillips",
+  "lastSeen": "2026-08-16",
+  "roles": 14
+ },
+ "medline": {
+  "name": "Medline",
+  "lastSeen": "2026-08-16",
+  "roles": 7
+ },
+ "winland-foods": {
+  "name": "Winland Foods",
+  "lastSeen": "2026-08-16",
+  "roles": 7
+ },
+ "hntb": {
+  "name": "HNTB",
+  "lastSeen": "2026-08-16",
+  "roles": 14
+ },
+ "keybank": {
+  "name": "KeyBank",
+  "lastSeen": "2026-08-16",
+  "roles": 16
+ },
+ "northwestern-mutual": {
+  "name": "Northwestern Mutual",
+  "lastSeen": "2026-08-16",
+  "roles": 5
+ },
+ "ge-vernova": {
+  "name": "GE Vernova",
+  "lastSeen": "2026-08-16",
+  "roles": 10
+ },
+ "american-fidelity": {
+  "name": "American Fidelity",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "bp": {
+  "name": "BP",
+  "lastSeen": "2026-08-16",
+  "roles": 3
+ },
+ "uhy": {
+  "name": "UHY",
+  "lastSeen": "2026-08-16",
+  "roles": 4
+ },
+ "ing": {
+  "name": "ING",
+  "lastSeen": "2026-08-16",
+  "roles": 4
+ },
+ "motorola-solutions": {
+  "name": "Motorola Solutions",
+  "lastSeen": "2026-08-16",
+  "roles": 3
+ },
+ "crowe": {
+  "name": "Crowe",
+  "lastSeen": "2026-08-16",
+  "roles": 4
+ },
+ "gritt-robotics": {
+  "name": "Gritt Robotics",
+  "lastSeen": "2026-08-16",
   "roles": 1
+ },
+ "astera-institute": {
+  "name": "Astera Institute",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "citadel-securities": {
+  "name": "Citadel Securities",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "d-e-shaw-and-co": {
+  "name": "D. E. Shaw & Co.",
+  "lastSeen": "2026-08-16",
+  "roles": 3
+ },
+ "abridge": {
+  "name": "Abridge",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "hypercubic": {
+  "name": "Hypercubic",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "first-american": {
+  "name": "First American",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "generac": {
+  "name": "Generac",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "valeo": {
+  "name": "Valeo",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "metaphor": {
+  "name": "Metaphor",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "teledyne": {
+  "name": "Teledyne",
+  "lastSeen": "2026-08-16",
+  "roles": 3
+ },
+ "bosch": {
+  "name": "Bosch",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "foxconn-industrial-internet-usa": {
+  "name": "Foxconn Industrial Internet USA",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "oracle": {
+  "name": "Oracle",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "raytheon": {
+  "name": "Raytheon",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "sel": {
+  "name": "SEL",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "general-dynamics-mission-systems": {
+  "name": "General Dynamics Mission Systems",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "hiebing": {
+  "name": "Hiebing",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "centerfield": {
+  "name": "Centerfield",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "kastle": {
+  "name": "Kastle",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "terranova": {
+  "name": "Terranova",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "gulf-management": {
+  "name": "Gulf Management",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "draper": {
+  "name": "Draper",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "corpay": {
+  "name": "Corpay",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "persona-ai": {
+  "name": "Persona AI",
+  "lastSeen": "2026-08-16",
+  "roles": 3
+ },
+ "microchip": {
+  "name": "Microchip",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "two-six-technologies": {
+  "name": "Two Six Technologies",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "bild-ai": {
+  "name": "Bild AI",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "tencent": {
+  "name": "Tencent",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "serval": {
+  "name": "Serval",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "black-cape": {
+  "name": "Black Cape",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "pylon": {
+  "name": "Pylon",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "windborne-systems": {
+  "name": "WindBorne Systems",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "eulerity": {
+  "name": "Eulerity",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "sony": {
+  "name": "Sony",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "ctgt": {
+  "name": "CTGT",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "binance-us": {
+  "name": "Binance.US",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "circleback": {
+  "name": "Circleback",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "beacon-software": {
+  "name": "Beacon Software",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "fluxergy": {
+  "name": "Fluxergy",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "prospect-equities": {
+  "name": "Prospect Equities",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "base-power-company": {
+  "name": "Base Power Company",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "reply": {
+  "name": "Reply",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "kos-ai": {
+  "name": "kos.ai",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "dexmate": {
+  "name": "Dexmate",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "rainmaker": {
+  "name": "Rainmaker",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "susquehanna-international-group": {
+  "name": "Susquehanna International Group",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "freeform": {
+  "name": "Freeform",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "the-nuclear-company": {
+  "name": "The Nuclear Company",
+  "lastSeen": "2026-08-16",
+  "roles": 7
+ },
+ "wec-energy-group": {
+  "name": "WEC Energy Group",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "vertiv": {
+  "name": "Vertiv",
+  "lastSeen": "2026-08-16",
+  "roles": 9
+ },
+ "hershey": {
+  "name": "Hershey",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "berrydunn": {
+  "name": "BerryDunn",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "guidewell-mutual": {
+  "name": "GuideWell Mutual",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "composio": {
+  "name": "Composio",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "pgim": {
+  "name": "PGIM",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "motorola": {
+  "name": "Motorola",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "prudential-financial": {
+  "name": "Prudential Financial",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "schoolmint": {
+  "name": "SchoolMint",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "infinitequant": {
+  "name": "InfiniteQuant",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "rrs-group": {
+  "name": "RRS Group",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "tmeic-corporation-americas": {
+  "name": "TMEIC Corporation Americas",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "western-digital": {
+  "name": "Western Digital",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "sentry": {
+  "name": "Sentry",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "deloitte": {
+  "name": "Deloitte",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "kimley-horn": {
+  "name": "Kimley-Horn",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "quantbot-technologies": {
+  "name": "Quantbot Technologies",
+  "lastSeen": "2026-08-16",
+  "roles": 4
+ },
+ "hewlett-packard-hp": {
+  "name": "Hewlett Packard (HP)",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "mujin": {
+  "name": "Mujin",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "altamira-technologies": {
+  "name": "Altamira Technologies",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "atoms": {
+  "name": "Atoms",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "montenson": {
+  "name": "Montenson",
+  "lastSeen": "2026-08-16",
+  "roles": 5
+ },
+ "mckesson": {
+  "name": "McKesson",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "trillium": {
+  "name": "Trillium",
+  "lastSeen": "2026-08-16",
+  "roles": 3
+ },
+ "belvedere-trading": {
+  "name": "Belvedere Trading",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "varda-space": {
+  "name": "Varda Space",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "maven-securities": {
+  "name": "Maven Securities",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "jpmorganchase": {
+  "name": "JPMorganChase",
+  "lastSeen": "2026-08-16",
+  "roles": 7
+ },
+ "jp-morgan-chase": {
+  "name": "JP Morgan Chase",
+  "lastSeen": "2026-08-16",
+  "roles": 7
+ },
+ "the-boeing-company": {
+  "name": "The Boeing Company",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "two-sigma": {
+  "name": "Two Sigma",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "hpr-hyannis-port-research": {
+  "name": "HPR (Hyannis Port Research)",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "university-of-virginia-investment-management-company-uvimco": {
+  "name": "University of Virginia Investment Management Company (UVIMCO)",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "east-penn-manufacturing-company": {
+  "name": "East Penn Manufacturing Company",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "quadrillion": {
+  "name": "Quadrillion",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "aqr-capital-management": {
+  "name": "AQR Capital Management",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "axon": {
+  "name": "Axon",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "cybernetic-labs": {
+  "name": "Cybernetic Labs",
+  "lastSeen": "2026-08-16",
+  "roles": 3
+ },
+ "old-mission-capital": {
+  "name": "Old Mission Capital",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "the-trade-desk": {
+  "name": "The Trade Desk",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "voloridge": {
+  "name": "Voloridge",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "arrowstreet-capital": {
+  "name": "Arrowstreet Capital",
+  "lastSeen": "2026-08-16",
+  "roles": 2
+ },
+ "alixpartners": {
+  "name": "AlixPartners",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "marshall-wace": {
+  "name": "Marshall Wace",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "susquehanna-international-group-sig": {
+  "name": "Susquehanna International Group (SIG)",
+  "lastSeen": "2026-08-16",
+  "roles": 15
+ },
+ "tower-research-capital": {
+  "name": "Tower Research Capital",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "heron-power": {
+  "name": "Heron Power",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "simoncomputing": {
+  "name": "SimonComputing",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "fussball-club-cincinnati-llc-fc-cincinnati": {
+  "name": "Fussball Club Cincinnati LLC (“FC Cincinnati”)",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "asm-international": {
+  "name": "ASM International",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "workato": {
+  "name": "Workato",
+  "lastSeen": "2026-08-16",
+  "roles": 1
+ },
+ "grant-thornton": {
+  "name": "Grant Thornton",
+  "lastSeen": "2026-08-16",
+  "roles": 2
  }
 }
