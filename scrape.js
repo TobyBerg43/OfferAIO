@@ -316,6 +316,17 @@ const FETCHERS = { greenhouse, lever, ashby, workday };
  */
 const normUrl = (u) => String(u || "").replace(/[?#].*$/, "").replace(/\/+$/, "").toLowerCase();
 
+/* Upgrade http to https.
+ *
+ * The community feeds carry a handful of plain-http links — JazzHR, Ashby and an Oracle
+ * tenant, all of which serve https perfectly well; the http is just stale data upstream.
+ * It matters because the user is about to type their name, phone number and email into that
+ * page and attach a résumé, and doing that over http sends all of it in the clear. Upgrading
+ * is safe: every one of these hosts answered 200 on https when checked. If a host genuinely
+ * has no https, the liveness check returns null and the row simply sits there unverified —
+ * which is the right outcome, and better than advertising a cleartext application form. */
+const httpsUrl = (u) => String(u || "").replace(/^http:\/\//i, "https://");
+
 function normTitle(t) {
   return String(t || "")
     .toLowerCase()
@@ -362,9 +373,39 @@ const richness = (l) =>
  * listing exactly as it was. Dropping a live posting because their server hiccuped costs
  * a user a job; leaving a dead one listed for six more hours costs a wasted click.
  */
-const CHECKABLE_HOST = /(^|\.)greenhouse\.io$|(^|\.)lever\.co$|(^|\.)ashbyhq\.com$/;
-const CHECK_BUDGET = 120;
-const RECHECK_MS = 48 * 60 * 60 * 1000;
+/* Which hosts answer honestly about a dead req, and how to ask them.
+ *
+ * ⚠️ Measured host by host on 2026-08-16, because guessing here is dangerous in both
+ * directions: a host that always says 200 makes coverage look complete when nothing is
+ * verified, and a host that 404s a live posting deletes a job somebody could have had.
+ *
+ *   greenhouse / lever / ashby   HEAD is enough — 404, 410, or a redirect to the board root
+ *   myworkdayjobs.com            the HTML is a SPA shell and returns **200 for a req that
+ *                                never existed**, so HEAD is worthless. The cxs per-job
+ *                                JSON endpoint returns 404 with errorCode S21 instead.
+ *                                Workday is the largest host on the board (324 rows), so
+ *                                this one check moved coverage from 23% to 57%
+ *   icims.com                    returns a clean 410 Gone
+ *   smartrecruiters.com          the public postings API 404s a missing id
+ *
+ * Deliberately NOT checkable, verified rather than assumed:
+ *   ats.rippling.com             200 for a fabricated job id — cannot distinguish
+ *   lifeattiktok.com             refuses our requests outright
+ * Those, plus tesla.com / janestreet.com / oraclecloud.com / workatastartup.com, are
+ * largely the same employer-owned sites §16 says cannot be filled either, so the
+ * unverifiable set and the unfillable set overlap heavily. `data/meta.json` reports
+ * `checkable` so that gap stays visible instead of being mistaken for full coverage.
+ */
+const CHECKABLE_HOST =
+  /(^|\.)greenhouse\.io$|(^|\.)lever\.co$|(^|\.)ashbyhq\.com$|(^|\.)myworkdayjobs\.com$|(^|\.)icims\.com$|(^|\.)smartrecruiters\.com$/;
+/* Budget per run. The workflow runs every 6h and RECHECK_MS is under a day, so each
+ * listing comes due once a day and the budget spreads that across four runs: at ~570
+ * checkable rows that is ~143 per run, and this leaves headroom as the board grows.
+ * If the board outgrows 4x this, coverage silently drops — which is exactly what the
+ * `checked` vs `checkable` numbers in meta.json are for. */
+const CHECK_BUDGET = 250;
+/* Under 24h on purpose: at 48h a "daily" check was a promise the code did not keep. */
+const RECHECK_MS = 20 * 60 * 60 * 1000;
 const CHECK_CONCURRENCY = 6;
 // Forget a dead req after a fortnight, so listings.json doesn't grow without bound.
 const FORGET_CLOSED_MS = 14 * 24 * 60 * 60 * 1000;
@@ -373,8 +414,16 @@ const isCheckable = (l) => {
   try { return CHECKABLE_HOST.test(new URL(l.url).hostname); } catch (e) { return false; }
 };
 
-/** true = open, false = definitely closed, null = couldn't tell (leave it alone). */
-async function isStillOpen(url) {
+/* Every checker returns the same three-valued answer, and the third value is the important
+ * one: true = open, false = DEFINITELY closed, null = could not tell, leave the row alone.
+ *
+ * §15a's rule, restated because it is the rule that matters here: anything ambiguous — a
+ * timeout, a 5xx, a 403, a shape we did not expect — must return null. Dropping a live
+ * posting because a server hiccuped costs somebody a job; leaving a dead one up for another
+ * six hours costs a wasted click. Only an unambiguous "gone" may return false. */
+
+/** Greenhouse / Lever / Ashby / iCIMS: a plain HEAD is enough. */
+async function headCheck(url) {
   try {
     const r = await fetch(url, {
       method: "HEAD",
@@ -394,6 +443,66 @@ async function isStillOpen(url) {
   } catch (e) {
     return null;
   }
+}
+
+/**
+ * Workday. The posting HTML is a SPA shell that answers 200 for a req id that never
+ * existed, so HEAD proves nothing; ask the cxs endpoint that backs it instead.
+ *
+ *   https://{host}/{site}/job/{path}  ->  https://{host}/wday/cxs/{tenant}/{site}/job/{path}
+ *
+ * The tenant is not in the posting URL. It is the first host label for every board on this
+ * list, which is how they were validated in the first place — and if that guess is wrong the
+ * endpoint answers 422, which is ambiguous, so the row is left alone rather than deleted.
+ */
+async function workdayCheck(url) {
+  let u;
+  try { u = new URL(url); } catch (e) { return null; }
+  const m = u.pathname.match(/^\/(?:([a-z]{2}-[A-Z]{2})\/)?([^/]+)\/job\/(.+)$/);
+  if (!m) return null;                       // not a posting URL shape we understand
+  const site = m[2], jobPath = m[3];
+  const tenant = u.hostname.split(".")[0];
+  try {
+    const r = await fetch(`https://${u.hostname}/wday/cxs/${tenant}/${site}/job/${jobPath}`, {
+      headers: { accept: "application/json", "User-Agent": "OfferAIO-pipeline/1.0" },
+      signal: AbortSignal.timeout(10000),
+    });
+    if (r.status === 404 || r.status === 410) return false;   // errorCode S21, "not found"
+    if (!r.ok) return null;                                    // 422 = wrong tenant, unknown
+    const j = await r.json();
+    // A live req carries jobPostingInfo. Anything else is a shape we did not expect.
+    if (j && j.jobPostingInfo) return true;
+    if (j && j.httpStatus === 404) return false;
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
+/** SmartRecruiters: the public postings API answers for a single id. */
+async function smartRecruitersCheck(url) {
+  const m = String(url).match(/jobs\.smartrecruiters\.com\/([^/?#]+)\/(\d+)/);
+  if (!m) return null;
+  try {
+    const r = await fetch(`https://api.smartrecruiters.com/v1/companies/${m[1]}/postings/${m[2]}`, {
+      headers: { accept: "application/json", "User-Agent": "OfferAIO-pipeline/1.0" },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (r.status === 404 || r.status === 410) return false;
+    // A 400 here means the id was malformed, not that the req closed. Ambiguous.
+    return r.ok ? true : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+/** Dispatch to whichever checker understands this host. */
+async function isStillOpen(url) {
+  let host;
+  try { host = new URL(url).hostname; } catch (e) { return null; }
+  if (/(^|\.)myworkdayjobs\.com$/.test(host)) return workdayCheck(url);
+  if (/(^|\.)smartrecruiters\.com$/.test(host)) return smartRecruitersCheck(url);
+  return headCheck(url);
 }
 
 /** Read the previous run's output so a check result survives between runs. */
@@ -504,6 +613,10 @@ module.exports = {
   COMMUNITY_FEEDS, FEED_MIN_ROWS, FEED_MIN_INTERN_RATIO,
   parseSimplifySchema, parseZshahCsv, parseSpeedyapplyTable, parseCSVRows,
   isIntern, isUS, dedupeKey, normUrl, normTitle, normCompany, normLoc, listing,
+  // Liveness, so a test can prove each host's checker against a real posting and a
+  // fabricated one rather than trusting the comment above CHECKABLE_HOST.
+  isStillOpen, headCheck, workdayCheck, smartRecruitersCheck, isCheckable,
+  CHECKABLE_HOST, CHECK_BUDGET, RECHECK_MS, CHECK_CONCURRENCY,
 };
 
 if (require.main === module) (async () => {
@@ -545,6 +658,8 @@ if (require.main === module) (async () => {
   const deduped = [];
   for (const l of all) {
     if (!isUS(l)) continue; // US-only
+    // Before the keys are computed, so http and https forms of one posting cannot both land.
+    l.url = httpsUrl(l.url);
     const key1 = normUrl(l.url);
     const key2 = dedupeKey(l);
     const prevIdx = seen.has(key1) ? seen.get(key1) : seen.has(key2) ? seen.get(key2) : -1;
@@ -552,6 +667,20 @@ if (require.main === module) (async () => {
       // Same role seen twice. Keep whichever row carries more — the community feed often
       // has the salary and every location, the direct ATS pull often has neither.
       if (richness(l) > richness(deduped[prevIdx])) deduped[prevIdx] = l;
+      /* ⚠️ Register THIS row's keys against the survivor, win or lose.
+       *
+       * Without these two lines the winner's URL was never added to `seen`, so:
+       *   A (url=uA, key=k) lands at idx 0
+       *   B (url=uB, key=k) collides on k, replaces A at idx 0 — and uB stays unregistered
+       *   C (url=uB, key=other) matches nothing and is pushed as a NEW row
+       * and the board ends up with uB twice. Optiver posts the same title in the same city
+       * under two req ids, which is exactly the shape that triggers it; audit-listings.mjs
+       * caught three duplicate URLs this way on 2026-08-16.
+       *
+       * Guarded with `has`, because a key already pointing at a different index must keep
+       * pointing there — remapping it would orphan the earlier association. */
+      if (!seen.has(key1)) seen.set(key1, prevIdx);
+      if (!seen.has(key2)) seen.set(key2, prevIdx);
       continue;
     }
     deduped.push(l);
@@ -563,11 +692,34 @@ if (require.main === module) (async () => {
 
   // Carry forward what the last run learned, then re-check what's due.
   const previous = readPrevious();
+  const nowSec = Math.floor(Date.now() / 1000);
   for (const l of deduped) {
     const p = previous.get(normUrl(l.url));
     if (p) {
       if (p.date_checked) l.date_checked = p.date_checked;
-      if (p.active === false) l.active = false;
+      if (p.active === false) {
+        l.active = false;
+        /* ⚠️ Carry date_closed too, or §15a's fortnight of retention does not exist.
+         *
+         * The fresh row from the feed has no date_closed. Without this line the forget
+         * filter below evaluates `(undefined || 0) > cutoff` — false — and drops the row on
+         * the very next run. The community feed has not noticed the req closed, so it
+         * re-imports it as live, and the whole cycle repeats: flagged closed, forgotten,
+         * re-imported, flagged closed. The two dead Veeam reqs PROJECT.md says were caught
+         * on 2026-08-06 were still being caught twice a run on 08-16, which is what
+         * finally made this visible. Retention is the thing that stops a dead posting
+         * coming back, and it was the one part not carried across. */
+        l.date_closed = p.date_closed || p.date_checked || nowSec;
+      }
+      /* When we first saw this posting, carried across runs.
+       *
+       * Needed to judge liveness coverage honestly: a row that arrived twenty minutes ago
+       * has not been checked because it has not had the chance, and counting it as
+       * unverified makes every board expansion look like a broken checker.
+       * audit-listings.mjs measures coverage only over rows old enough to have been due. */
+      l.date_first_seen = p.date_first_seen || p.date_posted || nowSec;
+    } else {
+      l.date_first_seen = nowSec;
     }
   }
   await verifyStillOpen(deduped);
@@ -592,8 +744,13 @@ if (require.main === module) (async () => {
     closed: kept.length - open.length,
     // How much of the board has actually been verified recently, so a shrinking number
     // here is visible rather than being mistaken for "everything is fine".
-    checked: kept.filter((l) => l.date_checked).length,
-    checkable: kept.filter(isCheckable).length,
+    //
+    // ⚠️ Counted over `open`, not `kept`, and that is the whole point: `total` is the open
+    // rows, so counting coverage over `kept` measured the ratio against a different set and
+    // quietly inflated it by however many closed rows were being retained. Caught by
+    // tests/listings-integrity.test.mjs.
+    checked: open.filter((l) => l.date_checked).length,
+    checkable: open.filter(isCheckable).length,
     bySource: open.reduce((m, l) => ((m[l.source] = (m[l.source] || 0) + 1), m), {}),
   }, null, 2));
   console.log(

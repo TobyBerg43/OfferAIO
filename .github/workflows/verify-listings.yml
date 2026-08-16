@@ -1,0 +1,96 @@
+name: Verify listings
+
+# Daily audit of data/listings.json: is it internally sound, is the liveness pass actually
+# keeping up, and do the links still resolve?
+#
+# This is deliberately SEPARATE from "Update listings" (update.yml, every 6h), which is the
+# job that does the checking. This one checks that the checking happened. Two bugs got weeks
+# of runway because nothing audited the pipeline: a feed listed in scrape.js was never read,
+# and verifyStillOpen covered 23% of the board while meta.json reported that honestly and
+# nobody looked. A number nothing acts on is not a safeguard.
+#
+# 07:30 UTC — 90 minutes after update.yml's 06:00 run, so it audits fresh data.
+
+on:
+  schedule:
+    - cron: "30 7 * * *"
+  workflow_dispatch:
+    inputs:
+      sample:
+        description: "How many live URLs to sample (0 = no network)"
+        default: "60"
+  # Any change to the pipeline or its config gets audited immediately, not tomorrow.
+  push:
+    branches: [main]
+    paths:
+      - scrape.js
+      - companies.json
+      - audit-listings.mjs
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Audit listings
+        id: audit
+        run: |
+          # A push-triggered run samples fewer links: the point there is the data invariants,
+          # and hammering real employers on every pipeline commit would be rude.
+          SAMPLE="${{ github.event.inputs.sample || (github.event_name == 'push' && '15' || '60') }}"
+          echo "sampling $SAMPLE live URLs"
+          node audit-listings.mjs --sample "$SAMPLE" | tee audit.txt
+          # tee swallows the exit code; recover it from PIPESTATUS.
+          exit "${PIPESTATUS[0]}"
+
+      - name: Machine-readable report
+        if: always()
+        run: node audit-listings.mjs --sample 0 --json > audit.json || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: listings-audit
+          path: |
+            audit.txt
+            audit.json
+          retention-days: 30
+
+      # A red X in the Actions tab is easy to miss for weeks — which is the failure mode this
+      # whole workflow exists to prevent. Raise something that shows up in the issue list, and
+      # reuse one issue rather than opening a new one every morning.
+      - name: Open or update an issue on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BODY=$(printf 'The daily listings audit failed on %s.\n\n```\n%s\n```\n\nRun: %s/%s/actions/runs/%s\n' \
+            "$(date -u +%Y-%m-%dT%H:%MZ)" "$(tail -c 3000 audit.txt)" \
+            "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")
+          EXISTING=$(gh issue list --label listings-audit --state open --limit 1 --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh label create listings-audit --description "Daily listings audit" --color B60205 2>/dev/null || true
+            gh issue create --title "Listings audit failing" --label listings-audit --body "$BODY"
+          fi
+
+      # Close the issue once the audit is green again, so an open issue always means a live
+      # problem rather than an old one somebody forgot.
+      - name: Close the issue on success
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for n in $(gh issue list --label listings-audit --state open --json number --jq '.[].number'); do
+            gh issue comment "$n" --body "Audit green again as of $(date -u +%Y-%m-%dT%H:%MZ). Closing."
+            gh issue close "$n"
+          done

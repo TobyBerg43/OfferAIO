@@ -57,7 +57,7 @@
  "point72": {
   "name": "Point72",
   "lastSeen": "2026-08-16",
-  "roles": 5
+  "roles": 4
  },
  "palantir": {
   "name": "Palantir",
@@ -67,7 +67,7 @@
  "optiver": {
   "name": "Optiver",
   "lastSeen": "2026-08-16",
-  "roles": 11
+  "roles": 9
  },
  "vital-lyfe": {
   "name": "VITAL LYFE",
@@ -327,7 +327,7 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-08-16",
-  "roles": 106
+  "roles": 104
  },
  "notion": {
   "name": "Notion",
@@ -532,7 +532,7 @@
  "walleye-capital": {
   "name": "Walleye Capital",
   "lastSeen": "2026-08-16",
-  "roles": 3
+  "roles": 2
  },
  "palantir-technologies": {
   "name": "Palantir Technologies",
@@ -542,7 +542,7 @@
  "jane-street": {
   "name": "Jane Street",
   "lastSeen": "2026-08-16",
-  "roles": 16
+  "roles": 15
  },
  "deepgram": {
   "name": "Deepgram",
@@ -557,7 +557,7 @@
  "appian": {
   "name": "Appian",
   "lastSeen": "2026-08-16",
-  "roles": 4
+  "roles": 3
  },
  "micron": {
   "name": "Micron",
@@ -672,7 +672,7 @@
  "chicago-trading-company": {
   "name": "Chicago Trading Company",
   "lastSeen": "2026-08-16",
-  "roles": 4
+  "roles": 2
  },
  "modal": {
   "name": "Modal",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-16",
-  "roles": 21
+  "roles": 20
  },
  "bytedance": {
   "name": "ByteDance",
@@ -837,7 +837,7 @@
  "cno-financial-group": {
   "name": "CNO Financial Group",
   "lastSeen": "2026-08-16",
-  "roles": 4
+  "roles": 3
  },
  "epic-games": {
   "name": "Epic Games",
@@ -927,7 +927,7 @@
  "ge-vernova": {
   "name": "GE Vernova",
   "lastSeen": "2026-08-16",
-  "roles": 10
+  "roles": 11
  },
  "american-fidelity": {
   "name": "American Fidelity",
@@ -1012,7 +1012,7 @@
  "teledyne": {
   "name": "Teledyne",
   "lastSeen": "2026-08-16",
-  "roles": 3
+  "roles": 2
  },
  "bosch": {
   "name": "Bosch",
