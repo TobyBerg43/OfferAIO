@@ -88,6 +88,15 @@
   .safe li{padding:5px 0 5px 26px;position:relative}
   .safe li::before{content:"✓";position:absolute;left:2px;color:var(--green);font-weight:700}
   footer{border-top:1px solid var(--line);padding:32px 22px;text-align:center;color:var(--dim);font-size:13px}
+  /* The manual-install fallback, collapsed. It is the rare path now and should not
+     compete with the store button for attention. */
+  .fallback{margin-top:13px;border-top:1px solid var(--w-line);padding-top:11px}
+  .fallback summary{cursor:pointer;font:11.5px var(--mono);color:var(--w-dim);list-style:none}
+  .fallback summary::-webkit-details-marker{display:none}
+  .fallback summary::before{content:'\25B8  ';color:var(--w-dim2)}
+  .fallback[open] summary::before{content:'\25BE  '}
+  .fallback summary:hover{color:var(--ink)}
+  .fallback .meta{margin-top:9px}
 </style>
 </head>
 <body>
@@ -100,7 +109,7 @@
   <h1><span class="d">Let's get you</span><span class="s">set up.</span></h1>
   <p class="lede">Five steps, about ten minutes. Each one checks itself — nothing here says
      "done" unless it actually is.</p>
-  <span class="pill"><span class="dot"></span>MANUAL INSTALL · NOT YET ON THE CHROME WEB STORE</span>
+  <span class="pill"><span class="dot"></span>ON THE CHROME WEB STORE · ONE-CLICK INSTALL</span>
 
   <!-- 1 ------------------------------------------------------------------ -->
   <div class="step" id="step1">
@@ -109,25 +118,32 @@
       <h2>Install the OfferAIO extension</h2>
       <p>OfferAIO runs as a Chrome extension so applications go out from your own browser,
          on your own logged-in sessions — never from our servers.</p>
-      <!-- This block used to read "the extension is in review with the Chrome Web Store",
-           which was never true: it has never been submitted. Saying so cost nothing and
-           left people waiting for an email that was not coming. -->
-      <div class="note"><strong>Straight answer:</strong> OfferAIO isn't on the Chrome Web
-        Store yet — it hasn't been submitted, so there's no review to wait for. The download
-        below is the real extension and it works today; it just takes Chrome's Developer
-        mode to load. When the store listing goes live this step becomes one click.</div>
+      <!-- ⚠️ This block told every visitor the extension "isn't on the Chrome Web Store
+           yet — it hasn't been submitted" and then walked them through unzipping a folder
+           and enabling Developer mode. That was true when it was written and stopped being
+           true on 2026-08-04, when the listing was published; it stayed on the page for
+           twelve days and four store releases. It was the highest-friction sentence on the
+           site — a Developer-mode sideload asked of a student in place of one click — and
+           it also read as "this product is not finished", on the one page whose entire job
+           is to convert. Keep this step pointed at the store. -->
       <div class="row">
-        <a class="btn btn-gold" href="https://github.com/TobyBerg43/OfferAIO/releases/download/extension-latest/offeraio-extension.zip">Download the extension (.zip)</a>
-      </div>
-      <div class="shot">
-        <div class="shot-bar">chrome://extensions</div>
-        <div class="shot-body"><span>Developer mode</span><span class="toggle"></span></div>
+        <a class="btn btn-gold" href="https://chromewebstore.google.com/detail/hcbchgpjladdfmcammhgbbmkdagcfcgd" target="_blank" rel="noopener">Add to Chrome — free</a>
       </div>
       <div class="meta">
-        1 · unzip it somewhere permanent — Chrome loads it from that folder every launch<br>
-        2 · open <b>chrome://extensions</b> · 3 · turn on <b>Developer mode</b> (top right)<br>
-        4 · click <b>Load unpacked</b> · 5 · pick the unzipped folder
+        One click, no developer mode, and Chrome keeps it up to date. Works in Chrome,
+        Edge, Brave and Arc.
       </div>
+      <details class="fallback">
+        <summary>Or load it manually from a .zip</summary>
+        <div class="meta">
+          Only needed if your browser blocks the store, or you want a build newer than the
+          published one.<br>
+          1 · <a href="https://github.com/TobyBerg43/OfferAIO/releases/download/extension-latest/offeraio-extension.zip">download the zip</a> and unzip it somewhere permanent —
+          Chrome reloads it from that folder every launch<br>
+          2 · open <b>chrome://extensions</b> · 3 · turn on <b>Developer mode</b> (top right)<br>
+          4 · click <b>Load unpacked</b> · 5 · pick the unzipped folder
+        </div>
+      </details>
       <div class="state waiting" id="s1"><span class="sd"></span>Waiting for the extension…</div>
     </div>
   </div>
