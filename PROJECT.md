@@ -2,7 +2,19 @@
 
 Single source of truth for the OfferAIO project. Any assistant or person should be
 able to read this file and pick up the work without re-discovering anything.
-**Last updated: 2026-08-15.** (Two things today.
+**Last updated: 2026-08-16.**
+
+**2026-08-16 — v1.4.1 cleared review and is PUBLISHED at 100%.** Verified against
+`:fetchStatus`: `published PUBLISHED crx 1.4.1 @ 100%`, `submitted — none —`. Real installs
+now have §17's résumé auto-attach and §18's work-auth fix. **179 tests pass** (115 in
+`tests/`, 64 in `worker/test/` — the §11 secret and cover-request guards took the worker
+suite from 51 to 64), plus 32 browser assertions. `/health` and offeraio.com both answer 200.
+**There is no longer any code or store item on the critical path.** What is left is either an
+account action only Toby can perform (the screenshots + Privacy practices tab in §8, the
+Actions secret in §11) or a product decision (§12 item 6, `/rank`) — and, above both,
+**distribution: the product is published, correct and has no users.**
+
+(Earlier, 2026-08-15 — two things.
 
 **§18 — the work-authorisation bug that hid inside the rule against it, fixed in v1.4.1.**
 Rule 1 stopped `answerFor` asserting work authorisation and left a guard for "we don't
@@ -263,7 +275,7 @@ element.
   (solid muted gold primary, white ghost — no glossy gradients).
 
 ## 7. The Chrome extension (`extension/`)
-Manifest V3. Name "OfferAIO — Auto Apply", **v1.4.0 in the repo, v1.3.1 on the store**
+Manifest V3. Name "OfferAIO — Auto Apply", **v1.4.1 in the repo and on the store**
 (1.0.0 → 1.1.0 licensing, → 1.1.1 bridge licence relay, → 1.1.2 new logo, → 1.1.3 the three
 safety fixes below, → 1.2.0 the application tracker, the context-aware popup and the identity
 relay, → 1.3.0 the ATS relay and the `*.wellfound.com` host fix, §16, → 1.3.1 the two bugs
@@ -411,37 +423,41 @@ automatically (§17); the field is highlighted only when a form's own uploader r
 
 ## 8. Chrome Web Store status
 
-### ✅ Review cleared. PUBLISHED at v1.3.1, 100%, nothing pending (2026-08-15)
+### ✅ Review cleared. PUBLISHED at v1.4.1, 100%, nothing pending (2026-08-16)
 
 Verified against `:fetchStatus`:
 
 ```
-publishedItemRevisionStatus  PUBLISHED  crxVersion 1.3.1  deployPercentage 100
+publishedItemRevisionStatus  PUBLISHED  crxVersion 1.4.1  deployPercentage 100
 submittedItemRevisionStatus  — absent —
 ```
 
-The absent second block is the whole story: nothing is in review, so the 1.3.1 that went in
-after the 2026-08-13 harness pass is what installs now get. **Every problem this section
-described for three days is fixed for real users**: the §7 safety rules, the tracker, the
-`identity` bridge message the deployed dashboard needs, the ATS coverage of §16. The
-extended review predicted below for the widened host permissions either did not happen or
-did not take long.
+The absent second block is the whole story: nothing is in review, so the v1.4.1 submitted on
+08-15 — §17's résumé auto-attach and §18's work-auth fix — is what installs now get. **The
+repo and the store agree for the first time in the product's life.** The gap this section
+described for a week is closed; the only things still owed here are the two the API cannot
+touch, below.
 
-⚠️ **The store is at v1.3.1; the repo and the `extension-latest` zip are at v1.4.0.** The gap
-is §17 — the résumé is saved in the popup and attached to the form automatically. Store
-users still get the old behaviour: the résumé field highlighted and handed back on every
-application, which is the one manual step in a tool that sells itself on not having any.
-Shipping it is the open item. Two things to weigh first, neither of them blocking:
+(Read for history: the same block read `crxVersion 1.3.1` on 2026-08-15, after the 08-13
+harness pass. Every version gap this file has tracked has closed within two days of
+submission — the API path plus `browser-endtoend.mjs` before submitting is a working loop, and
+neither of the last three submissions was rejected.) **Every problem this section
+described for a week is fixed for real users**: the §7 safety rules, the tracker, the
+`identity` bridge message the deployed dashboard needs, the ATS coverage of §16, §17's
+résumé auto-attach and §18's work-auth fix. The extended review predicted below for the
+widened host permissions either did not happen or did not take long.
 
-- **§17's "Not verified" is still not verified.** The `input.files` handoff was proven in a
-  normal page, not from a content script's isolated world, and never on a real ATS. The
-  design fails safe — `attachResume()` re-reads `input.files` and an isolated-world failure
-  reports as "couldn't attach" and falls back to the highlight — so shipping it unproven
-  costs users nothing they have today. Proving it first is still cheaper than a rejection:
-  `dev/local-mode.mjs on`, then one real Greenhouse or Lever fill.
-- **The data disclosure changed with §17** and the Privacy practices tab is dashboard-only.
-  v1.4.0 is the first build that stores a résumé file, so the answers dating from v1.1.2 are
-  now describing a different extension. See the warning in `store/OfferAIO-store-listing.md`
+⚠️ **Still owed, and it is the same item it has been since v1.1.2: one dashboard visit.**
+Neither part is a code change and neither can be done through the API:
+
+- **The screenshots on the live listing are still whatever v1.1.2 uploaded** — v1.1.2-era
+  pictures of v1.4.1 code. Current ones sit in `store/`, regenerated against the **v1.2.0**
+  UI. ⚠️ Two UI passes have landed since (§16's coverage labels, §17's green résumé field),
+  so run `node store/regenerate.mjs` again before uploading rather than uploading what is
+  on disk.
+- **The Privacy practices tab may be answered wrongly.** Those answers date from v1.1.2,
+  before Pro sent anything off-device and before v1.4.0 became the first build to store a
+  résumé file. See the warning in `store/OfferAIO-store-listing.md`
   — `privacy.html` was already rewritten to match, and a listing that disagrees with the
   policy it links to is a standard rejection reason.
 
@@ -459,7 +475,7 @@ v1.2.0-era ones in `store/` cannot be put there through the API. Upload them by 
 time the dashboard is open.
 
 - Developer account: **tobybergerbusiness@gmail.com** — registered, dashboard accessible.
-- Item id **`hcbchgpjladdfmcammhgbbmkdagcfcgd`**, published at **v1.3.1**.
+- Item id **`hcbchgpjladdfmcammhgbbmkdagcfcgd`**, published at **v1.4.1**.
 - Listing copy, category, permission justifications and data disclosures live in
   `store/OfferAIO-store-listing.md`.
 - Screenshots (1280×800) in `store/` — popup, in-page fill bar, dashboard. **Regenerate
@@ -710,12 +726,20 @@ it ships, not the day it sells.
 
 ## 12. Open TODOs
 
-**Everything left is an account action only Toby can perform — the key blockers are gone.**
-The code is done: **154 tests pass** (103 in `tests/`, 51 in `worker/test/`), the Worker is
-deployed and gating correctly, the dashboard is wired to it, three of the four keys in §11
-are set, and **the store listing is published and current through v1.3.1** (§8). What
-remains is shipping v1.4.0 to the store, a first real purchase to exercise the Stripe path,
-and the `/rank` decision below.
+**Nothing left is a code blocker.** As of 2026-08-16: **179 tests pass** (115 in `tests/`,
+64 in `worker/test/`) plus 32 browser assertions, the Worker is deployed and gating
+correctly, `/cover` genuinely works (§11), the dashboard is wired to it, three of the four
+keys in §11 are set, and **the store listing is published and current at v1.4.1** — the repo
+and the store agree (§8). What remains is one dashboard visit, a first real purchase to
+exercise the Stripe path, the `/rank` decision below — and the thing this list has never had
+an item for:
+
+⚠️ **The real gate is distribution, not code.** The product is published, correct, and has
+**no users and no purchases**. Every item below is worth less than one student installing it.
+The season this product exists for — Summer 2027 recruiting — is open now through roughly
+November 2026, so the scarce resource is calendar, not engineering. Nothing in this repo will
+change that; the next honest unit of work is getting it in front of students. Resist adding
+a ninth engineering TODO here in preference to that.
 
 ✅ **The 2026-08-06 trust pass is deployed.** It merged as PR #1 and Pages rebuilt the same
 day; the live dashboard no longer simulates applying. (This section said otherwise until
@@ -735,18 +759,20 @@ in any browser testing it after either pass — `manifest.json` changed in both.
      `worker/**` fails the Deploy Worker job. **This is a convenience, not a blocker** —
      `npx wrangler deploy` from `worker/` works today on this machine, so the only cost is
      that Worker deploys stay manual.
-1. ✅ **Chrome Web Store — published at v1.3.1, review cleared (§8).** Confirmed 2026-08-15:
+1. ✅ **Chrome Web Store — published at v1.4.1, review cleared (§8).** Confirmed 2026-08-16:
    `publishedItemRevisionStatus` is `PUBLISHED` at 100% and there is no submitted revision.
-   Every safety rule in §7, the tracker, the `identity` bridge message and §16's coverage
-   honesty have reached real installs. Poll any future submission with
+   Every safety rule in §7, the tracker, the `identity` bridge message, §16's coverage
+   honesty, §17's résumé auto-attach and §18's work-auth fix have all reached real installs.
+   Poll any future submission with
    `node store/publish-extension.mjs --dry-run`, which now prints both revision blocks
    directly (it used to slice the raw response at 500 chars, and the ~400-char `publicKey`
    ate the whole window, so the one thing the poll exists to report was never visible).
-   **v1.4.1 was submitted 2026-08-15** (§17 the résumé auto-attach, §18 the work-auth fix)
-   after `tests/browser-endtoend.mjs` verified §17's isolated-world handoff. A rejection is
-   cheap now: v1.3.1 keeps serving. **One thing still owed:**
-   - **A dashboard visit**, for the two things the API cannot touch: the three regenerated
-     screenshots in `store/` (the live listing still shows v1.1.2's), and the Privacy
+   The submit loop that works: `node tests/browser-endtoend.mjs`, then
+   `node store/publish-extension.mjs`, then poll `--dry-run` a day later. Three for three.
+   **One thing still owed:**
+   - **A dashboard visit**, for the two things the API cannot touch: the screenshots (the
+     live listing still shows v1.1.2's; the ones in `store/` are v1.2.0-era, so re-run
+     `node store/regenerate.mjs` first), and the Privacy
      practices tab. ⚠️ Read the warning in `store/OfferAIO-store-listing.md` before
      answering the data-transfer question — the honest answer changed when Pro started
      sending data off-device and again when §17 started storing a résumé file, and a
