@@ -109,10 +109,41 @@
       return workAuthAnswer(l, p);
     }
     if (/\blinkedin\b/.test(l)) return p.linkedin;
-    if (/graduat/.test(l)) return p.gradDate;
     if (/\bgpa\b/.test(l)) return p.gpa;
-    if (/school|university|college/.test(l)) return p.school;
-    if (/\bmajor\b|field of study/.test(l)) return p.major;
+
+    /* Name-by-label, for the ATSes that ask again as a custom question. Greenhouse names
+     * those inputs question_<id>, so the SEL.first/SEL.last selectors in fill() cannot see
+     * them and "Legal First Name*" sat empty and required on both DRW forms. Split the same
+     * way fill() does, so the two routes cannot disagree about where the surname starts. */
+    const nameParts = String(p.name || "").trim().split(/\s+/);
+    if (/first name|given name|forename/.test(l)) return nameParts[0] || null;
+    if (/last name|surname|family name/.test(l)) return nameParts.slice(1).join(" ") || null;
+
+    /* ⚠️ A question about WHEN is answered before any question about WHERE, and the order
+     * is the whole point.
+     *
+     * "Please confirm when you will complete your university studies." contains the word
+     * "university", and the school test below used to reach it first — so a real DRW
+     * Greenhouse application was filled with **"Indiana University" as the answer to a
+     * date question**. Found on the live form on 2026-08-16, on two postings.
+     *
+     * That is §7 rule 4's failure by another route. Rule 4 stops a label binding to the
+     * wrong control; this bound the right control to the wrong answer, and the result is
+     * the same thing: a confident, wrong answer in the user's name on a legal-ish form.
+     * §7 rule 1 already carries the same warning about test order for "without sponsor",
+     * so treat this chain as order-sensitive throughout and add nothing above these two.
+     *
+     * There is no phrasing of "when do you finish?" that a school name answers, so the
+     * date test can afford to be broad, and NEEDS_USER when we have no date is correct:
+     * the bar names it and the user fills it in. */
+    const asksWhen =
+      /\bwhen\b|\bdate\b|graduat|expected|anticipat|completion|complete (?:your )?(?:university|college|degree|studies|education|program)/.test(l);
+    if (asksWhen) return p.gradDate || NEEDS_USER;
+
+    if (/school|university|college|institution/.test(l)) return p.school;
+    // "Discipline" and "course of study" are what Greenhouse's structured education block
+    // calls the major; both were unfilled on the DRW forms until they were added here.
+    if (/\bmajor\b|field of study|discipline|course of study/.test(l)) return p.major;
     if (/\bminor\b/.test(l)) return p.minor;
     if (/hear about|how did you find/.test(l)) return "Company website";
     return null;

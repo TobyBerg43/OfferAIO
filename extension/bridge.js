@@ -14,7 +14,16 @@ window.addEventListener("message", (e) => {
   const d = e.data;
   if (!d || d.source !== "offeraio-site") return;
   if (d.type === "profile" && d.profile) {
-    chrome.storage.local.set({ profile: d.profile, mode: d.mode || "semi" }, () => {
+    // dailyCap rides alongside the profile rather than inside it: license.js reads it as a
+    // top-level key, and it is a setting no employer ever sees. The dashboard has had a
+    // "Daily cap" input since long before anything read it — it persisted to localStorage
+    // and stopped there, which is the same dead-control problem as the trust panel's
+    // pacing claim. Out-of-range or missing values are simply not written, so getDaily()
+    // keeps the shipped default rather than inheriting a nonsense number from the page.
+    const patch = { profile: d.profile, mode: d.mode || "semi" };
+    const cap = Math.floor(Number(d.dailyCap));
+    if (Number.isFinite(cap) && cap >= 1 && cap <= 200) patch.dailyCap = cap;
+    chrome.storage.local.set(patch, () => {
       window.postMessage({ source: "offeraio-ext", type: "saved" }, "*");
     });
   }

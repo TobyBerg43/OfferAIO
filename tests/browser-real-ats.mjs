@@ -90,10 +90,43 @@ class CDP {
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** How to read the payload check — see the long note at its call site. */
+function describePayload(p) {
+  if (!p) return "n/a (no file attached)";
+  if (p.state === "noform") {
+    return "no enclosing <form> element — this ATS uploads the file with its own request, " +
+      "so a form payload does not exist to check (same for a hand-picked file)";
+  }
+  if (p.state === "present") return `in FormData as "${p.name}" ${p.size}B`;
+  if (p.state === "unnamed") {
+    return `${p.name} ${p.size}B — real File, but the input has no name attribute, ` +
+      "so FormData excludes it for a hand-picked file too (this ATS reads input.files itself)";
+  }
+  return "MISSING from the form payload";
+}
+/* ⚠️ `fn` may be synchronous, and may throw synchronously.
+ *
+ * This used to read `await fn().catch(() => null)`, which requires fn() to return a
+ * thenable. One of the call sites below hands it a plain synchronous callback that returns
+ * null until the isolated world shows up — so on any page where the content script was not
+ * already attached by the first poll, `null.catch` threw
+ * "Cannot read properties of null (reading 'catch')" and the run died on the first URL.
+ *
+ * Two things made that worse than a normal bug. It is timing-dependent, so it passed
+ * whenever the extension happened to win the race and failed on a slow real page; and the
+ * TypeError replaced this function's own message, which is the one that tells you what to
+ * actually check ("is this host in the manifest?"). Found 2026-08-16 pointing the harness
+ * at a live DRW Greenhouse posting. */
 async function waitFor(fn, what, ms = 25000) {
   const end = Date.now() + ms;
   for (;;) {
-    const v = await fn().catch(() => null);
+    let v = null;
+    try {
+      v = await fn();
+    } catch {
+      v = null;
+    }
     if (v) return v;
     if (Date.now() > end) throw new Error("timed out waiting for " + what);
     await sleep(250);
@@ -146,29 +179,48 @@ try {
     const host = new URL(url).hostname;
     console.log("── " + host + "\n   " + url);
     try {
-      contexts.length = 0;
-      await cdp.send("Page.navigate", { url });
-      const ctx = await waitFor(
-        () => contexts.find((c) => c.auxData && c.auxData.type === "isolated") || null,
-        "the content script (is this host in the manifest?)");
-      await waitFor(() => evalIn(ctx.id, "return !!self.OfferAIOFill").then((v) => v === true), "OfferAIOFill");
+      /* Lever and Ashby keep the posting and the application on separate URLs, so a bare
+       * posting link renders a description with no fields and the run used to skip it —
+       * which quietly meant §17 was only ever verified on Greenhouse, one ATS of three,
+       * while the summary line read like all three had been covered. Both use a fixed
+       * suffix, so try the posting first and fall through to the apply page. */
+      const candidates = [url];
+      if (/jobs\.lever\.co/.test(host) && !/\/apply\/?$/.test(url)) {
+        candidates.push(url.replace(/\/$/, "") + "/apply");
+      }
+      if (/jobs\.ashbyhq\.com/.test(host) && !/\/application\/?$/.test(url)) {
+        candidates.push(url.replace(/\/$/, "") + "/application");
+      }
 
-      // Give a React/SPA form time to render its fields before judging what is there.
-      const form = await evalIn(ctx.id, `
-        for (let i = 0; i < 40; i++) {
-          if (document.querySelector('input[type=file], input[type=email], input[autocomplete=email]')) break;
-          await new Promise(r => setTimeout(r, 500));
-        }
-        return {
-          fileInputs: document.querySelectorAll('input[type=file]').length,
-          textInputs: document.querySelectorAll('input:not([type=hidden]):not([type=submit])').length,
-          iframes: document.querySelectorAll('iframe').length,
-        };`);
+      let ctx = null, form = null, usedUrl = null;
+      for (const candidate of candidates) {
+        contexts.length = 0;
+        await cdp.send("Page.navigate", { url: candidate });
+        ctx = await waitFor(
+          () => contexts.find((c) => c.auxData && c.auxData.type === "isolated") || null,
+          "the content script (is this host in the manifest?)");
+        await waitFor(() => evalIn(ctx.id, "return !!self.OfferAIOFill").then((v) => v === true), "OfferAIOFill");
 
-      if (!form.textInputs) {
-        console.log("   no application form on this URL (apply may be behind a link) — skipped\n");
+        // Give a React/SPA form time to render its fields before judging what is there.
+        form = await evalIn(ctx.id, `
+          for (let i = 0; i < 40; i++) {
+            if (document.querySelector('input[type=file], input[type=email], input[autocomplete=email]')) break;
+            await new Promise(r => setTimeout(r, 500));
+          }
+          return {
+            fileInputs: document.querySelectorAll('input[type=file]').length,
+            textInputs: document.querySelectorAll('input:not([type=hidden]):not([type=submit])').length,
+            iframes: document.querySelectorAll('iframe').length,
+          };`);
+        usedUrl = candidate;
+        if (form.textInputs) break;
+      }
+
+      if (!form || !form.textInputs) {
+        console.log("   no application form found, including at the apply path — skipped\n");
         continue;
       }
+      if (usedUrl !== url) console.log("   → form found at " + usedUrl);
 
       await evalIn(ctx.id, `
         await chrome.storage.local.clear();
@@ -178,10 +230,50 @@ try {
       // run() only. doSubmit is never called and no button is clicked.
       const out = await evalIn(ctx.id, `
         const r = await self.OfferAIOFill.run();
-        const rf = document.querySelector('input[type=file]');
+        /* The input the extension actually used, not merely the first one on the page.
+         * Ashby renders two file inputs and the resume goes into the second, so the old
+         * querySelector reported "no file to check" on a form where the handoff had in fact
+         * worked — understating the result on the one ATS hardest to verify. */
+        const fileInputs = [...document.querySelectorAll('input[type=file]')];
+        const rf = fileInputs.find(el => el.files && el.files.length) || fileInputs[0] || null;
+        /* Is the file in the form's payload?
+         *
+         * ⚠️ This used to be new FormData(f).get(rf.name) and reported "no" on every real
+         * Greenhouse posting — because Greenhouse's résumé input carries id=resume and NO
+         * name attribute, FormData only serialises *named* controls, and FormData.get("")
+         * is null. So the one line §17 calls "the one that matters" was answering a
+         * question about the markup while looking like a verdict on our attachment.
+         *
+         * The three cases below are genuinely different, and only the last is a problem:
+         *   unnamed  — the browser cannot include it whoever attached it. A human picking
+         *              the file by hand produces the identical DOM, so this says nothing
+         *              about us. Greenhouse reads input.files itself and uploads it.
+         *   present  — named, and serialised. Fully proven.
+         *   MISSING  — named, and absent anyway. That is the §17 nightmare: a file we
+         *              believe is attached that the form would not send. */
         let inFormData = null;
         const f = rf && rf.closest('form');
-        if (f) { const v = new FormData(f).get(rf.name); if (v && typeof v === 'object') inFormData = { name: v.name, size: v.size }; }
+        // Ashby renders its uploader outside any form element and posts the file with its
+        // own request, so no form payload exists to inspect. That is a different answer from
+        // "the file is missing" and has to read differently.
+        if (rf && rf.files.length && !f) inFormData = { state: 'noform' };
+        if (f && rf.files.length) {
+          if (rf.name) {
+            const v = new FormData(f).get(rf.name);
+            inFormData = (v && typeof v === 'object')
+              ? { state: 'present', name: v.name, size: v.size }
+              : { state: 'MISSING' };
+          } else {
+            // Prove the File itself is real and serialisable by naming the input just long
+            // enough to look, then putting the markup back exactly as it was.
+            rf.setAttribute('name', '__oa_probe');
+            const v = new FormData(f).get('__oa_probe');
+            rf.removeAttribute('name');
+            inFormData = (v && typeof v === 'object')
+              ? { state: 'unnamed', name: v.name, size: v.size }
+              : { state: 'MISSING' };
+          }
+        }
         const filled = [...document.querySelectorAll('input,select,textarea')]
           .filter(el => el.value && el.type !== 'hidden' && el.type !== 'submit')
           .map(el => (el.name || el.id || el.type) + '=' + String(el.value).slice(0, 28));
@@ -204,8 +296,12 @@ try {
         console.log(`   résumé: ${ok ? "ATTACHED" : "NOT attached"}` +
           (ok ? ` (${out.resumeName})` : "") +
           `  · reported: ${out.resumeAttached}` +
-          `  · in FormData: ${out.inFormData ? out.inFormData.name + " " + out.inFormData.size + "B" : "no"}`);
+          `  · payload: ${describePayload(out.inFormData)}`);
         if (out.resumeAttached !== ok) console.log("   ⚠️  report disagrees with the DOM — that is the one thing §17 must never do");
+        if (out.inFormData && out.inFormData.state === "MISSING") {
+          console.log("   ⚠️  the file is on a NAMED input and still absent from the form payload —");
+          console.log("       this is the case §17 fails safe against; do not ship a build that does this");
+        }
       } else {
         console.log("   résumé: no file input on this page");
       }

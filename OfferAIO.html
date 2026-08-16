@@ -573,7 +573,7 @@
             <div class="card">
               <h3>Smart Pacing</h3>
               <div class="row2">
-                <div><label class="f-lbl">Daily cap</label><input type="number" id="dailyCap" value="25" min="1" max="200"></div>
+                <div><label class="f-lbl">Daily cap</label><input type="number" id="dailyCap" value="12" min="1" max="200"></div>
                 <div><label class="f-lbl">Match quality floor</label><select id="qFloor"><option>Any match</option><option selected>Good fit (70%+)</option><option>Strong fit (85%+)</option></select></div>
               </div>
               <div class="toggle-row"><div><div class="t-title">Randomized human timing</div><div class="t-sub">Jitters submissions so you never look like a bot</div></div><div class="switch on" onclick="this.classList.toggle('on')"></div></div>
@@ -1800,7 +1800,12 @@ function sponsorshipFlag(auth){
 function pushToExtension(){
   const mode=(($('defModeSeg')&&$('defModeSeg').querySelector('button.on'))||{}).dataset?
     $('defModeSeg').querySelector('button.on').dataset.v:'semi';
-  window.postMessage({source:'offeraio-site',type:'profile',profile:collectProfile(),mode:mode==='auto'?'auto':'semi'},'*');
+  // dailyCap goes over the bridge too. It is not part of collectProfile() because it is a
+  // setting rather than anything an employer sees - see the note in extension/bridge.js,
+  // which validates the range before storing it.
+  window.postMessage({source:'offeraio-site',type:'profile',profile:collectProfile(),
+    mode:mode==='auto'?'auto':'semi',
+    dailyCap:Number((($('dailyCap')||{}).value)||0)},'*');
 }
 function saveSettings(){
   const n=$('saveNote');n.classList.add('show');setTimeout(()=>n.classList.remove('show'),1800);
