@@ -215,6 +215,95 @@
   .list-row .lr-meta span.lr-new{color:var(--violet);border-color:rgba(51,82,140,.3)}
   .save-note{color:var(--green);font-size:12px;font-family:var(--mono);opacity:0;transition:.3s}
   .save-note.show{opacity:1}
+
+  /* ============================== responsive ==============================
+   *
+   * Added 2026-08-16. Until then this file had **no media queries at all**, while
+   * declaring <meta name="viewport" content="width=device-width"> — so it promised the
+   * browser it was mobile-ready and then laid out a 200px non-shrinking sidebar, a
+   * four-column stat grid and full-width data tables. On a 390px phone that is 200px of
+   * chrome and 190px of content. The landing page has a dozen breakpoints; the actual
+   * product had none, which is the wrong way round.
+   *
+   * Three sizes: narrow desktop (grids collapse), tablet/phone (the sidebar becomes a
+   * scrollable top strip), small phone (single column, tighter). Tables are never
+   * reflowed into cards — they keep a min-width and scroll inside their own card, which
+   * preserves the column alignment that makes a listings table readable at all.
+   */
+
+  /* Wide grids give up their second column before anything else has to move. */
+  @media (max-width:1080px){
+    .grid2{grid-template-columns:1fr}
+  }
+
+  @media (max-width:900px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .row2{grid-template-columns:1fr}
+    .content{padding:18px 16px}
+  }
+
+  /* 900px, not 760: an iPad in portrait is 768 wide, and 768 minus a 200px sidebar leaves
+     568px for tables that want 560. Below 900 the content takes the whole width. */
+  @media (max-width:900px){
+    /* 100dvh, because 100vh on a phone includes the space the URL bar is sitting in and
+       the bottom of the scroll container ends up unreachable. The vh line stays first as
+       the fallback for anything without dvh. */
+    body,.window{height:100vh;height:100dvh}
+    .main{flex-direction:column;min-height:0}
+
+    /* The sidebar becomes a horizontal, scrollable strip pinned to the top. */
+    .sidebar{width:auto;flex-direction:row;align-items:center;gap:4px;
+      padding:7px 10px;border-right:none;border-bottom:1px solid var(--border);
+      overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
+      position:sticky;top:0;z-index:50;background:var(--bg);scrollbar-width:none;
+      /* The strip scrolls and the scrollbar is hidden, so fade the right edge — otherwise
+         Settings and the plan chip are off-screen with nothing to suggest they exist. The
+         mask is dropped once the strip is scrolled to the end (.at-end, set in JS). */
+      -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent);
+      mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent)}
+    .sidebar.at-end{-webkit-mask-image:none;mask-image:none}
+    .sidebar::-webkit-scrollbar{display:none}
+    .logo{padding:0 6px 0 0;flex:0 0 auto}
+    /* Keep the mark, drop the wordmark and version — they cost a third of the strip. */
+    .logo-name,.logo-ver{display:none}
+    .nav-item{flex:0 0 auto;margin-bottom:0;white-space:nowrap;padding:8px 11px;font-size:13px}
+    .nav-badge{margin-left:5px}
+    .sidebar .spacer{display:none}
+    /* The ENGINE/DB/CONNECTED chips are diagnostics, and there is no room for three lines
+       of them here. #connectGate already covers the case that actually matters — no
+       extension — so they are dropped rather than shrunk into illegibility. */
+    .side-status{display:none}
+    .userchip{flex:0 0 auto;margin-left:auto;padding:5px 8px;gap:7px}
+    .userchip .ue{display:none}
+    .avatar{width:24px;height:24px;font-size:10px}
+
+    /* Tables scroll inside their card instead of stretching the page. Reflowing them into
+       stacked cards would lose the column alignment that makes them scannable. */
+    .card{overflow-x:auto}
+    .card table{min-width:560px}
+
+    .page-head h1{font-size:20px}
+    .head-actions{margin-left:0;width:100%}
+    .stat{padding:13px 14px}
+    .stat .val{font-size:23px}
+  }
+
+  @media (max-width:480px){
+    .stats{grid-template-columns:1fr}
+    .content{padding:14px 12px}
+    .cg-card{padding:22px 18px}
+    .cg-card h2{font-size:22px}
+    /* A listing row's controls wrap under the title rather than squeezing it to nothing. */
+    .list-row{flex-wrap:wrap}
+    .list-row .lr-main{flex:1 0 100%}
+    .list-row .lr-role{white-space:normal}
+  }
+
+  /* The dashboard animates a page swap and a few pulses; honour a reduced-motion setting
+     the way landing.html already does. */
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  }
 </style>
 </head>
 <body>
@@ -246,7 +335,7 @@
     <div class="sidebar">
       <div class="logo">
         <div class="logo-icon" role="img" aria-label="OfferAIO"></div>
-        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver" id="logoVer">v1.4.1</div></div>
+        <div><div class="logo-name">Offer<span>AIO</span></div><div class="logo-ver" id="logoVer">v1.5.0</div></div>
       </div>
       <div class="nav-item active" data-page="dashboard">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
@@ -293,9 +382,9 @@
         </div>
         <div class="stats">
           <div class="stat green"><div class="lbl">Applications Sent</div><div class="val" id="stSent">0</div><div class="sub" id="stToday">+0 today</div></div>
-          <div class="stat"><div class="lbl">Active Tasks</div><div class="val" id="stActive">0</div><div class="sub">monitoring &amp; applying</div></div>
+          <div class="stat"><div class="lbl">Active Tasks</div><div class="val" id="stActive">0</div><div class="sub">matched &amp; waiting for you</div></div>
           <div class="stat cyan"><div class="lbl">Responses</div><div class="val" id="stResp">0</div><div class="sub" id="stRespRate">0% response rate</div></div>
-          <div class="stat amber"><div class="lbl">Interviews</div><div class="val" id="stInt">0</div><div class="sub">first rounds locked</div></div>
+          <div class="stat amber"><div class="lbl">Interviews</div><div class="val" id="stInt">0</div><div class="sub">from Radar, if enabled</div></div>
         </div>
         <div class="grid2">
           <div class="card">
@@ -598,15 +687,22 @@
 const CATS = {
   swe:{label:'Software Engineering'},
   ai:{label:'AI & Machine Learning'},
-  ib:{label:'Investment Banking'},
+  hardware:{label:'Hardware & Semiconductor'},
+  data:{label:'Data Science & Analytics'},
+  product:{label:'Product Management'},
   quant:{label:'Quantitative Finance'},
-  consulting:{label:'Consulting'},
-  accounting:{label:'Accounting'},
+  ib:{label:'Investment Banking'},
+  finance:{label:'Finance & Banking'},
   pe:{label:'Private Equity & Venture Capital'},
+  accounting:{label:'Accounting'},
+  risk:{label:'Risk, Insurance & Audit'},
+  consulting:{label:'Consulting'},
+  ops:{label:'Operations & Supply Chain'},
+  marketing:{label:'Marketing & Sales'},
+  hr:{label:'Human Resources'},
   re:{label:'Real Estate'},
   startup:{label:'Startups'},
-  product:{label:'Product Management'},
-  data:{label:'Data Science & Analytics'}
+  other:{label:'Other'}
 };
 const LOGO_COLORS=['#33528c','#4a72b8','#e05c8f','#2fbf8f','#e0a02f','#5cc8e0','#a05ce0','#e0662f'];
 /* Every status a user can see, and the ONLY events that can produce it.
@@ -722,18 +818,44 @@ function sourceLabel(url){
     return u.hostname.replace(/^www\./,'');
   }catch(e){return 'your pipeline';}
 }
+/* Category from the title alone.
+ *
+ * ⚠️ The fallback used to be `return 'swe'`, which made Software Engineering the home
+ * for everything unmatched. Measured against the 387-row live board on 2026-08-16:
+ * **73.4% of all listings landed in Software Engineering**, and 49 of those rows
+ * contained no engineering or tech word at all — Wells Fargo's Human Resources
+ * internship, Marsh McLennan's Insurance req, Oliver Wyman's Actuarial programme,
+ * Commercial Banking, Wealth Management, Corporate Risk. "Pick your lanes" is the
+ * feature this broke: a student who selects Software Engineering and is handed an
+ * insurance req has been told something false about the board.
+ *
+ * So `swe` is now claimed only on an actual engineering signal, and whatever is left
+ * says 'other'. An honest 'Other' bucket is worth more than a confident wrong label —
+ * the same reasoning as canFill()'s third state in §16.
+ *
+ * Order is most-specific-first, because titles collide. "Trading Desk Operations
+ * Engineer" is quant and not operations and not software; "Sales and Trading" is quant
+ * and not sales; "Corporate Risk Development Program" is risk and not development. Every
+ * one of those inverts if the tests below it are moved above it. */
 function catForTitle(t){
   t=(t||'').toLowerCase();
-  if(/quant|trading/.test(t))return 'quant';
-  if(/machine learning|\bml\b|\bai\b|deep learning|\bllm\b|research scientist/.test(t))return 'ai';
-  if(/data scien|data analy|data eng|analytics/.test(t))return 'data';
-  if(/product manage|\bapm\b/.test(t))return 'product';
+  if(/quant|trading|trader|\bmarkets\b/.test(t))return 'quant';
+  if(/machine learning|\bml\b|\bai\b|deep learning|\bllm\b|research scientist|computer vision|\bnlp\b/.test(t))return 'ai';
+  if(/data scien|data analy|data eng|analytics|business intelligence/.test(t))return 'data';
+  if(/product manage|\bapm\b|product design|product intern/.test(t))return 'product';
   if(/consult|strategy analyst/.test(t))return 'consulting';
-  if(/account|audit|\btax\b/.test(t))return 'accounting';
+  if(/human resources|\bhr\b|talent acquisition|recruiting|people team/.test(t))return 'hr';
+  if(/actuar|insurance|\brisk\b|compliance|regulatory|audit/.test(t))return 'risk';
+  if(/account|\btax\b|controller|financial reporting/.test(t))return 'accounting';
+  if(/private equity|venture capital|growth equity|\bpe\b/.test(t))return 'pe';
+  if(/real estate/.test(t))return 're';
   if(/invest(ment)? bank|m&a|capital markets|summer analyst/.test(t))return 'ib';
-  if(/private equity|venture|growth equity/.test(t))return 'pe';
-  if(/real estate|acquisition/.test(t))return 're';
-  return 'swe';
+  if(/wealth|asset manage|commercial bank|consumer bank|corporate bank|treasury|payments|lending|equity research|research analyst|\bfinance\b|financial/.test(t))return 'finance';
+  if(/semiconduct|\bfpga\b|\basic\b|hardware|electrical engineer|\bdram\b|silicon|\bchip\b|firmware|embedded|process integration|analog|\brf\b|photonic/.test(t))return 'hardware';
+  if(/operations|supply chain|logistics|procurement/.test(t))return 'ops';
+  if(/marketing|\bsales\b|communications|\bbrand\b/.test(t))return 'marketing';
+  if(/software|\bswe\b|engineer|developer|programmer|front.?end|back.?end|full.?stack|mobile|\bios\b|android|devops|infrastructure|platform|computer scien|cyber|security|cloud|\bqa\b|\bsre\b|systems|robotic|technolog|\bdata\b/.test(t))return 'swe';
+  return 'other';
 }
 const NON_US_RE=/\b(Canada|Toronto|Vancouver|Montreal|Ottawa|Calgary|United Kingdom|UK|London|Dublin|Ireland|Germany|Berlin|Munich|France|Paris|Netherlands|Amsterdam|Spain|Madrid|Barcelona|Poland|Warsaw|Krakow|India|Bangalore|Bengaluru|Hyderabad|Mumbai|Pune|Gurgaon|Noida|Chennai|Singapore|Japan|Tokyo|China|Shanghai|Beijing|Shenzhen|Hong Kong|Taiwan|Taipei|Korea|Seoul|Australia|Sydney|Melbourne|Brazil|S[ãa]o Paulo|Mexico|Chile|Santiago|Argentina|Buenos Aires|Colombia|Bogot[áa]|Peru|Lima|Costa Rica|Israel|Tel Aviv|Dubai|UAE|Switzerland|Zurich|Geneva|Sweden|Stockholm|Finland|Helsinki|Norway|Oslo|Denmark|Copenhagen|Italy|Milan|Rome|Portugal|Lisbon|Belgium|Brussels|Austria|Vienna|Prague|Budapest|Bucharest|Luxembourg|LATAM|EMEA|APAC|FIN|GBR|DEU|CAN|MEX|BRA|IND|CHN|JPN|SGP|AUS|POL|ESP|FRA|NLD|CHE|ITA)\b/;
 function ingest(data,srcName){
@@ -1804,6 +1926,20 @@ function boot(){
   };
   checkEngine();
 }
+
+/* The mobile nav strip's right-edge fade (see the 900px block) means "there is more this
+   way". Once you have scrolled to the end there is not, so drop it — a permanent fade
+   reads as a rendering artefact rather than an affordance. */
+(function(){
+  var sb=document.querySelector('.sidebar');
+  if(!sb) return;
+  function sync(){
+    sb.classList.toggle('at-end', sb.scrollLeft + sb.clientWidth >= sb.scrollWidth - 2);
+  }
+  sb.addEventListener('scroll',sync,{passive:true});
+  addEventListener('resize',sync);
+  sync();
+})();
 </script>
 </body>
 </html>

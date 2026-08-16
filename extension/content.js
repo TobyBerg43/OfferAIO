@@ -367,7 +367,10 @@
     if (needsUser.length) tail += " - answer yourself: " + needsUser.join("; ");
     if (LIC()) {
       const s = await LIC().status();
-      tail += " (" + s.remaining + " of " + s.quota + " left)";
+      tail += " (" + s.remaining + " of " + s.quota + " left this month";
+      // Only worth the words once the cap is close enough to matter.
+      if (s.dailyRemaining <= 3) tail += "; " + s.dailyRemaining + " auto-sends left today";
+      tail += ")";
     }
     status("Filled " + n + " fields" + tail);
     const sb = document.getElementById("oa-submit");
@@ -397,6 +400,34 @@
       if (resumeMissing()) {
         status("Full-auto paused - attach your resume (highlighted), then Submit");
         return { ok: true, ...lastFill, paused: "resume" };
+      }
+
+      /* The daily cap and the randomized gap, both from license.js.
+       *
+       * They stop full-auto and never stop the user: the pause says how to send this one
+       * anyway, and doSubmit deliberately does not re-check either. An unattended loop is
+       * the thing worth rate-limiting; a student sitting in front of the form deciding to
+       * apply is not, and a rail with no override is a trap. */
+      if (LIC()) {
+        const day = await LIC().getDaily();
+        if (day.remaining <= 0) {
+          status(
+            "Full-auto paused - daily cap reached (" + day.count + " of " + day.cap +
+              " auto-sends today). Click Submit to send this one anyway.",
+          );
+          return { ok: true, ...lastFill, paused: "daily_cap" };
+        }
+        const wait = await LIC().paceWaitMs();
+        // Even with no gap outstanding the delay is jittered rather than a flat 2s: a
+        // constant interval is itself a signature, which is the whole point of pacing.
+        const delay = Math.max(wait, 1800 + Math.floor(Math.random() * 2600));
+        status(
+          "Full-auto - submitting in " + Math.round(delay / 1000) + "s" +
+            (wait ? " (spacing from your last send)" : "") + " - " +
+            day.remaining + " of " + day.cap + " auto-sends left today",
+        );
+        setTimeout(doSubmit, delay);
+        return { ok: true, ...lastFill, autoInMs: delay };
       }
       status("Full-auto - submitting in 2s...");
       setTimeout(doSubmit, 2000);
@@ -483,9 +514,12 @@
       }
     }
 
-    // The browser will not let a script attach a file, so a missing resume means this
-    // submission cannot succeed. Refusing here costs the user nothing; clicking anyway
-    // burned a submission on an application that was never going to send.
+    // A resume that is not on the form means this submission cannot succeed, so refusing
+    // here costs the user nothing; clicking anyway burns a submission on an application
+    // that was never going to send. (This used to say browsers forbid scripts from
+    // attaching files. They do not — they forbid setting input.value to a path, and §17
+    // attaches the file through a DataTransfer. resumeMissing() reads input.files, so it
+    // still catches the forms whose own uploader refuses the handoff.)
     if (resumeMissing()) {
       status("Attach your resume first (highlighted) - not submitted, nothing counted.");
       return;

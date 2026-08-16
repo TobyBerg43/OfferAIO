@@ -25,6 +25,23 @@
   const CACHE_MS = 24 * 60 * 60 * 1000; // re-verify at most daily
   const OFFLINE_GRACE_MS = 7 * 24 * 60 * 60 * 1000; // ride out a Worker outage
 
+  /* Daily cap and pacing — the safety rails, not the meter.
+   *
+   * These exist for a different reason from the monthly quota. The quota is billing;
+   * these are about not looking like a script to an ATS. Forty applications fired at one
+   * Greenhouse tenant inside a minute is a pattern worth avoiding, and the cost of being
+   * flagged lands on the student's real account.
+   *
+   * They govern AUTOMATIC submission only. A user who clicks Submit themselves is never
+   * blocked by either: they are present, they are choosing, and PROJECT.md's rule that a
+   * metering bug must never stop someone applying for a job applies here with more force,
+   * not less. A rail you cannot override is a trap, so full-auto pauses and says how to
+   * proceed instead of refusing.
+   */
+  const DAILY_CAP = 12;
+  const PACE_MIN_MS = 45 * 1000;
+  const PACE_MAX_MS = 90 * 1000;
+
   const FREE = { active: false, plan: "free", quota: FREE_QUOTA };
 
   const get = (keys) => new Promise((r) => chrome.storage.local.get(keys, r));
@@ -53,10 +70,56 @@
     return { month: now, count: u.count || 0 };
   }
 
+  const dayKey = (d = new Date()) =>
+    monthKey(d) + "-" + String(d.getDate()).padStart(2, "0");
+
+  /**
+   * Auto-submits used today, resetting on the local-date rollover — the same local-time
+   * basis as the monthly counter, so a user near midnight sees both roll together.
+   * `dailyCap` in storage lets the number be tuned without a release; anything absent or
+   * nonsensical falls back to the shipped default rather than to "no limit".
+   */
+  async function getDaily() {
+    const d = await get(["daily", "dailyCap"]);
+    const today = dayKey();
+    const raw = Number(d.dailyCap);
+    const cap = Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : DAILY_CAP;
+    const v = d.daily;
+    const count = v && v.day === today ? v.count || 0 : 0;
+    return { day: today, count, cap, remaining: Math.max(0, cap - count) };
+  }
+
+  /** A fresh randomized gap, drawn once per submission. */
+  const nextPaceDelay = () =>
+    PACE_MIN_MS + Math.floor(Math.random() * (PACE_MAX_MS - PACE_MIN_MS + 1));
+
+  /**
+   * Milliseconds still to wait before the next AUTOMATIC submission, 0 if clear.
+   *
+   * The gap is drawn once in recordSubmission and stored as an absolute deadline rather
+   * than rolled here. Rolling per call would mean the answer changed every time anything
+   * asked, so the wait would never actually elapse and nothing could be tested.
+   *
+   * The PACE_MAX_MS clamp is the same clock-skew reasoning as the licence cache below: a
+   * clock knocked forward leaves paceUntil absurdly far ahead, and without the clamp
+   * full-auto would sit waiting out a deadline that is months away.
+   */
+  async function paceWaitMs() {
+    const d = await get(["paceUntil"]);
+    const until = Number(d.paceUntil) || 0;
+    const left = until - Date.now();
+    return left > 0 ? Math.min(left, PACE_MAX_MS) : 0;
+  }
+
   async function recordSubmission() {
-    const u = await getUsage();
+    const [u, day] = await Promise.all([getUsage(), getDaily()]);
     const next = { month: u.month, count: u.count + 1 };
-    await set({ usage: next });
+    await set({
+      usage: next,
+      daily: { day: day.day, count: day.count + 1 },
+      lastSubmitAt: Date.now(),
+      paceUntil: Date.now() + nextPaceDelay(),
+    });
     return next;
   }
 
@@ -188,7 +251,12 @@
 
   /** Combined view for the UI and the submit gate. */
   async function status() {
-    const [lic, usage] = await Promise.all([getLicense(), getUsage()]);
+    const [lic, usage, day, pace] = await Promise.all([
+      getLicense(),
+      getUsage(),
+      getDaily(),
+      paceWaitMs(),
+    ]);
     return {
       plan: lic.plan,
       active: lic.active,
@@ -197,6 +265,10 @@
       remaining: Math.max(0, lic.quota - usage.count),
       stale: !!lic.stale,
       reason: lic.reason,
+      dailyUsed: day.count,
+      dailyCap: day.cap,
+      dailyRemaining: day.remaining,
+      paceWaitMs: pace,
     };
   }
 
@@ -205,10 +277,15 @@
     activate,
     clearLicense,
     getUsage,
+    getDaily,
+    paceWaitMs,
     recordSubmission,
     status,
     installId,
     FREE_QUOTA,
     PRO_QUOTA,
+    DAILY_CAP,
+    PACE_MIN_MS,
+    PACE_MAX_MS,
   };
 })();
