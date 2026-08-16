@@ -4,7 +4,16 @@ Single source of truth for the OfferAIO project. Any assistant or person should 
 able to read this file and pick up the work without re-discovering anything.
 **Last updated: 2026-08-16.**
 
-**2026-08-16 — four things. §21 is the one with the biggest number, §20 the one with the worst bug.**
+**2026-08-16 — five things. §21 has the biggest number, §20 the worst bug, §22 the most
+overdue.**
+
+**§22: nothing verified the pipeline, so the pipeline was wrong in three ways nobody had
+measured.** Building a daily audit found duplicate URLs on the board, seven job applications
+linked over plain `http`, and — the bad one — closed reqs being forgotten on the next run and
+re-imported as live, which is why the dead Veeam postings §15a recorded as caught on 08-06
+were *still* being re-detected twice a run ten days later. Liveness coverage was 23% because
+only three hosts were ever checked; it is 60.8% now, Workday included. `verify-listings.yml`
+runs daily and opens an issue when it fails.
 
 **§21: the board went 387 → 942 listings**, and most of the gain came from a feed `scrape.js`
 already named. `communityListings()` took the first reachable source and returned, so
@@ -31,7 +40,7 @@ now have §17's résumé auto-attach and §18's work-auth fix. `/health` and off
 answer 200. **The repo is now v1.5.0 and ahead of the store again** — §19's rails and §20's
 fix are not on real installs until the next submission.
 
-**231 tests pass** (167 in `tests/`, 64 in `worker/test/`), plus 32 browser assertions and a
+**248 tests pass** (184 in `tests/`, 64 in `worker/test/`), plus 32 browser assertions and a
 real-ATS run across all three open-form ATSes. **No code or store item is on the critical
 path.** What is left is an account action only Toby can perform (the screenshots + Privacy
 practices tab in §8, the Actions secret in §11), a product decision (§12 item 6, `/rank`), and
@@ -758,7 +767,7 @@ it ships, not the day it sells.
 
 ## 12. Open TODOs
 
-**Nothing left is a code blocker.** As of 2026-08-16: **231 tests pass** (167 in `tests/`,
+**Nothing left is a code blocker.** As of 2026-08-16: **248 tests pass** (184 in `tests/`,
 64 in `worker/test/`) plus 32 browser assertions and a real-ATS run across all three
 open-form ATSes (§20), the Worker is deployed and gating
 correctly, `/cover` genuinely works (§11), the dashboard is wired to it, three of the four
@@ -1621,3 +1630,131 @@ dedupe, and was **mutation-tested**: restoring the fallback chain fails it.
   enumerates 4. iCIMS, Taleo, Jobvite and Workable have no clean public JSON per tenant;
   LinkedIn/Indeed/ZipRecruiter forbid it. SmartRecruiters and Breezy are the only two with a
   real opening.
+
+## 22. Verifying the listings, and the three bugs verification found (added 2026-08-16)
+
+### The premise
+
+The pipeline had a liveness checker and a filter chain, and **nothing checked either of
+them.** §21 is what that costs: a feed named in `scrape.js` went unread for weeks and nothing
+failed. So this pass built the audit, and the audit found three real bugs within minutes of
+first running. That is the argument for it, and it is the same argument as §18's — *test the
+writers, or the reader's tests are fiction* — applied to the pipeline instead of the profile.
+
+### a) 77% of the board was never verified
+
+`CHECKABLE_HOST` covered Greenhouse, Lever and Ashby only: **213 of 942 rows (23%)**. Workday
+had meanwhile become the largest host on the board at 324 rows and was checked not at all.
+
+Every major host was **measured, not assumed** — guessing is dangerous in both directions,
+because a host that always says 200 makes coverage look complete while nothing is verified,
+and a host that 404s a live posting deletes a job somebody could have had:
+
+| Host | Rows | Verdict |
+| --- | --- | --- |
+| `myworkdayjobs.com` | 324 | ⚠️ **the posting HTML is a SPA shell and returns 200 for a req id that never existed** — HEAD proves nothing. The **cxs per-job JSON** endpoint returns 404 (`errorCode S21`). Checkable, via a different request |
+| `greenhouse.io` / `lever.co` / `ashbyhq.com` | 213 | HEAD: 404, 410, or a redirect to the board root |
+| `icims.com` | 21 | clean **410 Gone** |
+| `smartrecruiters.com` | 12 | public postings API 404s a missing id |
+| `ats.rippling.com` | 11 | **200 for a fabricated job id** — not checkable |
+| `lifeattiktok.com` | 106 | refuses our requests — not checkable |
+
+Coverage **23% → 60.8%**. The expanded checker immediately caught a **CNO Financial**
+(Workday) and an **Uber** (iCIMS) req that were dead and still listed — both on hosts that
+could not be checked at all the day before.
+
+⚠️ The unverifiable remainder — TikTok, Tesla, Jane Street, Oracle Cloud, Work at a Startup,
+Rippling — is largely **the same employer-owned set §16 says cannot be filled**. The two gaps
+overlap, which is worth remembering before treating either number as improvable in isolation.
+
+### b) "Checked daily" was not something the code did
+
+`RECHECK_MS` was **48h**. Now **20h**, so a listing always comes due within a day, and
+`CHECK_BUDGET` went 120 → **250**: four runs a day gives 1,000 checks against 563 checkable
+rows, with headroom. Verified empirically rather than by arithmetic alone — after two passes,
+**278 of 278** settled checkable rows were verified inside 36h.
+
+⚠️ Both numbers are asserted by `tests/listings-integrity.test.mjs`, including the arithmetic
+one: **if the board outgrows `CHECK_BUDGET × 4`, the test fails before coverage visibly
+rots.** That is the check that would have caught this in the first place.
+
+### ⚠️ c) Three bugs, found by the audit on its first run
+
+**1. Duplicate URLs reached the board.** The dedupe registered the *loser's* keys but never
+the *winner's*, so after a richness replacement the winner's URL was unknown to `seen` and a
+third row carrying it was pushed as new:
+
+```
+A (url=uA, key=k)  -> idx 0
+B (url=uB, key=k)  -> collides on k, replaces A at idx 0; uB never registered
+C (url=uB, key=k2) -> matches nothing, pushed as a NEW row  ->  uB is on the board twice
+```
+
+Optiver posting one title in one city under two req ids is exactly that shape. Three
+duplicates; 942 → 934 once fixed. The registration is guarded with `has`, because a key
+already pointing at a different index must keep pointing there.
+
+**2. Seven rows on plain `http`** — JazzHR, Ashby and an Oracle tenant. Not pedantry: the user
+types their name, phone and email into that page and attaches a résumé, so `http` sends all of
+it **in the clear**. Every one of those hosts answers 200 on https — the `http` was stale feed
+data — so URLs are upgraded at ingest, **before** the dedupe keys are computed, or the two
+forms of one posting both land.
+
+**3. ⚠️ Closed rows were forgotten on the very next run, so §15a's fortnight of retention
+never existed.** The carry-forward copied `active: false` but **not `date_closed`**, so the
+forget filter evaluated `(undefined || 0) > cutoff` — false — dropped the row, and the
+community feed, which had not noticed the req closed, re-imported it as live. Flagged closed,
+forgotten, re-imported, flagged closed again, indefinitely.
+
+The proof was sitting in the logs the whole time: **the two dead Veeam reqs PROJECT.md records
+as caught on 2026-08-06 were still being re-detected twice a run on 08-16.** Retention is the
+one thing that stops a dead posting coming back, and it was the one field not carried across.
+Verified after the fix: run one flags five closed and retains them, **run two re-closes
+nothing.**
+
+Also `meta.json` counted `checked` and `checkable` over retained rows while `total` counted
+open ones, so the coverage ratio was measured against a different set than its own denominator
+and read slightly high.
+
+### d) What now checks, and where
+
+**`audit-listings.mjs`** — data invariants, coverage arithmetic, staleness, source
+concentration, and a **stratified sample of real URLs actually fetched** to see whether they
+still resolve. Exits non-zero on a hard invariant or a breached threshold.
+
+⚠️ Coverage is measured **only over rows old enough to have been due**, using a new
+`date_first_seen` carried across runs. Scoring a row that arrived twenty minutes ago as
+unverified would make every board expansion look like a broken checker, and an audit that
+cries wolf after every good day is an audit everyone learns to ignore — which is precisely
+what happened to the coverage numbers already sitting in `meta.json`.
+
+**`.github/workflows/verify-listings.yml`** — daily at **07:30 UTC**, ninety minutes after
+`update.yml`'s 06:00 pass so it audits fresh data, plus on any push touching `scrape.js`,
+`companies.json` or the audit itself. It uploads the report and **opens or comments on a single
+labelled issue on failure**, then closes it when green. A red X in the Actions tab is easy to
+miss for weeks, which is the exact failure mode this workflow exists to prevent; an alert
+nobody sees is not an alert.
+
+⚠️ It is deliberately **separate from `update.yml`**. `update.yml` does the checking; this
+checks that the checking happened. Do not merge them — a failing audit must not stop fresh
+listings from publishing, and a broken pipeline must not be able to suppress its own alarm.
+
+**`tests/listings-integrity.test.mjs`** (17, no network, every push) — re-applies the ingest
+filters to the committed data, so a filter regression is caught by the data rather than by a
+user landing on a Summer 2025 req. Also asserts no duplicate URLs, https everywhere, that
+`CHECKABLE_HOST` and `isStillOpen` **agree about which hosts have a real strategy** (a host in
+the first without one in the second would be counted as covered and silently HEAD-checked —
+exactly wrong for Workday), that the budget covers the board daily, and that every closed row
+carries `date_closed`.
+
+### e) Standing hazards
+
+- ⚠️ **GitHub disables scheduled workflows after 60 days of repository inactivity.** Both
+  `update.yml` and `verify-listings.yml` are cron-driven. If listings ever go stale for no
+  visible reason, check whether the schedules were disabled before debugging anything else.
+- ⚠️ **Never let an ambiguous response mark a listing closed.** A timeout, a 5xx, a 403, a 422
+  from a wrong Workday tenant, or an unexpected JSON shape must all return `null`. §15a's
+  reasoning, restated because the new per-host checkers each had to re-implement it: dropping
+  a live posting costs somebody a job, leaving a dead one up costs a wasted click.
+- The `checkable` figure in `meta.json` is the number to watch. If it falls, a host stopped
+  reporting closure honestly and coverage is quietly rotting.
