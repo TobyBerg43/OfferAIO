@@ -4,15 +4,32 @@ Single source of truth for the OfferAIO project. Any assistant or person should 
 able to read this file and pick up the work without re-discovering anything.
 **Last updated: 2026-08-16.**
 
-**2026-08-16 — v1.4.1 cleared review and is PUBLISHED at 100%.** Verified against
+**2026-08-16 — three things, and the third is the one to read.**
+
+**§19–§20: the website was selling a different product, and one real fill found a real bug.**
+Nobody had ever audited `landing.html`, `pricing/` or `start.html` against the shipped code.
+Four claims described features that did not exist; the hero demo was still running the §2
+simulation ten days after it was deleted from the dashboard, inventing interview requests
+beside real company names; 11 of the 14 companies it showed being applied to cannot be filled;
+`start.html` told every visitor the extension **was not on the Chrome Web Store** and walked
+them through Developer-mode sideloading, twelve days and four releases after it was published.
+Two of those four claims were **built** instead of cut (the daily cap and randomized pacing are
+now real code with tests). Then Toby's own profile was pushed into the extension and used on a
+live DRW Greenhouse form — which had never been done — and it answered *"when will you complete
+your university studies"* with **"Indiana University"**. §7 rule 2 also stopped a full-auto
+submission to a real employer, correctly. **§20 first, then §19, then §7 rules 1 and 4.**
+
+**v1.4.1 cleared review and is PUBLISHED at 100%.** Verified against
 `:fetchStatus`: `published PUBLISHED crx 1.4.1 @ 100%`, `submitted — none —`. Real installs
-now have §17's résumé auto-attach and §18's work-auth fix. **179 tests pass** (115 in
-`tests/`, 64 in `worker/test/` — the §11 secret and cover-request guards took the worker
-suite from 51 to 64), plus 32 browser assertions. `/health` and offeraio.com both answer 200.
-**There is no longer any code or store item on the critical path.** What is left is either an
-account action only Toby can perform (the screenshots + Privacy practices tab in §8, the
-Actions secret in §11) or a product decision (§12 item 6, `/rank`) — and, above both,
-**distribution: the product is published, correct and has no users.**
+now have §17's résumé auto-attach and §18's work-auth fix. `/health` and offeraio.com both
+answer 200. **The repo is now v1.5.0 and ahead of the store again** — §19's rails and §20's
+fix are not on real installs until the next submission.
+
+**215 tests pass** (151 in `tests/`, 64 in `worker/test/`), plus 32 browser assertions and a
+real-ATS run across all three open-form ATSes. **No code or store item is on the critical
+path.** What is left is an account action only Toby can perform (the screenshots + Privacy
+practices tab in §8, the Actions secret in §11), a product decision (§12 item 6, `/rank`), and
+above both, **distribution: the product is published, correct and has no users.**
 
 (Earlier, 2026-08-15 — two things.
 
@@ -275,7 +292,7 @@ element.
   (solid muted gold primary, white ghost — no glossy gradients).
 
 ## 7. The Chrome extension (`extension/`)
-Manifest V3. Name "OfferAIO — Auto Apply", **v1.4.1 in the repo and on the store**
+Manifest V3. Name "OfferAIO — Auto Apply", **v1.5.0 in the repo, v1.4.1 on the store**
 (1.0.0 → 1.1.0 licensing, → 1.1.1 bridge licence relay, → 1.1.2 new logo, → 1.1.3 the three
 safety fixes below, → 1.2.0 the application tracker, the context-aware popup and the identity
 relay, → 1.3.0 the ATS relay and the `*.wellfound.com` host fix, §16, → 1.3.1 the two bugs
@@ -288,7 +305,7 @@ landing page and the dashboard sidebar now both read the manifest's version. Bum
 `dashboard/index.html` is out of date with `OfferAIO.html`. The rule was written here
 before and drifted anyway; a comment cannot enforce a convention.
 
-### ⚠️ Five rules in `content.js` that must never regress (1–3 fixed 2026-08-05, 4 on 08-06, 5 on 08-13)
+### ⚠️ Six rules in `content.js` that must never regress (1–3 fixed 2026-08-05, 4 on 08-06, 5 on 08-13, 6 on 08-16)
 
 1. **Never assert work authorisation.** `answerFor` used to return a flat `"Yes"` for any
    label matching `/authoriz|eligible to work|legally/`, and route anything containing
@@ -338,6 +355,15 @@ before and drifted anyway; a comment cannot enforce a convention.
    dense form every label wrote into the first box and the answer to one question landed
    in another. That is the same class of harm as rule 1: a false answer under the user's
    name. Tests: `tests/content-tracker.test.mjs`.
+
+6. **The test chain in `answerFor()` is order-sensitive, top to bottom.** Rule 1 already says
+   the `without …sponsor` test must precede `requires …sponsor`. The same trap bit again on a
+   real DRW form: `/school|university|college/` sat above any test for a date, so **"Please
+   confirm when you will complete your university studies." was answered "Indiana
+   University"** — a WHEN question answered with a WHERE. Rule 4 stops a label binding to the
+   wrong control; this bound the right control to the wrong answer, which is the same harm.
+   A date test now runs before any place test. **Add nothing above the work-auth and date
+   tests.** Tests: `tests/content-fieldorder.test.mjs` (11, mutation-tested). See §20.
 
 ### The application tracker (added 2026-08-06) — the other half of §2
 
@@ -726,8 +752,9 @@ it ships, not the day it sells.
 
 ## 12. Open TODOs
 
-**Nothing left is a code blocker.** As of 2026-08-16: **179 tests pass** (115 in `tests/`,
-64 in `worker/test/`) plus 32 browser assertions, the Worker is deployed and gating
+**Nothing left is a code blocker.** As of 2026-08-16: **215 tests pass** (151 in `tests/`,
+64 in `worker/test/`) plus 32 browser assertions and a real-ATS run across all three
+open-form ATSes (§20), the Worker is deployed and gating
 correctly, `/cover` genuinely works (§11), the dashboard is wired to it, three of the four
 keys in §11 are set, and **the store listing is published and current at v1.4.1** — the repo
 and the store agree (§8). What remains is one dashboard visit, a first real purchase to
@@ -1233,3 +1260,242 @@ A real Chrome, the real extension, the real content script in its real isolated 
   of using the profile shape the product actually stores. The first version of the harness
   used `firstName`/`lastName`, "found" a name-filling bug that did not exist, and that false
   positive is itself the argument for `profile-contract.test.mjs`.
+
+## 19. The marketing page was selling a different product (added 2026-08-16, v1.5.0)
+
+### The pattern, stated once
+
+Every problem in this section is the same problem, and it is the one §2 is about: **a claim
+that nothing checks drifts away from the code and nobody notices, because a claim has no
+tests.** §2 fixed it in the dashboard on 08-06. §8 fixed it in the store listing on 08-08.
+Nobody audited **landing.html, pricing/index.html or start.html**, and by 08-16 all three
+were describing a product that did not exist. Found by reading the live site against the
+shipped code, which had never been done.
+
+### a) Four claims the product could not deliver
+
+| Claim | Where | Reality | Resolution |
+| --- | --- | --- | --- |
+| "plus **any link you paste**", a green `+ any link` chip, "Paste any link as a task" | `landing.html` ×3, `pricing/index.html` | §16: ~49% of the board is on employer-owned careers sites where no content script runs. §8 cut this exact sentence from the store listing on 08-08 as untrue and a rejection risk, and never touched the site | **cut** |
+| "**Resume-ranked matching** — tasks fire on the roles your resume scores highest on" + a Pro bullet | `landing.html`, `pricing/` | `/rank` has no caller outside the desktop engine, and wiring it as designed contradicts `privacy.html` (§12 item 6) | **cut**, replaced with §16's coverage honesty, which is real and is a genuine differentiator |
+| "**Response Radar** — watches Gmail, Handshake and LinkedIn" + a Pro bullet | `landing.html`, `pricing/` | `engine-gmail.js`, the optional Electron engine. The extension reads no mail. §8 already keeps Responses at 0 in the store screenshots for exactly this reason | **scoped** — labelled "desktop app" |
+| "**PACING** humanized · randomized", "**DAILY CAP** 12 applications" | `landing.html` trust band | A grep of `extension/` for `dailyCap`, `pacing`, `humaniz`, `randomDelay` returned **nothing at all**. Both were claims about code that did not exist | **built** — see (b) |
+
+⚠️ The trust band is the worst place in the product for a false statement, because its whole
+job is to be believed. Two of its five rows were fiction.
+
+### b) The rails now exist, and are the real thing (`license.js`, `content.js`)
+
+`getDaily()` counts auto-sends against a **12/day** cap on the same local-date basis as the
+monthly counter. `paceWaitMs()` reports a **randomized 45–90s** gap, drawn once per
+submission in `recordSubmission()` and stored as an absolute deadline — **not rolled per
+call**, because a re-rolled gap changes on every read and therefore never elapses, and
+nothing about it could be tested. Clock skew clamps to one normal gap, the same reasoning as
+the licence cache.
+
+⚠️ **Both govern AUTOMATIC sending only, and this is deliberate.** Full-auto pauses and says
+how to send anyway; `doSubmit` does not re-check either. A user clicking Submit is present and
+choosing, and this project's rule is that a metering bug must never stop someone applying for
+a job — which applies to a safety rail with *more* force, not less. **A rail you cannot
+override is a trap.** Full-auto's flat 2s delay is now jittered too: a constant interval is
+itself a signature, which is the entire point of pacing.
+
+`tests/pacing.test.mjs` (16 tests) asserts the cap, the day rollover, the range, the
+stored-deadline property, clock skew, junk input — **and the advertised constants**, so the
+trust band cannot quietly become a lie again. That last test is the point of the file.
+
+The dashboard's **"Daily cap" input had existed for a while and was wired to nothing** —
+localStorage and no further. It now rides over the bridge; `bridge.js` validates the range
+before storing it and ignores anything out of range so `getDaily()` keeps the shipped
+default. Its default moved **25 → 12** to agree with the code and the page.
+
+### c) The hero demo was still running the §2 simulation
+
+`landing.html`'s `STAGES` walked `Monitoring → Match found → Filling application… → Writing
+cover letter… → Submitted ✓ → ★ Interview request` on `setInterval(tick, 1900)`, and rolled
+`Math.random() < .05` to **invent interview requests** next to real company names. That is
+verbatim the thing §2 calls "the single most important rule in the project", deleted from the
+dashboard on 08-06 and left running for ten more days **on the most public page we have** —
+where §8's rule ("inventing a response rate in a store listing is the same failure in a more
+public place") applies harder, not less.
+
+Deleted. `tick`, `startSim` and the interval are gone; `typeof tick === "undefined"` on the
+live page. Two active statuses remain because two is all the product has (`Ready · matched`,
+`Opened for review`), and the Submitted tab shows **Applied ✓** vs **Sent · not confirmed** —
+the tracker's own outcomes. Showing the unconfirmed row turns out to be the most persuasive
+thing on the page: the honesty *is* the pitch.
+
+⚠️ **Nothing may advance on a timer here again.** The honest levers are the ones a visitor
+drives — switch pages, add a task, open one, send from the queue. Reaching `applied` needs the
+extension on a real employer's form, which a marketing page cannot do and must not mime.
+
+**The cast was also wrong.** Of the 14 companies shown being applied to, **nine were not on
+the live board at all** (Stripe, Anthropic, Bain, Goldman, Two Sigma, Figma, Meta, McKinsey,
+Ramp) and Jane Street's 15 rows and Databricks' 1 are **zero-fillable** — 11 of 14 were
+postings the product cannot fill, and Jane Street was both the flagship row and the
+cover-letter showcase. Now Palantir, DRW, Point72, Anduril, IMC, Capital One, Citi, Virtu,
+Micron, Etched: every one on the board and on a host `ats.js` matches. `FALLBACK` too.
+And `toby · Pro` is off the public page — §8 caught the identical leak in store screenshot 2.
+
+### d) `catForTitle()` used Software Engineering as a dumping ground
+
+Its last line was `return 'swe'`. Measured against the 387-row board:
+
+```
+                      before          after
+Software Engineering   284 (73.4%)     201 (51.9%)
+...with no tech word    49               0
+categories produced      8              16
+```
+
+The 49 were Wells Fargo **Human Resources**, Marsh McLennan **Insurance**, Oliver Wyman
+**Actuarial**, Commercial Banking, Wealth Management, Corporate Risk. "Pick your lanes" is the
+feature that broke: a student who picks Software Engineering and is handed an insurance req has
+been told something false about the board. `swe` is now claimed only on a real engineering
+signal; seven categories were added (`hardware`, `finance`, `risk`, `ops`, `marketing`, `hr`,
+`other`) and the remainder says **`other`**. An honest Other beats a confident wrong label —
+the same reasoning as `canFill()`'s third state in §16.
+
+`tests/category.test.mjs` (9 tests) is a consistency test over the live board, and was
+**mutation-tested**: restoring `return 'swe'` fails two of it.
+
+⚠️ **`generate_pages.js` keeps its own `CATS`** with the same bare-`engineer` over-match.
+Deliberately untouched: its slugs are live SEO URLs (`/internships/software-engineering/`) and
+changing them churns indexed pages. That is a decision, not an oversight.
+
+### e) `landing.html` read `listings.json` without filtering `active !== false`
+
+The one rule §15a says every consumer must follow, and the exact fix `generate_pages.js`
+needed. Harmless only while `data/meta.json` reports `closed: 0`, which is not the steady
+state — `verifyStillOpen()` exists precisely because it will not stay 0. Filtered before the
+newest-8 slice, or a run that closes eight reqs empties the panel.
+
+### f) The dashboard had no media queries at all
+
+`OfferAIO.html` declared `<meta name="viewport" content="width=device-width">` and then laid
+out a `width:200px` non-shrinking sidebar, a `repeat(4,1fr)` stat grid and full-width data
+tables. On a 390px phone: 200px of chrome, 190px of content. **The landing page had a dozen
+breakpoints; the product had none**, which is the wrong way round.
+
+Now: grids collapse at 1080/900, and under **900px** (not 760 — an iPad in portrait is 768,
+and 768 − 200 leaves 568px for tables that want 560) the sidebar becomes a horizontal
+scrollable top strip with a right-edge mask that drops once scrolled to the end. Tables keep a
+`min-width` and scroll **inside their card** rather than being reflowed into stacked cards,
+which preserves the column alignment that makes a listings table scannable. `100dvh` with a
+`100vh` fallback. Reduced motion honoured. Verified at 390/768/1100px with no horizontal
+overflow.
+
+### g) `start.html` told every visitor the extension was not on the store
+
+The page every **"Start free"** click lands on carried a badge reading `MANUAL INSTALL · NOT
+YET ON THE CHROME WEB STORE` and a paragraph opening *"Straight answer: OfferAIO isn't on the
+Chrome Web Store yet — it hasn't been submitted, so there's no review to wait for"*, followed
+by five steps of unzip-and-enable-Developer-mode.
+
+True when written. False from **2026-08-04**, and it survived **four store releases** —
+v1.1.2, v1.3.0, v1.3.1 and v1.4.1 all shipped while onboarding said the extension had never
+been submitted. Two costs, the second larger: it asked a student to sideload an unpacked
+extension where one click would do, and it told every visitor **in the product's own words
+that the product was not finished**, on the one page whose entire job is to convert. §12 says
+the remaining gate is distribution; this was distribution blocked by a stale sentence.
+
+Now one **"Add to Chrome — free"** button →
+`chromewebstore.google.com/detail/hcbchgpjladdfmcammhgbbmkdagcfcgd` (verified 200, serving
+v1.4.1). The zip path is kept — it is still the only way to run a build newer than the
+published one — but collapsed into a `<details>` so it stops competing. Same for the
+dashboard's connect gate and the landing footer.
+
+⚠️ **Whenever the store status changes, `start.html` step 1 is the thing to check.** It is
+the only place that describes how to install, and it is not covered by any test.
+
+## 20. Filling a real form with a real profile (added 2026-08-16)
+
+Toby's own profile was pushed through the dashboard into the extension and used to fill live
+DRW Greenhouse postings. **This had never been done**, and it found in one run what no test in
+the repo had.
+
+### ⚠️ a) A "when" question answered with the school name
+
+```
+"Please confirm when you will complete your university studies."   ->   "Indiana University"
+```
+
+The label contains **"university"**, and `answerFor()`'s school test sat above any test for a
+date. Reproduced on both DRW postings. This is **§7 rule 4's failure by another route**: rule
+4 stops a label binding to the wrong *control*; this bound the right control to the wrong
+*answer*. The consequence is identical and it is the one that matters — something untrue, in
+the user's name, on a form an employer reads.
+
+§7 rule 1 already documents an ordering trap in this same function ("without sponsor" must be
+tested before "requires sponsor"). **Treat the whole chain as order-sensitive and add nothing
+above the work-auth and date tests.** A WHEN question is now answered before any WHERE
+question, and `NEEDS_USER` when no date is stored — the bar names it, the user fills it.
+
+`tests/content-fieldorder.test.mjs` (11 tests), **mutation-tested**: moving the school test
+back above the date test fails two of it.
+
+Two fields the profile already knew and never used, both empty **and required** on both DRW
+forms: **"Discipline"** / "course of study" (Greenhouse's word for the major) and **"Legal
+First/Last Name"** (asked as a custom question named `question_<id>`, which `SEL.first` and
+`SEL.last` cannot see). Coverage on that form went **9 → 22 of 48**.
+
+### b) §7 rule 2 earned its keep on a real employer's page
+
+The extension was still in **full-auto** from the 08-13 harness runs. On a live DRW form it
+**paused** rather than submitting, because it had declined to answer *"Please provide visa
+status and expiration if applicable."* Had the rule not been there, a real application would
+have gone to a real employer unattended. The rule works; the mode was then set back to semi.
+
+⚠️ **A harness run leaves state in whatever browser it touched** — mode, profile, usage
+counter, application records. Check the mode before testing anything on a real posting.
+
+### c) `tests/browser-real-ats.mjs` was broken, and had been flattering itself
+
+§18 presents this harness as closing §17's last caveat "with evidence". It had three bugs, and
+the second means the evidence was never what it looked like:
+
+1. **`waitFor()` did `await fn().catch(...)`**, but one call site passes a *synchronous*
+   callback returning `null` until the isolated world appears. So on any page where the
+   content script had not attached by the first poll, `null.catch` threw
+   `Cannot read properties of null (reading 'catch')` and the run died on the first URL — and
+   the TypeError replaced `waitFor`'s own message, the one that says what to check. Timing
+   dependent, so it passed whenever the extension won the race.
+2. **Lever and Ashby keep the posting and the application on separate URLs**, so both were
+   skipped as "no application form" while the output read as though three ATSes were covered.
+   In practice **only Greenhouse was ever reached.** Now falls through to `/apply` and
+   `/application`.
+3. **The payload check did `FormData(f).get(rf.name)`** and reported `in FormData: no` on every
+   real Greenhouse posting — because Greenhouse's résumé input carries `id="resume"` and **no
+   `name` attribute**, and `FormData` only serialises *named* controls. The single line §17
+   calls "the one that matters" was answering a question about markup while reading as a
+   verdict on our attachment. It also inspected the *first* file input, not the one the
+   extension used, so Ashby (which has two) reported "no file to check" on a form where the
+   handoff had worked.
+
+### ✅ d) §17 is now verified on all three ATSes
+
+```
+Greenhouse  attached · real File · input unnamed, so FormData excludes it for a
+                                   hand-picked file too - this ATS reads input.files itself
+Lever       attached · IN FormData as test-resume.pdf, 193B      <- the fully proven case
+Ashby       attached · uploader sits outside any <form>, so no payload exists to check
+```
+
+No **"report disagrees with the DOM"** warning on any of them, which §18 correctly names as
+the one result that would matter. Nothing was submitted; `doSubmit` was never called.
+
+⚠️ The payload check now distinguishes four states — `present`, `unnamed`, `noform`,
+`MISSING` — and **only `MISSING` is a bug**. Do not "fix" `unnamed` or `noform`; they are
+properties of the employer's markup and are identical for a file the user picked by hand.
+
+### e) What the fill rate actually looks like
+
+`Greenhouse 22/48 · Lever 6/89 · Ashby 1/4`. Greenhouse is genuinely good; **Lever and Ashby
+are not**, and the honest reading is that the numbers reflect long custom-question sections and
+lazily-rendered fields rather than contact details being missed. Not investigated further — the
+next real coverage work is here, not in adding another ATS.
+
+⚠️ **A business/finance student's fillable half is mostly Workday.** Of 126 postings on
+open-form ATSes (Greenhouse/Lever/Ashby), **74 are software** and only 8 are in finance, IB,
+accounting, real estate or consulting. The 51% coverage headline of §16 is not evenly
+distributed across categories, and for a non-technical user the practical figure is worse.
