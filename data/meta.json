@@ -1,9 +1,9 @@
 {
-  "updated": "2026-08-16T01:03:26.023Z",
+  "updated": "2026-08-16T06:32:32.646Z",
   "total": 386,
-  "closed": 2,
-  "checked": 128,
-  "checkable": 128,
+  "closed": 0,
+  "checked": 126,
+  "checkable": 126,
   "bySource": {
     "workday": 55,
     "ashby": 1,
