@@ -4,7 +4,13 @@ Single source of truth for the OfferAIO project. Any assistant or person should 
 able to read this file and pick up the work without re-discovering anything.
 **Last updated: 2026-08-16.**
 
-**2026-08-16 — three things, and the third is the one to read.**
+**2026-08-16 — four things. §21 is the one with the biggest number, §20 the one with the worst bug.**
+
+**§21: the board went 387 → 942 listings**, and most of the gain came from a feed `scrape.js`
+already named. `communityListings()` took the first reachable source and returned, so
+SimplifyJobs — the largest Summer 2027 list there is — was listed for weeks and never read.
+Two more feeds added, 29 dead Workday boards removed and 46 recovered from the feeds' own
+posting URLs. Fillable went 208 → 578.
 
 **§19–§20: the website was selling a different product, and one real fill found a real bug.**
 Nobody had ever audited `landing.html`, `pricing/` or `start.html` against the shipped code.
@@ -25,7 +31,7 @@ now have §17's résumé auto-attach and §18's work-auth fix. `/health` and off
 answer 200. **The repo is now v1.5.0 and ahead of the store again** — §19's rails and §20's
 fix are not on real installs until the next submission.
 
-**215 tests pass** (151 in `tests/`, 64 in `worker/test/`), plus 32 browser assertions and a
+**231 tests pass** (167 in `tests/`, 64 in `worker/test/`), plus 32 browser assertions and a
 real-ATS run across all three open-form ATSes. **No code or store item is on the critical
 path.** What is left is an account action only Toby can perform (the screenshots + Privacy
 practices tab in §8, the Actions secret in §11), a product decision (§12 item 6, `/rank`), and
@@ -752,7 +758,7 @@ it ships, not the day it sells.
 
 ## 12. Open TODOs
 
-**Nothing left is a code blocker.** As of 2026-08-16: **215 tests pass** (151 in `tests/`,
+**Nothing left is a code blocker.** As of 2026-08-16: **231 tests pass** (167 in `tests/`,
 64 in `worker/test/`) plus 32 browser assertions and a real-ATS run across all three
 open-form ATSes (§20), the Worker is deployed and gating
 correctly, `/cover` genuinely works (§11), the dashboard is wired to it, three of the four
@@ -1499,3 +1505,119 @@ next real coverage work is here, not in adding another ATS.
 open-form ATSes (Greenhouse/Lever/Ashby), **74 are software** and only 8 are in finance, IB,
 accounting, real estate or consulting. The 51% coverage headline of §16 is not evenly
 distributed across categories, and for a non-technical user the practical figure is worse.
+
+## 21. The board doubled, mostly from a feed already listed here (added 2026-08-16)
+
+```
+                     before    after
+active listings        387       942     +143%
+fillable               208       578     53.7% -> 61.4%
+HEAD-checkable         126       213
+in finance/IB/RE/
+  accounting lanes      55       130     (fillable)
+```
+
+### ⚠️ a) A fallback chain and a merge look almost identical in code
+
+`communityListings()` iterated `COMMUNITY_SOURCES`, took the **first reachable** one and
+`return`ed. `vanshb03` is first and always reachable, so **SimplifyJobs — 46k stars, the
+largest Summer 2027 list in existence — was listed in `scrape.js` for weeks and never once
+read.** Nothing failed. Nothing logged. Measured on 08-16: vanshb03 carries 401 rows,
+SimplifyJobs **14,286** (919 tagged Summer 2027).
+
+This is §19's pattern in the pipeline instead of the copy: **the config said the right thing
+and the code did something else, and no test compared them.** The two shapes differ by a
+`return`.
+
+### b) Four feeds, each with its own parser
+
+| Feed | Kept | Why it is here |
+| --- | --- | --- |
+| `SimplifyJobs/Summer2027-Internships` | 364 | The big one. Listed for weeks, never read |
+| `vanshb03/Summer2027-Internships` | 161 | Already used; tags no terms, so the title rules carry it |
+| `speedyapply/2027-SWE-College-Jobs` | 81 | 8.8k stars, daily. Its generator reads a **private** API, so the only public copy of the data is the **markdown table in the README** |
+| `zshah101/Automated-List-Of-…` | 41 | ~4,300 employer boards every 30 min, clean CSV with an explicit `season` column, plus salary and H-1B sponsor data. **72% fillable — the best share of any feed**, because its rows come from ATS hosts rather than employer careers pages |
+
+Merging is only safe because **the dedupe is URL-first**. The same posting arrives from three
+aggregators as "Palantir", "Palantir Technologies" and "Palantir Technologies Inc"; the
+company+title+location key treats those as three companies, and the URL key collapses them to
+one row. ⚠️ **Do not reorder the dedupe to put the name key first.**
+
+⚠️ **`mirrors` inside a feed IS a fallback chain, and that is correct** — they are copies of
+one source (`/dev` and `/main` of the same repo), not different sources. The bug was applying
+that logic *between* feeds.
+
+### ⚠️ c) The sanity gate, and why a parser must never be trusted
+
+Two of the four parsers read formats maintained by strangers — a CSV and a markdown table. **A
+parser aimed at a format that has moved on does not throw.** It returns rows with the columns
+shifted, so the title column now holds a location, and every one of those rows becomes a
+posting the product advertises and the user cannot open. That is worse than a crash.
+
+So `fetchFeed()` discards a feed **wholesale** unless it clears both `FEED_MIN_ROWS` (20) and
+`FEED_MIN_INTERN_RATIO` (0.5 of titles passing `isIntern`). A broken feed contributes nothing
+and says so in the log; it never contributes garbage. `tests/feeds.test.mjs` simulates a
+column shift and asserts the gate rejects it.
+
+### ⚠️ d) 29 of 56 Workday boards in `companies.json` were dead
+
+Probing every one found these returning **422 or 404 on every run**, for an unknown length of
+time — roughly 87 wasted requests every six hours, and enough log noise to hide a real
+failure. The slug is wrong, not the request: the hosts resolve (a bare root gives 406 because
+Workday wants a real site path), and **no site-variant guess fixes any of them**, so the
+tenant is wrong too.
+
+They are **removed** rather than left failing, and recorded here so the intent is not lost.
+**Wanted, needs a correct `host`/`tenant`/`site`:**
+
+> Goldman Sachs, KKR, Deloitte, KPMG, EY, Grant Thornton, BDO, CBRE, Hines, Brookfield, AMD,
+> Qualcomm, Intuit, Visa, American Express, Truist, BNY Mellon, Northern Trust, T. Rowe Price,
+> PIMCO, Aon, Apollo, Carlyle, Moelis, Guggenheim, Baird, William Blair, Piper Sandler,
+> Jefferies
+
+That list is disproportionately **investment banking, accounting, PE and real estate** — the
+lanes a non-technical user cares about (§20e). Recovering them is the single highest-value
+listings work left. The method that works: find the employer's real Workday careers URL, read
+the `host` and the site slug out of it, then validate with a POST to
+`https://{host}/wday/cxs/{tenant}/{site}/jobs` before committing it. Some of these employers
+are **not on Workday at all** (Goldman runs `higher.gs.com`), so expect to delete a few rather
+than fix them.
+
+### ✅ e) 46 Workday boards recovered from the feeds' own URLs
+
+The trick worth remembering: **a posting URL in a community feed proves the host and site slug
+are real.** Harvesting `myworkdayjobs.com` URLs off the merged board yielded 53 host/site pairs
+`companies.json` did not have; 52 validated against the live API; 46 survived after dropping
+internal boards (`private`, `redeployment`, `sourcer_on_req` — recruiter and existing-staff
+sites, not public postings) and case-duplicate slugs. **14,875 postings sit behind them.**
+
+Enumerating a board directly finds every intern posting on it, not just the one or two an
+aggregator happened to catch — which is why 46 boards moved the Workday row from 53 listings
+to 221.
+
+Good ones for a finance audience: **Arrowstreet Capital** (`Campus_Careers`), **LPL Financial**
+(`university`), **HNTB** (`hntb_university_careers`), Crowe, UHY, First American, PGIM,
+Prudential, KeyBank, Northwestern Mutual, Genworth, CNO Financial, FTI Consulting.
+
+### f) `scrape.js` is testable now
+
+It exports its parsers and predicates, and `main` is behind `require.main === module`. Before
+this, **nothing in the repo exercised any of the pipeline** — which is how (a) survived. `node
+scrape.js` behaves exactly as before. `tests/feeds.test.mjs` (16) covers the merge shape, all
+four parsers, CSV quoting, markdown entity decoding, the sanity gate and cross-feed URL
+dedupe, and was **mutation-tested**: restoring the fallback chain fails it.
+
+### g) Sources considered and rejected
+
+- **`sndsh404/summer-2027-internships`** (907 stars) — publishes only `internship_tracker.xlsx`.
+  Parsing xlsx with zero dependencies means unzipping and reading XML; not worth it for the
+  volume, and the repo had not been pushed in two weeks.
+- **SmartRecruiters** — its public postings API works
+  (`api.smartrecruiters.com/v1/companies/{co}/postings`, no auth) and the extension already
+  fills that host, but every company needs its slug discovered by hand. **Worth doing next**
+  after the §21d recovery.
+- **Breezy** (`{co}.breezy.hr/json`) — redirects (302); needs follow logic. Small volume.
+- **The remaining 12 fillable ATSes** — the extension fills 16 (`ats.js`) and the pipeline
+  enumerates 4. iCIMS, Taleo, Jobvite and Workable have no clean public JSON per tenant;
+  LinkedIn/Indeed/ZipRecruiter forbid it. SmartRecruiters and Breezy are the only two with a
+  real opening.
