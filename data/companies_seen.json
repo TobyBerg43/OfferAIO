@@ -317,7 +317,7 @@
  "intel": {
   "name": "Intel",
   "lastSeen": "2026-08-17",
-  "roles": 4
+  "roles": 3
  },
  "homebase": {
   "name": "Homebase",
@@ -562,7 +562,7 @@
  "micron": {
   "name": "Micron",
   "lastSeen": "2026-08-17",
-  "roles": 12
+  "roles": 14
  },
  "pdt-partners": {
   "name": "PDT Partners",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-17",
-  "roles": 20
+  "roles": 18
  },
  "bytedance": {
   "name": "ByteDance",
@@ -837,7 +837,7 @@
  "cno-financial-group": {
   "name": "CNO Financial Group",
   "lastSeen": "2026-08-17",
-  "roles": 3
+  "roles": 4
  },
  "epic-games": {
   "name": "Epic Games",
@@ -1352,7 +1352,7 @@
  "jp-morgan-chase": {
   "name": "JP Morgan Chase",
   "lastSeen": "2026-08-17",
-  "roles": 7
+  "roles": 6
  },
  "the-boeing-company": {
   "name": "The Boeing Company",
