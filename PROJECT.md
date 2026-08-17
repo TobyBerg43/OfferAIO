@@ -243,7 +243,11 @@ session re-uploading old files. After any extension change, verify the raw file 
   half-finished change (a version bumped in one file, a dashboard copy not regenerated)
   rather than on broken logic — which is the point, since every rule they check was
   written down in this file first and drifted anyway.
-- `.github/workflows/` — scrape + generate-pages pipeline, worker deploy, tests, zip
+- `discover-boards.mjs` — owns `companies.json`: re-validates every board and harvests new
+  ones from the feeds, every 3 days (§24). `companies.json` is **not** hand-edited any more.
+- `.github/workflows/` — scrape + generate-pages pipeline, worker deploy, tests, zip,
+  board discovery (§24), listings verification (§22) and `keepalive.yml` (§26c, the one that
+  stops all three crons being disabled after 60 quiet days)
 - ~~`patch_dashboard.js` + `patch.yml`~~ — **deleted 2026-08-06.** All three of its targets
   were already applied and `rep()` throws on a miss, so the manual "Patch dashboard"
   dispatch failed immediately every time it was run. A committed patch script is a
@@ -1781,9 +1785,13 @@ carries `date_closed`.
 
 ### e) Standing hazards
 
-- ⚠️ **GitHub disables scheduled workflows after 60 days of repository inactivity.** Both
-  `update.yml` and `verify-listings.yml` are cron-driven. If listings ever go stale for no
-  visible reason, check whether the schedules were disabled before debugging anything else.
+- ⚠️ **GitHub disables scheduled workflows after 60 days of repository inactivity.**
+  `update.yml`, `verify-listings.yml` and `discover-boards.yml` are all cron-driven. If
+  listings ever go stale for no visible reason, check whether the schedules were disabled
+  before debugging anything else. **`keepalive.yml` now defends this (§26c) — but only once
+  `KEEPALIVE_PAT` is set**, and it deliberately fails loudly until it is. Do not assume the
+  listings bot's own pushes protect you: they use `GITHUB_TOKEN`, and whether that counts as
+  repository activity is not settled.
 - ⚠️ **Never let an ambiguous response mark a listing closed.** A timeout, a 5xx, a 403, a 422
   from a wrong Workday tenant, or an unexpected JSON shape must all return `null`. §15a's
   reasoning, restated because the new per-host checkers each had to re-implement it: dropping
@@ -2115,3 +2123,93 @@ consumer insights, SkillBridge. There is no next cluster worth a rule; the remai
 - **Class-year targeting beyond degree level.** Nothing distinguishes a rising-junior
   programme from a rising-senior one, because titles rarely say. `rising junior|senior` is
   read as an undergraduate *signal*, not used to filter between them.
+
+## 26. Working from another machine, and keeping the crons alive (added 2026-08-17)
+
+Written because the project is moving to a Mac for a few months. **Nothing in the product
+depends on any particular machine being switched on** — the site is GitHub Pages, listings
+run on GitHub Actions, the Worker is on Cloudflare, and the extension is published on the
+Web Store. A laptop can be closed for six months and users are unaffected. What does *not*
+travel is a short list of credentials, and one scheduled-workflow trap.
+
+### a) Setting up a clone
+
+```bash
+git clone https://github.com/TobyBerg43/OfferAIO.git
+cd OfferAIO
+git config user.name  TobyBerg43            # repo-local; .git/config never clones
+git config user.email tobybergerbusiness@gmail.com
+gh auth login
+```
+
+**There is no `npm install`** — no `package.json`, zero dependencies, by design. Node 20+;
+CI runs 22.
+
+The three Chrome-driving scripts (`tests/browser-endtoend.mjs`, `tests/browser-real-ats.mjs`,
+`store/regenerate.mjs`) already list `/Applications/Google Chrome.app/…` in `findChrome()`,
+so they run on macOS unchanged. They are the only platform-specific code in the repo —
+checked, not assumed.
+
+⚠️ One Windows-only hazard disappears on macOS and is worth knowing so it is not
+re-diagnosed: §11's `OPENAI_API_KEY` BOM came from PowerShell's `>` redirection writing a
+UTF-8 BOM. `secret()` strips it now regardless, but the *cause* cannot recur off Windows.
+
+### b) The three things that live outside the repo
+
+| What | Where | Getting it on the new machine |
+| --- | --- | --- |
+| **Chrome Web Store publish credentials** | `~/.offeraio-cws.env` (4 keys) | **Copy the file.** It is the only one worth carrying by hand. Otherwise re-mint: `node store/mint-cws-token.mjs <client-id> <client-secret>` |
+| **Cloudflare Wrangler login** | wrangler's own config dir | `npx wrangler login`, from `worker/`. Only needed to deploy the Worker; the deployed Worker keeps serving without it |
+| **`gh` auth + git identity** | keyring, `.git/config` | The two commands in (a) |
+
+⚠️ **Google refresh tokens expire after ~6 months without use.** If nothing is published for
+a long stretch, expect the first `publish-extension.mjs` back to fail with `invalid_grant`
+and re-mint rather than debugging it. §8's separate warning still applies too: an OAuth
+consent screen left in "Testing" expires the refresh token in **7 days**, so if it ever gets
+reset, set it to "In production" before minting.
+
+### ⚠️ c) The 60-day trap, and why the listings bot does not save you
+
+**GitHub disables a public repo's scheduled workflows after 60 days without repository
+activity.** If that trips, three things stop at once and none of them announce it:
+`update.yml` (listings, 6-hourly), `verify-listings.yml` (the daily audit that opens an issue
+when the board is wrong) and `discover-boards.yml` (§24). The board then sits there looking
+completely normal and quietly goes stale — §22's subject exactly, and §22 already names this
+as the first thing to check when listings look frozen.
+
+**Do not count on the listings bot's own pushes.** They are made with `GITHUB_TOKEN`, and
+whether a `GITHUB_TOKEN` commit counts as "repository activity" is **not settled by the
+docs** — the existence of a whole genre of third-party keepalive actions is the evidence that
+it frequently does not. This is recorded as an open uncertainty rather than a fact in either
+direction.
+
+`.github/workflows/keepalive.yml` closes it: on the **1st and 15th** it pushes an empty
+commit authored by a real user through a PAT, which unambiguously counts. A ~15-day heartbeat
+against a 60-day limit means three consecutive failures still leave a month of margin.
+
+**It needs one secret, and it fails loudly without it.** A keepalive that silently does
+nothing is precisely the failure it exists to prevent, so a missing token exits 1 — the red
+run emails you while there is still ~45 days of margin, instead of going quiet until the
+crons are already off.
+
+To arm it:
+1. Create a token — classic with `repo` scope, or fine-grained on this repo with
+   **Contents: read and write**. Give it an expiry you will outlive; a token that expires
+   mid-absence re-opens the hole.
+2. Repo → Settings → Secrets and variables → Actions → New repository secret, named
+   **`KEEPALIVE_PAT`**.
+3. Actions → Keepalive → **Run workflow** to prove it before relying on it.
+
+The commit is empty on purpose: a heartbeat that touched a tracked file would add churn to
+`data/` forever and collide with the listings bot's own commits. It carries `[skip ci]`
+because the *push* is what counts as activity, not the jobs it would otherwise trigger.
+
+**If it trips anyway:** GitHub emails a warning first, and re-enabling is one click in the
+Actions tab — doable from a phone. Any ordinary commit also resets the clock, so normal work
+from any machine covers it.
+
+### d) What still needs a human, from anywhere
+
+- **The Chrome Web Store Privacy practices tab** (§8) — dashboard-only, and the one item
+  still genuinely owed. A browser is all it needs; the Mac is fine.
+- **Distribution** (§12) — still the real gate, still not a code task.

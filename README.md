@@ -17,6 +17,11 @@ reasoning behind decisions that look odd from the outside. This README is just t
 If you read only two sections of it, read **§2** (why the dashboard does not apply to
 anything) and **§15** (why EU-hosted job listings must not be filtered out).
 
+**Setting up on a new machine?** **§26** — it is a clone, two `git config` lines and
+`gh auth login`; there is no `npm install`, because there are no dependencies. It also lists
+the three credentials that live outside the repo, and the 60-day scheduled-workflow trap that
+silently stops the listings pipeline if the repo goes quiet.
+
 ## The one rule
 
 **The extension applies. The dashboard queues and tracks. Nothing else may claim an

@@ -1,0 +1,62 @@
+name: Keepalive
+
+# GitHub disables a PUBLIC repo's scheduled workflows after 60 days without repository
+# activity. If that trips here, three things stop at once and none of them announce it:
+#   update.yml          — listings, every 6h
+#   verify-listings.yml — the daily audit that opens an issue when the board is wrong
+#   discover-boards.yml — board discovery and re-validation, every 3 days
+# The board would then sit there looking fine and quietly rot, which is §22's whole subject.
+#
+# ⚠️ The bot's own listings pushes are NOT relied on to prevent this. They are made with
+# GITHUB_TOKEN, and whether a GITHUB_TOKEN commit counts as "repository activity" is not
+# something the docs settle — the existence of an entire genre of keepalive actions suggests
+# it often does not. So this pushes a commit authored by a real user via a PAT, which
+# unambiguously counts.
+#
+# Runs on the 1st and 15th, i.e. a ~15-day heartbeat against a 60-day limit. Three
+# consecutive failures still leave a month of margin.
+
+on:
+  schedule:
+    - cron: "0 6 1,15 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      # A keepalive that silently does nothing is precisely the failure it exists to prevent,
+      # so a missing PAT fails loudly. The red run is the point: it emails you while there is
+      # still ~45 days of margin left, instead of going quiet until the crons are already off.
+      - name: Require the PAT
+        env:
+          PAT: ${{ secrets.KEEPALIVE_PAT }}
+        run: |
+          if [ -z "$PAT" ]; then
+            echo "::error::KEEPALIVE_PAT is not set, so this workflow cannot prove repository"
+            echo "::error::activity and the scheduled workflows will be disabled after 60 days"
+            echo "::error::of inactivity. Create a token and add it as a repo secret — see"
+            echo "::error::PROJECT.md section 26. Falling back to GITHUB_TOKEN would push a"
+            echo "::error::bot commit, which is exactly the thing that may not count."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.KEEPALIVE_PAT }}
+
+      - name: Push a heartbeat commit
+        run: |
+          git config user.name  "TobyBerg43"
+          git config user.email "tobybergerbusiness@gmail.com"
+          # Empty on purpose: a heartbeat that touched a tracked file would add churn to
+          # data/ forever and collide with the listings bot's own commits.
+          # [skip ci] keeps this from re-running the test and listings workflows; the push
+          # itself is what counts as activity, not the jobs it would otherwise trigger.
+          git commit --allow-empty -m "chore: keepalive heartbeat [skip ci]"
+          git pull --rebase --autostash
+          git push
+          echo "Heartbeat pushed. Scheduled workflows are safe for another 60 days."
