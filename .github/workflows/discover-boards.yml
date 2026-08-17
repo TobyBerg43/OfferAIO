@@ -1,0 +1,57 @@
+name: Discover boards
+
+# companies.json is the pipeline's only hand-maintained input, and hand-maintaining 2,000
+# boards does not work: §21d found 29 of 56 Workday boards had been dead "for an unknown
+# length of time". This re-validates every listed board and harvests new ones from the
+# community feeds, so the list maintains itself.
+#
+# Every 3 days rather than every 6 hours on purpose — board membership changes on the scale
+# of weeks, while ~2,000 validation requests against Greenhouse, Lever, Ashby and Workday is
+# a burst worth being polite about. Listings themselves still refresh 4x a day (update.yml).
+
+on:
+  schedule:
+    - cron: "0 5 */3 * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Validate and report without writing companies.json"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    # ~2,000 boards at concurrency 12, plus retries on throttled hosts.
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Discover and re-validate boards
+        run: node discover-boards.mjs ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      # The shape test is what stands between a bad harvest and a pipeline that quietly
+      # enumerates nothing, so it gates the commit rather than running after it.
+      - name: Validate the file that was just written
+        run: node --test tests/companies.test.mjs
+
+      - name: Commit the board list
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git config user.name "offeraio-bot"
+          git config user.email "bot@offeraio.dev"
+          git add companies.json data/board-health.json
+          if git diff --cached --quiet; then
+            echo "no board changes"
+            exit 0
+          fi
+          git commit -m "chore: refresh company boards [skip ci]"
+          # update.yml pushes data/ every 6 hours, so a plain push races it.
+          git pull --rebase --autostash
+          git push

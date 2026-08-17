@@ -701,6 +701,11 @@ const CATS = {
   marketing:{label:'Marketing & Sales'},
   hr:{label:'Human Resources'},
   re:{label:'Real Estate'},
+  healthcare:{label:'Healthcare & Life Sciences'},
+  engineering:{label:'Engineering (non-software)'},
+  design:{label:'Design & Creative'},
+  legal:{label:'Legal'},
+  program:{label:'Rotational & Leadership Programs'},
   startup:{label:'Startups'},
   other:{label:'Other'}
 };
@@ -854,6 +859,16 @@ function catForTitle(t){
   if(/semiconduct|\bfpga\b|\basic\b|hardware|electrical engineer|\bdram\b|silicon|\bchip\b|firmware|embedded|process integration|analog|\brf\b|photonic/.test(t))return 'hardware';
   if(/operations|supply chain|logistics|procurement/.test(t))return 'ops';
   if(/marketing|\bsales\b|communications|\bbrand\b/.test(t))return 'marketing';
+  /* Added 2026-08-17. Board discovery (§24) took the board from 945 to ~1,800 listings and
+     from mostly-tech employers to hospitals, universities, manufacturers and utilities.
+     'other' went to 26.3% — the same "too narrow above it" failure this file was rewritten
+     to fix in August, arriving from the opposite direction. These sit directly above the
+     swe catch-all, so every more specific rule already above them still wins. */
+  if(/pharmac|nurs|clinical|medical|health|patient|dental|veterinar|biotech|biolog|chemis|laborator|\br&d\b|life scien/.test(t))return 'healthcare';
+  if(/mechanical|civil|aerospace|manufactur|industrial engineer|process engineer|quality engineer|materials|structural|\bhvac\b|construction|facilit/.test(t))return 'engineering';
+  if(/\blegal\b|paralegal|\blaw\b|counsel|contracts/.test(t))return 'legal';
+  if(/\bdesign\b|\bux\b|\bui\b|graphic|creative|content/.test(t))return 'design';
+  if(/rotational|leadership (development|program|rotation)|\bldp\b|general management/.test(t))return 'program';
   if(/software|\bswe\b|engineer|developer|programmer|front.?end|back.?end|full.?stack|mobile|\bios\b|android|devops|infrastructure|platform|computer scien|cyber|security|cloud|\bqa\b|\bsre\b|systems|robotic|technolog|\bdata\b/.test(t))return 'swe';
   return 'other';
 }

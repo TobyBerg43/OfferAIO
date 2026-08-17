@@ -1910,7 +1910,9 @@ A test that asserts a plausible invariant nobody measured is how a working board
 
 ### f) Next, in order
 
-1. **The 1,083 unclaimed pairs from (a).** The single largest listings opportunity left. Not
+1. ✅ **Done 2026-08-17 — see §24.** It was 1,956 boards across all four ATSes, not 1,083 on
+   one, and `discover-boards.mjs` now owns the file. Left here for the reasoning:
+   **The 1,083 unclaimed pairs from (a).** The single largest listings opportunity left. Not
    done here because it is a different decision, not a bigger version of this one: 1,083
    boards is ~15× the current enumeration cost every six hours, and most are neither US nor
    student-facing. Needs a filter — and `zshah101` (§21b) is already 72% fillable, so measure
@@ -1920,3 +1922,108 @@ A test that asserts a plausible invariant nobody measured is how a working board
    weeks (Consulting and EY-Parthenon 09-22, Assurance 09-30, Tax 10-05). EY cannot be
    enumerated (d), so this is a **calendar** item, not a pipeline one — the Big Four open and
    close inside a five-week window that starts three weeks from now.
+
+## 24. The board list maintains itself now (added 2026-08-17)
+
+§23f left 1,083 unclaimed Workday pairs as "the single largest listings opportunity left".
+Taking it turned out to be bigger than that in one direction and smaller in another: there
+were **1,956 novel boards across all four ATSes**, not 1,083 on one — but adding them
+exposed three accuracy bugs that mattered more than the volume did.
+
+```
+companies.json     206 -> 2,015 boards     (greenhouse 536, workday 1,040, ashby 289, lever 150)
+live listings      945 -> 1,806
+phase 2 roles      781 -> 2,144
+checkable share   60.8% -> 79.0%
+pipeline runtime          3m31s            (was well under a minute)
+```
+
+**`discover-boards.mjs` now owns `companies.json`.** Hand-maintaining 2,000 boards does not
+work — §21d is the proof, and it was only 56. `.github/workflows/discover-boards.yml` runs
+it every 3 days.
+
+### a) Startups arrived with the ATS, not with a startup list
+
+The §23 harvest looked only for `myworkdayjobs.com`, which is why it found big employers.
+The same feed text carries **536 Greenhouse, 289 Ashby and 150 Lever** boards — and those
+three are where startups live. No separate startup source was needed: ElevenLabs, Linear,
+1Password, Ramp, Rigetti, Gumloop, BillionToOne, Skydio, Kairos Power and Tenstorrent all
+arrived from the same parse.
+
+Names come from the **feed's own `company_name` paired with its URL**, not from prettifying
+a slug, and where feeds disagree ("Palantir" / "Palantir Technologies Inc") the name the most
+rows agree on wins. `geocomply-2` and `tahoebio-ai` are real slugs with correct names beside
+them, which slug-prettifying would have got wrong.
+
+### ⚠️ b) Two jobs every run, and a strike system rather than a delete
+
+1. **Re-validate every listed board.** A failure is a *strike*, recorded in
+   `data/board-health.json`; a board is dropped only after **3 consecutive** failed runs —
+   at a 3-day cadence, a week and a half of being dead. One flaky morning must never delete
+   a working board, and §21d must never happen again. Both directions matter.
+2. **Discover and validate new boards.** Nothing is added that has not answered its own API
+   in that run (§23b).
+
+A board must be alive, non-empty, **and publicly readable**. Truist (§23d) is why the last
+one is there: its search endpoint answers while its per-job endpoint returns 403, so the
+Workday check reads one posting back before accepting the board. An empty board is refused
+too — KPMG's Lever board answers 200 with nothing on it, forever.
+
+⚠️ **A 429 is a statement about our request rate, not about the board.** The first version
+recorded **47 boards as rejected with `http 429`** — real boards, throttled, that would
+simply never have been added, and nothing would have looked wrong. Sweeping 2,000 boards
+means asking Greenhouse 500+ times in a burst. `req()` now retries 429 and 5xx with backoff
+and honours `Retry-After`; 404/422/403 are answers about the board and return immediately.
+Rejections fell 173 → 129 and **44 real boards came back**.
+
+### ⚠️ c) The three accuracy bugs, which are the actual content of this section
+
+**1. `listing()` asserted the season instead of deriving it.** Every Phase 2 row carried
+`terms: ["Summer 2027"]`, hard-coded. That was roughly true across 206 curated boards; at
+2,015 it was not — **759 of 1,153 Phase 2 rows carry no year in the title at all** and were
+being labelled Summer 2027 on the user's board anyway. This is §2's rule broken in the
+pipeline rather than in the dashboard: a claim printed beside a real company that the data
+does not support. `termsFor(title)` now derives it, and an unstated season is an honest `[]`
+— which costs the row nothing, because both the dashboard filter and `parseSimplifySchema`
+keep rows that state no term, and `richness()` then prefers a feed row that *does* state
+Summer 2027 when both describe one job.
+⚠️ **Stated beats derived beats asserted.** zshah101 publishes a season column and
+`parseZshahCsv` already filters on it, so deriving from the title there would have *discarded*
+known-good data — the title "Software Engineer Intern" carries no year even though the feed
+said Summer 2027. `listing()` takes an optional `terms` for exactly that case, and
+`tests/feeds.test.mjs` caught the regression when it did not.
+
+**2. `CHECK_BUDGET` silently stopped covering the board.** 250 x 4 runs = 1,000 checks/day
+against **1,427 checkable rows**: a growing share of the board would have gone unverified,
+which is the coverage rot §22 exists to prevent, arriving as a *success*. Raised to **600**.
+Caught by `tests/listings-integrity.test.mjs`, which does the arithmetic instead of trusting
+a comment, and which prints the floor to raise it to.
+
+**3. `catForTitle()` sent 26.3% of the board to 'other'.** The board stopped being mostly
+tech employers — hospitals, universities, manufacturers and utilities arrived with the new
+boards — and the classifier had no rule for any of them. This is the **same failure the
+classifier was rewritten to fix in August, from the opposite direction**: then everything
+unmatched fell into `swe`, now into `other`. Five categories added (healthcare, engineering,
+design, legal, program), sitting directly above the `swe` catch-all so every more specific
+rule still wins. 26.3% -> 15.9%, 22 categories in use.
+
+**All three were caught by tests that already existed.** None was found by reading the diff.
+
+### d) What it costs, and what to watch
+
+Phase 2 is **3m31s** for 2,015 boards at concurrency 8 — fine for a 6-hourly Action, and the
+discovery workflow is capped at 45 minutes. The audit reports **79.0% checkable** (was 60.8%)
+and a live link sample of 40 came back 37 open, 2 gone, 1 inconclusive; the two gone are
+flagged on the next liveness pass, which is the mechanism working.
+
+- **`data/board-health.json` is the file to read when listings look wrong.** It records each
+  board's strikes and last success. A board quietly on 2 strikes is a board about to vanish.
+- **Watch the rejection-reason line in the workflow log.** A sudden mass of `http 429` means
+  the backoff is no longer enough and boards are being lost to throttling, not death.
+- **`checkable` in `meta.json` is still the coverage number**, and the budget test is still
+  what stops it rotting.
+- ⚠️ **Deciding what is out of scope is not done.** 159 identical "Pharmacy Intern - Grad"
+  reqs from one employer now sit on the board. They are real postings, honestly labelled and
+  correctly categorised as healthcare — but licensure-track clinical roles, MBA-only and
+  PhD-only internships are not what an undergraduate is shopping for, and no rule excludes
+  them. That is a product decision, deliberately not taken here.

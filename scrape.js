@@ -180,6 +180,8 @@ function parseZshahCsv(text, feedName) {
       locations: r.location ? [r.location] : [],
       source: feedName,
       posted: r.posted_at ? Math.floor(Date.parse(r.posted_at) / 1000) || null : null,
+      // The row survived the filter above, so the feed stated Summer 2027 for it.
+      terms: ["Summer 2027"],
     }));
 }
 
@@ -220,7 +222,35 @@ function isIntern(t) {
   return true;
 }
 
-function listing({ company, title, url, locations = [], source, posted = null }) {
+/**
+ * The season a posting actually states, not the season we wish it stated.
+ *
+ * ⚠️ `listing()` used to hard-code `terms: ["Summer 2027"]` on every Phase 2 row. That was
+ * roughly true at 206 curated boards; at 2,015 it is not. Measured 2026-08-17: **759 of
+ * 1,153 Phase 2 rows carry no year in the title at all** — evergreen reqs like "Accounting
+ * Intern" — and every one of them was being labelled Summer 2027 on the user's board. That
+ * is §2's rule broken in the pipeline instead of the dashboard: a claim printed next to a
+ * real company that the data does not support.
+ *
+ * An empty `terms` is honest and costs nothing: both the dashboard filter
+ * (`OfferAIO.html`) and `parseSimplifySchema` keep rows that state no term, and `richness()`
+ * then prefers a feed row that *does* state Summer 2027 when the two describe one job.
+ *
+ * isIntern() has already dropped 2020–2026 and non-summer seasons by this point, so a title
+ * carrying "2027" is genuinely a 2027 summer role.
+ */
+function termsFor(title) {
+  return /\b2027\b/.test(String(title || "")) ? ["Summer 2027"] : [];
+}
+
+/**
+ * `terms` is optional and means "the source stated this season outright". zshah101 publishes
+ * a season column and parseZshahCsv has already filtered on it, so re-deriving from the
+ * title there would *discard* known-good data — the title "Software Engineer Intern" carries
+ * no year even though the feed said Summer 2027. Stated beats derived; derived beats
+ * asserted.
+ */
+function listing({ company, title, url, locations = [], source, posted = null, terms = null }) {
   return {
     company_name: company,
     title,
@@ -230,7 +260,7 @@ function listing({ company, title, url, locations = [], source, posted = null })
     is_visible: true,
     date_posted: posted || Math.floor(Date.now() / 1000),
     date_updated: Math.floor(Date.now() / 1000),
-    terms: ["Summer 2027"],
+    terms: Array.isArray(terms) ? terms : termsFor(title),
     source,
     id: `${company}::${title}::${(locations[0] || "").slice(0, 40)}`.toLowerCase(),
   };
@@ -399,11 +429,15 @@ const richness = (l) =>
 const CHECKABLE_HOST =
   /(^|\.)greenhouse\.io$|(^|\.)lever\.co$|(^|\.)ashbyhq\.com$|(^|\.)myworkdayjobs\.com$|(^|\.)icims\.com$|(^|\.)smartrecruiters\.com$/;
 /* Budget per run. The workflow runs every 6h and RECHECK_MS is under a day, so each
- * listing comes due once a day and the budget spreads that across four runs: at ~570
- * checkable rows that is ~143 per run, and this leaves headroom as the board grows.
- * If the board outgrows 4x this, coverage silently drops — which is exactly what the
- * `checked` vs `checkable` numbers in meta.json are for. */
-const CHECK_BUDGET = 250;
+ * listing comes due once a day and the budget spreads that across four runs.
+ *
+ * ⚠️ Raised 250 -> 600 on 2026-08-17, when board discovery (§24) took the board from 945 to
+ * ~1,800 listings and ~1,430 checkable rows. 250x4 = 1,000/day could no longer cover them,
+ * so a growing share of the board would have gone unverified — the coverage rot this budget
+ * exists to prevent, arriving through the front door as a *success*. Caught by
+ * `tests/listings-integrity.test.mjs`, which does the arithmetic rather than trusting this
+ * comment; raise the budget with the board, and let that test tell you the floor. */
+const CHECK_BUDGET = 600;
 /* Under 24h on purpose: at 48h a "daily" check was a promise the code did not keep. */
 const RECHECK_MS = 20 * 60 * 60 * 1000;
 const CHECK_CONCURRENCY = 6;
@@ -612,7 +646,7 @@ async function communityListings() {
 module.exports = {
   COMMUNITY_FEEDS, FEED_MIN_ROWS, FEED_MIN_INTERN_RATIO,
   parseSimplifySchema, parseZshahCsv, parseSpeedyapplyTable, parseCSVRows,
-  isIntern, isUS, dedupeKey, normUrl, normTitle, normCompany, normLoc, listing,
+  isIntern, isUS, dedupeKey, normUrl, normTitle, normCompany, normLoc, listing, termsFor,
   // Liveness, so a test can prove each host's checker against a real posting and a
   // fabricated one rather than trusting the comment above CHECKABLE_HOST.
   isStillOpen, headCheck, workdayCheck, smartRecruitersCheck, isCheckable,
