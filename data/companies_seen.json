@@ -447,7 +447,7 @@
  "rippling": {
   "name": "Rippling",
   "lastSeen": "2026-08-17",
-  "roles": 6
+  "roles": 4
  },
  "old-mission": {
   "name": "Old Mission",
@@ -797,7 +797,7 @@
  "american-express": {
   "name": "American Express",
   "lastSeen": "2026-08-17",
-  "roles": 9
+  "roles": 11
  },
  "boeing": {
   "name": "Boeing",
@@ -917,12 +917,12 @@
  "keybank": {
   "name": "KeyBank",
   "lastSeen": "2026-08-17",
-  "roles": 16
+  "roles": 15
  },
  "northwestern-mutual": {
   "name": "Northwestern Mutual",
   "lastSeen": "2026-08-17",
-  "roles": 5
+  "roles": 4
  },
  "ge-vernova": {
   "name": "GE Vernova",
@@ -937,7 +937,7 @@
  "bp": {
   "name": "BP",
   "lastSeen": "2026-08-17",
-  "roles": 3
+  "roles": 4
  },
  "uhy": {
   "name": "UHY",
