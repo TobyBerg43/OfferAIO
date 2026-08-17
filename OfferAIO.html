@@ -701,6 +701,7 @@ const CATS = {
   marketing:{label:'Marketing & Sales'},
   hr:{label:'Human Resources'},
   re:{label:'Real Estate'},
+  retail:{label:'Retail & Merchandising'},
   healthcare:{label:'Healthcare & Life Sciences'},
   engineering:{label:'Engineering (non-software)'},
   design:{label:'Design & Creative'},
@@ -864,6 +865,10 @@ function catForTitle(t){
      'other' went to 26.3% — the same "too narrow above it" failure this file was rewritten
      to fix in August, arriving from the opposite direction. These sit directly above the
      swe catch-all, so every more specific rule already above them still wins. */
+  /* Retail leadership programmes — Target's "Store Executive Intern" and its equivalents —
+     are a mainstream, well-paid business internship, and 24 of them were sitting in 'other'.
+     Measured when added: this rule takes nothing from any category above it. */
+  if(/\bstore\b|\bretail\b|merchandis|\bbuyer\b/.test(t))return 'retail';
   if(/pharmac|nurs|clinical|medical|health|patient|dental|veterinar|biotech|biolog|chemis|laborator|\br&d\b|life scien/.test(t))return 'healthcare';
   if(/mechanical|civil|aerospace|manufactur|industrial engineer|process engineer|quality engineer|materials|structural|\bhvac\b|construction|facilit/.test(t))return 'engineering';
   if(/\blegal\b|paralegal|\blaw\b|counsel|contracts/.test(t))return 'legal';
@@ -873,8 +878,22 @@ function catForTitle(t){
   return 'other';
 }
 const NON_US_RE=/\b(Canada|Toronto|Vancouver|Montreal|Ottawa|Calgary|United Kingdom|UK|London|Dublin|Ireland|Germany|Berlin|Munich|France|Paris|Netherlands|Amsterdam|Spain|Madrid|Barcelona|Poland|Warsaw|Krakow|India|Bangalore|Bengaluru|Hyderabad|Mumbai|Pune|Gurgaon|Noida|Chennai|Singapore|Japan|Tokyo|China|Shanghai|Beijing|Shenzhen|Hong Kong|Taiwan|Taipei|Korea|Seoul|Australia|Sydney|Melbourne|Brazil|S[ãa]o Paulo|Mexico|Chile|Santiago|Argentina|Buenos Aires|Colombia|Bogot[áa]|Peru|Lima|Costa Rica|Israel|Tel Aviv|Dubai|UAE|Switzerland|Zurich|Geneva|Sweden|Stockholm|Finland|Helsinki|Norway|Oslo|Denmark|Copenhagen|Italy|Milan|Rome|Portugal|Lisbon|Belgium|Brussels|Austria|Vienna|Prague|Budapest|Bucharest|Luxembourg|LATAM|EMEA|APAC|FIN|GBR|DEU|CAN|MEX|BRA|IND|CHN|JPN|SGP|AUS|POL|ESP|FRA|NLD|CHE|ITA)\b/;
+/* OfferAIO is for undergraduates going into their junior and senior years, so a graduate-only
+   req is not an extra — it is one of the user's 50 monthly submissions spent on something
+   they cannot be hired for. scrape.js drops these at the source; this is here because the
+   dashboard re-filters whatever listings.json happens to contain, and a stale file must not
+   put them back. ⚠️ Keep IDENTICAL to isUndergrad() in scrape.js —
+   tests/undergrad.test.mjs runs both over one corpus and fails if they ever disagree.
+   The override matters: "Research Intern (BS/MS/PhD)" names a bachelor's path and stays. */
+function isUndergradTitle(t){
+  const s=String(t||'');
+  if(/high school|\bhigh-school\b/i.test(s))return false;
+  if(/\bb\.?s\.?\b|\bb\.?a\.?\b|bachelor|undergrad|rising\s+(junior|senior|sophomore)/i.test(s))return true;
+  return !/\bmba\b|\bph\.?\s?d\b|\bdoctoral\b|\bdoctorate\b|\bpharm\.?d\b|pharmacy intern|pharmacy grad|\bmaster'?s\b|\bmsw\b|\bjd\b|law student|\bgrad\b|\bgraduate\s+(intern|student|engineer|program|analyst|associate)/i.test(s);
+}
 function ingest(data,srcName){
   const rows=data.filter(l=>l.active!==false&&l.is_visible!==false&&l.url&&l.title&&l.company_name
+    &&isUndergradTitle(l.title)
     &&!/\b202[0-6]\b/.test(l.title)
     &&!(/\b(fall|autumn|spring|winter|off.?cycle|co-?op)\b/i.test(l.title)&&!/\bsummer\b/i.test(l.title))
     &&!/\b(jan|feb|mar|apr|sep|oct|nov|dec)[a-z]*\.?\s*(to|through|thru|[-–])\s*(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i.test(l.title)

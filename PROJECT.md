@@ -101,7 +101,9 @@ auto-created a static worker "ffer" serving the whole repo. Always deploy from `
 ---
 
 ## 1. What OfferAIO is
-OfferAIO helps students auto-apply to Summer 2027 internships **in their own browser**.
+OfferAIO helps **undergraduates going into their junior and senior years** auto-apply to
+Summer 2027 internships **in their own browser**. Graduate-only postings — MBA, PhD,
+Master's, pharmacy/licensure — are kept off the board at the source (**§25**).
 It watches live internship postings, fills each application across the major applicant
 tracking systems, drafts cover letters in the user's voice, and lets the user review and
 submit. Positioning: *"Auto apply to internships while in class."*
@@ -2022,8 +2024,94 @@ flagged on the next liveness pass, which is the mechanism working.
   the backoff is no longer enough and boards are being lost to throttling, not death.
 - **`checkable` in `meta.json` is still the coverage number**, and the budget test is still
   what stops it rotting.
-- ⚠️ **Deciding what is out of scope is not done.** 159 identical "Pharmacy Intern - Grad"
-  reqs from one employer now sit on the board. They are real postings, honestly labelled and
-  correctly categorised as healthcare — but licensure-track clinical roles, MBA-only and
-  PhD-only internships are not what an undergraduate is shopping for, and no rule excludes
-  them. That is a product decision, deliberately not taken here.
+- ✅ **Deciding what is out of scope is DONE — see §25 (2026-08-17).** The board is for
+  undergraduates going into their junior and senior years. 205 graduate-only rows were
+  dropped and `tests/undergrad.test.mjs` keeps them off. Left here because the reasoning is
+  still the reasoning: *159 identical "Pharmacy Intern - Grad" reqs from one employer sat on
+  the board — real postings, honestly labelled and correctly categorised as healthcare, but
+  licensure-track clinical roles, MBA-only and PhD-only internships are not what an
+  undergraduate is shopping for.*
+
+## 25. The board is for undergraduates (added 2026-08-17)
+
+§24d left this open as "a product decision, deliberately not taken here". It is taken now,
+and the answer is narrow: **OfferAIO targets undergraduates going into their junior and
+senior years.** Graduate-only postings are dropped at the source.
+
+```
+live listings   1,806 -> 1,606      (205 graduate-only rows removed)
+'other'          17.1% -> 15.6%     (23 categories in use)
+```
+
+### a) Why this is a correctness fix and not a taste preference
+
+A graduate-only req on the board is not a harmless extra. **The free tier is 50 submissions
+a month**, so every posting the user cannot be hired for is one of those fifty spent — and
+§16's argument is exactly this: offering something you cannot deliver is worse than offering
+nothing. 155 of the 205 were the *same* "Pharmacy Intern - Grad" req from one employer, which
+had also been a third of the `other` category and looked, on the board, like real inventory.
+
+### ⚠️ b) The override is the rule. A banned-word list would be wrong.
+
+> `Research Intern (BS/MS/PhD)` — **keep.** It names a bachelor's path; it is open to our user.
+> `Quantitative Research Intern (PhD)` — **drop.**
+
+Both contain "PhD". Anything that only looked for graduate words would throw away the first
+one, and a student would never know the posting existed. So `isUndergrad()` checks for an
+explicit undergraduate signal **first** (`BS`, `BA`, `bachelor`, `undergrad`, `rising
+junior/senior`) and only then applies the graduate pattern.
+
+Two traps worth keeping in mind:
+- **"Undergraduate" contains "graduate".** `\bgrad` never matches inside it because there is
+  no word boundary there — verified, not assumed, because losing that boundary inverts the
+  rule precisely where it matters and would empty the board.
+- **"Master" is a job word as well as a degree.** "Master Data Management Intern" and "Scrum
+  Master Intern" must survive, so the pattern requires `master's`/`masters` with the s.
+
+Dropped: MBA, PhD/doctoral, Master's, PharmD and pharmacy-intern licensure roles, MSW, JD and
+law-student roles, "Graduate Intern/Student/Engineer/Program", and high-school programmes.
+Sophomore and first-year programmes are deliberately **kept** — a student going into their
+junior year is a sophomore now.
+
+### c) Where it lives, and the copy that would have drifted
+
+The check sits inside **`isIntern()`**, so Phase 1 feeds and Phase 2 boards both pass through
+it. Putting it anywhere else would let one source in under weaker rules, which is §21a's bug
+in a new costume.
+
+`OfferAIO.html` carries its own copy in `isUndergradTitle()`, because the dashboard
+re-filters whatever `listings.json` contains and a stale file must not put the rows back.
+⚠️ **A duplicated rule with no test comparing the copies is a rule that is already
+drifting** — the dashboard has mirrored the pipeline's title rules since §16 and nothing had
+ever checked that it still did. `tests/undergrad.test.mjs` now lifts the shipped function out
+of the HTML and runs both over one corpus.
+
+### d) `tests/undergrad.test.mjs` (7 tests, mutation-tested)
+
+Including the one that matters: **no graduate-only row is on the live board.** It reads
+`data/listings.json` off disk, so it fails on the data rather than on the regex — the check
+that would have caught 155 pharmacy reqs sitting on a board aimed at finance undergraduates.
+
+Mutation-tested against six ways this breaks, all caught: the rule commented out, the
+undergrad override removed, the high-school check removed, MBA dropped from the pattern, the
+`\bgrad` word boundary lost, and the dashboard copy drifting from the pipeline's.
+
+### e) Also: a retail category
+
+Target's **"Store Executive Intern"** and its equivalents — a mainstream, well-paid business
+internship — were sitting in `other`, 24 of them. Added as `retail`, and measured before
+adding: the rule takes **nothing** from any category above it.
+
+`other` is now 15.6% and genuinely heterogeneous — warehouse management, video production,
+consumer insights, SkillBridge. There is no next cluster worth a rule; the remainder is what
+`other` is for.
+
+### f) Not done, on purpose
+
+- **Returning/conversion reqs** ("Intern Conversion", "Returning Project Controls Intern")
+  are still listed. They are open to undergraduates but effectively reserved for a company's
+  previous interns. Filtering them needs judgement about wording that varies by employer, and
+  the failure mode is mild.
+- **Class-year targeting beyond degree level.** Nothing distinguishes a rising-junior
+  programme from a rising-senior one, because titles rarely say. `rising junior|senior` is
+  read as an undergraduate *signal*, not used to filter between them.

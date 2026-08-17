@@ -90,6 +90,37 @@ const WRONG_YEAR_RE = /\b202[0-6]\b/;
 // drop fall/spring/winter/co-op roles unless they also mention summer
 const OTHER_SEASON_RE = /\b(fall|autumn|spring|winter|off.?cycle|co-?op)\b/i;
 const SUMMER_RE = /\bsummer\b/i;
+
+/* ---------------- who this product is for ----------------
+ *
+ * Undergraduates going into their junior and senior years. A graduate-only posting on the
+ * board is not a harmless extra: the free tier is 50 submissions a month, so every req the
+ * user cannot be hired for is one of those fifty spent, and §16's whole argument is that
+ * offering something you cannot deliver is worse than offering nothing.
+ *
+ * Measured 2026-08-17, after board discovery: 155 identical "Pharmacy Intern - Grad" reqs
+ * from one employer, plus MBA, PhD and Master's-only programmes — ~190 rows of a 1,806-row
+ * board, and the pharmacy block alone was a third of the 'other' category.
+ *
+ * ⚠️ The override is the important half. "Research Intern (BS/MS/PhD)" names a bachelor's
+ * path and is open to exactly our user; "Quantitative Research Intern (PhD)" is not. A rule
+ * that only looked for grad words would drop both. So an explicit undergraduate signal wins.
+ */
+const GRAD_ONLY_RE =
+  /\bmba\b|\bph\.?\s?d\b|\bdoctoral\b|\bdoctorate\b|\bpharm\.?d\b|pharmacy intern|pharmacy grad|\bmaster'?s\b|\bmsw\b|\bjd\b|law student|\bgrad\b|\bgraduate\s+(intern|student|engineer|program|analyst|associate)/i;
+/* "Undergraduate" contains "graduate" but not at a word boundary, so \bgrad… never matches
+   inside it — checked, because that would invert this rule exactly where it matters. */
+const UNDERGRAD_OK_RE = /\bb\.?s\.?\b|\bb\.?a\.?\b|bachelor|undergrad|rising\s+(junior|senior|sophomore)/i;
+const HIGH_SCHOOL_RE = /high school|\bhigh-school\b/i;
+
+/** Is this posting open to an undergraduate? An explicit bachelor's signal beats a grad one. */
+function isUndergrad(t) {
+  const s = String(t || "");
+  if (HIGH_SCHOOL_RE.test(s)) return false;
+  if (UNDERGRAD_OK_RE.test(s)) return true;
+  return !GRAD_ONLY_RE.test(s);
+}
+
 // US-only: reject listings whose title or location mentions a non-US country/city
 const NON_US_RE = /\b(Canada|Toronto|Vancouver|Montreal|Ottawa|Calgary|United Kingdom|UK|London|Dublin|Ireland|Germany|Berlin|Munich|France|Paris|Netherlands|Amsterdam|Spain|Madrid|Barcelona|Poland|Warsaw|Krakow|India|Bangalore|Bengaluru|Hyderabad|Mumbai|Pune|Gurgaon|Noida|Chennai|Singapore|Japan|Tokyo|China|Shanghai|Beijing|Shenzhen|Hong Kong|Taiwan|Taipei|Korea|Seoul|Australia|Sydney|Melbourne|Brazil|S[ãa]o Paulo|Mexico|Chile|Santiago|Argentina|Buenos Aires|Colombia|Bogot[áa]|Peru|Lima|Costa Rica|Israel|Tel Aviv|Dubai|UAE|Switzerland|Zurich|Geneva|Sweden|Stockholm|Finland|Helsinki|Norway|Oslo|Denmark|Copenhagen|Italy|Milan|Rome|Portugal|Lisbon|Belgium|Brussels|Austria|Vienna|Prague|Budapest|Bucharest|Luxembourg|LATAM|EMEA|APAC|FIN|GBR|DEU|CAN|MEX|BRA|IND|CHN|JPN|SGP|AUS|POL|ESP|FRA|NLD|CHE|ITA)\b/;
 const isUS = (l) => !NON_US_RE.test(`${l.title} ${(l.locations || []).join(" ")}`);
@@ -215,6 +246,7 @@ const MONTH_RANGE_RE = /\b(jan|feb|mar|apr|sep|oct|nov|dec)[a-z]*\.?\s*(to|throu
 const NON_ENGLISH_RE = /[À-ÖØ-öø-ÿĀ-ž]/;
 function isIntern(t) {
   if (!INTERN_RE.test(t) || EXCLUDE_RE.test(t)) return false;
+  if (!isUndergrad(t)) return false;                                // grad-only or high-school
   if (WRONG_YEAR_RE.test(t)) return false;                          // 2020–2026 seasons
   if (OTHER_SEASON_RE.test(t) && !SUMMER_RE.test(t)) return false;  // fall/spring/co-op only
   if (MONTH_RANGE_RE.test(t)) return false;                         // e.g. "Jan to Jun 2027"
@@ -646,7 +678,7 @@ async function communityListings() {
 module.exports = {
   COMMUNITY_FEEDS, FEED_MIN_ROWS, FEED_MIN_INTERN_RATIO,
   parseSimplifySchema, parseZshahCsv, parseSpeedyapplyTable, parseCSVRows,
-  isIntern, isUS, dedupeKey, normUrl, normTitle, normCompany, normLoc, listing, termsFor,
+  isIntern, isUndergrad, isUS, dedupeKey, normUrl, normTitle, normCompany, normLoc, listing, termsFor,
   // Liveness, so a test can prove each host's checker against a real posting and a
   // fabricated one rather than trusting the comment above CHECKABLE_HOST.
   isStillOpen, headCheck, workdayCheck, smartRecruitersCheck, isCheckable,

@@ -17,12 +17,12 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-08-17",
-  "roles": 18
+  "roles": 14
  },
  "capital-one": {
   "name": "Capital One",
   "lastSeen": "2026-08-17",
-  "roles": 7
+  "roles": 6
  },
  "salesforce": {
   "name": "Salesforce",
@@ -107,7 +107,7 @@
  "imc-trading": {
   "name": "IMC Trading",
   "lastSeen": "2026-08-17",
-  "roles": 7
+  "roles": 5
  },
  "scale-ai": {
   "name": "Scale AI",
@@ -132,7 +132,7 @@
  "imc": {
   "name": "IMC",
   "lastSeen": "2026-08-17",
-  "roles": 4
+  "roles": 3
  },
  "susquehanna-investment-group": {
   "name": "Susquehanna Investment Group",
@@ -187,7 +187,7 @@
  "apple": {
   "name": "Apple",
   "lastSeen": "2026-08-17",
-  "roles": 2
+  "roles": 1
  },
  "kudu-dynamics": {
   "name": "Kudu Dynamics",
@@ -327,7 +327,7 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-08-17",
-  "roles": 105
+  "roles": 103
  },
  "notion": {
   "name": "Notion",
@@ -402,7 +402,7 @@
  "spacex": {
   "name": "SpaceX",
   "lastSeen": "2026-08-17",
-  "roles": 8
+  "roles": 7
  },
  "poshmark": {
   "name": "Poshmark",
@@ -512,7 +512,7 @@
  "five-rings": {
   "name": "Five Rings",
   "lastSeen": "2026-08-17",
-  "roles": 3
+  "roles": 2
  },
  "netic": {
   "name": "Netic",
@@ -532,7 +532,7 @@
  "walleye-capital": {
   "name": "Walleye Capital",
   "lastSeen": "2026-08-17",
-  "roles": 2
+  "roles": 1
  },
  "palantir-technologies": {
   "name": "Palantir Technologies",
@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-08-17",
-  "roles": 7
+  "roles": 8
  },
  "postman": {
   "name": "Postman",
@@ -797,7 +797,7 @@
  "american-express": {
   "name": "American Express",
   "lastSeen": "2026-08-17",
-  "roles": 11
+  "roles": 12
  },
  "boeing": {
   "name": "Boeing",
@@ -897,7 +897,7 @@
  "conocophillips": {
   "name": "ConocoPhillips",
   "lastSeen": "2026-08-17",
-  "roles": 14
+  "roles": 13
  },
  "medline": {
   "name": "Medline",
@@ -977,7 +977,7 @@
  "d-e-shaw-and-co": {
   "name": "D. E. Shaw & Co.",
   "lastSeen": "2026-08-17",
-  "roles": 3
+  "roles": 2
  },
  "abridge": {
   "name": "Abridge",
@@ -1182,7 +1182,7 @@
  "dexmate": {
   "name": "Dexmate",
   "lastSeen": "2026-08-17",
-  "roles": 2
+  "roles": 1
  },
  "rainmaker": {
   "name": "Rainmaker",
@@ -1212,7 +1212,7 @@
  "vertiv": {
   "name": "Vertiv",
   "lastSeen": "2026-08-17",
-  "roles": 9
+  "roles": 8
  },
  "hershey": {
   "name": "Hershey",
@@ -1312,7 +1312,7 @@
  "atoms": {
   "name": "Atoms",
   "lastSeen": "2026-08-17",
-  "roles": 2
+  "roles": 1
  },
  "montenson": {
   "name": "Montenson",
@@ -1432,7 +1432,7 @@
  "susquehanna-international-group-sig": {
   "name": "Susquehanna International Group (SIG)",
   "lastSeen": "2026-08-17",
-  "roles": 14
+  "roles": 11
  },
  "tower-research-capital": {
   "name": "Tower Research Capital",
@@ -1492,7 +1492,7 @@
  "university-of-virginia": {
   "name": "University of Virginia",
   "lastSeen": "2026-08-17",
-  "roles": 5
+  "roles": 4
  },
  "united-parcel-service-ups": {
   "name": "United Parcel Service (UPS)",
@@ -1522,7 +1522,7 @@
  "target": {
   "name": "Target",
   "lastSeen": "2026-08-17",
-  "roles": 20
+  "roles": 21
  },
  "td-bank": {
   "name": "TD Bank",
@@ -1722,7 +1722,7 @@
  "invesco": {
   "name": "Invesco",
   "lastSeen": "2026-08-17",
-  "roles": 12
+  "roles": 13
  },
  "hub": {
   "name": "HUB",
@@ -1732,7 +1732,7 @@
  "highmark-health": {
   "name": "Highmark Health",
   "lastSeen": "2026-08-17",
-  "roles": 2
+  "roles": 1
  },
  "gsk": {
   "name": "GSK",
@@ -1922,7 +1922,7 @@
  "applied-materials": {
   "name": "Applied Materials",
   "lastSeen": "2026-08-17",
-  "roles": 3
+  "roles": 1
  },
  "ardian": {
   "name": "Ardian",
@@ -2192,7 +2192,7 @@
  "clera": {
   "name": "Clera",
   "lastSeen": "2026-08-17",
-  "roles": 4
+  "roles": 3
  },
  "constellation-space": {
   "name": "Constellation Space",
@@ -2462,7 +2462,7 @@
  "newsbreak": {
   "name": "NewsBreak",
   "lastSeen": "2026-08-17",
-  "roles": 2
+  "roles": 1
  },
  "crest-industries": {
   "name": "Crest Industries",
@@ -2552,7 +2552,7 @@
  "truveta": {
   "name": "Truveta",
   "lastSeen": "2026-08-17",
-  "roles": 2
+  "roles": 1
  },
  "rise8": {
   "name": "Rise8",
@@ -2622,7 +2622,7 @@
  "docugami": {
   "name": "Docugami",
   "lastSeen": "2026-08-17",
-  "roles": 2
+  "roles": 1
  },
  "medical-informatics-engineering": {
   "name": "Medical Informatics Engineering",
@@ -2652,7 +2652,7 @@
  "ginkgo-bioworks": {
   "name": "Ginkgo Bioworks",
   "lastSeen": "2026-08-17",
-  "roles": 3
+  "roles": 2
  },
  "octaura": {
   "name": "Octaura",
@@ -2706,6 +2706,11 @@
  },
  "ekimetrics": {
   "name": "Ekimetrics",
+  "lastSeen": "2026-08-17",
+  "roles": 1
+ },
+ "johnson-and-johnson": {
+  "name": "Johnson & Johnson",
   "lastSeen": "2026-08-17",
   "roles": 1
  }
