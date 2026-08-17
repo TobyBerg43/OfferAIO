@@ -233,6 +233,9 @@ session re-uploading old files. After any extension change, verify the raw file 
   Deliberately outside
   `extension/`, which `zip-extension.yml` ships wholesale to the store. `test.yml` globs
   `tests/*.test.mjs`, so a new file runs on its own.
+  From 2026-08-17, `companies.test.mjs` (§23e) is a fourth consistency test: it validates
+  `companies.json`, the pipeline's only hand-maintained input, which nothing checked until
+  29 boards had been dead in it for weeks.
   ⚠️ The last three are **consistency** tests: they read `manifest.json`, `OfferAIO.html`
   and `data/listings.json` off disk and assert the repo agrees with itself. They fail on a
   half-finished change (a version bumped in one file, a dashboard copy not regenerated)
@@ -498,20 +501,28 @@ described for a week is fixed for real users**: the §7 safety rules, the tracke
 résumé auto-attach and §18's work-auth fix. The extended review predicted below for the
 widened host permissions either did not happen or did not take long.
 
-⚠️ **Still owed, and it is the same item it has been since v1.1.2: one dashboard visit.**
-Neither part is a code change and neither can be done through the API:
+⚠️ **One item is still owed here, and it is the Privacy practices tab — not the screenshots.**
 
-- **The screenshots on the live listing are still whatever v1.1.2 uploaded** — v1.1.2-era
-  pictures of v1.5.0 code. ✅ **The three in `store/` were regenerated 2026-08-17 against the
-  shipped v1.5.0 UI** (screenshots 2 and 3 changed; 1 came out byte-identical, and no icon
-  did), so they can be uploaded as they sit — no need to re-run `regenerate.mjs` first.
-  Screenshot 3's sidebar reads `v1.5.0` and `931 LIVE`, which is the check that they are
-  current.
-- **The Privacy practices tab may be answered wrongly.** Those answers date from v1.1.2,
-  before Pro sent anything off-device and before v1.4.0 became the first build to store a
-  résumé file. See the warning in `store/OfferAIO-store-listing.md`
+- **The Privacy practices tab may be answered wrongly, and that is a real risk.** Those
+  answers date from v1.1.2, before Pro sent anything off-device and before v1.4.0 became the
+  first build to store a résumé file. See the warning in `store/OfferAIO-store-listing.md`
   — `privacy.html` was already rewritten to match, and a listing that disagrees with the
-  policy it links to is a standard rejection reason.
+  policy it links to is a standard rejection reason. Dashboard-only; the API cannot touch it.
+- **The screenshots are cosmetic. Demoted 2026-08-17 — do not treat this as a task.** The
+  live listing still shows v1.1.2's, and that is fine. The store page is not a sales surface
+  for this product: Chrome Web Store payments do not exist (§10), purchases happen on
+  offeraio.com, and by the time anyone reaches the listing they have come through
+  `start.html` and already seen the real demo — the page is an **Add to Chrome** button.
+  Store *search* would be the other reason to care, and a new item with no installs and no
+  reviews does not rank. v1.1.2 already carried the current logo, so what the old shots
+  actually lack is §16's coverage labels and §17's green résumé field: the same product, a
+  slightly older UI. Four reviews have cleared with them.
+  ✅ The three in `store/` were regenerated 2026-08-17 against the shipped v1.5.0 UI
+  (2 and 3 changed; 1 came out byte-identical, and no icon did), so they are ready to drag in
+  during the Privacy-tab visit — two minutes while already there, **not a trip of their own.**
+  ⚠️ This item sat at the same weight as the Privacy tab for thirteen days and was read as
+  urgent in three separate sessions. **A TODO that never gets done and never hurts anything
+  is miscategorised, not neglected** — say which it is, in the entry.
 
 For history, and because it explains why the published version is 1.3.1 and not the 1.3.0
 this file said was submitted: the listing was **published at v1.1.2** from 2026-08-04, not a
@@ -824,10 +835,10 @@ in any browser testing it after either pass — `manifest.json` changed in both.
    The submit loop that works: `node tests/browser-endtoend.mjs`, then
    `node store/publish-extension.mjs`, then poll `--dry-run` a day later. Three for three.
    **One thing still owed:**
-   - **A dashboard visit**, for the two things the API cannot touch: the screenshots (the
-     live listing still shows v1.1.2's; the three in `store/` were regenerated against the
-     shipped v1.5.0 UI on 2026-08-17 and are ready to upload as-is), and the Privacy
-     practices tab. ⚠️ Read the warning in `store/OfferAIO-store-listing.md` before
+   - **A dashboard visit, for the Privacy practices tab.** (The screenshots are on the same
+     visit but are **cosmetic** — demoted 2026-08-17, see §8 for why the store page is an
+     install button rather than a sales surface. Regenerated and ready to drag in; not a
+     reason to make the trip.) ⚠️ Read the warning in `store/OfferAIO-store-listing.md` before
      answering the data-transfer question — the honest answer changed when Pro started
      sending data off-device and again when §17 started storing a résumé file, and a
      mismatch with privacy.html is a common rejection reason.
@@ -1604,6 +1615,13 @@ the `host` and the site slug out of it, then validate with a POST to
 are **not on Workday at all** (Goldman runs `higher.gs.com`), so expect to delete a few rather
 than fix them.
 
+✅ **Done 2026-08-17 — see §23. This list is closed; do not work from it.** 13 of the 29 are
+back (12 Workday, plus William Blair, which turned out to be on **Greenhouse**). The other 16
+are recorded in §23d as **decided** with the reason for each — Goldman's own portal, Truist's
+API returning 403 on a board that is genuinely live, BNY Mellon and Qualcomm having moved off
+Workday since. The prediction above that a few would need deleting rather than fixing was
+right about the direction and low about the number.
+
 ### ✅ e) 46 Workday boards recovered from the feeds' own URLs
 
 The trick worth remembering: **a posting URL in a community feed proves the host and site slug
@@ -1770,3 +1788,135 @@ carries `date_closed`.
   a live posting costs somebody a job, leaving a dead one up costs a wasted click.
 - The `checkable` figure in `meta.json` is the number to watch. If it falls, a host stopped
   reporting closure honestly and coverage is quietly rotting.
+
+## 23. Recovering the dead Workday boards (added 2026-08-17)
+
+§21d removed 29 Workday boards that returned 422/404 on every run and listed them as
+"wanted, needs a correct `host`/`tenant`/`site`". **13 are back** — 12 on Workday and one
+that had moved to Greenhouse. The other 16 are not recoverable and are recorded below as
+**decided**, not pending, so nobody spends another afternoon on them.
+
+```
+companies.json   193 -> 206 boards
+live listings    940 -> 945          (+7 today, all in the finance lanes)
+```
+
+**+7 is the honest number, and it is small.** It is small because the season has barely
+opened: eleven of the thirteen boards validate with hundreds of live reqs and **zero**
+2027 intern postings *today*. The value is that they are now enumerated every six hours
+through the September–November posting window, which is when they fill. What arrived
+immediately: PIMCO ×5 (`2027 Summer Intern — Finance & Accounting Analyst`, Product
+Strategy, Client Solutions), BDO, Baird.
+
+### a) The method that worked, and the one that did not
+
+**Harvesting the raw feed text beats harvesting the board.** §21e harvested
+`myworkdayjobs.com` URLs off the *merged board* and got 53 host/site pairs. The same trick
+against the **raw SimplifyJobs feed** yields 7,222 URLs → **1,129 distinct pairs, 1,083 of
+them not in `companies.json`.** The board is post-filter (2027 interns only); the feed is
+not. Nine of the thirteen recoveries came from this in one pass, free.
+
+⚠️ **Rate limit.** `raw.githubusercontent.com` starts 429ing after a few pulls of the
+10MB SimplifyJobs file. Cache it to disk once and re-read locally; a second harvest run
+silently produced 66 URLs instead of 7,222 and looked like a real result.
+
+**Searching works for the rest, and the tenant is why guessing never could.** §21d
+concluded "no site-variant guess fixes any of them, so the tenant is wrong too" — correct,
+and the recovered rows show how wrong: Apollo Global Management is tenant **`athene`**,
+Northern Trust is **`ntrs`**, Guggenheim is **`guggenheiminvestment`**. Direct guesses at
+`amd`, `intuit`, `cbre`, `kpmg`, `aexp` all returned 422/401 exactly as before.
+
+### ⚠️ b) Validate every candidate against the live API. The parse step is not trustworthy.
+
+The harvester's URL parser skipped locale segments with `^[a-z]{2}([-_][A-Z]{2})?$` to find
+the site slug — which also skips a **real** site named `nw` (Nightwing's, 329 jobs). Nothing
+bad reached `companies.json` only because every candidate was POSTed to
+`https://{host}/wday/cxs/{tenant}/{site}/jobs` before being written. **A validated wrong
+guess is caught; an unvalidated right-looking one is a board that 404s for months.**
+
+Ask the endpoint **twice** — once with `searchText: "intern 2027"` and once bare. The first
+version of the validator returned early when the intern search answered 200, so a live board
+with no intern req today was indistinguishable from a wrong slug. Both read "0 jobs".
+
+### c) Recovered — 13
+
+| Company | Board | Live reqs |
+| --- | --- | --- |
+| PIMCO | `pimco.wd1` / `pimco-careers` | 153 (7 intern) |
+| BDO | `bdo.wd3` / `BDO` | 252 (3 intern) |
+| Baird | `baird.wd1` / `careers` | 87 (1 intern) |
+| Northern Trust | `ntrs.wd1` / `northerntrust` | 649 |
+| Visa | `visa.wd5` / `Visa` | 758 |
+| T. Rowe Price | `troweprice.wd5` / `TRowePrice` | 128 |
+| Apollo Global Management | `athene.wd5` / `Apollo_Careers` | 95 |
+| Carlyle | `carlyle.wd1` / `Carlyle` | 86 |
+| Brookfield | `brookfield.wd5` / `bpandc` | 82 |
+| Piper Sandler | `pipersandler.wd501` / `Piper_Sandler_Careers` | 39 |
+| Guggenheim | `guggenheiminvestment.wd5` / `External` | 26 |
+| Moelis | `moelis.wd1` / `University-Hires` | campus board |
+| **William Blair** | **Greenhouse `williamblair`** | 48 |
+
+**William Blair was never a Workday problem** — it is on Greenhouse, and its job links carry
+`gh_jid=`. Before writing off a dead board, sweep the employer across the three open-form
+ATSes; that is one script and it converted a deletion into a recovery.
+
+Moelis's `Experienced-Hires` (46 real IB reqs) is deliberately **not** added — experienced
+roles, no interns, pure request cost. `University-Hires` is the campus board and carries a
+talent-community placeholder until the season opens. Brookfield's `brookfieldprivate` was
+also skipped: a Portuguese talent pool ("Cadastro de Candidatos"), i.e. §21e's internal-board
+rule.
+
+### d) Not recoverable — 16, decided, do not retry
+
+Own portal, not on public Workday: **Goldman Sachs** (`higher.gs.com`), **KKR**,
+**Deloitte** (`apply.deloitte.com`; only the Irish firm is on Workday), **Jefferies**,
+**Aon** (`jobs.aon.com` — note `aoncology.wd12` is American Oncology Network, a different
+company), **AMD**, **Intuit** (`intuit.wd1` answers **401**, an auth-walled internal tenant),
+**CBRE**, **American Express**, **Grant Thornton** (only AU/IE/Canada on Workday, not US),
+**KPMG** (a Lever board `kpmg` exists and is **empty**), **EY** (`usearlycareers.ey.com`).
+
+Moved off Workday since: **BNY Mellon** → Oracle Cloud, **Qualcomm** → `careers.qualcomm.com`
+(`wd5` 422, `wd12` answers but is empty).
+
+Fillable but not enumerable: **Hines** → `careers-hines.icims.com`. The extension fills
+iCIMS; the pipeline has no per-tenant JSON for it (§21g).
+
+⚠️ **Truist is the interesting one, and it is not a slug problem.**
+`truist.wd1.myworkdayjobs.com/Careers` is **real and live** — the feed carries four 2027
+Truist Securities reqs (equity research, S&T) — but the public API is **closed**: the search
+endpoint 500s on every body shape and the per-job endpoint returns **403 permission denied**.
+A board can be live, correct, and carrying exactly the roles this product exists for, and
+still be un-enumerable. Adding it would only restore the §21d log noise. (Those four reqs are
+`"active": false` in the feed anyway — the pipeline drops them correctly.)
+
+### e) `tests/companies.test.mjs` (8 tests, mutation-tested)
+
+`companies.json` is the pipeline's only hand-maintained input and **nothing checked it**.
+A bad row does not crash: `scrape.js` catches, contributes nothing, and the run reports
+success — which is how 29 dead boards survived "an unknown length of time". The test asserts
+shape only (liveness is §22's job): a name, an enumerable `ats`, host/tenant/site on Workday
+rows, a slug elsewhere, no locale-shaped site, no internal board, no two rows describing the
+same board. Mutation-tested against all five.
+
+⚠️ **Two obvious-looking invariants are deliberately absent, because real rows disprove
+them** — both checked against the live API rather than assumed:
+- **"host starts with tenant"** — Wells Fargo is tenant `wf` on host `wellsfargo.wd1…` and
+  answers with 1,618 jobs. Workday's tenant id and subdomain are independent.
+- **"names are unique"** — HP has two real boards, US and EU, on one host. **The board is the
+  identity, not the company.**
+
+A test that asserts a plausible invariant nobody measured is how a working board gets
+"fixed" into a broken one.
+
+### f) Next, in order
+
+1. **The 1,083 unclaimed pairs from (a).** The single largest listings opportunity left. Not
+   done here because it is a different decision, not a bigger version of this one: 1,083
+   boards is ~15× the current enumeration cost every six hours, and most are neither US nor
+   student-facing. Needs a filter — and `zshah101` (§21b) is already 72% fillable, so measure
+   the overlap before paying for it.
+2. **SmartRecruiters** (§21g) — still the next ATS, still needs per-company slugs.
+3. ⚠️ **EY posts every early-careers track on 2026-09-08**, with published deadlines within
+   weeks (Consulting and EY-Parthenon 09-22, Assurance 09-30, Tax 10-05). EY cannot be
+   enumerated (d), so this is a **calendar** item, not a pipeline one — the Big Four open and
+   close inside a five-week window that starts three weeks from now.

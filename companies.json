@@ -1109,5 +1109,94 @@
     "host": "hendrick.wd5.myworkdayjobs.com",
     "tenant": "hendrick",
     "site": "HMSCareers"
+  },
+  {
+    "name": "William Blair",
+    "ats": "greenhouse",
+    "slug": "williamblair"
+  },
+  {
+    "name": "BDO",
+    "ats": "workday",
+    "host": "bdo.wd3.myworkdayjobs.com",
+    "tenant": "bdo",
+    "site": "BDO"
+  },
+  {
+    "name": "Brookfield",
+    "ats": "workday",
+    "host": "brookfield.wd5.myworkdayjobs.com",
+    "tenant": "brookfield",
+    "site": "bpandc"
+  },
+  {
+    "name": "Visa",
+    "ats": "workday",
+    "host": "visa.wd5.myworkdayjobs.com",
+    "tenant": "visa",
+    "site": "Visa"
+  },
+  {
+    "name": "T. Rowe Price",
+    "ats": "workday",
+    "host": "troweprice.wd5.myworkdayjobs.com",
+    "tenant": "troweprice",
+    "site": "TRowePrice"
+  },
+  {
+    "name": "PIMCO",
+    "ats": "workday",
+    "host": "pimco.wd1.myworkdayjobs.com",
+    "tenant": "pimco",
+    "site": "pimco-careers"
+  },
+  {
+    "name": "Guggenheim",
+    "ats": "workday",
+    "host": "guggenheiminvestment.wd5.myworkdayjobs.com",
+    "tenant": "guggenheiminvestment",
+    "site": "External"
+  },
+  {
+    "name": "Baird",
+    "ats": "workday",
+    "host": "baird.wd1.myworkdayjobs.com",
+    "tenant": "baird",
+    "site": "careers"
+  },
+  {
+    "name": "Piper Sandler",
+    "ats": "workday",
+    "host": "pipersandler.wd501.myworkdayjobs.com",
+    "tenant": "pipersandler",
+    "site": "Piper_Sandler_Careers"
+  },
+  {
+    "name": "Carlyle",
+    "ats": "workday",
+    "host": "carlyle.wd1.myworkdayjobs.com",
+    "tenant": "carlyle",
+    "site": "Carlyle"
+  },
+  {
+    "name": "Apollo Global Management",
+    "ats": "workday",
+    "host": "athene.wd5.myworkdayjobs.com",
+    "tenant": "athene",
+    "site": "Apollo_Careers"
+  },
+  {
+    "name": "Northern Trust",
+    "ats": "workday",
+    "host": "ntrs.wd1.myworkdayjobs.com",
+    "tenant": "ntrs",
+    "site": "northerntrust"
+  },
+  {
+    "name": "Moelis",
+    "ats": "workday",
+    "host": "moelis.wd1.myworkdayjobs.com",
+    "tenant": "moelis",
+    "site": "University-Hires"
   }
 ]
