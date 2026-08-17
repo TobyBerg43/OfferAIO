@@ -2,7 +2,7 @@
 
 Single source of truth for the OfferAIO project. Any assistant or person should be
 able to read this file and pick up the work without re-discovering anything.
-**Last updated: 2026-08-16.**
+**Last updated: 2026-08-17.**
 
 **2026-08-16 — five things. §21 has the biggest number, §20 the worst bug, §22 the most
 overdue.**
@@ -34,11 +34,17 @@ live DRW Greenhouse form — which had never been done — and it answered *"whe
 your university studies"* with **"Indiana University"**. §7 rule 2 also stopped a full-auto
 submission to a real employer, correctly. **§20 first, then §19, then §7 rules 1 and 4.**
 
-**v1.4.1 cleared review and is PUBLISHED at 100%.** Verified against
-`:fetchStatus`: `published PUBLISHED crx 1.4.1 @ 100%`, `submitted — none —`. Real installs
-now have §17's résumé auto-attach and §18's work-auth fix. `/health` and offeraio.com both
-answer 200. **The repo is now v1.5.0 and ahead of the store again** — §19's rails and §20's
-fix are not on real installs until the next submission.
+**2026-08-17 — v1.5.0 cleared review overnight and is PUBLISHED at 100%.** Verified against
+`:fetchStatus`: `published PUBLISHED crx 1.5.0 @ 100%`, `submitted — none —`. **The repo and
+the store agree**, and §19's daily-cap/pacing rails and §20's field-order fix are on real
+installs — this file said the opposite until now, because it was written before the
+submission went in. 248 tests pass and the 32 browser assertions pass against the shipped
+build; the daily Verify listings run is green. **`:fetchStatus` is the only trustworthy
+answer to "what version do users have" — this section has been wrong about it in both
+directions.** Store screenshots regenerated against the v1.5.0 UI the same day (§8).
+
+(Earlier: v1.4.1 cleared review and was published at 100%, giving real installs §17's résumé
+auto-attach and §18's work-auth fix. `/health` and offeraio.com both answer 200.)
 
 **248 tests pass** (184 in `tests/`, 64 in `worker/test/`), plus 32 browser assertions and a
 real-ATS run across all three open-form ATSes. **No code or store item is on the critical
@@ -307,7 +313,7 @@ element.
   (solid muted gold primary, white ghost — no glossy gradients).
 
 ## 7. The Chrome extension (`extension/`)
-Manifest V3. Name "OfferAIO — Auto Apply", **v1.5.0 in the repo, v1.4.1 on the store**
+Manifest V3. Name "OfferAIO — Auto Apply", **v1.5.0 in the repo and on the store**
 (1.0.0 → 1.1.0 licensing, → 1.1.1 bridge licence relay, → 1.1.2 new logo, → 1.1.3 the three
 safety fixes below, → 1.2.0 the application tracker, the context-aware popup and the identity
 relay, → 1.3.0 the ATS relay and the `*.wellfound.com` host fix, §16, → 1.3.1 the two bugs
@@ -464,20 +470,24 @@ automatically (§17); the field is highlighted only when a form's own uploader r
 
 ## 8. Chrome Web Store status
 
-### ✅ Review cleared. PUBLISHED at v1.4.1, 100%, nothing pending (2026-08-16)
+### ✅ Review cleared. PUBLISHED at v1.5.0, 100%, nothing pending (2026-08-17)
 
 Verified against `:fetchStatus`:
 
 ```
-publishedItemRevisionStatus  PUBLISHED  crxVersion 1.4.1  deployPercentage 100
+publishedItemRevisionStatus  PUBLISHED  crxVersion 1.5.0  deployPercentage 100
 submittedItemRevisionStatus  — absent —
 ```
 
-The absent second block is the whole story: nothing is in review, so the v1.4.1 submitted on
-08-15 — §17's résumé auto-attach and §18's work-auth fix — is what installs now get. **The
-repo and the store agree for the first time in the product's life.** The gap this section
-described for a week is closed; the only things still owed here are the two the API cannot
-touch, below.
+The absent second block is the whole story: nothing is in review, so **v1.5.0 — §19's
+daily-cap and pacing rails and §20's field-order fix — is what installs now get**, and the
+repo and the store agree. Four submissions, four clean reviews.
+
+⚠️ **This section, §7 and §12 all said the store was on v1.4.1 until 2026-08-17**, because
+the submission went in after they were written and nobody re-read the status afterwards. The
+version this file *claims* is published is worth nothing; `node store/publish-extension.mjs
+--dry-run` takes ten seconds and is the only answer. **Read the status before believing a
+version gap here — in either direction.**
 
 (Read for history: the same block read `crxVersion 1.3.1` on 2026-08-15, after the 08-13
 harness pass. Every version gap this file has tracked has closed within two days of
@@ -492,10 +502,11 @@ widened host permissions either did not happen or did not take long.
 Neither part is a code change and neither can be done through the API:
 
 - **The screenshots on the live listing are still whatever v1.1.2 uploaded** — v1.1.2-era
-  pictures of v1.4.1 code. Current ones sit in `store/`, regenerated against the **v1.2.0**
-  UI. ⚠️ Two UI passes have landed since (§16's coverage labels, §17's green résumé field),
-  so run `node store/regenerate.mjs` again before uploading rather than uploading what is
-  on disk.
+  pictures of v1.5.0 code. ✅ **The three in `store/` were regenerated 2026-08-17 against the
+  shipped v1.5.0 UI** (screenshots 2 and 3 changed; 1 came out byte-identical, and no icon
+  did), so they can be uploaded as they sit — no need to re-run `regenerate.mjs` first.
+  Screenshot 3's sidebar reads `v1.5.0` and `931 LIVE`, which is the check that they are
+  current.
 - **The Privacy practices tab may be answered wrongly.** Those answers date from v1.1.2,
   before Pro sent anything off-device and before v1.4.0 became the first build to store a
   résumé file. See the warning in `store/OfferAIO-store-listing.md`
@@ -516,7 +527,7 @@ v1.2.0-era ones in `store/` cannot be put there through the API. Upload them by 
 time the dashboard is open.
 
 - Developer account: **tobybergerbusiness@gmail.com** — registered, dashboard accessible.
-- Item id **`hcbchgpjladdfmcammhgbbmkdagcfcgd`**, published at **v1.4.1**.
+- Item id **`hcbchgpjladdfmcammhgbbmkdagcfcgd`**, published at **v1.5.0**.
 - Listing copy, category, permission justifications and data disclosures live in
   `store/OfferAIO-store-listing.md`.
 - Screenshots (1280×800) in `store/` — popup, in-page fill bar, dashboard. **Regenerate
@@ -771,7 +782,7 @@ it ships, not the day it sells.
 64 in `worker/test/`) plus 32 browser assertions and a real-ATS run across all three
 open-form ATSes (§20), the Worker is deployed and gating
 correctly, `/cover` genuinely works (§11), the dashboard is wired to it, three of the four
-keys in §11 are set, and **the store listing is published and current at v1.4.1** — the repo
+keys in §11 are set, and **the store listing is published and current at v1.5.0** — the repo
 and the store agree (§8). What remains is one dashboard visit, a first real purchase to
 exercise the Stripe path, the `/rank` decision below — and the thing this list has never had
 an item for:
@@ -801,10 +812,11 @@ in any browser testing it after either pass — `manifest.json` changed in both.
      `worker/**` fails the Deploy Worker job. **This is a convenience, not a blocker** —
      `npx wrangler deploy` from `worker/` works today on this machine, so the only cost is
      that Worker deploys stay manual.
-1. ✅ **Chrome Web Store — published at v1.4.1, review cleared (§8).** Confirmed 2026-08-16:
+1. ✅ **Chrome Web Store — published at v1.5.0, review cleared (§8).** Confirmed 2026-08-17:
    `publishedItemRevisionStatus` is `PUBLISHED` at 100% and there is no submitted revision.
    Every safety rule in §7, the tracker, the `identity` bridge message, §16's coverage
-   honesty, §17's résumé auto-attach and §18's work-auth fix have all reached real installs.
+   honesty, §17's résumé auto-attach, §18's work-auth fix, §19's rails and §20's field-order
+   fix have all reached real installs.
    Poll any future submission with
    `node store/publish-extension.mjs --dry-run`, which now prints both revision blocks
    directly (it used to slice the raw response at 500 chars, and the ~400-char `publicKey`
@@ -813,8 +825,8 @@ in any browser testing it after either pass — `manifest.json` changed in both.
    `node store/publish-extension.mjs`, then poll `--dry-run` a day later. Three for three.
    **One thing still owed:**
    - **A dashboard visit**, for the two things the API cannot touch: the screenshots (the
-     live listing still shows v1.1.2's; the ones in `store/` are v1.2.0-era, so re-run
-     `node store/regenerate.mjs` first), and the Privacy
+     live listing still shows v1.1.2's; the three in `store/` were regenerated against the
+     shipped v1.5.0 UI on 2026-08-17 and are ready to upload as-is), and the Privacy
      practices tab. ⚠️ Read the warning in `store/OfferAIO-store-listing.md` before
      answering the data-transfer question — the honest answer changed when Pro started
      sending data off-device and again when §17 started storing a résumé file, and a
