@@ -752,7 +752,7 @@
  "dv-trading": {
   "name": "DV Trading",
   "lastSeen": "2026-08-17",
-  "roles": 2
+  "roles": 3
  },
  "godaddy": {
   "name": "GoDaddy",
@@ -1522,7 +1522,7 @@
  "target": {
   "name": "Target",
   "lastSeen": "2026-08-17",
-  "roles": 21
+  "roles": 22
  },
  "td-bank": {
   "name": "TD Bank",
@@ -1762,7 +1762,7 @@
  "globalfoundries": {
   "name": "GlobalFoundries",
   "lastSeen": "2026-08-17",
-  "roles": 5
+  "roles": 6
  },
  "ge-aerospace": {
   "name": "GE Aerospace",
@@ -1912,7 +1912,7 @@
  "astrazeneca": {
   "name": "AstraZeneca",
   "lastSeen": "2026-08-17",
-  "roles": 2
+  "roles": 3
  },
  "ariensco": {
   "name": "AriensCo",
