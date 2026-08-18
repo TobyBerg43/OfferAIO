@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-08-18",
-  "roles": 8
+  "roles": 7
  },
  "postman": {
   "name": "Postman",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-18",
-  "roles": 20
+  "roles": 25
  },
  "bytedance": {
   "name": "ByteDance",
@@ -797,7 +797,7 @@
  "american-express": {
   "name": "American Express",
   "lastSeen": "2026-08-18",
-  "roles": 24
+  "roles": 22
  },
  "boeing": {
   "name": "Boeing",
@@ -897,7 +897,7 @@
  "conocophillips": {
   "name": "ConocoPhillips",
   "lastSeen": "2026-08-18",
-  "roles": 13
+  "roles": 14
  },
  "medline": {
   "name": "Medline",
@@ -907,7 +907,7 @@
  "winland-foods": {
   "name": "Winland Foods",
   "lastSeen": "2026-08-18",
-  "roles": 7
+  "roles": 6
  },
  "hntb": {
   "name": "HNTB",
@@ -1277,12 +1277,12 @@
  "sentry": {
   "name": "Sentry",
   "lastSeen": "2026-08-18",
-  "roles": 2
+  "roles": 1
  },
  "deloitte": {
   "name": "Deloitte",
   "lastSeen": "2026-08-18",
-  "roles": 1
+  "roles": 2
  },
  "kimley-horn": {
   "name": "Kimley-Horn",
@@ -1912,7 +1912,7 @@
  "astrazeneca": {
   "name": "AstraZeneca",
   "lastSeen": "2026-08-18",
-  "roles": 3
+  "roles": 2
  },
  "ariensco": {
   "name": "AriensCo",
@@ -2758,5 +2758,15 @@
   "name": "Readystate Asset Management",
   "lastSeen": "2026-08-18",
   "roles": 1
+ },
+ "huck-adventures": {
+  "name": "Huck Adventures",
+  "lastSeen": "2026-08-18",
+  "roles": 1
+ },
+ "ahead": {
+  "name": "AHEAD",
+  "lastSeen": "2026-08-18",
+  "roles": 3
  }
 }
