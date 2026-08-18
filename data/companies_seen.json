@@ -327,7 +327,7 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-08-18",
-  "roles": 103
+  "roles": 105
  },
  "notion": {
   "name": "Notion",
@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-08-18",
-  "roles": 7
+  "roles": 8
  },
  "postman": {
   "name": "Postman",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-18",
-  "roles": 25
+  "roles": 22
  },
  "bytedance": {
   "name": "ByteDance",
@@ -2717,7 +2717,7 @@
  "ksm": {
   "name": "KSM",
   "lastSeen": "2026-08-18",
-  "roles": 4
+  "roles": 5
  },
  "general-motors": {
   "name": "General Motors",
@@ -2768,5 +2768,20 @@
   "name": "AHEAD",
   "lastSeen": "2026-08-18",
   "roles": 3
+ },
+ "richemont": {
+  "name": "Richemont",
+  "lastSeen": "2026-08-18",
+  "roles": 1
+ },
+ "l3harris-technologies": {
+  "name": "L3Harris Technologies",
+  "lastSeen": "2026-08-18",
+  "roles": 1
+ },
+ "national-reconnaissance-office": {
+  "name": "National Reconnaissance Office",
+  "lastSeen": "2026-08-18",
+  "roles": 1
  }
 }
