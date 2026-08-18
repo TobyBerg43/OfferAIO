@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-18",
-  "roles": 22
+  "roles": 21
  },
  "bytedance": {
   "name": "ByteDance",
@@ -797,7 +797,7 @@
  "american-express": {
   "name": "American Express",
   "lastSeen": "2026-08-18",
-  "roles": 22
+  "roles": 23
  },
  "boeing": {
   "name": "Boeing",
@@ -892,7 +892,7 @@
  "lpl-financial-holdings": {
   "name": "LPL Financial Holdings",
   "lastSeen": "2026-08-18",
-  "roles": 6
+  "roles": 4
  },
  "conocophillips": {
   "name": "ConocoPhillips",
@@ -927,7 +927,7 @@
  "ge-vernova": {
   "name": "GE Vernova",
   "lastSeen": "2026-08-18",
-  "roles": 12
+  "roles": 13
  },
  "american-fidelity": {
   "name": "American Fidelity",
@@ -1017,7 +1017,7 @@
  "bosch": {
   "name": "Bosch",
   "lastSeen": "2026-08-18",
-  "roles": 2
+  "roles": 1
  },
  "foxconn-industrial-internet-usa": {
   "name": "Foxconn Industrial Internet USA",
@@ -1197,7 +1197,7 @@
  "freeform": {
   "name": "Freeform",
   "lastSeen": "2026-08-18",
-  "roles": 1
+  "roles": 2
  },
  "the-nuclear-company": {
   "name": "The Nuclear Company",
@@ -1352,7 +1352,7 @@
  "jp-morgan-chase": {
   "name": "JP Morgan Chase",
   "lastSeen": "2026-08-18",
-  "roles": 7
+  "roles": 6
  },
  "the-boeing-company": {
   "name": "The Boeing Company",
@@ -1482,7 +1482,7 @@
  "vanguard": {
   "name": "Vanguard",
   "lastSeen": "2026-08-18",
-  "roles": 17
+  "roles": 16
  },
  "vanderlande-industries": {
   "name": "Vanderlande Industries",
@@ -1542,7 +1542,7 @@
  "situsamc": {
   "name": "SitusAMC",
   "lastSeen": "2026-08-18",
-  "roles": 1
+  "roles": 5
  },
  "signify": {
   "name": "Signify",
@@ -1597,7 +1597,7 @@
  "procter-and-gamble-pandg": {
   "name": "Procter & Gamble (P&G)",
   "lastSeen": "2026-08-18",
-  "roles": 29
+  "roles": 31
  },
  "philips": {
   "name": "Philips",
@@ -1612,7 +1612,7 @@
  "pimco": {
   "name": "PIMCO",
   "lastSeen": "2026-08-18",
-  "roles": 9
+  "roles": 7
  },
  "pine-rest": {
   "name": "Pine Rest",
@@ -1642,7 +1642,7 @@
  "occidental-petroleum-corporation-oxy": {
   "name": "Occidental Petroleum Corporation (Oxy)",
   "lastSeen": "2026-08-18",
-  "roles": 3
+  "roles": 6
  },
  "nxp-semiconductors": {
   "name": "NXP Semiconductors",
@@ -1757,17 +1757,17 @@
  "great-american-insurance-company": {
   "name": "Great American Insurance Company",
   "lastSeen": "2026-08-18",
-  "roles": 1
+  "roles": 2
  },
  "globalfoundries": {
   "name": "GlobalFoundries",
   "lastSeen": "2026-08-18",
-  "roles": 7
+  "roles": 8
  },
  "ge-aerospace": {
   "name": "GE Aerospace",
   "lastSeen": "2026-08-18",
-  "roles": 13
+  "roles": 17
  },
  "ge-healthcare": {
   "name": "GE Healthcare",
@@ -1792,7 +1792,7 @@
  "fifth-third-bank": {
   "name": "Fifth Third Bank",
   "lastSeen": "2026-08-18",
-  "roles": 1
+  "roles": 3
  },
  "evonik": {
   "name": "Evonik",
@@ -1806,8 +1806,8 @@
  },
  "cvs-health": {
   "name": "CVS Health",
-  "lastSeen": "2026-08-17",
-  "roles": 158
+  "lastSeen": "2026-08-18",
+  "roles": 1
  },
  "dxc-technology": {
   "name": "DXC Technology",
@@ -2247,7 +2247,7 @@
  "acds": {
   "name": "ACDS",
   "lastSeen": "2026-08-18",
-  "roles": 9
+  "roles": 8
  },
  "fast-enterprises": {
   "name": "FAST Enterprises",
@@ -2297,7 +2297,7 @@
  "four-hands": {
   "name": "Four Hands",
   "lastSeen": "2026-08-18",
-  "roles": 7
+  "roles": 6
  },
  "mckinney": {
   "name": "McKinney",
@@ -2717,12 +2717,12 @@
  "ksm": {
   "name": "KSM",
   "lastSeen": "2026-08-18",
-  "roles": 5
+  "roles": 7
  },
  "general-motors": {
   "name": "General Motors",
   "lastSeen": "2026-08-18",
-  "roles": 1
+  "roles": 2
  },
  "brunswick": {
   "name": "Brunswick",
@@ -2772,7 +2772,7 @@
  "richemont": {
   "name": "Richemont",
   "lastSeen": "2026-08-18",
-  "roles": 1
+  "roles": 4
  },
  "l3harris-technologies": {
   "name": "L3Harris Technologies",
@@ -2781,6 +2781,16 @@
  },
  "national-reconnaissance-office": {
   "name": "National Reconnaissance Office",
+  "lastSeen": "2026-08-18",
+  "roles": 1
+ },
+ "arkansas-center-for-data-sciences": {
+  "name": "Arkansas Center for Data Sciences",
+  "lastSeen": "2026-08-18",
+  "roles": 1
+ },
+ "toshiba-global-commerce": {
+  "name": "Toshiba Global Commerce",
   "lastSeen": "2026-08-18",
   "roles": 1
  }
