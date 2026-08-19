@@ -92,7 +92,7 @@
  "nvidia": {
   "name": "NVIDIA",
   "lastSeen": "2026-08-19",
-  "roles": 1
+  "roles": 13
  },
  "jump-trading": {
   "name": "Jump Trading",
@@ -1352,7 +1352,7 @@
  "jp-morgan-chase": {
   "name": "JP Morgan Chase",
   "lastSeen": "2026-08-19",
-  "roles": 7
+  "roles": 6
  },
  "the-boeing-company": {
   "name": "The Boeing Company",
@@ -2767,12 +2767,12 @@
  "ahead": {
   "name": "AHEAD",
   "lastSeen": "2026-08-19",
-  "roles": 3
+  "roles": 4
  },
  "richemont": {
   "name": "Richemont",
   "lastSeen": "2026-08-19",
-  "roles": 4
+  "roles": 6
  },
  "l3harris-technologies": {
   "name": "L3Harris Technologies",
