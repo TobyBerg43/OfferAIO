@@ -1476,13 +1476,13 @@
  },
  "goldman-sachs": {
   "name": "Goldman Sachs",
-  "lastSeen": "2026-08-18",
-  "roles": 4
+  "lastSeen": "2026-08-19",
+  "roles": 1
  },
  "vanguard": {
   "name": "Vanguard",
   "lastSeen": "2026-08-19",
-  "roles": 16
+  "roles": 14
  },
  "vanderlande-industries": {
   "name": "Vanderlande Industries",
@@ -1587,7 +1587,7 @@
  "roche": {
   "name": "Roche",
   "lastSeen": "2026-08-19",
-  "roles": 11
+  "roles": 17
  },
  "pricewaterhousecoopers-pwc": {
   "name": "PricewaterhouseCoopers (PwC)",
@@ -1792,7 +1792,7 @@
  "fifth-third-bank": {
   "name": "Fifth Third Bank",
   "lastSeen": "2026-08-19",
-  "roles": 3
+  "roles": 5
  },
  "evonik": {
   "name": "Evonik",
@@ -2752,7 +2752,7 @@
  "dee-zee": {
   "name": "Dee Zee",
   "lastSeen": "2026-08-19",
-  "roles": 1
+  "roles": 2
  },
  "readystate-asset-management": {
   "name": "Readystate Asset Management",
@@ -2832,7 +2832,7 @@
  "dimensional-fund-advisors": {
   "name": "Dimensional Fund Advisors",
   "lastSeen": "2026-08-19",
-  "roles": 2
+  "roles": 5
  },
  "truist-bank": {
   "name": "Truist Bank",
@@ -2843,5 +2843,15 @@
   "name": "Humana",
   "lastSeen": "2026-08-19",
   "roles": 1
+ },
+ "continental-resources": {
+  "name": "Continental Resources",
+  "lastSeen": "2026-08-19",
+  "roles": 5
+ },
+ "riveron": {
+  "name": "Riveron",
+  "lastSeen": "2026-08-19",
+  "roles": 3
  }
 }
