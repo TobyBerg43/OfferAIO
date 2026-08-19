@@ -1115,6 +1115,11 @@
     "slug": "rho"
   },
   {
+    "name": "Riveron",
+    "ats": "ashby",
+    "slug": "riveron"
+  },
+  {
     "name": "Rivian and Volkswagen Group Technologies",
     "ats": "ashby",
     "slug": "rivianvw.tech"
@@ -3380,6 +3385,11 @@
     "slug": "ramp"
   },
   {
+    "name": "Readystate Asset Management",
+    "ats": "greenhouse",
+    "slug": "readystate"
+  },
+  {
     "name": "Realtor.com",
     "ats": "greenhouse",
     "slug": "rdccareers"
@@ -4075,6 +4085,11 @@
     "slug": "xairatherapeutics"
   },
   {
+    "name": "Xantium",
+    "ats": "greenhouse",
+    "slug": "xantium"
+  },
+  {
     "name": "Xebia",
     "ats": "greenhouse",
     "slug": "xebiausa"
@@ -4583,6 +4598,11 @@
     "name": "Parallel Wireless",
     "ats": "lever",
     "slug": "parallelwireless"
+  },
+  {
+    "name": "Pelmorex",
+    "ats": "lever",
+    "slug": "pelmorex"
   },
   {
     "name": "Penta Group",
@@ -5552,6 +5572,13 @@
     "host": "astrazeneca.wd3.myworkdayjobs.com",
     "tenant": "astrazeneca",
     "site": "Careers"
+  },
+  {
+    "name": "AT&T",
+    "ats": "workday",
+    "host": "att.wd1.myworkdayjobs.com",
+    "tenant": "att",
+    "site": "ATTCollege"
   },
   {
     "name": "Athena Health",
@@ -6765,6 +6792,13 @@
     "site": "External"
   },
   {
+    "name": "Continental Resources",
+    "ats": "workday",
+    "host": "clr.wd5.myworkdayjobs.com",
+    "tenant": "clr",
+    "site": "CLR_Careers"
+  },
+  {
     "name": "Cooper Standard",
     "ats": "workday",
     "host": "cooperstandard.wd1.myworkdayjobs.com",
@@ -7024,6 +7058,13 @@
     "site": "Deckers"
   },
   {
+    "name": "Dee Zee",
+    "ats": "workday",
+    "host": "deezee.wd108.myworkdayjobs.com",
+    "tenant": "deezee",
+    "site": "DeeZee_Careers"
+  },
+  {
     "name": "Dell",
     "ats": "workday",
     "tenant": "dell",
@@ -7078,6 +7119,13 @@
     "host": "dickssportinggoods.wd1.myworkdayjobs.com",
     "tenant": "dickssportinggoods",
     "site": "DSG"
+  },
+  {
+    "name": "Dimensional Fund Advisors",
+    "ats": "workday",
+    "host": "dimensional.wd5.myworkdayjobs.com",
+    "tenant": "dimensional",
+    "site": "dfa_careers"
   },
   {
     "name": "Direct Supply",
@@ -7666,6 +7714,13 @@
     "host": "firstnational.wd12.myworkdayjobs.com",
     "tenant": "firstnational",
     "site": "fnbocareers"
+  },
+  {
+    "name": "Foresters Financial",
+    "ats": "workday",
+    "host": "foresters.wd3.myworkdayjobs.com",
+    "tenant": "foresters",
+    "site": "ForestersFinancialCareers"
   },
   {
     "name": "Fortrea",
