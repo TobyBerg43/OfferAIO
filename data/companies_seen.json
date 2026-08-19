@@ -532,7 +532,7 @@
  "walleye-capital": {
   "name": "Walleye Capital",
   "lastSeen": "2026-08-19",
-  "roles": 1
+  "roles": 2
  },
  "palantir-technologies": {
   "name": "Palantir Technologies",
@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-08-19",
-  "roles": 8
+  "roles": 7
  },
  "postman": {
   "name": "Postman",
@@ -747,7 +747,7 @@
  "microsoft": {
   "name": "Microsoft",
   "lastSeen": "2026-08-19",
-  "roles": 2
+  "roles": 3
  },
  "dv-trading": {
   "name": "DV Trading",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-19",
-  "roles": 22
+  "roles": 24
  },
  "bytedance": {
   "name": "ByteDance",
@@ -837,7 +837,7 @@
  "cno-financial-group": {
   "name": "CNO Financial Group",
   "lastSeen": "2026-08-19",
-  "roles": 4
+  "roles": 5
  },
  "epic-games": {
   "name": "Epic Games",
@@ -927,7 +927,7 @@
  "ge-vernova": {
   "name": "GE Vernova",
   "lastSeen": "2026-08-19",
-  "roles": 13
+  "roles": 17
  },
  "american-fidelity": {
   "name": "American Fidelity",
@@ -952,7 +952,7 @@
  "motorola-solutions": {
   "name": "Motorola Solutions",
   "lastSeen": "2026-08-19",
-  "roles": 4
+  "roles": 5
  },
  "crowe": {
   "name": "Crowe",
@@ -1026,7 +1026,7 @@
  },
  "oracle": {
   "name": "Oracle",
-  "lastSeen": "2026-08-17",
+  "lastSeen": "2026-08-19",
   "roles": 1
  },
  "raytheon": {
@@ -1482,7 +1482,7 @@
  "vanguard": {
   "name": "Vanguard",
   "lastSeen": "2026-08-19",
-  "roles": 14
+  "roles": 16
  },
  "vanderlande-industries": {
   "name": "Vanderlande Industries",
@@ -1577,7 +1577,7 @@
  "ryan-companies": {
   "name": "Ryan Companies",
   "lastSeen": "2026-08-19",
-  "roles": 7
+  "roles": 8
  },
  "rolls-royce": {
   "name": "Rolls-Royce",
@@ -1642,7 +1642,7 @@
  "occidental-petroleum-corporation-oxy": {
   "name": "Occidental Petroleum Corporation (Oxy)",
   "lastSeen": "2026-08-19",
-  "roles": 6
+  "roles": 8
  },
  "nxp-semiconductors": {
   "name": "NXP Semiconductors",
@@ -1742,7 +1742,7 @@
  "hitachi": {
   "name": "Hitachi",
   "lastSeen": "2026-08-19",
-  "roles": 2
+  "roles": 1
  },
  "guidehouse": {
   "name": "Guidehouse",
@@ -1817,7 +1817,7 @@
  "eisneramper": {
   "name": "EisnerAmper",
   "lastSeen": "2026-08-19",
-  "roles": 2
+  "roles": 1
  },
  "denver": {
   "name": "Denver",
@@ -1847,7 +1847,7 @@
  "conagra-brands": {
   "name": "Conagra Brands",
   "lastSeen": "2026-08-19",
-  "roles": 11
+  "roles": 13
  },
  "clarios": {
   "name": "Clarios",
@@ -1912,7 +1912,7 @@
  "astrazeneca": {
   "name": "AstraZeneca",
   "lastSeen": "2026-08-19",
-  "roles": 2
+  "roles": 3
  },
  "ariensco": {
   "name": "AriensCo",
@@ -2712,7 +2712,7 @@
  "johnson-and-johnson": {
   "name": "Johnson & Johnson",
   "lastSeen": "2026-08-19",
-  "roles": 1
+  "roles": 2
  },
  "ksm": {
   "name": "KSM",
@@ -2853,5 +2853,35 @@
   "name": "Riveron",
   "lastSeen": "2026-08-19",
   "roles": 3
+ },
+ "neuberger-berman": {
+  "name": "Neuberger Berman",
+  "lastSeen": "2026-08-19",
+  "roles": 1
+ },
+ "atandt": {
+  "name": "AT&T",
+  "lastSeen": "2026-08-19",
+  "roles": 3
+ },
+ "ascensus": {
+  "name": "Ascensus",
+  "lastSeen": "2026-08-19",
+  "roles": 1
+ },
+ "metova-federal": {
+  "name": "Metova Federal",
+  "lastSeen": "2026-08-19",
+  "roles": 1
+ },
+ "by-light": {
+  "name": "By Light",
+  "lastSeen": "2026-08-19",
+  "roles": 1
+ },
+ "detroit-lions": {
+  "name": "Detroit Lions",
+  "lastSeen": "2026-08-19",
+  "roles": 1
  }
 }
