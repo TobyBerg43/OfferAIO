@@ -82,7 +82,7 @@
  "abb": {
   "name": "ABB",
   "lastSeen": "2026-08-20",
-  "roles": 4
+  "roles": 6
  },
  "datasite": {
   "name": "Datasite",
@@ -92,7 +92,7 @@
  "nvidia": {
   "name": "NVIDIA",
   "lastSeen": "2026-08-20",
-  "roles": 13
+  "roles": 12
  },
  "jump-trading": {
   "name": "Jump Trading",
@@ -327,7 +327,7 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-08-20",
-  "roles": 110
+  "roles": 111
  },
  "notion": {
   "name": "Notion",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-20",
-  "roles": 26
+  "roles": 24
  },
  "bytedance": {
   "name": "ByteDance",
@@ -2022,7 +2022,7 @@
  "sereact": {
   "name": "Sereact",
   "lastSeen": "2026-08-20",
-  "roles": 6
+  "roles": 5
  },
  "niural": {
   "name": "Niural",
@@ -2926,6 +2926,11 @@
  },
  "corewell-health": {
   "name": "Corewell Health",
+  "lastSeen": "2026-08-20",
+  "roles": 1
+ },
+ "juvare": {
+  "name": "Juvare",
   "lastSeen": "2026-08-20",
   "roles": 1
  }
