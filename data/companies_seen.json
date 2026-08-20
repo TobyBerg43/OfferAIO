@@ -82,7 +82,7 @@
  "abb": {
   "name": "ABB",
   "lastSeen": "2026-08-20",
-  "roles": 6
+  "roles": 9
  },
  "datasite": {
   "name": "Datasite",
@@ -327,7 +327,7 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-08-20",
-  "roles": 111
+  "roles": 112
  },
  "notion": {
   "name": "Notion",
@@ -422,7 +422,7 @@
  "rivian-and-volkswagen-group-technologies": {
   "name": "Rivian and Volkswagen Group Technologies",
   "lastSeen": "2026-08-20",
-  "roles": 5
+  "roles": 4
  },
  "herdora": {
   "name": "Herdora",
@@ -562,7 +562,7 @@
  "micron": {
   "name": "Micron",
   "lastSeen": "2026-08-20",
-  "roles": 13
+  "roles": 14
  },
  "pdt-partners": {
   "name": "PDT Partners",
@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-08-20",
-  "roles": 8
+  "roles": 9
  },
  "postman": {
   "name": "Postman",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-20",
-  "roles": 24
+  "roles": 23
  },
  "bytedance": {
   "name": "ByteDance",
@@ -837,7 +837,7 @@
  "cno-financial-group": {
   "name": "CNO Financial Group",
   "lastSeen": "2026-08-20",
-  "roles": 5
+  "roles": 6
  },
  "epic-games": {
   "name": "Epic Games",
@@ -867,7 +867,7 @@
  "university-of-texas-at-austin": {
   "name": "University of Texas at Austin",
   "lastSeen": "2026-08-20",
-  "roles": 13
+  "roles": 12
  },
  "uline": {
   "name": "Uline",
@@ -927,7 +927,7 @@
  "ge-vernova": {
   "name": "GE Vernova",
   "lastSeen": "2026-08-20",
-  "roles": 17
+  "roles": 18
  },
  "american-fidelity": {
   "name": "American Fidelity",
@@ -947,7 +947,7 @@
  "ing": {
   "name": "ING",
   "lastSeen": "2026-08-20",
-  "roles": 4
+  "roles": 3
  },
  "motorola-solutions": {
   "name": "Motorola Solutions",
@@ -1052,7 +1052,7 @@
  "centerfield": {
   "name": "Centerfield",
   "lastSeen": "2026-08-20",
-  "roles": 2
+  "roles": 1
  },
  "kastle": {
   "name": "Kastle",
@@ -1127,7 +1127,7 @@
  "eulerity": {
   "name": "Eulerity",
   "lastSeen": "2026-08-20",
-  "roles": 6
+  "roles": 5
  },
  "sony": {
   "name": "Sony",
@@ -1321,7 +1321,7 @@
  },
  "mckesson": {
   "name": "McKesson",
-  "lastSeen": "2026-08-17",
+  "lastSeen": "2026-08-20",
   "roles": 1
  },
  "trillium": {
@@ -1392,7 +1392,7 @@
  "axon": {
   "name": "Axon",
   "lastSeen": "2026-08-20",
-  "roles": 5
+  "roles": 3
  },
  "cybernetic-labs": {
   "name": "Cybernetic Labs",
@@ -1482,7 +1482,7 @@
  "vanguard": {
   "name": "Vanguard",
   "lastSeen": "2026-08-20",
-  "roles": 16
+  "roles": 15
  },
  "vanderlande-industries": {
   "name": "Vanderlande Industries",
@@ -1577,7 +1577,7 @@
  "ryan-companies": {
   "name": "Ryan Companies",
   "lastSeen": "2026-08-20",
-  "roles": 8
+  "roles": 11
  },
  "rolls-royce": {
   "name": "Rolls-Royce",
@@ -1612,7 +1612,7 @@
  "pimco": {
   "name": "PIMCO",
   "lastSeen": "2026-08-20",
-  "roles": 16
+  "roles": 18
  },
  "pine-rest": {
   "name": "Pine Rest",
@@ -1792,7 +1792,7 @@
  "fifth-third-bank": {
   "name": "Fifth Third Bank",
   "lastSeen": "2026-08-20",
-  "roles": 5
+  "roles": 6
  },
  "evonik": {
   "name": "Evonik",
@@ -1847,7 +1847,7 @@
  "conagra-brands": {
   "name": "Conagra Brands",
   "lastSeen": "2026-08-20",
-  "roles": 13
+  "roles": 14
  },
  "clarios": {
   "name": "Clarios",
@@ -1897,7 +1897,7 @@
  "barclays": {
   "name": "Barclays",
   "lastSeen": "2026-08-20",
-  "roles": 1
+  "roles": 2
  },
  "baird": {
   "name": "Baird",
@@ -2247,7 +2247,7 @@
  "acds": {
   "name": "ACDS",
   "lastSeen": "2026-08-20",
-  "roles": 6
+  "roles": 5
  },
  "fast-enterprises": {
   "name": "FAST Enterprises",
@@ -2287,7 +2287,7 @@
  "olsson": {
   "name": "Olsson",
   "lastSeen": "2026-08-20",
-  "roles": 1
+  "roles": 2
  },
  "apex-companies": {
   "name": "Apex Companies",
@@ -2342,7 +2342,7 @@
  "alku": {
   "name": "ALKU",
   "lastSeen": "2026-08-20",
-  "roles": 6
+  "roles": 7
  },
  "defense-unicorns": {
   "name": "Defense Unicorns",
@@ -2507,7 +2507,7 @@
  "metox-international": {
   "name": "MetOx International",
   "lastSeen": "2026-08-20",
-  "roles": 2
+  "roles": 1
  },
  "xsolla": {
   "name": "Xsolla",
@@ -2887,7 +2887,7 @@
  "elanco": {
   "name": "Elanco",
   "lastSeen": "2026-08-20",
-  "roles": 5
+  "roles": 6
  },
  "arch-capital-group": {
   "name": "Arch Capital Group",
@@ -2931,6 +2931,41 @@
  },
  "juvare": {
   "name": "Juvare",
+  "lastSeen": "2026-08-20",
+  "roles": 1
+ },
+ "rsm": {
+  "name": "RSM",
+  "lastSeen": "2026-08-20",
+  "roles": 1
+ },
+ "metecs": {
+  "name": "METECS",
+  "lastSeen": "2026-08-20",
+  "roles": 1
+ },
+ "n1": {
+  "name": "N1",
+  "lastSeen": "2026-08-20",
+  "roles": 1
+ },
+ "specialisterne": {
+  "name": "Specialisterne",
+  "lastSeen": "2026-08-20",
+  "roles": 1
+ },
+ "fooji": {
+  "name": "Fooji",
+  "lastSeen": "2026-08-20",
+  "roles": 1
+ },
+ "abbvie": {
+  "name": "AbbVie",
+  "lastSeen": "2026-08-20",
+  "roles": 1
+ },
+ "fannie-mae": {
+  "name": "Fannie Mae",
   "lastSeen": "2026-08-20",
   "roles": 1
  }
