@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-08-20",
-  "roles": 14
+  "roles": 15
  },
  "capital-one": {
   "name": "Capital One",
@@ -82,7 +82,7 @@
  "abb": {
   "name": "ABB",
   "lastSeen": "2026-08-20",
-  "roles": 3
+  "roles": 4
  },
  "datasite": {
   "name": "Datasite",
@@ -237,7 +237,7 @@
  "abundant": {
   "name": "Abundant",
   "lastSeen": "2026-08-20",
-  "roles": 1
+  "roles": 2
  },
  "terranox-ai": {
   "name": "Terranox AI",
@@ -327,12 +327,12 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-08-20",
-  "roles": 106
+  "roles": 110
  },
  "notion": {
   "name": "Notion",
   "lastSeen": "2026-08-20",
-  "roles": 4
+  "roles": 5
  },
  "al-warren-oil-company": {
   "name": "Al Warren Oil Company",
@@ -402,7 +402,7 @@
  "spacex": {
   "name": "SpaceX",
   "lastSeen": "2026-08-20",
-  "roles": 7
+  "roles": 6
  },
  "poshmark": {
   "name": "Poshmark",
@@ -422,7 +422,7 @@
  "rivian-and-volkswagen-group-technologies": {
   "name": "Rivian and Volkswagen Group Technologies",
   "lastSeen": "2026-08-20",
-  "roles": 6
+  "roles": 5
  },
  "herdora": {
   "name": "Herdora",
@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-08-20",
-  "roles": 7
+  "roles": 8
  },
  "postman": {
   "name": "Postman",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-20",
-  "roles": 27
+  "roles": 26
  },
  "bytedance": {
   "name": "ByteDance",
@@ -1612,7 +1612,7 @@
  "pimco": {
   "name": "PIMCO",
   "lastSeen": "2026-08-20",
-  "roles": 14
+  "roles": 16
  },
  "pine-rest": {
   "name": "Pine Rest",
@@ -2327,7 +2327,7 @@
  "wpp-media": {
   "name": "WPP Media",
   "lastSeen": "2026-08-20",
-  "roles": 3
+  "roles": 4
  },
  "per-scholas": {
   "name": "Per Scholas",
@@ -2921,6 +2921,11 @@
  },
  "regions-bank": {
   "name": "Regions Bank",
+  "lastSeen": "2026-08-20",
+  "roles": 1
+ },
+ "corewell-health": {
+  "name": "Corewell Health",
   "lastSeen": "2026-08-20",
   "roles": 1
  }
