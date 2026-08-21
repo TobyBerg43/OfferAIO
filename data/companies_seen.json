@@ -451,7 +451,7 @@
  },
  "old-mission": {
   "name": "Old Mission",
-  "lastSeen": "2026-08-16",
+  "lastSeen": "2026-08-21",
   "roles": 1
  },
  "jll": {
@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-08-21",
-  "roles": 8
+  "roles": 9
  },
  "postman": {
   "name": "Postman",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-21",
-  "roles": 25
+  "roles": 19
  },
  "bytedance": {
   "name": "ByteDance",
@@ -957,7 +957,7 @@
  "crowe": {
   "name": "Crowe",
   "lastSeen": "2026-08-21",
-  "roles": 4
+  "roles": 5
  },
  "gritt-robotics": {
   "name": "Gritt Robotics",
@@ -1352,7 +1352,7 @@
  "jp-morgan-chase": {
   "name": "JP Morgan Chase",
   "lastSeen": "2026-08-21",
-  "roles": 7
+  "roles": 6
  },
  "the-boeing-company": {
   "name": "The Boeing Company",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-08-21",
-  "roles": 2
+  "roles": 4
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1592,7 +1592,7 @@
  "pricewaterhousecoopers-pwc": {
   "name": "PricewaterhouseCoopers (PwC)",
   "lastSeen": "2026-08-21",
-  "roles": 5
+  "roles": 6
  },
  "procter-and-gamble-pandg": {
   "name": "Procter & Gamble (P&G)",
