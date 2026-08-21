@@ -22,7 +22,7 @@
  "capital-one": {
   "name": "Capital One",
   "lastSeen": "2026-08-21",
-  "roles": 6
+  "roles": 4
  },
  "salesforce": {
   "name": "Salesforce",
@@ -82,7 +82,7 @@
  "abb": {
   "name": "ABB",
   "lastSeen": "2026-08-21",
-  "roles": 9
+  "roles": 8
  },
  "datasite": {
   "name": "Datasite",
@@ -152,7 +152,7 @@
  "databricks": {
   "name": "Databricks",
   "lastSeen": "2026-08-21",
-  "roles": 2
+  "roles": 3
  },
  "aqr": {
   "name": "AQR",
@@ -442,7 +442,7 @@
  "datadog": {
   "name": "Datadog",
   "lastSeen": "2026-08-21",
-  "roles": 3
+  "roles": 2
  },
  "rippling": {
   "name": "Rippling",
@@ -467,7 +467,7 @@
  "copart": {
   "name": "Copart",
   "lastSeen": "2026-08-21",
-  "roles": 1
+  "roles": 4
  },
  "fab2": {
   "name": "fab2",
@@ -501,7 +501,7 @@
  },
  "moog": {
   "name": "Moog ",
-  "lastSeen": "2026-08-20",
+  "lastSeen": "2026-08-21",
   "roles": 1
  },
  "hudson-river-trading": {
@@ -522,7 +522,7 @@
  "astranis": {
   "name": "Astranis",
   "lastSeen": "2026-08-21",
-  "roles": 3
+  "roles": 4
  },
  "google": {
   "name": "Google",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-21",
-  "roles": 19
+  "roles": 18
  },
  "bytedance": {
   "name": "ByteDance",
@@ -852,7 +852,7 @@
  "blackstone": {
   "name": "Blackstone",
   "lastSeen": "2026-08-21",
-  "roles": 3
+  "roles": 11
  },
  "replit": {
   "name": "Replit",
@@ -892,7 +892,7 @@
  "lpl-financial-holdings": {
   "name": "LPL Financial Holdings",
   "lastSeen": "2026-08-21",
-  "roles": 5
+  "roles": 8
  },
  "conocophillips": {
   "name": "ConocoPhillips",
@@ -927,7 +927,7 @@
  "ge-vernova": {
   "name": "GE Vernova",
   "lastSeen": "2026-08-21",
-  "roles": 18
+  "roles": 22
  },
  "american-fidelity": {
   "name": "American Fidelity",
@@ -1087,7 +1087,7 @@
  "microchip": {
   "name": "Microchip",
   "lastSeen": "2026-08-21",
-  "roles": 1
+  "roles": 2
  },
  "two-six-technologies": {
   "name": "Two Six Technologies",
@@ -1202,7 +1202,7 @@
  "the-nuclear-company": {
   "name": "The Nuclear Company",
   "lastSeen": "2026-08-21",
-  "roles": 7
+  "roles": 6
  },
  "wec-energy-group": {
   "name": "WEC Energy Group",
@@ -1212,7 +1212,7 @@
  "vertiv": {
   "name": "Vertiv",
   "lastSeen": "2026-08-21",
-  "roles": 8
+  "roles": 10
  },
  "hershey": {
   "name": "Hershey",
@@ -1352,7 +1352,7 @@
  "jp-morgan-chase": {
   "name": "JP Morgan Chase",
   "lastSeen": "2026-08-21",
-  "roles": 6
+  "roles": 5
  },
  "the-boeing-company": {
   "name": "The Boeing Company",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-08-21",
-  "roles": 4
+  "roles": 2
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1492,7 +1492,7 @@
  "university-of-virginia": {
   "name": "University of Virginia",
   "lastSeen": "2026-08-21",
-  "roles": 4
+  "roles": 3
  },
  "united-parcel-service-ups": {
   "name": "United Parcel Service (UPS)",
@@ -1557,7 +1557,7 @@
  "schnucks": {
   "name": "Schnucks",
   "lastSeen": "2026-08-21",
-  "roles": 1
+  "roles": 2
  },
  "samsung": {
   "name": "Samsung",
@@ -1592,7 +1592,7 @@
  "pricewaterhousecoopers-pwc": {
   "name": "PricewaterhouseCoopers (PwC)",
   "lastSeen": "2026-08-21",
-  "roles": 6
+  "roles": 7
  },
  "procter-and-gamble-pandg": {
   "name": "Procter & Gamble (P&G)",
@@ -1902,7 +1902,7 @@
  "baird": {
   "name": "Baird",
   "lastSeen": "2026-08-21",
-  "roles": 1
+  "roles": 3
  },
  "avis-budget-group": {
   "name": "Avis Budget Group",
@@ -1942,7 +1942,7 @@
  "airbus": {
   "name": "Airbus",
   "lastSeen": "2026-08-21",
-  "roles": 2
+  "roles": 4
  },
  "aaa-club-alliance": {
   "name": "AAA Club Alliance",
@@ -2887,7 +2887,7 @@
  "elanco": {
   "name": "Elanco",
   "lastSeen": "2026-08-21",
-  "roles": 9
+  "roles": 12
  },
  "arch-capital-group": {
   "name": "Arch Capital Group",
@@ -2987,10 +2987,55 @@
  "phoebe": {
   "name": "Phoebe",
   "lastSeen": "2026-08-21",
-  "roles": 1
+  "roles": 2
  },
  "imeg": {
   "name": "IMEG",
+  "lastSeen": "2026-08-21",
+  "roles": 1
+ },
+ "e-space": {
+  "name": "E-Space",
+  "lastSeen": "2026-08-21",
+  "roles": 1
+ },
+ "formlabs": {
+  "name": "Formlabs",
+  "lastSeen": "2026-08-21",
+  "roles": 2
+ },
+ "figure": {
+  "name": "Figure",
+  "lastSeen": "2026-08-21",
+  "roles": 1
+ },
+ "figma": {
+  "name": "Figma",
+  "lastSeen": "2026-08-21",
+  "roles": 1
+ },
+ "exa": {
+  "name": "Exa",
+  "lastSeen": "2026-08-21",
+  "roles": 1
+ },
+ "amd": {
+  "name": "AMD",
+  "lastSeen": "2026-08-21",
+  "roles": 2
+ },
+ "leidos": {
+  "name": "Leidos",
+  "lastSeen": "2026-08-21",
+  "roles": 1
+ },
+ "millennium": {
+  "name": "Millennium",
+  "lastSeen": "2026-08-21",
+  "roles": 3
+ },
+ "monolithic-power-systems-inc": {
+  "name": "Monolithic Power Systems, Inc.",
   "lastSeen": "2026-08-21",
   "roles": 1
  }

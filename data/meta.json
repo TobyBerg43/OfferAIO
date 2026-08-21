@@ -1,23 +1,22 @@
 {
-  "updated": "2026-08-21T12:40:59.403Z",
-  "total": 1857,
-  "closed": 7,
-  "checked": 1444,
-  "checkable": 1444,
+  "updated": "2026-08-21T18:34:25.872Z",
+  "total": 1889,
+  "closed": 1,
+  "checked": 1471,
+  "checkable": 1471,
   "bySource": {
-    "workday": 675,
+    "workday": 694,
     "ashby": 131,
-    "speedyapply": 68,
-    "greenhouse": 214,
-    "Simplify": 433,
+    "speedyapply": 65,
+    "greenhouse": 212,
+    "Simplify": 435,
+    "vanshb03": 195,
     "zshah101": 50,
     "lever": 90,
-    "vanshb03": 178,
     "aprameyak": 13,
     "ChristianHirschey": 1,
     "katie0014": 1,
     "DereC4": 1,
-    "sbui056": 1,
     "amhw460": 1
   }
 }
