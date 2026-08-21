@@ -207,7 +207,7 @@
  "etched": {
   "name": "Etched",
   "lastSeen": "2026-08-21",
-  "roles": 18
+  "roles": 17
  },
  "susquehanna": {
   "name": "Susquehanna",
@@ -562,7 +562,7 @@
  "micron": {
   "name": "Micron",
   "lastSeen": "2026-08-21",
-  "roles": 17
+  "roles": 18
  },
  "pdt-partners": {
   "name": "PDT Partners",
@@ -767,7 +767,7 @@
  "bytedance": {
   "name": "ByteDance",
   "lastSeen": "2026-08-21",
-  "roles": 40
+  "roles": 41
  },
  "yotta-labs": {
   "name": "Yotta Labs",
@@ -917,7 +917,7 @@
  "keybank": {
   "name": "KeyBank",
   "lastSeen": "2026-08-21",
-  "roles": 20
+  "roles": 21
  },
  "northwestern-mutual": {
   "name": "Northwestern Mutual",
@@ -1482,7 +1482,7 @@
  "vanguard": {
   "name": "Vanguard",
   "lastSeen": "2026-08-21",
-  "roles": 13
+  "roles": 14
  },
  "vanderlande-industries": {
   "name": "Vanderlande Industries",
@@ -2637,7 +2637,7 @@
  "rtw-investments": {
   "name": "RTW Investments",
   "lastSeen": "2026-08-21",
-  "roles": 1
+  "roles": 2
  },
  "solopulse": {
   "name": "SoloPulse",
@@ -2971,6 +2971,26 @@
  },
  "devon-energy": {
   "name": "Devon Energy",
+  "lastSeen": "2026-08-21",
+  "roles": 1
+ },
+ "ontario-teachers-pension-plan": {
+  "name": "Ontario Teachers' Pension Plan",
+  "lastSeen": "2026-08-21",
+  "roles": 1
+ },
+ "auto-owners-insurance": {
+  "name": "Auto-Owners Insurance",
+  "lastSeen": "2026-08-21",
+  "roles": 1
+ },
+ "phoebe": {
+  "name": "Phoebe",
+  "lastSeen": "2026-08-21",
+  "roles": 1
+ },
+ "imeg": {
+  "name": "IMEG",
   "lastSeen": "2026-08-21",
   "roles": 1
  }
