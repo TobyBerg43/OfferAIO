@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-08-22",
-  "roles": 9
+  "roles": 8
  },
  "postman": {
   "name": "Postman",
@@ -747,7 +747,7 @@
  "microsoft": {
   "name": "Microsoft",
   "lastSeen": "2026-08-22",
-  "roles": 3
+  "roles": 4
  },
  "dv-trading": {
   "name": "DV Trading",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-22",
-  "roles": 18
+  "roles": 17
  },
  "bytedance": {
   "name": "ByteDance",
@@ -807,7 +807,7 @@
  "hp": {
   "name": "HP",
   "lastSeen": "2026-08-22",
-  "roles": 6
+  "roles": 7
  },
  "roblox": {
   "name": "Roblox",
@@ -1327,7 +1327,7 @@
  "trillium": {
   "name": "Trillium",
   "lastSeen": "2026-08-22",
-  "roles": 3
+  "roles": 2
  },
  "belvedere-trading": {
   "name": "Belvedere Trading",
@@ -1762,7 +1762,7 @@
  "globalfoundries": {
   "name": "GlobalFoundries",
   "lastSeen": "2026-08-22",
-  "roles": 8
+  "roles": 9
  },
  "ge-aerospace": {
   "name": "GE Aerospace",
@@ -2192,7 +2192,7 @@
  "clera": {
   "name": "Clera",
   "lastSeen": "2026-08-22",
-  "roles": 3
+  "roles": 2
  },
  "constellation-space": {
   "name": "Constellation Space",
@@ -2727,7 +2727,7 @@
  "brunswick": {
   "name": "Brunswick",
   "lastSeen": "2026-08-22",
-  "roles": 2
+  "roles": 3
  },
  "abbott": {
   "name": "Abbott",
@@ -3098,5 +3098,25 @@
   "name": "BRG",
   "lastSeen": "2026-08-22",
   "roles": 2
+ },
+ "emory-university": {
+  "name": "Emory University",
+  "lastSeen": "2026-08-22",
+  "roles": 1
+ },
+ "simis": {
+  "name": "SimIS",
+  "lastSeen": "2026-08-22",
+  "roles": 1
+ },
+ "availity": {
+  "name": "Availity",
+  "lastSeen": "2026-08-22",
+  "roles": 1
+ },
+ "springs-window-fashions": {
+  "name": "Springs Window Fashions",
+  "lastSeen": "2026-08-22",
+  "roles": 8
  }
 }
