@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-08-22",
-  "roles": 15
+  "roles": 2
  },
  "capital-one": {
   "name": "Capital One",
@@ -77,7 +77,7 @@
  "caci": {
   "name": "CACI",
   "lastSeen": "2026-08-22",
-  "roles": 4
+  "roles": 1
  },
  "abb": {
   "name": "ABB",
@@ -237,7 +237,7 @@
  "abundant": {
   "name": "Abundant",
   "lastSeen": "2026-08-22",
-  "roles": 2
+  "roles": 3
  },
  "terranox-ai": {
   "name": "Terranox AI",
@@ -317,7 +317,7 @@
  "intel": {
   "name": "Intel",
   "lastSeen": "2026-08-22",
-  "roles": 3
+  "roles": 2
  },
  "homebase": {
   "name": "Homebase",
@@ -327,7 +327,7 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-08-22",
-  "roles": 112
+  "roles": 114
  },
  "notion": {
   "name": "Notion",
@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-08-22",
-  "roles": 9
+  "roles": 2
  },
  "postman": {
   "name": "Postman",
@@ -802,12 +802,12 @@
  "boeing": {
   "name": "Boeing",
   "lastSeen": "2026-08-22",
-  "roles": 16
+  "roles": 1
  },
  "hp": {
   "name": "HP",
   "lastSeen": "2026-08-22",
-  "roles": 6
+  "roles": 1
  },
  "roblox": {
   "name": "Roblox",
@@ -837,7 +837,7 @@
  "cno-financial-group": {
   "name": "CNO Financial Group",
   "lastSeen": "2026-08-22",
-  "roles": 6
+  "roles": 1
  },
  "epic-games": {
   "name": "Epic Games",
@@ -852,7 +852,7 @@
  "blackstone": {
   "name": "Blackstone",
   "lastSeen": "2026-08-22",
-  "roles": 11
+  "roles": 3
  },
  "replit": {
   "name": "Replit",
@@ -862,27 +862,27 @@
  "hendrick-motorsports": {
   "name": "Hendrick Motorsports",
   "lastSeen": "2026-08-22",
-  "roles": 2
+  "roles": 1
  },
  "university-of-texas-at-austin": {
   "name": "University of Texas at Austin",
   "lastSeen": "2026-08-22",
-  "roles": 12
+  "roles": 1
  },
  "uline": {
   "name": "Uline",
   "lastSeen": "2026-08-22",
-  "roles": 43
+  "roles": 6
  },
  "pentair": {
   "name": "Pentair",
   "lastSeen": "2026-08-22",
-  "roles": 8
+  "roles": 2
  },
  "genworth-financial": {
   "name": "Genworth Financial",
   "lastSeen": "2026-08-22",
-  "roles": 4
+  "roles": 1
  },
  "chamberlain-group": {
   "name": "Chamberlain Group",
@@ -892,12 +892,12 @@
  "lpl-financial-holdings": {
   "name": "LPL Financial Holdings",
   "lastSeen": "2026-08-22",
-  "roles": 8
+  "roles": 4
  },
  "conocophillips": {
   "name": "ConocoPhillips",
   "lastSeen": "2026-08-22",
-  "roles": 14
+  "roles": 2
  },
  "medline": {
   "name": "Medline",
@@ -907,37 +907,37 @@
  "winland-foods": {
   "name": "Winland Foods",
   "lastSeen": "2026-08-22",
-  "roles": 6
+  "roles": 1
  },
  "hntb": {
   "name": "HNTB",
   "lastSeen": "2026-08-22",
-  "roles": 16
+  "roles": 1
  },
  "keybank": {
   "name": "KeyBank",
   "lastSeen": "2026-08-22",
-  "roles": 21
+  "roles": 4
  },
  "northwestern-mutual": {
   "name": "Northwestern Mutual",
   "lastSeen": "2026-08-22",
-  "roles": 4
+  "roles": 2
  },
  "ge-vernova": {
   "name": "GE Vernova",
   "lastSeen": "2026-08-22",
-  "roles": 22
+  "roles": 2
  },
  "american-fidelity": {
   "name": "American Fidelity",
   "lastSeen": "2026-08-22",
-  "roles": 7
+  "roles": 4
  },
  "bp": {
   "name": "BP",
   "lastSeen": "2026-08-22",
-  "roles": 5
+  "roles": 1
  },
  "uhy": {
   "name": "UHY",
@@ -952,7 +952,7 @@
  "motorola-solutions": {
   "name": "Motorola Solutions",
   "lastSeen": "2026-08-22",
-  "roles": 5
+  "roles": 1
  },
  "crowe": {
   "name": "Crowe",
@@ -1357,7 +1357,7 @@
  "the-boeing-company": {
   "name": "The Boeing Company",
   "lastSeen": "2026-08-22",
-  "roles": 17
+  "roles": 1
  },
  "two-sigma": {
   "name": "Two Sigma",
@@ -1476,13 +1476,13 @@
  },
  "goldman-sachs": {
   "name": "Goldman Sachs",
-  "lastSeen": "2026-08-21",
-  "roles": 2
+  "lastSeen": "2026-08-22",
+  "roles": 6
  },
  "vanguard": {
   "name": "Vanguard",
   "lastSeen": "2026-08-22",
-  "roles": 14
+  "roles": 6
  },
  "vanderlande-industries": {
   "name": "Vanderlande Industries",
@@ -1577,7 +1577,7 @@
  "ryan-companies": {
   "name": "Ryan Companies",
   "lastSeen": "2026-08-22",
-  "roles": 11
+  "roles": 1
  },
  "rolls-royce": {
   "name": "Rolls-Royce",
@@ -1612,7 +1612,7 @@
  "pimco": {
   "name": "PIMCO",
   "lastSeen": "2026-08-22",
-  "roles": 21
+  "roles": 3
  },
  "pine-rest": {
   "name": "Pine Rest",
@@ -1767,7 +1767,7 @@
  "ge-aerospace": {
   "name": "GE Aerospace",
   "lastSeen": "2026-08-22",
-  "roles": 19
+  "roles": 5
  },
  "ge-healthcare": {
   "name": "GE Healthcare",
@@ -1847,7 +1847,7 @@
  "conagra-brands": {
   "name": "Conagra Brands",
   "lastSeen": "2026-08-22",
-  "roles": 14
+  "roles": 2
  },
  "clarios": {
   "name": "Clarios",
@@ -2832,7 +2832,7 @@
  "dimensional-fund-advisors": {
   "name": "Dimensional Fund Advisors",
   "lastSeen": "2026-08-22",
-  "roles": 5
+  "roles": 2
  },
  "truist-bank": {
   "name": "Truist Bank",
@@ -2842,12 +2842,12 @@
  "humana": {
   "name": "Humana",
   "lastSeen": "2026-08-22",
-  "roles": 3
+  "roles": 2
  },
  "continental-resources": {
   "name": "Continental Resources",
   "lastSeen": "2026-08-22",
-  "roles": 5
+  "roles": 2
  },
  "riveron": {
   "name": "Riveron",
@@ -2917,7 +2917,7 @@
  "general-matter": {
   "name": "General Matter",
   "lastSeen": "2026-08-22",
-  "roles": 1
+  "roles": 7
  },
  "regions-bank": {
   "name": "Regions Bank",
@@ -2947,7 +2947,7 @@
  "n1": {
   "name": "N1",
   "lastSeen": "2026-08-22",
-  "roles": 1
+  "roles": 2
  },
  "specialisterne": {
   "name": "Specialisterne",
@@ -2997,7 +2997,7 @@
  "e-space": {
   "name": "E-Space",
   "lastSeen": "2026-08-22",
-  "roles": 1
+  "roles": 4
  },
  "formlabs": {
   "name": "Formlabs",
@@ -3042,10 +3042,50 @@
  "diamondback-energy": {
   "name": "Diamondback Energy",
   "lastSeen": "2026-08-22",
-  "roles": 1
+  "roles": 9
  },
  "marsh": {
   "name": "Marsh",
+  "lastSeen": "2026-08-22",
+  "roles": 1
+ },
+ "weave": {
+  "name": "Weave",
+  "lastSeen": "2026-08-22",
+  "roles": 1
+ },
+ "pivot-robotics": {
+  "name": "Pivot Robotics",
+  "lastSeen": "2026-08-22",
+  "roles": 1
+ },
+ "navi-ai": {
+  "name": "Navi AI",
+  "lastSeen": "2026-08-22",
+  "roles": 1
+ },
+ "ambrook": {
+  "name": "Ambrook",
+  "lastSeen": "2026-08-22",
+  "roles": 1
+ },
+ "eudia": {
+  "name": "Eudia",
+  "lastSeen": "2026-08-22",
+  "roles": 1
+ },
+ "syska-hennessy-group": {
+  "name": "Syska Hennessy Group",
+  "lastSeen": "2026-08-22",
+  "roles": 1
+ },
+ "ecolab": {
+  "name": "Ecolab",
+  "lastSeen": "2026-08-22",
+  "roles": 1
+ },
+ "catalist": {
+  "name": "Catalist",
   "lastSeen": "2026-08-22",
   "roles": 1
  }
