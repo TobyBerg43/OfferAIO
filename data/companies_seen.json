@@ -2,7 +2,7 @@
  "marsh-mclennan": {
   "name": "Marsh McLennan",
   "lastSeen": "2026-08-23",
-  "roles": 5
+  "roles": 4
  },
  "travelers": {
   "name": "Travelers",
@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-08-23",
-  "roles": 8
+  "roles": 9
  },
  "postman": {
   "name": "Postman",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-08-23",
-  "roles": 2
+  "roles": 6
  },
  "vanguard": {
   "name": "Vanguard",
