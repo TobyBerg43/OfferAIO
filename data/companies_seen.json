@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-08-23",
-  "roles": 6
+  "roles": 2
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1867,7 +1867,7 @@
  "caterpillar-inc": {
   "name": "Caterpillar Inc.",
   "lastSeen": "2026-08-23",
-  "roles": 12
+  "roles": 11
  },
  "cambridge-associates": {
   "name": "Cambridge Associates",
