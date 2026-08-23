@@ -562,7 +562,7 @@
  "micron": {
   "name": "Micron",
   "lastSeen": "2026-08-23",
-  "roles": 20
+  "roles": 22
  },
  "pdt-partners": {
   "name": "PDT Partners",
@@ -1012,7 +1012,7 @@
  "teledyne": {
   "name": "Teledyne",
   "lastSeen": "2026-08-23",
-  "roles": 2
+  "roles": 3
  },
  "bosch": {
   "name": "Bosch",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-08-23",
-  "roles": 2
+  "roles": 4
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1587,7 +1587,7 @@
  "roche": {
   "name": "Roche",
   "lastSeen": "2026-08-23",
-  "roles": 17
+  "roles": 9
  },
  "pricewaterhousecoopers-pwc": {
   "name": "PricewaterhouseCoopers (PwC)",
@@ -2192,7 +2192,7 @@
  "clera": {
   "name": "Clera",
   "lastSeen": "2026-08-23",
-  "roles": 2
+  "roles": 3
  },
  "constellation-space": {
   "name": "Constellation Space",
