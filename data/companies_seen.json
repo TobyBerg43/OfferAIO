@@ -457,7 +457,7 @@
  "jll": {
   "name": "JLL",
   "lastSeen": "2026-08-24",
-  "roles": 1
+  "roles": 24
  },
  "radix-trading": {
   "name": "Radix Trading",
@@ -562,7 +562,7 @@
  "micron": {
   "name": "Micron",
   "lastSeen": "2026-08-24",
-  "roles": 22
+  "roles": 23
  },
  "pdt-partners": {
   "name": "PDT Partners",
@@ -642,7 +642,7 @@
  "gritt-robotics-inc": {
   "name": "GRITT ROBOTICS INC",
   "lastSeen": "2026-08-24",
-  "roles": 3
+  "roles": 4
  },
  "mathtech": {
   "name": "Mathtech",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-24",
-  "roles": 17
+  "roles": 15
  },
  "bytedance": {
   "name": "ByteDance",
@@ -837,7 +837,7 @@
  "cno-financial-group": {
   "name": "CNO Financial Group",
   "lastSeen": "2026-08-24",
-  "roles": 6
+  "roles": 7
  },
  "epic-games": {
   "name": "Epic Games",
@@ -847,7 +847,7 @@
  "mastercard": {
   "name": "Mastercard",
   "lastSeen": "2026-08-24",
-  "roles": 2
+  "roles": 3
  },
  "blackstone": {
   "name": "Blackstone",
@@ -892,7 +892,7 @@
  "lpl-financial-holdings": {
   "name": "LPL Financial Holdings",
   "lastSeen": "2026-08-24",
-  "roles": 8
+  "roles": 9
  },
  "conocophillips": {
   "name": "ConocoPhillips",
@@ -922,12 +922,12 @@
  "northwestern-mutual": {
   "name": "Northwestern Mutual",
   "lastSeen": "2026-08-24",
-  "roles": 4
+  "roles": 5
  },
  "ge-vernova": {
   "name": "GE Vernova",
   "lastSeen": "2026-08-24",
-  "roles": 22
+  "roles": 24
  },
  "american-fidelity": {
   "name": "American Fidelity",
@@ -1012,7 +1012,7 @@
  "teledyne": {
   "name": "Teledyne",
   "lastSeen": "2026-08-24",
-  "roles": 3
+  "roles": 2
  },
  "bosch": {
   "name": "Bosch",
@@ -1197,7 +1197,7 @@
  "freeform": {
   "name": "Freeform",
   "lastSeen": "2026-08-24",
-  "roles": 6
+  "roles": 7
  },
  "the-nuclear-company": {
   "name": "The Nuclear Company",
@@ -1242,7 +1242,7 @@
  "motorola": {
   "name": "Motorola",
   "lastSeen": "2026-08-24",
-  "roles": 2
+  "roles": 3
  },
  "prudential-financial": {
   "name": "Prudential Financial",
@@ -1557,7 +1557,7 @@
  "schnucks": {
   "name": "Schnucks",
   "lastSeen": "2026-08-24",
-  "roles": 2
+  "roles": 1
  },
  "samsung": {
   "name": "Samsung",
@@ -1607,12 +1607,12 @@
  "polaris": {
   "name": "Polaris",
   "lastSeen": "2026-08-24",
-  "roles": 2
+  "roles": 7
  },
  "pimco": {
   "name": "PIMCO",
   "lastSeen": "2026-08-24",
-  "roles": 21
+  "roles": 20
  },
  "pine-rest": {
   "name": "Pine Rest",
@@ -1757,7 +1757,7 @@
  "great-american-insurance-company": {
   "name": "Great American Insurance Company",
   "lastSeen": "2026-08-24",
-  "roles": 2
+  "roles": 3
  },
  "globalfoundries": {
   "name": "GlobalFoundries",
@@ -1892,7 +1892,7 @@
  "blackrock": {
   "name": "BlackRock",
   "lastSeen": "2026-08-24",
-  "roles": 4
+  "roles": 5
  },
  "barclays": {
   "name": "Barclays",
@@ -1902,7 +1902,7 @@
  "baird": {
   "name": "Baird",
   "lastSeen": "2026-08-24",
-  "roles": 3
+  "roles": 4
  },
  "avis-budget-group": {
   "name": "Avis Budget Group",
@@ -2287,7 +2287,7 @@
  "olsson": {
   "name": "Olsson",
   "lastSeen": "2026-08-24",
-  "roles": 2
+  "roles": 1
  },
  "apex-companies": {
   "name": "Apex Companies",
@@ -2297,7 +2297,7 @@
  "four-hands": {
   "name": "Four Hands",
   "lastSeen": "2026-08-24",
-  "roles": 6
+  "roles": 2
  },
  "mckinney": {
   "name": "McKinney",
@@ -2422,7 +2422,7 @@
  "penta-group": {
   "name": "Penta Group",
   "lastSeen": "2026-08-24",
-  "roles": 1
+  "roles": 2
  },
  "relay": {
   "name": "Relay",
@@ -2447,7 +2447,7 @@
  "f-schumacher-and-co": {
   "name": "F. Schumacher & Co.",
   "lastSeen": "2026-08-24",
-  "roles": 1
+  "roles": 2
  },
  "cartesian": {
   "name": "Cartesian",
@@ -2727,7 +2727,7 @@
  "brunswick": {
   "name": "Brunswick",
   "lastSeen": "2026-08-24",
-  "roles": 3
+  "roles": 8
  },
  "abbott": {
   "name": "Abbott",
@@ -2752,7 +2752,7 @@
  "dee-zee": {
   "name": "Dee Zee",
   "lastSeen": "2026-08-24",
-  "roles": 2
+  "roles": 3
  },
  "readystate-asset-management": {
   "name": "Readystate Asset Management",
@@ -2772,7 +2772,7 @@
  "richemont": {
   "name": "Richemont",
   "lastSeen": "2026-08-24",
-  "roles": 7
+  "roles": 8
  },
  "l3harris-technologies": {
   "name": "L3Harris Technologies",
@@ -2887,7 +2887,7 @@
  "elanco": {
   "name": "Elanco",
   "lastSeen": "2026-08-24",
-  "roles": 12
+  "roles": 15
  },
  "arch-capital-group": {
   "name": "Arch Capital Group",
@@ -2937,7 +2937,7 @@
  "rsm": {
   "name": "RSM",
   "lastSeen": "2026-08-24",
-  "roles": 3
+  "roles": 4
  },
  "metecs": {
   "name": "METECS",
@@ -2967,7 +2967,7 @@
  "fannie-mae": {
   "name": "Fannie Mae",
   "lastSeen": "2026-08-24",
-  "roles": 4
+  "roles": 5
  },
  "devon-energy": {
   "name": "Devon Energy",
@@ -3082,7 +3082,7 @@
  "ecolab": {
   "name": "Ecolab",
   "lastSeen": "2026-08-24",
-  "roles": 8
+  "roles": 9
  },
  "catalist": {
   "name": "Catalist",
@@ -3092,7 +3092,7 @@
  "cigna-group": {
   "name": "Cigna Group",
   "lastSeen": "2026-08-24",
-  "roles": 2
+  "roles": 5
  },
  "brg": {
   "name": "BRG",
@@ -3127,10 +3127,70 @@
  "the-walt-disney-company": {
   "name": "The Walt Disney Company",
   "lastSeen": "2026-08-24",
-  "roles": 1
+  "roles": 6
  },
  "impact-com": {
   "name": "impact.com",
+  "lastSeen": "2026-08-24",
+  "roles": 2
+ },
+ "williams": {
+  "name": "Williams",
+  "lastSeen": "2026-08-24",
+  "roles": 2
+ },
+ "santander": {
+  "name": "Santander",
+  "lastSeen": "2026-08-24",
+  "roles": 1
+ },
+ "raymond-james-financial": {
+  "name": "Raymond James Financial",
+  "lastSeen": "2026-08-24",
+  "roles": 1
+ },
+ "markel-group-inc": {
+  "name": "Markel Group, Inc.",
+  "lastSeen": "2026-08-24",
+  "roles": 1
+ },
+ "johns-manville-jm": {
+  "name": "Johns Manville (JM)",
+  "lastSeen": "2026-08-24",
+  "roles": 1
+ },
+ "ducharme-mcmillen-and-associates": {
+  "name": "DuCharme, McMillen & Associates",
+  "lastSeen": "2026-08-24",
+  "roles": 2
+ },
+ "amentum": {
+  "name": "Amentum",
+  "lastSeen": "2026-08-24",
+  "roles": 1
+ },
+ "medpace": {
+  "name": "Medpace",
+  "lastSeen": "2026-08-24",
+  "roles": 1
+ },
+ "bny": {
+  "name": "BNY",
+  "lastSeen": "2026-08-24",
+  "roles": 8
+ },
+ "gulfstream": {
+  "name": "Gulfstream",
+  "lastSeen": "2026-08-24",
+  "roles": 2
+ },
+ "procter-and-gamble": {
+  "name": "Procter & Gamble",
+  "lastSeen": "2026-08-24",
+  "roles": 2
+ },
+ "freddie-mac": {
+  "name": "Freddie Mac",
   "lastSeen": "2026-08-24",
   "roles": 2
  }
