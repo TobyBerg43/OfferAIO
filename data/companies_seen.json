@@ -90,9 +90,9 @@
   "roles": 1
  },
  "nvidia": {
-  "name": "NVIDIA",
+  "name": "Nvidia",
   "lastSeen": "2026-08-24",
-  "roles": 12
+  "roles": 13
  },
  "jump-trading": {
   "name": "Jump Trading",
@@ -1522,7 +1522,7 @@
  "target": {
   "name": "Target",
   "lastSeen": "2026-08-24",
-  "roles": 67
+  "roles": 75
  },
  "td-bank": {
   "name": "TD Bank",
@@ -2022,7 +2022,7 @@
  "sereact": {
   "name": "Sereact",
   "lastSeen": "2026-08-24",
-  "roles": 5
+  "roles": 7
  },
  "niural": {
   "name": "Niural",
@@ -2477,7 +2477,7 @@
  "geocomply": {
   "name": "GeoComply",
   "lastSeen": "2026-08-24",
-  "roles": 6
+  "roles": 3
  },
  "labelbox": {
   "name": "Labelbox",
@@ -2517,7 +2517,7 @@
  "guidepoint": {
   "name": "Guidepoint",
   "lastSeen": "2026-08-24",
-  "roles": 2
+  "roles": 1
  },
  "instalily": {
   "name": "InstaLILY",
@@ -2772,7 +2772,7 @@
  "richemont": {
   "name": "Richemont",
   "lastSeen": "2026-08-24",
-  "roles": 6
+  "roles": 7
  },
  "l3harris-technologies": {
   "name": "L3Harris Technologies",
@@ -3128,5 +3128,10 @@
   "name": "The Walt Disney Company",
   "lastSeen": "2026-08-24",
   "roles": 1
+ },
+ "impact-com": {
+  "name": "impact.com",
+  "lastSeen": "2026-08-24",
+  "roles": 2
  }
 }
