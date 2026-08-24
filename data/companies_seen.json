@@ -1522,7 +1522,7 @@
  "target": {
   "name": "Target",
   "lastSeen": "2026-08-24",
-  "roles": 38
+  "roles": 67
  },
  "td-bank": {
   "name": "TD Bank",
@@ -1597,7 +1597,7 @@
  "procter-and-gamble-pandg": {
   "name": "Procter & Gamble (P&G)",
   "lastSeen": "2026-08-24",
-  "roles": 32
+  "roles": 40
  },
  "philips": {
   "name": "Philips",
@@ -2712,7 +2712,7 @@
  "johnson-and-johnson": {
   "name": "Johnson & Johnson",
   "lastSeen": "2026-08-24",
-  "roles": 2
+  "roles": 4
  },
  "ksm": {
   "name": "KSM",
@@ -2936,8 +2936,8 @@
  },
  "rsm": {
   "name": "RSM",
-  "lastSeen": "2026-08-22",
-  "roles": 1
+  "lastSeen": "2026-08-24",
+  "roles": 3
  },
  "metecs": {
   "name": "METECS",
@@ -3121,6 +3121,11 @@
  },
  "roboforce": {
   "name": "RoboForce",
+  "lastSeen": "2026-08-24",
+  "roles": 1
+ },
+ "the-walt-disney-company": {
+  "name": "The Walt Disney Company",
   "lastSeen": "2026-08-24",
   "roles": 1
  }
