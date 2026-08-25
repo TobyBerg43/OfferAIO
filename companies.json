@@ -1130,6 +1130,11 @@
     "slug": "riveron"
   },
   {
+    "name": "Rivet Industries",
+    "ats": "ashby",
+    "slug": "rivet"
+  },
+  {
     "name": "Rivian and Volkswagen Group Technologies",
     "ats": "ashby",
     "slug": "rivianvw.tech"
@@ -1845,14 +1850,14 @@
     "slug": "brightai"
   },
   {
+    "name": "BTI360",
+    "ats": "greenhouse",
+    "slug": "bti36021"
+  },
+  {
     "name": "Bugcrowd",
     "ats": "greenhouse",
     "slug": "bugcrowd"
-  },
-  {
-    "name": "Businessolver",
-    "ats": "greenhouse",
-    "slug": "businessolverinvitationonly"
   },
   {
     "name": "Calendly",
@@ -2425,11 +2430,6 @@
     "slug": "glydways"
   },
   {
-    "name": "GoDaddy",
-    "ats": "greenhouse",
-    "slug": "eventsandinterns"
-  },
-  {
     "name": "GoFundMe",
     "ats": "greenhouse",
     "slug": "gofundme"
@@ -2908,6 +2908,11 @@
     "name": "MERGE",
     "ats": "greenhouse",
     "slug": "mergeworld"
+  },
+  {
+    "name": "Meridian Partners",
+    "ats": "greenhouse",
+    "slug": "morsecorpcoop"
   },
   {
     "name": "Meriton",
@@ -3403,6 +3408,11 @@
     "name": "Rugged Robotics",
     "ats": "greenhouse",
     "slug": "ruggedrobotics"
+  },
+  {
+    "name": "Sage",
+    "ats": "greenhouse",
+    "slug": "sage49"
   },
   {
     "name": "Salient Motion",
@@ -4453,6 +4463,11 @@
     "name": "Nobull",
     "ats": "lever",
     "slug": "nobullproject"
+  },
+  {
+    "name": "Nomagic",
+    "ats": "lever",
+    "slug": "Nomagic"
   },
   {
     "name": "Octopus Energy",
@@ -6839,13 +6854,6 @@
     "site": "csagroup"
   },
   {
-    "name": "CSAA Insurance Group",
-    "ats": "workday",
-    "host": "aaaie.wd1.myworkdayjobs.com",
-    "tenant": "aaaie",
-    "site": "CSAACareers2"
-  },
-  {
     "name": "CSL",
     "ats": "workday",
     "host": "csl.wd1.myworkdayjobs.com",
@@ -7180,13 +7188,6 @@
     "host": "elementfleet.wd3.myworkdayjobs.com",
     "tenant": "elementfleet",
     "site": "External_Career_Site"
-  },
-  {
-    "name": "Elevance Health",
-    "ats": "workday",
-    "host": "elevancehealth.wd1.myworkdayjobs.com",
-    "tenant": "elevancehealth",
-    "site": "ELV-ET"
   },
   {
     "name": "Elsevier",
@@ -7677,6 +7678,13 @@
     "host": "kbr.wd5.myworkdayjobs.com",
     "tenant": "kbr",
     "site": "Frazer_Nash_Careers"
+  },
+  {
+    "name": "Freddie Mac",
+    "ats": "workday",
+    "host": "freddiemac.wd5.myworkdayjobs.com",
+    "tenant": "freddiemac",
+    "site": "External"
   },
   {
     "name": "Freese and Nichols",
@@ -9415,6 +9423,13 @@
     "site": "multicare"
   },
   {
+    "name": "Multnomah County",
+    "ats": "workday",
+    "host": "multco.wd1.myworkdayjobs.com",
+    "tenant": "multco",
+    "site": "multco_jobs"
+  },
+  {
     "name": "Munters",
     "ats": "workday",
     "host": "munters.wd3.myworkdayjobs.com",
@@ -9994,6 +10009,13 @@
     "host": "pwc.wd3.myworkdayjobs.com",
     "tenant": "pwc",
     "site": "Global_Campus_Careers"
+  },
+  {
+    "name": "PricewaterhouseCoopers (PwC)",
+    "ats": "workday",
+    "host": "pwc.wd3.myworkdayjobs.com",
+    "tenant": "pwc",
+    "site": "US_Entry_Level_Careers"
   },
   {
     "name": "Primerica",
@@ -11919,6 +11941,13 @@
     "host": "wattswater.wd5.myworkdayjobs.com",
     "tenant": "wattswater",
     "site": "external"
+  },
+  {
+    "name": "Watts Water",
+    "ats": "workday",
+    "host": "wattswater.wd5.myworkdayjobs.com",
+    "tenant": "wattswater",
+    "site": "Intern-External"
   },
   {
     "name": "Waystar",
