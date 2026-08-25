@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-25",
-  "roles": 17
+  "roles": 16
  },
  "bytedance": {
   "name": "ByteDance",
@@ -1032,7 +1032,7 @@
  "raytheon": {
   "name": "Raytheon",
   "lastSeen": "2026-08-25",
-  "roles": 1
+  "roles": 2
  },
  "sel": {
   "name": "SEL",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-08-25",
-  "roles": 6
+  "roles": 5
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1867,7 +1867,7 @@
  "caterpillar-inc": {
   "name": "Caterpillar Inc.",
   "lastSeen": "2026-08-25",
-  "roles": 11
+  "roles": 12
  },
  "cambridge-associates": {
   "name": "Cambridge Associates",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-08-25",
-  "roles": 2
+  "roles": 4
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -3222,7 +3222,7 @@
  "kodiak-robotics": {
   "name": "Kodiak Robotics",
   "lastSeen": "2026-08-25",
-  "roles": 2
+  "roles": 5
  },
  "msa-safety": {
   "name": "MSA Safety",
