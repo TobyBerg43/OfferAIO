@@ -937,7 +937,7 @@
  "bp": {
   "name": "BP",
   "lastSeen": "2026-08-25",
-  "roles": 5
+  "roles": 7
  },
  "uhy": {
   "name": "UHY",
@@ -1647,7 +1647,7 @@
  "nxp-semiconductors": {
   "name": "NXP Semiconductors",
   "lastSeen": "2026-08-25",
-  "roles": 5
+  "roles": 6
  },
  "novogradac": {
   "name": "Novogradac",
@@ -2712,7 +2712,7 @@
  "johnson-and-johnson": {
   "name": "Johnson & Johnson",
   "lastSeen": "2026-08-25",
-  "roles": 5
+  "roles": 4
  },
  "ksm": {
   "name": "KSM",
@@ -2937,7 +2937,7 @@
  "rsm": {
   "name": "RSM",
   "lastSeen": "2026-08-25",
-  "roles": 4
+  "roles": 3
  },
  "metecs": {
   "name": "METECS",
@@ -3082,7 +3082,7 @@
  "ecolab": {
   "name": "Ecolab",
   "lastSeen": "2026-08-25",
-  "roles": 10
+  "roles": 11
  },
  "catalist": {
   "name": "Catalist",
@@ -3192,7 +3192,7 @@
  "freddie-mac": {
   "name": "Freddie Mac",
   "lastSeen": "2026-08-25",
-  "roles": 7
+  "roles": 11
  },
  "shaw-industries-group": {
   "name": "Shaw Industries Group",
@@ -3252,6 +3252,21 @@
  "the-hartford": {
   "name": "The Hartford",
   "lastSeen": "2026-08-25",
-  "roles": 4
+  "roles": 3
+ },
+ "watts-water": {
+  "name": "Watts Water",
+  "lastSeen": "2026-08-25",
+  "roles": 1
+ },
+ "nomagic": {
+  "name": "Nomagic",
+  "lastSeen": "2026-08-25",
+  "roles": 1
+ },
+ "genentech": {
+  "name": "Genentech",
+  "lastSeen": "2026-08-25",
+  "roles": 1
  }
 }
