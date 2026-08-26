@@ -92,7 +92,7 @@
  "nvidia": {
   "name": "Nvidia",
   "lastSeen": "2026-08-26",
-  "roles": 13
+  "roles": 15
  },
  "jump-trading": {
   "name": "Jump Trading",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-26",
-  "roles": 17
+  "roles": 16
  },
  "bytedance": {
   "name": "ByteDance",
@@ -1476,7 +1476,7 @@
  },
  "goldman-sachs": {
   "name": "Goldman Sachs",
-  "lastSeen": "2026-08-25",
+  "lastSeen": "2026-08-26",
   "roles": 6
  },
  "vanguard": {
@@ -1526,7 +1526,7 @@
  },
  "td-bank": {
   "name": "TD Bank",
-  "lastSeen": "2026-08-17",
+  "lastSeen": "2026-08-26",
   "roles": 1
  },
  "starr-insurance": {
@@ -1647,7 +1647,7 @@
  "nxp-semiconductors": {
   "name": "NXP Semiconductors",
   "lastSeen": "2026-08-26",
-  "roles": 6
+  "roles": 5
  },
  "novogradac": {
   "name": "Novogradac",
@@ -1712,7 +1712,7 @@
  "iqvia": {
   "name": "IQVIA",
   "lastSeen": "2026-08-26",
-  "roles": 1
+  "roles": 2
  },
  "ivy-tech-community-college": {
   "name": "Ivy Tech Community College",
@@ -2962,7 +2962,7 @@
  "abbvie": {
   "name": "AbbVie",
   "lastSeen": "2026-08-26",
-  "roles": 1
+  "roles": 6
  },
  "fannie-mae": {
   "name": "Fannie Mae",
@@ -3336,6 +3336,11 @@
  },
  "sila-nanotechnologies": {
   "name": "Sila Nanotechnologies",
+  "lastSeen": "2026-08-26",
+  "roles": 1
+ },
+ "acushnet-holdings": {
+  "name": "Acushnet Holdings",
   "lastSeen": "2026-08-26",
   "roles": 1
  }
