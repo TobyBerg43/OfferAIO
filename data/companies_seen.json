@@ -142,7 +142,7 @@
  "citadel": {
   "name": "Citadel",
   "lastSeen": "2026-08-26",
-  "roles": 2
+  "roles": 1
  },
  "tower-research": {
   "name": "Tower Research",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-26",
-  "roles": 16
+  "roles": 15
  },
  "bytedance": {
   "name": "ByteDance",
@@ -1587,7 +1587,7 @@
  "roche": {
   "name": "Roche",
   "lastSeen": "2026-08-26",
-  "roles": 9
+  "roles": 10
  },
  "pricewaterhousecoopers-pwc": {
   "name": "PricewaterhouseCoopers (PwC)",
@@ -2967,7 +2967,7 @@
  "fannie-mae": {
   "name": "Fannie Mae",
   "lastSeen": "2026-08-26",
-  "roles": 5
+  "roles": 7
  },
  "devon-energy": {
   "name": "Devon Energy",
@@ -3222,7 +3222,7 @@
  "kodiak-robotics": {
   "name": "Kodiak Robotics",
   "lastSeen": "2026-08-26",
-  "roles": 5
+  "roles": 4
  },
  "msa-safety": {
   "name": "MSA Safety",
@@ -3343,5 +3343,10 @@
   "name": "Acushnet Holdings",
   "lastSeen": "2026-08-26",
   "roles": 1
+ },
+ "solenis": {
+  "name": "Solenis",
+  "lastSeen": "2026-08-26",
+  "roles": 2
  }
 }
