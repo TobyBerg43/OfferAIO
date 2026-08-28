@@ -80,6 +80,11 @@
     "slug": "ambrook"
   },
   {
+    "name": "AMI",
+    "ats": "ashby",
+    "slug": "ami"
+  },
+  {
     "name": "Anterior",
     "ats": "ashby",
     "slug": "anterior"
@@ -163,6 +168,11 @@
     "name": "Blackbird Labs",
     "ats": "ashby",
     "slug": "blackbird-labs-inc"
+  },
+  {
+    "name": "Bland AI",
+    "ats": "ashby",
+    "slug": "bland"
   },
   {
     "name": "Blockhouse",
@@ -525,6 +535,11 @@
     "slug": "gorgias"
   },
   {
+    "name": "GrayMatter Robotics",
+    "ats": "ashby",
+    "slug": "graymatter-robotics"
+  },
+  {
     "name": "Great Question",
     "ats": "ashby",
     "slug": "greatquestion"
@@ -768,6 +783,16 @@
     "name": "Maxima",
     "ats": "ashby",
     "slug": "maxima"
+  },
+  {
+    "name": "Maximor AI",
+    "ats": "ashby",
+    "slug": "maximor"
+  },
+  {
+    "name": "Maxinsights",
+    "ats": "ashby",
+    "slug": "maxinsights"
   },
   {
     "name": "Medra",
@@ -1095,6 +1120,11 @@
     "slug": "realitydefender"
   },
   {
+    "name": "Realm",
+    "ats": "ashby",
+    "slug": "realmalliance"
+  },
+  {
     "name": "Reflect Orbital",
     "ats": "ashby",
     "slug": "reflect-orbital"
@@ -1263,6 +1293,11 @@
     "name": "Tacit",
     "ats": "ashby",
     "slug": "tacit"
+  },
+  {
+    "name": "TELUS Digital",
+    "ats": "ashby",
+    "slug": "telus-digital"
   },
   {
     "name": "Tempo",
@@ -1578,6 +1613,11 @@
     "name": "AMAROK Security",
     "ats": "greenhouse",
     "slug": "amarok"
+  },
+  {
+    "name": "American Institutes for Research",
+    "ats": "greenhouse",
+    "slug": "americaninstitutesforresearch"
   },
   {
     "name": "Amp Robotics",
@@ -1930,11 +1970,6 @@
     "slug": "clearwayjobs"
   },
   {
-    "name": "Climate Corps",
-    "ats": "greenhouse",
-    "slug": "cc"
-  },
-  {
     "name": "Clockwork Systems",
     "ats": "greenhouse",
     "slug": "clockworksystems"
@@ -1980,9 +2015,19 @@
     "slug": "commvault"
   },
   {
+    "name": "Compeer Financial",
+    "ats": "greenhouse",
+    "slug": "compeerfinancial"
+  },
+  {
     "name": "Comstock Companies",
     "ats": "greenhouse",
     "slug": "comstock"
+  },
+  {
+    "name": "Concentric",
+    "ats": "greenhouse",
+    "slug": "concentric"
   },
   {
     "name": "Conner Strong & Buckelew",
@@ -2073,11 +2118,6 @@
     "name": "DiDi Global",
     "ats": "greenhouse",
     "slug": "didi"
-  },
-  {
-    "name": "Digs",
-    "ats": "greenhouse",
-    "slug": "digs"
   },
   {
     "name": "Diligent Corporation",
@@ -4095,6 +4135,11 @@
     "slug": "analyticpartners"
   },
   {
+    "name": "AnaVation",
+    "ats": "lever",
+    "slug": "anavationllc"
+  },
+  {
     "name": "Anomali",
     "ats": "lever",
     "slug": "anomali"
@@ -4238,6 +4283,11 @@
     "name": "Elf Beauty",
     "ats": "lever",
     "slug": "elfbeauty"
+  },
+  {
+    "name": "Elk Valley Resources",
+    "ats": "lever",
+    "slug": "evr"
   },
   {
     "name": "Endpoint Clinical",
@@ -4413,6 +4463,11 @@
     "name": "Lexeo Therapeutics",
     "ats": "lever",
     "slug": "lexeotx"
+  },
+  {
+    "name": "Lightcast",
+    "ats": "lever",
+    "slug": "economicmodeling"
   },
   {
     "name": "Long Wall",
@@ -4920,6 +4975,13 @@
     "host": "airliquidehr.wd3.myworkdayjobs.com",
     "tenant": "airliquidehr",
     "site": "AirLiquideExternalCareer"
+  },
+  {
+    "name": "Air Products",
+    "ats": "workday",
+    "host": "airproducts.wd5.myworkdayjobs.com",
+    "tenant": "airproducts",
+    "site": "AP0001"
   },
   {
     "name": "Airbus",
@@ -6658,11 +6720,11 @@
     "site": "Search"
   },
   {
-    "name": "Comcast",
+    "name": "Commerce Bank",
     "ats": "workday",
-    "host": "comcast.wd5.myworkdayjobs.com",
-    "tenant": "comcast",
-    "site": "Comcast_Careers"
+    "host": "commercebank.wd1.myworkdayjobs.com",
+    "tenant": "commercebank",
+    "site": "CommerceJobs"
   },
   {
     "name": "Compassion International",
@@ -6889,6 +6951,13 @@
     "site": "external"
   },
   {
+    "name": "Customers Bank",
+    "ats": "workday",
+    "host": "customersbank.wd1.myworkdayjobs.com",
+    "tenant": "customersbank",
+    "site": "customersbankcareers"
+  },
+  {
     "name": "CVS Health",
     "ats": "workday",
     "host": "cvshealth.wd1.myworkdayjobs.com",
@@ -7076,13 +7145,6 @@
     "host": "dowjones.wd1.myworkdayjobs.com",
     "tenant": "dowjones",
     "site": "Dow_Jones_Career"
-  },
-  {
-    "name": "DPR Family of Companies",
-    "ats": "workday",
-    "host": "mydpr.wd5.myworkdayjobs.com",
-    "tenant": "mydpr",
-    "site": "11212017"
   },
   {
     "name": "Draper",
@@ -8658,6 +8720,13 @@
     "host": "jci.wd5.myworkdayjobs.com",
     "tenant": "jci",
     "site": "JCI"
+  },
+  {
+    "name": "Johnson Electric",
+    "ats": "workday",
+    "host": "johnsonelectric.wd3.myworkdayjobs.com",
+    "tenant": "johnsonelectric",
+    "site": "Career_JE"
   },
   {
     "name": "Johnson Matthey",
