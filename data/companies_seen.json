@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-08-29",
-  "roles": 19
+  "roles": 14
  },
  "bytedance": {
   "name": "ByteDance",
@@ -807,7 +807,7 @@
  "hp": {
   "name": "HP",
   "lastSeen": "2026-08-29",
-  "roles": 9
+  "roles": 10
  },
  "roblox": {
   "name": "Roblox",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-08-29",
-  "roles": 3
+  "roles": 4
  },
  "vanguard": {
   "name": "Vanguard",
@@ -2727,7 +2727,7 @@
  "brunswick": {
   "name": "Brunswick",
   "lastSeen": "2026-08-29",
-  "roles": 22
+  "roles": 21
  },
  "abbott": {
   "name": "Abbott",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-08-29",
-  "roles": 6
+  "roles": 5
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -2842,7 +2842,7 @@
  "humana": {
   "name": "Humana",
   "lastSeen": "2026-08-29",
-  "roles": 3
+  "roles": 2
  },
  "continental-resources": {
   "name": "Continental Resources",
