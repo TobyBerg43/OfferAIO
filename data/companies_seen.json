@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-08-29",
-  "roles": 16
+  "roles": 15
  },
  "capital-one": {
   "name": "Capital One",
@@ -807,7 +807,7 @@
  "hp": {
   "name": "HP",
   "lastSeen": "2026-08-29",
-  "roles": 10
+  "roles": 9
  },
  "roblox": {
   "name": "Roblox",
@@ -1942,7 +1942,7 @@
  "airbus": {
   "name": "Airbus",
   "lastSeen": "2026-08-29",
-  "roles": 1
+  "roles": 5
  },
  "aaa-club-alliance": {
   "name": "AAA Club Alliance",
@@ -2727,7 +2727,7 @@
  "brunswick": {
   "name": "Brunswick",
   "lastSeen": "2026-08-29",
-  "roles": 21
+  "roles": 22
  },
  "abbott": {
   "name": "Abbott",
@@ -3622,7 +3622,7 @@
  "workiva": {
   "name": "Workiva",
   "lastSeen": "2026-08-29",
-  "roles": 1
+  "roles": 3
  },
  "northwood-space": {
   "name": "Northwood Space",
