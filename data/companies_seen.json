@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-08-30",
-  "roles": 16
+  "roles": 15
  },
  "capital-one": {
   "name": "Capital One",
@@ -27,7 +27,7 @@
  "salesforce": {
   "name": "Salesforce",
   "lastSeen": "2026-08-30",
-  "roles": 2
+  "roles": 3
  },
  "pwc": {
   "name": "PwC",
@@ -602,7 +602,7 @@
  "tenstorrent": {
   "name": "Tenstorrent",
   "lastSeen": "2026-08-30",
-  "roles": 16
+  "roles": 15
  },
  "anthelion-capital": {
   "name": "Anthelion Capital",
@@ -807,7 +807,7 @@
  "hp": {
   "name": "HP",
   "lastSeen": "2026-08-30",
-  "roles": 9
+  "roles": 10
  },
  "roblox": {
   "name": "Roblox",
@@ -927,7 +927,7 @@
  "ge-vernova": {
   "name": "GE Vernova",
   "lastSeen": "2026-08-30",
-  "roles": 28
+  "roles": 29
  },
  "american-fidelity": {
   "name": "American Fidelity",
@@ -1012,7 +1012,7 @@
  "teledyne": {
   "name": "Teledyne",
   "lastSeen": "2026-08-30",
-  "roles": 2
+  "roles": 3
  },
  "bosch": {
   "name": "Bosch",
@@ -1082,7 +1082,7 @@
  "persona-ai": {
   "name": "Persona AI",
   "lastSeen": "2026-08-30",
-  "roles": 5
+  "roles": 4
  },
  "microchip": {
   "name": "Microchip",
@@ -1292,7 +1292,7 @@
  "quantbot-technologies": {
   "name": "Quantbot Technologies",
   "lastSeen": "2026-08-30",
-  "roles": 3
+  "roles": 2
  },
  "hewlett-packard-hp": {
   "name": "Hewlett Packard (HP)",
@@ -1522,7 +1522,7 @@
  "target": {
   "name": "Target",
   "lastSeen": "2026-08-30",
-  "roles": 115
+  "roles": 116
  },
  "td-bank": {
   "name": "TD Bank",
@@ -1712,7 +1712,7 @@
  "iqvia": {
   "name": "IQVIA",
   "lastSeen": "2026-08-30",
-  "roles": 2
+  "roles": 1
  },
  "ivy-tech-community-college": {
   "name": "Ivy Tech Community College",
@@ -1867,7 +1867,7 @@
  "caterpillar-inc": {
   "name": "Caterpillar Inc.",
   "lastSeen": "2026-08-30",
-  "roles": 14
+  "roles": 13
  },
  "cambridge-associates": {
   "name": "Cambridge Associates",
@@ -2192,7 +2192,7 @@
  "clera": {
   "name": "Clera",
   "lastSeen": "2026-08-30",
-  "roles": 3
+  "roles": 2
  },
  "constellation-space": {
   "name": "Constellation Space",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-08-30",
-  "roles": 5
+  "roles": 3
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -3481,7 +3481,7 @@
  },
  "centene": {
   "name": "Centene",
-  "lastSeen": "2026-08-27",
+  "lastSeen": "2026-08-30",
   "roles": 1
  },
  "iberdrola-group": {
@@ -3532,7 +3532,7 @@
  "hewlett-packard-enterprise": {
   "name": "Hewlett Packard Enterprise",
   "lastSeen": "2026-08-30",
-  "roles": 3
+  "roles": 6
  },
  "empower": {
   "name": "Empower",
@@ -3637,7 +3637,7 @@
  "charles-schwab": {
   "name": "Charles Schwab",
   "lastSeen": "2026-08-30",
-  "roles": 2
+  "roles": 3
  },
  "xaira-therapeutics": {
   "name": "Xaira Therapeutics",
@@ -3651,6 +3651,11 @@
  },
  "stantec": {
   "name": "Stantec",
+  "lastSeen": "2026-08-30",
+  "roles": 1
+ },
+ "game-plan-tech": {
+  "name": "Game Plan Tech",
   "lastSeen": "2026-08-30",
   "roles": 1
  }
