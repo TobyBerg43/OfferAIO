@@ -1,14 +1,14 @@
 {
-  "updated": "2026-08-29T20:24:01.127Z",
-  "total": 2676,
+  "updated": "2026-08-30T03:25:16.512Z",
+  "total": 2673,
   "closed": 7,
-  "checked": 2146,
+  "checked": 2168,
   "checkable": 2180,
   "bySource": {
     "workday": 1197,
     "ashby": 139,
     "speedyapply": 82,
-    "Simplify": 622,
+    "Simplify": 619,
     "zshah101": 95,
     "greenhouse": 242,
     "lever": 90,
