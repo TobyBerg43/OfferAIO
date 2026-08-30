@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-08-30",
-  "roles": 15
+  "roles": 16
  },
  "capital-one": {
   "name": "Capital One",
@@ -3127,7 +3127,7 @@
  "the-walt-disney-company": {
   "name": "The Walt Disney Company",
   "lastSeen": "2026-08-30",
-  "roles": 10
+  "roles": 9
  },
  "impact-com": {
   "name": "impact.com",
