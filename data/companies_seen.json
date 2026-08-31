@@ -291,7 +291,7 @@
  },
  "uber": {
   "name": "Uber",
-  "lastSeen": "2026-08-16",
+  "lastSeen": "2026-08-31",
   "roles": 1
  },
  "veeam-software": {
@@ -317,7 +317,7 @@
  "intel": {
   "name": "Intel",
   "lastSeen": "2026-08-31",
-  "roles": 2
+  "roles": 1
  },
  "homebase": {
   "name": "Homebase",
@@ -327,7 +327,7 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-08-31",
-  "roles": 121
+  "roles": 123
  },
  "notion": {
   "name": "Notion",
@@ -602,7 +602,7 @@
  "tenstorrent": {
   "name": "Tenstorrent",
   "lastSeen": "2026-08-31",
-  "roles": 15
+  "roles": 14
  },
  "anthelion-capital": {
   "name": "Anthelion Capital",
@@ -797,7 +797,7 @@
  "american-express": {
   "name": "American Express",
   "lastSeen": "2026-08-31",
-  "roles": 24
+  "roles": 27
  },
  "boeing": {
   "name": "Boeing",
@@ -867,7 +867,7 @@
  "university-of-texas-at-austin": {
   "name": "University of Texas at Austin",
   "lastSeen": "2026-08-31",
-  "roles": 12
+  "roles": 11
  },
  "uline": {
   "name": "Uline",
@@ -937,7 +937,7 @@
  "bp": {
   "name": "BP",
   "lastSeen": "2026-08-31",
-  "roles": 10
+  "roles": 24
  },
  "uhy": {
   "name": "UHY",
@@ -1237,7 +1237,7 @@
  "pgim": {
   "name": "PGIM",
   "lastSeen": "2026-08-31",
-  "roles": 1
+  "roles": 5
  },
  "motorola": {
   "name": "Motorola",
@@ -1247,7 +1247,7 @@
  "prudential-financial": {
   "name": "Prudential Financial",
   "lastSeen": "2026-08-31",
-  "roles": 1
+  "roles": 8
  },
  "schoolmint": {
   "name": "SchoolMint",
@@ -1262,7 +1262,7 @@
  "rrs-group": {
   "name": "RRS Group",
   "lastSeen": "2026-08-31",
-  "roles": 2
+  "roles": 1
  },
  "tmeic-corporation-americas": {
   "name": "TMEIC Corporation Americas",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-08-31",
-  "roles": 8
+  "roles": 7
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1527,7 +1527,7 @@
  "td-bank": {
   "name": "TD Bank",
   "lastSeen": "2026-08-31",
-  "roles": 2
+  "roles": 11
  },
  "starr-insurance": {
   "name": "Starr Insurance",
@@ -1587,7 +1587,7 @@
  "roche": {
   "name": "Roche",
   "lastSeen": "2026-08-31",
-  "roles": 13
+  "roles": 14
  },
  "pricewaterhousecoopers-pwc": {
   "name": "PricewaterhouseCoopers (PwC)",
@@ -1632,12 +1632,12 @@
  "oshkosh": {
   "name": "Oshkosh",
   "lastSeen": "2026-08-31",
-  "roles": 3
+  "roles": 6
  },
  "parsons": {
   "name": "Parsons",
   "lastSeen": "2026-08-31",
-  "roles": 4
+  "roles": 3
  },
  "occidental-petroleum-corporation-oxy": {
   "name": "Occidental Petroleum Corporation (Oxy)",
@@ -1767,7 +1767,7 @@
  "ge-aerospace": {
   "name": "GE Aerospace",
   "lastSeen": "2026-08-31",
-  "roles": 19
+  "roles": 20
  },
  "ge-healthcare": {
   "name": "GE Healthcare",
@@ -1787,7 +1787,7 @@
  "fidelity-investments": {
   "name": "Fidelity Investments",
   "lastSeen": "2026-08-31",
-  "roles": 5
+  "roles": 4
  },
  "fifth-third-bank": {
   "name": "Fifth Third Bank",
@@ -1927,7 +1927,7 @@
  "ardian": {
   "name": "Ardian",
   "lastSeen": "2026-08-31",
-  "roles": 3
+  "roles": 5
  },
  "ameren": {
   "name": "Ameren",
@@ -2512,7 +2512,7 @@
  "xsolla": {
   "name": "Xsolla",
   "lastSeen": "2026-08-31",
-  "roles": 7
+  "roles": 6
  },
  "guidepoint": {
   "name": "Guidepoint",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-08-31",
-  "roles": 3
+  "roles": 1
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -2937,7 +2937,7 @@
  "rsm": {
   "name": "RSM",
   "lastSeen": "2026-08-31",
-  "roles": 15
+  "roles": 25
  },
  "metecs": {
   "name": "METECS",
@@ -3612,7 +3612,7 @@
  "nationwide": {
   "name": "Nationwide",
   "lastSeen": "2026-08-31",
-  "roles": 1
+  "roles": 13
  },
  "american-institutes-for-research": {
   "name": "American Institutes for Research",
@@ -3622,12 +3622,12 @@
  "workiva": {
   "name": "Workiva",
   "lastSeen": "2026-08-31",
-  "roles": 3
+  "roles": 9
  },
  "northwood-space": {
   "name": "Northwood Space",
   "lastSeen": "2026-08-31",
-  "roles": 6
+  "roles": 13
  },
  "intuit": {
   "name": "Intuit",
@@ -3637,7 +3637,7 @@
  "charles-schwab": {
   "name": "Charles Schwab",
   "lastSeen": "2026-08-31",
-  "roles": 3
+  "roles": 1
  },
  "xaira-therapeutics": {
   "name": "Xaira Therapeutics",
@@ -3647,7 +3647,7 @@
  "charles-river-associates-cra": {
   "name": "Charles River Associates (CRA)",
   "lastSeen": "2026-08-31",
-  "roles": 1
+  "roles": 4
  },
  "stantec": {
   "name": "Stantec",
@@ -3656,6 +3656,21 @@
  },
  "game-plan-tech": {
   "name": "Game Plan Tech",
+  "lastSeen": "2026-08-31",
+  "roles": 1
+ },
+ "vermeer": {
+  "name": "Vermeer",
+  "lastSeen": "2026-08-31",
+  "roles": 3
+ },
+ "stryker": {
+  "name": "Stryker",
+  "lastSeen": "2026-08-31",
+  "roles": 13
+ },
+ "qorvo": {
+  "name": "Qorvo",
   "lastSeen": "2026-08-31",
   "roles": 1
  }
