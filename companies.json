@@ -720,11 +720,6 @@
     "slug": "lambda"
   },
   {
-    "name": "Latitude.io",
-    "ats": "ashby",
-    "slug": "latitude"
-  },
-  {
     "name": "Leland",
     "ats": "ashby",
     "slug": "leland"
@@ -888,6 +883,11 @@
     "name": "Normal Computing",
     "ats": "ashby",
     "slug": "normalcomputing"
+  },
+  {
+    "name": "Northwood Space",
+    "ats": "ashby",
+    "slug": "NorthwoodSpace"
   },
   {
     "name": "NORY",
@@ -1933,6 +1933,11 @@
     "name": "Celonis",
     "ats": "greenhouse",
     "slug": "celonis"
+  },
+  {
+    "name": "Charles River Associates (CRA)",
+    "ats": "greenhouse",
+    "slug": "charlesriverassociates"
   },
   {
     "name": "Checkr",
@@ -3555,11 +3560,6 @@
     "slug": "silananotechnologies"
   },
   {
-    "name": "Simple Technology Solutions",
-    "ats": "greenhouse",
-    "slug": "simpletechnologysolutions"
-  },
-  {
     "name": "SK hynix",
     "ats": "greenhouse",
     "slug": "skhynixamerica"
@@ -4750,6 +4750,11 @@
     "slug": "theinformationlab"
   },
   {
+    "name": "Thea Energy",
+    "ats": "lever",
+    "slug": "thea.energy"
+  },
+  {
     "name": "Toyota Research Institute",
     "ats": "lever",
     "slug": "tri"
@@ -5269,6 +5274,13 @@
     "host": "awg.wd3.myworkdayjobs.com",
     "tenant": "awg",
     "site": "broadbean_external"
+  },
+  {
+    "name": "Anheuser-Busch",
+    "ats": "workday",
+    "host": "abinbev.wd1.myworkdayjobs.com",
+    "tenant": "abinbev",
+    "site": "USA"
   },
   {
     "name": "Ankura Consulting Group",
@@ -6333,13 +6345,6 @@
     "host": "carlyle.wd1.myworkdayjobs.com",
     "tenant": "carlyle",
     "site": "Carlyle"
-  },
-  {
-    "name": "Carnegie Mellon University",
-    "ats": "workday",
-    "host": "cmu.wd5.myworkdayjobs.com",
-    "tenant": "cmu",
-    "site": "cmu"
   },
   {
     "name": "Carpenter Technology",
@@ -7453,13 +7458,6 @@
     "host": "ffive.wd5.myworkdayjobs.com",
     "tenant": "ffive",
     "site": "f5jobs"
-  },
-  {
-    "name": "Fabletics",
-    "ats": "workday",
-    "host": "justfab.wd1.myworkdayjobs.com",
-    "tenant": "justfab",
-    "site": "fabletics"
   },
   {
     "name": "FactSet",
@@ -9527,6 +9525,13 @@
     "site": "NLR"
   },
   {
+    "name": "Nationwide",
+    "ats": "workday",
+    "host": "nationwide.wd1.myworkdayjobs.com",
+    "tenant": "nationwide",
+    "site": "Nationwide_Career"
+  },
+  {
     "name": "Nationwide Children's Hospital",
     "ats": "workday",
     "host": "nationwidechildrens.wd5.myworkdayjobs.com",
@@ -10605,13 +10610,6 @@
     "site": "sartoriuscareers"
   },
   {
-    "name": "Savage X Fenty",
-    "ats": "workday",
-    "host": "justfab.wd1.myworkdayjobs.com",
-    "tenant": "justfab",
-    "site": "savagex"
-  },
-  {
     "name": "SBA Communications Corporation",
     "ats": "workday",
     "host": "sbasite.wd5.myworkdayjobs.com",
@@ -11431,6 +11429,13 @@
     "site": "1"
   },
   {
+    "name": "TIAA",
+    "ats": "workday",
+    "host": "tiaa.wd1.myworkdayjobs.com",
+    "tenant": "tiaa",
+    "site": "Search"
+  },
+  {
     "name": "Ticketmaster",
     "ats": "workday",
     "host": "livenation.wd503.myworkdayjobs.com",
@@ -12122,6 +12127,13 @@
     "tenant": "workday",
     "host": "workday.wd5.myworkdayjobs.com",
     "site": "Workday"
+  },
+  {
+    "name": "Workiva",
+    "ats": "workday",
+    "host": "workiva.wd503.myworkdayjobs.com",
+    "tenant": "workiva",
+    "site": "careers"
   },
   {
     "name": "World Kinect",
