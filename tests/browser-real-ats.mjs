@@ -277,12 +277,19 @@ try {
         const filled = [...document.querySelectorAll('input,select,textarea')]
           .filter(el => el.value && el.type !== 'hidden' && el.type !== 'submit')
           .map(el => (el.name || el.id || el.type) + '=' + String(el.value).slice(0, 28));
+        /* Greenhouse's uploader CONSUMES the input: it reads the file, starts its own S3
+           upload, clears input.files, and renders the filename as a chip in the page. So
+           an empty input is what success looks like there, and the chip is the DOM truth
+           to hold the report against — the same evidence content.js now uses. */
+        const chipVisible = ${JSON.stringify(RESUME.name)} &&
+          (document.body.innerText || '').includes(${JSON.stringify(RESUME.name)});
         return {
           ok: r && r.ok, reason: r && r.reason,
           fieldsFilled: r && r.fieldsFilled, fieldsTotal: r && r.fieldsTotal,
           resumeAttached: r && r.resumeAttached,
           resumeOnInput: rf ? rf.files.length : null,
           resumeName: rf && rf.files[0] ? rf.files[0].name : null,
+          chipVisible,
           inFormData,
           needsUser: (r && r.needsUser) || [],
           status: (document.getElementById('oa-status') || {}).textContent,
@@ -292,11 +299,14 @@ try {
       console.log(`   form: ${form.textInputs} inputs, ${form.fileInputs} file input(s), ${form.iframes} iframe(s)`);
       console.log(`   filled ${out.fieldsFilled} of ${out.fieldsTotal}`);
       if (form.fileInputs) {
-        const ok = out.resumeOnInput === 1;
+        const ok = out.resumeOnInput === 1 || out.chipVisible;
+        const how = out.resumeOnInput === 1 ? out.resumeName : "consumed by the uploader, chip rendered";
         console.log(`   résumé: ${ok ? "ATTACHED" : "NOT attached"}` +
-          (ok ? ` (${out.resumeName})` : "") +
+          (ok ? ` (${how})` : "") +
           `  · reported: ${out.resumeAttached}` +
-          `  · payload: ${describePayload(out.inFormData)}`);
+          `  · payload: ${out.chipVisible && !out.inFormData
+            ? "uploaded by the page's own request (input consumed)"
+            : describePayload(out.inFormData)}`);
         if (out.resumeAttached !== ok) console.log("   ⚠️  report disagrees with the DOM — that is the one thing §17 must never do");
         if (out.inFormData && out.inFormData.state === "MISSING") {
           console.log("   ⚠️  the file is on a NAMED input and still absent from the form payload —");

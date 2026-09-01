@@ -329,7 +329,7 @@ try {
       let changed = false, inputted = false;
       rf.addEventListener('change', () => { changed = true; });
       rf.addEventListener('input', () => { inputted = true; });
-      const returned = self.OfferAIOFill.attachResume(rf, resume);
+      const returned = await self.OfferAIOFill.attachResume(rf, resume);
       const fd = new FormData(document.getElementById('application_form'));
       const f = fd.get('resume');
       return {
@@ -375,7 +375,7 @@ try {
       dt.items.add(new File([new Uint8Array([1,2,3])], 'user-picked.pdf', { type: 'application/pdf' }));
       rf.files = dt.files;
       const { resume } = await chrome.storage.local.get('resume');
-      const returned = self.OfferAIOFill.attachResume(rf, resume);
+      const returned = await self.OfferAIOFill.attachResume(rf, resume);
       return { returned, name: rf.files[0].name, count: rf.files.length };`);
     check("a file the user attached is left alone", out.name === "user-picked.pdf" && out.count === 1, JSON.stringify(out));
     check("...and it still reports attached", out.returned === true);

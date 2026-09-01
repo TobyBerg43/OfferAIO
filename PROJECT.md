@@ -2213,3 +2213,58 @@ from any machine covers it.
 - **The Chrome Web Store Privacy practices tab** (§8) — dashboard-only, and the one item
   still genuinely owed. A browser is all it needs; the Mac is fine.
 - **Distribution** (§12) — still the real gate, still not a code task.
+
+## 27. Greenhouse consumes the résumé input, and both of §17's oracles were wrong there (added 2026-09-01)
+
+### ⚠️ Five of seven live Greenhouse postings failed the harness's one forbidden check
+
+`node tests/browser-real-ats.mjs` against seven live Greenhouse postings (2026-09-01)
+printed **"report disagrees with the DOM"** on five of them: `attachResume()` returned
+true, and `input.files` read back empty. §17 calls that the one thing the report must
+never do. A network-and-timeline probe against three of the failures showed it was really
+**two different bugs sharing a symptom**, one in each direction:
+
+- **scm, Neuralink (and by behaviour hpiq, olsson): the attach had actually WORKED.**
+  Greenhouse's uploader — on `job-boards.greenhouse.io`, and the same widget now served on
+  `boards.greenhouse.io` — *consumes* the input: its change handler reads the file, starts
+  its own S3 upload (`POST grnhse-prod-jben-us-east-1.s3.amazonaws.com` observed), **clears
+  `input.files`**, and renders the filename as a chip in the page. An empty input is what
+  success looks like there. `attachResume()`'s sync read-back happened to run before the
+  clearing, so it answered true by luck — and then `resumeMissing()`, reading the same
+  input moments later, answered "missing", so **`doSubmit` refused the very applications
+  where the attach had succeeded** ("Attach your resume first") and full-auto deadlocked.
+  A user picking the file through the site's own dialog hits the identical refusal, since
+  their handler clears the input either way — the extension could not complete a modern
+  Greenhouse application at all.
+- **Eulerity: the attach had actually FAILED, and was reported true.** The file sat on the
+  input with no chip and no S3 upload — their React handler (probably not yet mounted when
+  `change` fired) never read it, and nothing ever would. That one is the §17 nightmare
+  verbatim: full-auto would submit a résumé-less application on the strength of it.
+
+### The fix: on Greenhouse, believe the chip, not the input
+
+`content.js` now treats the page's own acknowledgment as the only acceptance worth
+trusting on `greenhouse.io` hosts:
+
+- **`attachResume()` is async.** After the DataTransfer handoff it polls for the filename
+  appearing in the document — the same chip the user would see picking the file by hand.
+  While the file still sits unconsumed on the input it re-dispatches `change` every ~1.2s
+  (the late-mounted-handler case), and if nothing acknowledges within 6s it returns false,
+  which flags the field instead of lying. Off Greenhouse, the input itself is still the
+  carrier and the old read-back stands unchanged.
+- **`resumeMissing()` accepts the chip as evidence.** A `seenFiles` WeakMap remembers which
+  filename last landed on which input — written by our own handoff, and by a capture-phase
+  `change` listener for files the user picks through the site's dialog (capture at the
+  document runs before their handler clears the input). Missing = no file on the input AND
+  no chip for the file this input took. Per-input on purpose: a cover-letter chip can never
+  vouch for a missing résumé.
+- **`findResume()` prefers an input labelled resume** over "first file input on the page" —
+  Greenhouse renders résumé and cover-letter uploaders as sibling file inputs, and DOM
+  order was the only thing keeping the résumé out of the cover-letter slot.
+
+`tests/browser-real-ats.mjs` holds the report against the same evidence now (chip or
+input), and `tests/content-tracker.test.mjs` pins all four behaviours: chip = attached and
+not missing, no acknowledgment = NOT attached, someone else's filename is not acceptance,
+and the re-dispatch nudge. The §17 principle survives intact — verify, never assume — it
+just took two live counterexamples to learn what verification means on an uploader that
+eats its own input.

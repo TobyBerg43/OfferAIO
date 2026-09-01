@@ -86,7 +86,10 @@ function makeDoc() {
   const head = new El("head");
   const doc = {
     body, head,
-    _byId: new Map(),
+    // Pre-seeded so buildBar() returns early: this DOM can't render the bar, and without
+    // this its boot() retry loop wakes on any test that puts a file/email input in the
+    // body, then dies mid-retry on the missing appendChild after the test has ended.
+    _byId: new Map([["offeraio-bar", new El("div")]]),
     getElementById(id) { return doc._byId.get(id) || body.descendants.find((d) => d.attrs.id === id) || null; },
     querySelector(s) { return body.querySelector(s); },
     querySelectorAll(s) { return body.querySelectorAll(s); },
@@ -377,45 +380,114 @@ const RESUME = {
   size: 26,
 };
 
-test("a stored resume is attached to the form's file input", () => {
-  const { api } = load();
+/* attachResume is async since the Greenhouse fix: on greenhouse.io hosts the only
+   acceptance it trusts is the page rendering the filename (their uploader consumes the
+   input, so reading it back proves nothing in either direction — see content.js's note,
+   verified live 2026-09-01). Elsewhere the input itself is still the carrier. LEVER_URL
+   exercises the carrier semantics; the greenhouse tests below exercise the chip. */
+const LEVER_URL = "https://jobs.lever.co/stripe/1";
+
+test("a stored resume is attached to the form's file input", async () => {
+  const { api } = load({ url: LEVER_URL });
   const rf = new El("input", { type: "file" });
-  assert.equal(api.attachResume(rf, RESUME), true);
+  assert.equal(await api.attachResume(rf, RESUME), true);
   assert.equal(rf.files.length, 1);
   assert.equal(rf.files[0].name, "priya-raman-resume.pdf");
   assert.equal(rf.files[0].type, "application/pdf");
 });
 
-test("it verifies the attach landed rather than assuming", () => {
+test("it verifies the attach landed rather than assuming", async () => {
   // A custom uploader that ignores the assignment must be reported as a failure, not a
   // success — full-auto decides whether to submit on this answer.
-  const { api } = load();
+  const { api } = load({ url: LEVER_URL });
   const rf = new El("input", { type: "file" });
   Object.defineProperty(rf, "files", { get: () => [], set() {}, configurable: true });
-  assert.equal(api.attachResume(rf, RESUME), false);
+  assert.equal(await api.attachResume(rf, RESUME), false);
 });
 
-test("a resume the user already attached is left alone", () => {
-  const { api } = load();
+test("a resume the user already attached is left alone", async () => {
+  const { api } = load({ url: LEVER_URL });
   const rf = new El("input", { type: "file", files: [{ name: "their-own.pdf", size: 9 }] });
-  assert.equal(api.attachResume(rf, RESUME), true);
+  assert.equal(await api.attachResume(rf, RESUME), true);
   assert.equal(rf.files[0].name, "their-own.pdf", "overwrote the user's own file");
 });
 
-test("no stored resume, no file input, and junk data all fail honestly", () => {
-  const { api } = load();
+test("no stored resume, no file input, and junk data all fail honestly", async () => {
+  const { api } = load({ url: LEVER_URL });
   const rf = new El("input", { type: "file" });
-  assert.equal(api.attachResume(rf, null), false);
-  assert.equal(api.attachResume(rf, {}), false);
-  assert.equal(api.attachResume(rf, { name: "x.pdf", data: "" }), false);
-  assert.equal(api.attachResume(null, RESUME), false);
+  assert.equal(await api.attachResume(rf, null), false);
+  assert.equal(await api.attachResume(rf, {}), false);
+  assert.equal(await api.attachResume(rf, { name: "x.pdf", data: "" }), false);
+  assert.equal(await api.attachResume(null, RESUME), false);
   assert.equal(rf.files.length, 0);
 });
 
-test("resumeMissing stays true when the attach failed, so full-auto still stops", () => {
-  const { api } = load();
+test("resumeMissing stays true when the attach failed, so full-auto still stops", async () => {
+  const { api } = load({ url: LEVER_URL });
   const rf = new El("input", { type: "file" });
   Object.defineProperty(rf, "files", { get: () => [], set() {}, configurable: true });
-  assert.equal(api.attachResume(rf, RESUME), false);
+  assert.equal(await api.attachResume(rf, RESUME), false);
   assert.equal(rf.files.length, 0, "an unattached resume must read as missing");
+});
+
+/* ------------------------------------------- the Greenhouse consuming uploader
+   Their widget reads the file off the input, starts its own upload, CLEARS the input,
+   and renders the filename as a chip. Success therefore looks like an empty input, and
+   an inert file sitting on the input forever looks like the old "success". Both
+   directions were live bugs on real postings (2026-09-01). */
+
+const shrinkAck = (api) => { api.ACK.ms = 400; api.ACK.nudgeMs = 60; api.ACK.pollMs = 15; };
+
+test("greenhouse: a consumed file with a rendered chip is attached, and not missing", async () => {
+  const { api, doc } = load(); // default load() url is job-boards.greenhouse.io
+  shrinkAck(api);
+  const rf = new El("input", { type: "file" });
+  doc.body.append(rf);
+  rf.addEventListener("change", () => {
+    // What their widget does: read, clear, render the filename.
+    const name = rf.files[0] && rf.files[0].name;
+    rf.files = [];
+    if (name) doc.body.textContent += " " + name;
+  });
+  assert.equal(await api.attachResume(rf, RESUME), true);
+  assert.equal(rf.files.length, 0, "the widget consumed the input — that IS success here");
+  assert.equal(api.resumeMissing(), false, "an attached resume must not read as missing");
+});
+
+test("greenhouse: a file their handler never acknowledges is reported NOT attached", async () => {
+  // The Eulerity case: the file lands on the input, nothing ever reads it, no chip.
+  // Reporting true here is the §17 nightmare — full-auto would send a resume-less
+  // application on the strength of it.
+  const { api, doc } = load();
+  shrinkAck(api);
+  const rf = new El("input", { type: "file" });
+  doc.body.append(rf);
+  assert.equal(await api.attachResume(rf, RESUME), false);
+  assert.equal(rf.files.length, 1, "the file is on the input, but nothing will ever read it");
+});
+
+test("greenhouse: the chip must be OUR filename — someone else's text is not acceptance", async () => {
+  const { api, doc } = load();
+  shrinkAck(api);
+  const rf = new El("input", { type: "file" });
+  doc.body.append(rf);
+  doc.body.textContent = "cover-letter.pdf attached earlier";
+  assert.equal(await api.attachResume(rf, RESUME), false);
+});
+
+test("greenhouse: a late-mounting handler is nudged with a re-dispatch until it hears us", async () => {
+  const { api, doc } = load();
+  shrinkAck(api);
+  const rf = new El("input", { type: "file" });
+  doc.body.append(rf);
+  let calls = 0;
+  rf.addEventListener("change", () => {
+    calls++;
+    if (calls < 2) return; // deaf the first time, like a React handler that mounted late
+    const name = rf.files[0] && rf.files[0].name;
+    rf.files = [];
+    if (name) doc.body.textContent += " " + name;
+  });
+  assert.equal(await api.attachResume(rf, RESUME), true);
+  assert.ok(calls >= 2, "the change event must be re-dispatched for late handlers");
 });

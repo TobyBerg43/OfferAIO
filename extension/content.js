@@ -273,10 +273,56 @@
   let lastFill = null;
 
   const findCover = () => q('#cover_letter_text, textarea[name*="cover" i], textarea[name="comments"], textarea[id*="cover" i]');
-  const findResume = () => q('input[type="file"]');
-  /* True when the page wants a file and none is attached — after attachResume() has had
-     its go. Full-auto must not race past this and send a resume-less application. */
-  const resumeMissing = () => { const rf = findResume(); return !!rf && rf.files.length === 0; };
+  /* The RESUME input, not merely the first file input. Greenhouse renders resume and
+     cover-letter uploaders as sibling file inputs, and "first on the page" is a DOM-order
+     accident — a form that put the cover letter first would get the resume in the wrong
+     uploader. Prefer anything labelled resume; fall back to the old rule. */
+  const findResume = () =>
+    q('input[type="file"][id*="resume" i], input[type="file"][name*="resume" i], input[type="file"][aria-label*="resume" i]') ||
+    q('input[type="file"]');
+
+  /* Evidence that a file reached an uploader that CONSUMES its input.
+
+     Greenhouse's boards (job-boards.greenhouse.io, and the same widget now served on
+     boards.greenhouse.io) do not keep the file on the input: their change handler reads
+     it, starts its own S3 upload, CLEARS the input, and renders the filename as a chip in
+     the page. Verified live 2026-09-01 on scm and Neuralink postings — input.files was
+     empty within a second of a successful attach, while the S3 POST fired and the chip
+     appeared. So "input.files is empty" does not mean "no resume": on those forms it is
+     what success looks like, and judging by the input alone made doSubmit refuse the very
+     applications where the attach had worked.
+
+     seenFiles remembers which filename last landed on which input — written by
+     attachResume() for our own handoff, and by a capture-phase listener for a file the
+     user picks through the site's own dialog (their handler clears the input either way;
+     capture at the document runs before it, so the filename is still readable there).
+     chipVisible() then asks the page itself: is that filename rendered in the document?
+     The pair is deliberately per-input, so a cover letter's chip can never vouch for a
+     missing resume. */
+  const seenFiles = new WeakMap();
+  if (document.addEventListener) {
+    document.addEventListener("change", (e) => {
+      const t = e.target;
+      if (t && t.type === "file" && t.files && t.files.length) seenFiles.set(t, t.files[0].name);
+    }, true);
+  }
+  const chipVisible = (name) => {
+    if (!name || !document.body) return false;
+    const text = document.body.innerText || document.body.textContent || "";
+    return typeof text === "string" && text.includes(name);
+  };
+
+  /* True when the page wants a file and there is no evidence one is attached — after
+     attachResume() has had its go. Full-auto must not race past this and send a
+     resume-less application. A file on the input counts; so does the page rendering the
+     filename of a file we watched land on this input (the consuming-uploader case). */
+  const resumeMissing = () => {
+    const rf = findResume();
+    if (!rf) return false;
+    if (rf.files.length) return false;
+    const seen = seenFiles.get(rf);
+    return !(seen && chipVisible(seen));
+  };
 
   const b64ToBytes = (b64) => {
     const s = atob(b64);
@@ -301,22 +347,57 @@
    * Returns whether it actually worked, and never assumes. A custom drag-and-drop uploader
    * that posts to S3 itself, a sandboxed iframe, or a cross-origin form can all leave the
    * input untouched — and a resume we merely *believe* we attached is worse than one we
-   * know is missing, because full-auto would submit on the strength of it. */
-  function attachResume(rf, resume) {
+   * know is missing, because full-auto would submit on the strength of it.
+   *
+   * ⚠️ "Re-read input.files afterwards" was the wrong oracle on Greenhouse, in BOTH
+   * directions, and it is why this is now async. Their uploader consumes the input (see
+   * resumeMissing's note): a successful attach reads back as an empty input moments after
+   * this returned true, and an attach their late-mounting React handler never saw reads
+   * back as a full input forever. Found live 2026-09-01: five of seven Greenhouse postings
+   * reported "attached" while tests/browser-real-ats.mjs read the input back empty — some
+   * were real successes (S3 upload fired, chip rendered), and at least one (Eulerity) was
+   * the §17 nightmare, a file sitting inert on an input nothing would ever read.
+   *
+   * So on greenhouse.io hosts the only acceptance we trust is the page rendering the
+   * filename — the same chip the user would see picking the file by hand. Until that
+   * appears we re-dispatch periodically (their handler mounts late on slow loads), and if
+   * it never appears we say so. Elsewhere the input itself is still the carrier and the
+   * old read-back stands. */
+  const ACK = { ms: 6000, nudgeMs: 1200, pollMs: 200 }; // exposed for tests
+  async function attachResume(rf, resume) {
     if (!rf || !resume || !resume.data) return false;
     if (rf.files && rf.files.length) return true; // the user already attached one
+    // A consuming uploader already holds a file it took from this input (theirs or ours).
+    const seen = seenFiles.get(rf);
+    if (seen && chipVisible(seen)) return true;
     try {
       if (typeof DataTransfer !== "function" || typeof File !== "function") return false;
       const file = new File([b64ToBytes(resume.data)], resume.name || "resume.pdf", {
         type: resume.type || "application/pdf",
       });
-      const dt = new DataTransfer();
-      dt.items.add(file);
-      rf.files = dt.files;
-      // React and friends listen for one or the other; send both.
-      rf.dispatchEvent(new Event("input", { bubbles: true }));
-      rf.dispatchEvent(new Event("change", { bubbles: true }));
-      return rf.files.length === 1 && rf.files[0].size === file.size;
+      const handoff = () => {
+        if (!(rf.files && rf.files.length)) {
+          const dt = new DataTransfer();
+          dt.items.add(file);
+          rf.files = dt.files;
+        }
+        seenFiles.set(rf, file.name);
+        // React and friends listen for one or the other; send both.
+        rf.dispatchEvent(new Event("input", { bubbles: true }));
+        rf.dispatchEvent(new Event("change", { bubbles: true }));
+      };
+      handoff();
+      const held = () => rf.files.length === 1 && rf.files[0].size === file.size;
+      if (!/greenhouse\.io$/.test(HOST)) return held();
+      const deadline = Date.now() + ACK.ms;
+      let nudgeAt = Date.now() + ACK.nudgeMs;
+      while (Date.now() < deadline) {
+        if (chipVisible(file.name)) return true; // the uploader acknowledged it
+        // Input still full and no chip: their handler likely wasn't listening yet.
+        if (held() && Date.now() >= nudgeAt) { handoff(); nudgeAt = Date.now() + ACK.nudgeMs; }
+        await sleep(ACK.pollMs);
+      }
+      return false;
     } catch (e) {
       return false;
     }
@@ -378,7 +459,7 @@
     const rf = findResume();
     let resumeAttached = false;
     if (rf) {
-      resumeAttached = attachResume(rf, d.resume);
+      resumeAttached = await attachResume(rf, d.resume);
       if (resumeAttached) {
         // Green, not blue: blue means "your turn". Marking a done thing as outstanding is
         // the same class of dishonesty as the reverse.
@@ -421,7 +502,8 @@
       // Full-auto still stops for the two things it must never decide alone: a legal
       // question we deliberately declined to answer, and a resume that is not on the form.
       // attachResume() means the second is now usually handled — but it reports honestly
-      // when it failed, and this check reads the input itself rather than trusting it.
+      // when it failed, and this check reads the page's own evidence (the input, or the
+      // filename chip a consuming uploader renders) rather than trusting the attempt.
       // Auto-submitting either sends an application that is wrong or incomplete, in the
       // user's name, with no chance for them to catch it.
       if (needsUser.length) {
@@ -549,7 +631,8 @@
     // here costs the user nothing; clicking anyway burns a submission on an application
     // that was never going to send. (This used to say browsers forbid scripts from
     // attaching files. They do not — they forbid setting input.value to a path, and §17
-    // attaches the file through a DataTransfer. resumeMissing() reads input.files, so it
+    // attaches the file through a DataTransfer. resumeMissing() reads input.files — or,
+    // for an uploader that consumes the input, the filename chip the page renders — so it
     // still catches the forms whose own uploader refuses the handoff.)
     if (resumeMissing()) {
       status("Attach your resume first (highlighted) - not submitted, nothing counted.");
@@ -657,6 +740,8 @@
     fillableFields,
     atsName,
     attachResume,
+    resumeMissing,
+    ACK,
   };
 
   // SPA forms can render late — retry building the bar for a few seconds.
