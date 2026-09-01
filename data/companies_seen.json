@@ -6,8 +6,8 @@
  },
  "travelers": {
   "name": "Travelers",
-  "lastSeen": "2026-07-17",
-  "roles": 1
+  "lastSeen": "2026-09-01",
+  "roles": 4
  },
  "citi": {
   "name": "Citi",
@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-09-01",
-  "roles": 15
+  "roles": 16
  },
  "capital-one": {
   "name": "Capital One",
@@ -82,7 +82,7 @@
  "abb": {
   "name": "ABB",
   "lastSeen": "2026-09-01",
-  "roles": 9
+  "roles": 10
  },
  "datasite": {
   "name": "Datasite",
@@ -262,7 +262,7 @@
  "tesla": {
   "name": "Tesla",
   "lastSeen": "2026-09-01",
-  "roles": 42
+  "roles": 44
  },
  "apex-technology-inc": {
   "name": "Apex Technology, Inc.",
@@ -562,7 +562,7 @@
  "micron": {
   "name": "Micron",
   "lastSeen": "2026-09-01",
-  "roles": 26
+  "roles": 27
  },
  "pdt-partners": {
   "name": "PDT Partners",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-09-01",
-  "roles": 15
+  "roles": 14
  },
  "bytedance": {
   "name": "ByteDance",
@@ -797,7 +797,7 @@
  "american-express": {
   "name": "American Express",
   "lastSeen": "2026-09-01",
-  "roles": 27
+  "roles": 41
  },
  "boeing": {
   "name": "Boeing",
@@ -847,7 +847,7 @@
  "mastercard": {
   "name": "Mastercard",
   "lastSeen": "2026-09-01",
-  "roles": 7
+  "roles": 6
  },
  "blackstone": {
   "name": "Blackstone",
@@ -927,7 +927,7 @@
  "ge-vernova": {
   "name": "GE Vernova",
   "lastSeen": "2026-09-01",
-  "roles": 29
+  "roles": 28
  },
  "american-fidelity": {
   "name": "American Fidelity",
@@ -1087,7 +1087,7 @@
  "microchip": {
   "name": "Microchip",
   "lastSeen": "2026-09-01",
-  "roles": 3
+  "roles": 1
  },
  "two-six-technologies": {
   "name": "Two Six Technologies",
@@ -1247,7 +1247,7 @@
  "prudential-financial": {
   "name": "Prudential Financial",
   "lastSeen": "2026-09-01",
-  "roles": 8
+  "roles": 9
  },
  "schoolmint": {
   "name": "SchoolMint",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-09-01",
-  "roles": 8
+  "roles": 1
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1507,7 +1507,7 @@
  "the-federal-reserve-system": {
   "name": "The Federal Reserve System",
   "lastSeen": "2026-09-01",
-  "roles": 3
+  "roles": 28
  },
  "the-coca-cola-company": {
   "name": "The Coca-Cola Company",
@@ -1527,7 +1527,7 @@
  "td-bank": {
   "name": "TD Bank",
   "lastSeen": "2026-09-01",
-  "roles": 15
+  "roles": 14
  },
  "starr-insurance": {
   "name": "Starr Insurance",
@@ -1742,7 +1742,7 @@
  "hitachi": {
   "name": "Hitachi",
   "lastSeen": "2026-09-01",
-  "roles": 4
+  "roles": 14
  },
  "guidehouse": {
   "name": "Guidehouse",
@@ -1867,7 +1867,7 @@
  "caterpillar-inc": {
   "name": "Caterpillar Inc.",
   "lastSeen": "2026-09-01",
-  "roles": 13
+  "roles": 16
  },
  "cambridge-associates": {
   "name": "Cambridge Associates",
@@ -2712,7 +2712,7 @@
  "johnson-and-johnson": {
   "name": "Johnson & Johnson",
   "lastSeen": "2026-09-01",
-  "roles": 8
+  "roles": 9
  },
  "ksm": {
   "name": "KSM",
@@ -2732,7 +2732,7 @@
  "abbott": {
   "name": "Abbott",
   "lastSeen": "2026-09-01",
-  "roles": 3
+  "roles": 4
  },
  "deutsche-bank": {
   "name": "Deutsche Bank",
@@ -2937,7 +2937,7 @@
  "rsm": {
   "name": "RSM",
   "lastSeen": "2026-09-01",
-  "roles": 30
+  "roles": 48
  },
  "metecs": {
   "name": "METECS",
@@ -3367,7 +3367,7 @@
  "manulife-financial": {
   "name": "Manulife Financial",
   "lastSeen": "2026-09-01",
-  "roles": 10
+  "roles": 11
  },
  "iron-mountain": {
   "name": "Iron Mountain",
@@ -3662,7 +3662,7 @@
  "vermeer": {
   "name": "Vermeer",
   "lastSeen": "2026-09-01",
-  "roles": 9
+  "roles": 11
  },
  "stryker": {
   "name": "Stryker",
@@ -3757,7 +3757,7 @@
  "sierra": {
   "name": "Sierra",
   "lastSeen": "2026-09-01",
-  "roles": 1
+  "roles": 3
  },
  "stripe": {
   "name": "Stripe",
@@ -3807,7 +3807,7 @@
  "protiviti": {
   "name": "Protiviti",
   "lastSeen": "2026-09-01",
-  "roles": 2
+  "roles": 15
  },
  "gcm-grosvenor": {
   "name": "GCM Grosvenor",
@@ -3822,7 +3822,7 @@
  "awetomaton": {
   "name": "Awetomaton",
   "lastSeen": "2026-09-01",
-  "roles": 1
+  "roles": 2
  },
  "draftkings": {
   "name": "DraftKings",
@@ -3832,12 +3832,12 @@
  "nisource": {
   "name": "NiSource",
   "lastSeen": "2026-09-01",
-  "roles": 1
+  "roles": 15
  },
  "nike": {
   "name": "Nike",
   "lastSeen": "2026-09-01",
-  "roles": 1
+  "roles": 2
  },
  "ercot": {
   "name": "Ercot",
@@ -3877,6 +3877,91 @@
  "verdantas": {
   "name": "Verdantas",
   "lastSeen": "2026-09-01",
+  "roles": 2
+ },
+ "tc-energy": {
+  "name": "TC Energy",
+  "lastSeen": "2026-09-01",
+  "roles": 3
+ },
+ "rockwell-automation": {
+  "name": "Rockwell Automation",
+  "lastSeen": "2026-09-01",
+  "roles": 2
+ },
+ "rogers-behavioral-health": {
+  "name": "Rogers Behavioral Health",
+  "lastSeen": "2026-09-01",
+  "roles": 2
+ },
+ "momentive": {
+  "name": "Momentive",
+  "lastSeen": "2026-09-01",
+  "roles": 5
+ },
+ "first-national-bank": {
+  "name": "First National Bank",
+  "lastSeen": "2026-09-01",
+  "roles": 5
+ },
+ "edwards-lifesciences": {
+  "name": "Edwards Lifesciences",
+  "lastSeen": "2026-09-01",
+  "roles": 2
+ },
+ "bluecross-blueshield-of-nebraska": {
+  "name": "BlueCross BlueShield of Nebraska",
+  "lastSeen": "2026-09-01",
+  "roles": 4
+ },
+ "accenture": {
+  "name": "Accenture",
+  "lastSeen": "2026-09-01",
   "roles": 1
+ },
+ "textron": {
+  "name": "Textron",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "edison-international": {
+  "name": "Edison International",
+  "lastSeen": "2026-09-01",
+  "roles": 5
+ },
+ "k2-space": {
+  "name": "K2 Space",
+  "lastSeen": "2026-09-01",
+  "roles": 8
+ },
+ "billiontoone": {
+  "name": "BillionToOne",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "whatnot": {
+  "name": "WhatNot",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "trane-technologies": {
+  "name": "Trane Technologies",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "southwest-airlines": {
+  "name": "Southwest Airlines",
+  "lastSeen": "2026-09-01",
+  "roles": 2
+ },
+ "katalyst-space-technologies": {
+  "name": "Katalyst Space Technologies",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "machina-labs": {
+  "name": "Machina Labs",
+  "lastSeen": "2026-09-01",
+  "roles": 3
  }
 }
