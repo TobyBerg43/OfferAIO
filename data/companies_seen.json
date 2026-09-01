@@ -207,7 +207,7 @@
  "etched": {
   "name": "Etched",
   "lastSeen": "2026-09-01",
-  "roles": 16
+  "roles": 15
  },
  "susquehanna": {
   "name": "Susquehanna",
@@ -287,7 +287,7 @@
  "dedalus-labs": {
   "name": "Dedalus Labs",
   "lastSeen": "2026-09-01",
-  "roles": 4
+  "roles": 5
  },
  "uber": {
   "name": "Uber",
@@ -312,7 +312,7 @@
  "skydio": {
   "name": "Skydio",
   "lastSeen": "2026-09-01",
-  "roles": 6
+  "roles": 3
  },
  "intel": {
   "name": "Intel",
@@ -902,7 +902,7 @@
  "medline": {
   "name": "Medline",
   "lastSeen": "2026-09-01",
-  "roles": 15
+  "roles": 17
  },
  "winland-foods": {
   "name": "Winland Foods",
@@ -1032,7 +1032,7 @@
  "raytheon": {
   "name": "Raytheon",
   "lastSeen": "2026-09-01",
-  "roles": 19
+  "roles": 20
  },
  "sel": {
   "name": "SEL",
@@ -1127,7 +1127,7 @@
  "eulerity": {
   "name": "Eulerity",
   "lastSeen": "2026-09-01",
-  "roles": 6
+  "roles": 7
  },
  "sony": {
   "name": "Sony",
@@ -1467,7 +1467,7 @@
  "grant-thornton": {
   "name": "Grant Thornton",
   "lastSeen": "2026-09-01",
-  "roles": 11
+  "roles": 10
  },
  "boom-supersonic": {
   "name": "Boom Supersonic",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-09-01",
-  "roles": 1
+  "roles": 8
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1497,7 +1497,7 @@
  "united-parcel-service-ups": {
   "name": "United Parcel Service (UPS)",
   "lastSeen": "2026-09-01",
-  "roles": 16
+  "roles": 19
  },
  "university-of-maryland-college-park": {
   "name": "University of Maryland - College Park",
@@ -1527,7 +1527,7 @@
  "td-bank": {
   "name": "TD Bank",
   "lastSeen": "2026-09-01",
-  "roles": 22
+  "roles": 25
  },
  "starr-insurance": {
   "name": "Starr Insurance",
@@ -1587,12 +1587,12 @@
  "roche": {
   "name": "Roche",
   "lastSeen": "2026-09-01",
-  "roles": 14
+  "roles": 15
  },
  "pricewaterhousecoopers-pwc": {
   "name": "PricewaterhouseCoopers (PwC)",
   "lastSeen": "2026-09-01",
-  "roles": 137
+  "roles": 138
  },
  "procter-and-gamble-pandg": {
   "name": "Procter & Gamble (P&G)",
@@ -1632,7 +1632,7 @@
  "oshkosh": {
   "name": "Oshkosh",
   "lastSeen": "2026-09-01",
-  "roles": 43
+  "roles": 44
  },
  "parsons": {
   "name": "Parsons",
@@ -1762,7 +1762,7 @@
  "globalfoundries": {
   "name": "GlobalFoundries",
   "lastSeen": "2026-09-01",
-  "roles": 16
+  "roles": 15
  },
  "ge-aerospace": {
   "name": "GE Aerospace",
@@ -1817,7 +1817,7 @@
  "eisneramper": {
   "name": "EisnerAmper",
   "lastSeen": "2026-09-01",
-  "roles": 1
+  "roles": 2
  },
  "denver": {
   "name": "Denver",
@@ -1897,7 +1897,7 @@
  "barclays": {
   "name": "Barclays",
   "lastSeen": "2026-09-01",
-  "roles": 8
+  "roles": 7
  },
  "baird": {
   "name": "Baird",
@@ -2722,7 +2722,7 @@
  "general-motors": {
   "name": "General Motors",
   "lastSeen": "2026-09-01",
-  "roles": 5
+  "roles": 12
  },
  "brunswick": {
   "name": "Brunswick",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-09-01",
-  "roles": 6
+  "roles": 7
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -3667,7 +3667,7 @@
  "stryker": {
   "name": "Stryker",
   "lastSeen": "2026-09-01",
-  "roles": 77
+  "roles": 81
  },
  "qorvo": {
   "name": "Qorvo",
@@ -3687,7 +3687,7 @@
  "valmont": {
   "name": "Valmont",
   "lastSeen": "2026-09-01",
-  "roles": 1
+  "roles": 2
  },
  "trustage": {
   "name": "TruStage",
@@ -3742,7 +3742,7 @@
  "bank-of-montreal": {
   "name": "Bank of Montreal",
   "lastSeen": "2026-09-01",
-  "roles": 1
+  "roles": 8
  },
  "ameriprise-financial": {
   "name": "Ameriprise Financial",
@@ -3827,7 +3827,7 @@
  "draftkings": {
   "name": "DraftKings",
   "lastSeen": "2026-09-01",
-  "roles": 3
+  "roles": 4
  },
  "nisource": {
   "name": "NiSource",
@@ -3872,7 +3872,7 @@
  "united-parcel-service": {
   "name": "United Parcel Service",
   "lastSeen": "2026-09-01",
-  "roles": 2
+  "roles": 3
  },
  "verdantas": {
   "name": "Verdantas",
@@ -4072,7 +4072,7 @@
  "corning": {
   "name": "Corning",
   "lastSeen": "2026-09-01",
-  "roles": 3
+  "roles": 5
  },
  "post-holdings": {
   "name": "Post Holdings",
@@ -4111,6 +4111,56 @@
  },
  "aig": {
   "name": "AIG",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "allegion": {
+  "name": "Allegion",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "daniels-health": {
+  "name": "Daniels Health",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "twg-global": {
+  "name": "TWG Global",
+  "lastSeen": "2026-09-01",
+  "roles": 3
+ },
+ "ragle-inc": {
+  "name": "Ragle Inc",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "syngenta-group": {
+  "name": "Syngenta Group",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "lawrence-livermore-national-laboratory-llnl": {
+  "name": "Lawrence Livermore National Laboratory (LLNL)",
+  "lastSeen": "2026-09-01",
+  "roles": 3
+ },
+ "southern-star-central-gas-pipeline": {
+  "name": "Southern Star Central Gas Pipeline",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "kinder-morgan": {
+  "name": "Kinder Morgan",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "john-deere": {
+  "name": "John Deere",
+  "lastSeen": "2026-09-01",
+  "roles": 1
+ },
+ "poet": {
+  "name": "POET",
   "lastSeen": "2026-09-01",
   "roles": 1
  }
