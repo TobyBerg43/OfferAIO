@@ -355,11 +355,6 @@
     "slug": "dryft"
   },
   {
-    "name": "Egra",
-    "ats": "ashby",
-    "slug": "egra"
-  },
-  {
     "name": "Eigen Labs",
     "ats": "ashby",
     "slug": "eigen-labs"
@@ -1070,6 +1065,11 @@
     "slug": "pivotrobotics"
   },
   {
+    "name": "Pluralis Research",
+    "ats": "ashby",
+    "slug": "pluralis-research"
+  },
+  {
     "name": "Polymath",
     "ats": "ashby",
     "slug": "polymath"
@@ -1763,6 +1763,11 @@
     "name": "Avride",
     "ats": "greenhouse",
     "slug": "avride"
+  },
+  {
+    "name": "Awetomaton",
+    "ats": "greenhouse",
+    "slug": "awetomaton"
   },
   {
     "name": "Axiomatic AI",
@@ -2475,6 +2480,11 @@
     "slug": "glydways"
   },
   {
+    "name": "GoDaddy",
+    "ats": "greenhouse",
+    "slug": "eventsandinterns"
+  },
+  {
     "name": "GoFundMe",
     "ats": "greenhouse",
     "slug": "gofundme"
@@ -2488,11 +2498,6 @@
     "name": "Graphcore",
     "ats": "greenhouse",
     "slug": "graphcore"
-  },
-  {
-    "name": "Grassroots Analytics",
-    "ats": "greenhouse",
-    "slug": "grassrootsanalytics"
   },
   {
     "name": "Greenworks",
@@ -2568,6 +2573,11 @@
     "name": "Horizon Industries",
     "ats": "greenhouse",
     "slug": "horizonindustrieslimited"
+  },
+  {
+    "name": "HP IQ",
+    "ats": "greenhouse",
+    "slug": "hpiq"
   },
   {
     "name": "HPR (Hyannis Port Research)",
@@ -2720,6 +2730,11 @@
     "slug": "juvare"
   },
   {
+    "name": "K2 Space",
+    "ats": "greenhouse",
+    "slug": "k2spacecorporation"
+  },
+  {
     "name": "Kairos Power",
     "ats": "greenhouse",
     "slug": "kairospower"
@@ -2733,6 +2748,11 @@
     "name": "Kargo",
     "ats": "greenhouse",
     "slug": "kargo"
+  },
+  {
+    "name": "Katalyst Space Technologies",
+    "ats": "greenhouse",
+    "slug": "katalyst"
   },
   {
     "name": "Kensington",
@@ -4480,6 +4500,11 @@
     "slug": "ltaresearch"
   },
   {
+    "name": "Machina Labs",
+    "ats": "lever",
+    "slug": "MachinaLabs"
+  },
+  {
     "name": "Magnet Forensics",
     "ats": "lever",
     "slug": "magnetforensics"
@@ -4598,6 +4623,11 @@
     "name": "QuantCo",
     "ats": "lever",
     "slug": "quantco-"
+  },
+  {
+    "name": "Quantum Workplace",
+    "ats": "lever",
+    "slug": "QuantumWorkplace"
   },
   {
     "name": "Rainmaker",
@@ -5983,6 +6013,13 @@
     "site": "blueorigin"
   },
   {
+    "name": "BlueCross BlueShield of Nebraska",
+    "ats": "workday",
+    "host": "nebraskablue.wd1.myworkdayjobs.com",
+    "tenant": "nebraskablue",
+    "site": "BCBSNE"
+  },
+  {
     "name": "BlueScope",
     "ats": "workday",
     "host": "bluescopenac.wd5.myworkdayjobs.com",
@@ -7150,6 +7187,20 @@
     "host": "dowjones.wd1.myworkdayjobs.com",
     "tenant": "dowjones",
     "site": "Dow_Jones_Career"
+  },
+  {
+    "name": "DPR Family of Companies",
+    "ats": "workday",
+    "host": "mydpr.wd5.myworkdayjobs.com",
+    "tenant": "mydpr",
+    "site": "11212017"
+  },
+  {
+    "name": "DraftKings",
+    "ats": "workday",
+    "host": "draftkings.wd1.myworkdayjobs.com",
+    "tenant": "draftkings",
+    "site": "Campus_Career_Portal"
   },
   {
     "name": "Draper",
@@ -9644,11 +9695,25 @@
     "site": "nw"
   },
   {
+    "name": "Nike",
+    "ats": "workday",
+    "host": "nike.wd1.myworkdayjobs.com",
+    "tenant": "nike",
+    "site": "nke"
+  },
+  {
     "name": "Nio",
     "ats": "workday",
     "host": "nio.wd3.myworkdayjobs.com",
     "tenant": "nio",
     "site": "NIO_Careers"
+  },
+  {
+    "name": "NiSource",
+    "ats": "workday",
+    "host": "nisource.wd1.myworkdayjobs.com",
+    "tenant": "nisource",
+    "site": "NiSource"
   },
   {
     "name": "Nissan Global",
@@ -10141,6 +10206,13 @@
     "site": "protivitiexperiencedcareers"
   },
   {
+    "name": "Protiviti",
+    "ats": "workday",
+    "host": "roberthalf.wd1.myworkdayjobs.com",
+    "tenant": "roberthalf",
+    "site": "ProtivitiNA"
+  },
+  {
     "name": "Prudential Financial",
     "ats": "workday",
     "host": "pru.wd5.myworkdayjobs.com",
@@ -10391,6 +10463,13 @@
     "host": "rockwellautomation.wd1.myworkdayjobs.com",
     "tenant": "rockwellautomation",
     "site": "External_Rockwell_Automation"
+  },
+  {
+    "name": "Rockwell Automation",
+    "ats": "workday",
+    "host": "rockwellautomation.wd1.myworkdayjobs.com",
+    "tenant": "rockwellautomation",
+    "site": "External-Rockwell-Automation-Early-Careers"
   },
   {
     "name": "ROCKWOOL Group",
@@ -11105,6 +11184,13 @@
     "host": "symbotic.wd504.myworkdayjobs.com",
     "tenant": "symbotic",
     "site": "Symbotic"
+  },
+  {
+    "name": "Synchrony Financial",
+    "ats": "workday",
+    "host": "synchronyfinancial.wd5.myworkdayjobs.com",
+    "tenant": "synchronyfinancial",
+    "site": "careers"
   },
   {
     "name": "Synchrony Financial",
@@ -11875,6 +11961,13 @@
     "host": "veralto.wd1.myworkdayjobs.com",
     "tenant": "veralto",
     "site": "hachjobs"
+  },
+  {
+    "name": "Verdantas",
+    "ats": "workday",
+    "host": "verdantas.wd108.myworkdayjobs.com",
+    "tenant": "verdantas",
+    "site": "Verdantas"
   },
   {
     "name": "Verizon Communications",
