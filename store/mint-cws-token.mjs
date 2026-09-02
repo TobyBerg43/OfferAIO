@@ -80,8 +80,17 @@ const code = await new Promise((resolve, reject) => {
   server.listen(PORT, "127.0.0.1", () => {
     console.log("Opening Google's consent screen in your browser.");
     console.log("If it does not open, paste this in yourself:\n\n" + authUrl + "\n");
-    // Windows: `start` is a cmd builtin, so it needs a shell.
-    spawn("cmd", ["/c", "start", "", authUrl], { detached: true, stdio: "ignore" }).unref();
+    // Best-effort per platform; the URL is printed above, so a failed open is not fatal —
+    // and it MUST not be: the unguarded Windows-only spawn used to throw ENOENT on macOS
+    // and kill the process before the loopback server ever saw the redirect.
+    const opener =
+      process.platform === "win32"
+        ? spawn("cmd", ["/c", "start", "", authUrl], { detached: true, stdio: "ignore" })
+        : spawn(process.platform === "darwin" ? "open" : "xdg-open", [authUrl], {
+            detached: true, stdio: "ignore",
+          });
+    opener.on("error", () => {});
+    opener.unref();
   });
   setTimeout(() => { server.close(); reject(new Error("timed out after 5 minutes")); }, 300_000);
 });

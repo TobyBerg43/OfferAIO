@@ -29,7 +29,11 @@ const dryRun = args.has("--dry-run");
 const doUpload = !args.has("--publish-only");
 const doPublish = !args.has("--upload-only");
 
-const need = ["CWS_CLIENT_ID", "CWS_CLIENT_SECRET", "CWS_REFRESH_TOKEN", "CWS_PUBLISHER_ID"];
+/* CWS_PUBLISHER_ID is optional: without it, the script uses the legacy v1.1 items API,
+ * which addresses the item by id alone and needs no publisher. Proven working 2026-09-01
+ * (upload SUCCESS + publish OK for v1.5.1). The publisher id only unlocks the v2 endpoints
+ * and their richer fetchStatus; it lives dashboard-only (gear → Publisher ID). */
+const need = ["CWS_CLIENT_ID", "CWS_CLIENT_SECRET", "CWS_REFRESH_TOKEN"];
 const missing = need.filter((k) => !process.env[k]);
 if (missing.length) {
   console.error("Missing environment variables:\n  " + missing.join("\n  "));
@@ -55,13 +59,25 @@ async function accessToken() {
   return j.access_token;
 }
 
-const base = `https://chromewebstore.googleapis.com/v2/publishers/${CWS_PUBLISHER_ID}/items/${ITEM_ID}`;
-const uploadUrl = `https://chromewebstore.googleapis.com/upload/v2/publishers/${CWS_PUBLISHER_ID}/items/${ITEM_ID}:upload`;
+const V2 = !!(CWS_PUBLISHER_ID && CWS_PUBLISHER_ID !== "PASTE_PUBLISHER_ID_HERE");
+const base = V2
+  ? `https://chromewebstore.googleapis.com/v2/publishers/${CWS_PUBLISHER_ID}/items/${ITEM_ID}`
+  : `https://www.googleapis.com/chromewebstore/v1.1/items/${ITEM_ID}`;
+const uploadUrl = V2
+  ? `https://chromewebstore.googleapis.com/upload/v2/publishers/${CWS_PUBLISHER_ID}/items/${ITEM_ID}:upload`
+  : `https://www.googleapis.com/upload/chromewebstore/v1.1/items/${ITEM_ID}`;
+const statusUrl = V2 ? `${base}:fetchStatus` : `${base}?projection=DRAFT`;
+const publishUrl = V2 ? `${base}:publish` : `${base}/publish`;
+if (!V2) console.log("no CWS_PUBLISHER_ID — using the v1.1 items API (item id only)");
 
-async function call(url, token, body) {
+async function call(url, token, body, method = "POST") {
   const res = await fetch(url, {
-    method: "POST",
-    headers: { authorization: "Bearer " + token, ...(body ? {} : { "content-length": "0" }) },
+    method,
+    headers: {
+      authorization: "Bearer " + token,
+      "x-goog-api-version": "2",
+      ...(body ? {} : { "content-length": "0" }),
+    },
     body,
   });
   const text = await res.text();
@@ -74,8 +90,9 @@ const token = await accessToken();
 console.log("auth ok");
 
 // Status first — it is a read, and it tells us whether a submission is already in flight.
-const status = await fetch(`${base}:fetchStatus`, { headers: { authorization: "Bearer " + token } })
-  .then(async (r) => ({ status: r.status, body: await r.text() }));
+const status = await fetch(statusUrl, {
+  headers: { authorization: "Bearer " + token, "x-goog-api-version": "2" },
+}).then(async (r) => ({ status: r.status, body: await r.text() }));
 console.log("fetchStatus:", status.status);
 
 /* Print the two revision blocks, not the raw body. The body leads with a ~400-character
@@ -92,8 +109,14 @@ function describeRevision(rev) {
 }
 try {
   const j = JSON.parse(status.body);
-  console.log("  published:", describeRevision(j.publishedItemRevisionStatus));
-  console.log("  submitted:", describeRevision(j.submittedItemRevisionStatus));
+  if (V2) {
+    console.log("  published:", describeRevision(j.publishedItemRevisionStatus));
+    console.log("  submitted:", describeRevision(j.submittedItemRevisionStatus));
+  } else {
+    // v1.1's shape: crxVersion is what's live; uploadState NOT_FOUND means no draft is
+    // pending, IN_PROGRESS/SUCCESS means one is.
+    console.log("  live crx:", j.crxVersion ?? "?", " uploadState:", j.uploadState ?? "?");
+  }
 } catch {
   console.log("  (unparseable response)", status.body.slice(0, 500));
 }
@@ -107,13 +130,13 @@ if (doUpload) {
   console.log("\ndownloading the published zip…");
   const zip = Buffer.from(await (await fetch(ZIP_URL, { redirect: "follow" })).arrayBuffer());
   console.log("zip:", zip.length, "bytes");
-  const up = await call(uploadUrl, token, zip);
+  const up = await call(uploadUrl, token, zip, V2 ? "POST" : "PUT");
   console.log("upload:", up.status, JSON.stringify(up.json).slice(0, 600));
   if (!up.ok) { console.error("\nUpload failed — not attempting to publish."); process.exit(1); }
 }
 
 if (doPublish) {
-  const pub = await call(`${base}:publish`, token);
+  const pub = await call(publishUrl, token);
   console.log("publish:", pub.status, JSON.stringify(pub.json).slice(0, 800));
   if (!pub.ok) {
     console.error(
