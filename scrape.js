@@ -460,16 +460,21 @@ const richness = (l) =>
  */
 const CHECKABLE_HOST =
   /(^|\.)greenhouse\.io$|(^|\.)lever\.co$|(^|\.)ashbyhq\.com$|(^|\.)myworkdayjobs\.com$|(^|\.)icims\.com$|(^|\.)smartrecruiters\.com$/;
-/* Budget per run. The workflow runs every 6h and RECHECK_MS is under a day, so each
- * listing comes due once a day and the budget spreads that across four runs.
+/* Budget per run. The workflow runs twice a day and RECHECK_MS is under a day, so each
+ * listing comes due once a day and the budget spreads that across two runs.
  *
  * ⚠️ Raised 250 -> 600 on 2026-08-17, when board discovery (§24) took the board from 945 to
  * ~1,800 listings and ~1,430 checkable rows. 250x4 = 1,000/day could no longer cover them,
  * so a growing share of the board would have gone unverified — the coverage rot this budget
  * exists to prevent, arriving through the front door as a *success*. Caught by
  * `tests/listings-integrity.test.mjs`, which does the arithmetic rather than trusting this
- * comment; raise the budget with the board, and let that test tell you the floor. */
-const CHECK_BUDGET = 600;
+ * comment; raise the budget with the board, and let that test tell you the floor.
+ * ⚠️ Raised 600 -> 1800 on 2026-09-01, for two compounding reasons: the board had grown to
+ * ~2,900 checkable rows (600x4 = 2,400/day already short, audit issue #3), and update.yml
+ * moved from every 6h to twice daily, halving runs. 1800x2 = 3,600/day covers ~2,900 with
+ * room for the board to keep growing. If the cron changes again, change runsPerDay in
+ * audit-listings.mjs and the x2 in listings-integrity.test.mjs WITH it. */
+const CHECK_BUDGET = 1800;
 /* Under 24h on purpose: at 48h a "daily" check was a promise the code did not keep. */
 const RECHECK_MS = 20 * 60 * 60 * 1000;
 const CHECK_CONCURRENCY = 6;

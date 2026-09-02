@@ -117,12 +117,13 @@ test("a meaningful share of the board is on a host that reports closure honestly
 
 test("the check budget can cover every checkable row daily", () => {
   // Arithmetic, so it fails the moment the board outgrows the budget rather than after
-  // coverage has already rotted. update.yml runs every 6h.
+  // coverage has already rotted. update.yml runs twice a day (0 */12) — change the 2
+  // here and runsPerDay in audit-listings.mjs WITH the cron.
   const checkable = active.filter(S.isCheckable).length;
-  const capacity = S.CHECK_BUDGET * 4;
+  const capacity = S.CHECK_BUDGET * 2;
   assert.ok(capacity >= checkable,
-    `CHECK_BUDGET ${S.CHECK_BUDGET} x 4 runs = ${capacity}/day cannot cover ${checkable} ` +
-    `checkable rows. Raise it to at least ${Math.ceil(checkable / 4)}.`);
+    `CHECK_BUDGET ${S.CHECK_BUDGET} x 2 runs = ${capacity}/day cannot cover ${checkable} ` +
+    `checkable rows. Raise it to at least ${Math.ceil(checkable / 2)}.`);
 });
 
 test("the recheck window is under a day, so 'checked daily' is true", () => {

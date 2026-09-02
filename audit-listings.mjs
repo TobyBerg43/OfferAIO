@@ -154,7 +154,7 @@ if (checkable.some((l) => !l.date_first_seen)) {
 
 /* Is the budget even capable of daily coverage? Arithmetic, not observation — this catches
    the problem the moment the board outgrows the budget, before coverage visibly rots. */
-const runsPerDay = 4; // update.yml cron: 0 */6 * * *
+const runsPerDay = 2; // update.yml cron: 0 */12 * * * — change this WITH the cron
 const capacity = S.CHECK_BUDGET * runsPerDay;
 I(`budget capacity: ${S.CHECK_BUDGET} x ${runsPerDay} runs = ${capacity}/day vs ${checkable.length} checkable`);
 if (capacity < checkable.length) {
