@@ -475,6 +475,42 @@ test("greenhouse: the chip must be OUR filename — someone else's text is not a
   assert.equal(await api.attachResume(rf, RESUME), false);
 });
 
+test("greenhouse: a chip restyled by CSS text-transform still counts as acceptance", async () => {
+  // innerText reflects rendering, so a widget styled uppercase yields
+  // 'PRIYA-RAMAN-RESUME.PDF' — the match must be case-insensitive or every attach on
+  // that board spins the full timeout and reports a working upload as failed.
+  const { api, doc } = load();
+  shrinkAck(api);
+  const rf = new El("input", { type: "file" });
+  doc.body.append(rf);
+  rf.addEventListener("change", () => {
+    const name = rf.files[0] && rf.files[0].name;
+    rf.files = [];
+    if (name) doc.body.textContent += " " + name.toUpperCase();
+  });
+  assert.equal(await api.attachResume(rf, RESUME), true);
+});
+
+test("greenhouse: evidence survives the input node being replaced by a re-render", async () => {
+  // React boards can unmount and replace the file input after consuming the file — a
+  // keyed re-render. Per-node evidence alone would orphan, resumeMissing would flip back
+  // to true, and doSubmit would refuse an application whose resume is already uploaded.
+  const { api, doc } = load();
+  shrinkAck(api);
+  const rf = new El("input", { type: "file" });
+  doc.body.append(rf);
+  rf.addEventListener("change", () => {
+    const name = rf.files[0] && rf.files[0].name;
+    rf.files = [];
+    if (name) doc.body.textContent += " " + name;
+  });
+  assert.equal(await api.attachResume(rf, RESUME), true);
+  doc.body.children = [];                                  // the widget re-renders...
+  doc.body.append(new El("input", { type: "file" }));      // ...with a fresh input node
+  assert.equal(api.resumeMissing(), false,
+    "a replaced input node must not orphan the attach evidence");
+});
+
 test("greenhouse: a late-mounting handler is nudged with a re-dispatch until it hears us", async () => {
   const { api, doc } = load();
   shrinkAck(api);

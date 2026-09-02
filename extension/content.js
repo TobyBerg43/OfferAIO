@@ -300,28 +300,54 @@
      The pair is deliberately per-input, so a cover letter's chip can never vouch for a
      missing resume. */
   const seenFiles = new WeakMap();
-  if (document.addEventListener) {
-    document.addEventListener("change", (e) => {
-      const t = e.target;
-      if (t && t.type === "file" && t.files && t.files.length) seenFiles.set(t, t.files[0].name);
-    }, true);
-  }
+  /* The WeakMap alone is not enough: React boards can unmount and REPLACE the input node
+     after consuming the file (a keyed re-render), which orphans per-node evidence and
+     brings the refuse-to-submit deadlock back through the side door. resumeSeen remembers
+     the last filename that landed on whatever findResume() pointed at, by value, so the
+     evidence survives the node it arrived on. */
+  let resumeSeen = null;
+  document.addEventListener("change", (e) => {
+    const t = e.target;
+    if (t && t.type === "file" && t.files && t.files.length) {
+      seenFiles.set(t, t.files[0].name);
+      if (t === findResume()) resumeSeen = t.files[0].name;
+    }
+  }, true);
+  /* Case-insensitive on purpose: innerText reflects CSS, so a chip styled with
+     text-transform would never match the stored name exactly. The stem fragment catches
+     widgets that truncate long filenames — 12 chars of a real resume's name is
+     distinctive; a shorter stem falls back to the exact match alone.
+     Known residual: this reads ANY rendering of the filename as acceptance, including a
+     hypothetical "x.pdf was rejected" error. Accepted: doSubmit still validates the form,
+     and the tracker only counts sends the page itself evidenced. */
   const chipVisible = (name) => {
     if (!name || !document.body) return false;
-    const text = document.body.innerText || document.body.textContent || "";
-    return typeof text === "string" && text.includes(name);
+    const text = (document.body.innerText || document.body.textContent || "").toLowerCase();
+    const n = String(name).toLowerCase();
+    if (text.includes(n)) return true;
+    const stem = n.replace(/\.[a-z0-9]+$/, "");
+    return stem.length >= 12 && text.includes(stem.slice(0, 12));
+  };
+
+  /* The one evidence predicate, shared by attachResume() and resumeMissing() so the two
+     can never disagree about what "attached" means: a file on the input, or the page
+     rendering the filename of a file we watched land on this input (the consuming-
+     uploader case — see the note above). Only ever called with findResume()'s input,
+     which is what makes the resumeSeen fallback safe: it never lets a cover letter's
+     chip vouch for the resume. */
+  const attachEvidence = (rf) => {
+    if (!rf) return false;
+    if (rf.files && rf.files.length) return true;
+    const seen = seenFiles.get(rf) || resumeSeen;
+    return !!(seen && chipVisible(seen));
   };
 
   /* True when the page wants a file and there is no evidence one is attached — after
      attachResume() has had its go. Full-auto must not race past this and send a
-     resume-less application. A file on the input counts; so does the page rendering the
-     filename of a file we watched land on this input (the consuming-uploader case). */
+     resume-less application. */
   const resumeMissing = () => {
     const rf = findResume();
-    if (!rf) return false;
-    if (rf.files.length) return false;
-    const seen = seenFiles.get(rf);
-    return !(seen && chipVisible(seen));
+    return !!rf && !attachEvidence(rf);
   };
 
   const b64ToBytes = (b64) => {
@@ -366,10 +392,9 @@
   const ACK = { ms: 6000, nudgeMs: 1200, pollMs: 200 }; // exposed for tests
   async function attachResume(rf, resume) {
     if (!rf || !resume || !resume.data) return false;
-    if (rf.files && rf.files.length) return true; // the user already attached one
-    // A consuming uploader already holds a file it took from this input (theirs or ours).
-    const seen = seenFiles.get(rf);
-    if (seen && chipVisible(seen)) return true;
+    // A file already on the input (the user picked one), or already consumed by the
+    // uploader (theirs or ours) — either way, not ours to overwrite.
+    if (attachEvidence(rf)) return true;
     try {
       if (typeof DataTransfer !== "function" || typeof File !== "function") return false;
       const file = new File([b64ToBytes(resume.data)], resume.name || "resume.pdf", {
@@ -382,13 +407,14 @@
           rf.files = dt.files;
         }
         seenFiles.set(rf, file.name);
+        resumeSeen = file.name; // survives the input node being replaced by a re-render
         // React and friends listen for one or the other; send both.
         rf.dispatchEvent(new Event("input", { bubbles: true }));
         rf.dispatchEvent(new Event("change", { bubbles: true }));
       };
       handoff();
       const held = () => rf.files.length === 1 && rf.files[0].size === file.size;
-      if (!/greenhouse\.io$/.test(HOST)) return held();
+      if (!/(^|\.)greenhouse\.io$/.test(HOST)) return held();
       const deadline = Date.now() + ACK.ms;
       let nudgeAt = Date.now() + ACK.nudgeMs;
       while (Date.now() < deadline) {
