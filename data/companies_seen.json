@@ -262,7 +262,7 @@
  "tesla": {
   "name": "Tesla",
   "lastSeen": "2026-09-02",
-  "roles": 44
+  "roles": 48
  },
  "apex-technology-inc": {
   "name": "Apex Technology, Inc.",
@@ -392,7 +392,7 @@
  "hermeus": {
   "name": "Hermeus",
   "lastSeen": "2026-09-02",
-  "roles": 7
+  "roles": 10
  },
  "nbcuniversal": {
   "name": "NBCUniversal",
@@ -912,7 +912,7 @@
  "hntb": {
   "name": "HNTB",
   "lastSeen": "2026-09-02",
-  "roles": 37
+  "roles": 38
  },
  "keybank": {
   "name": "KeyBank",
@@ -927,7 +927,7 @@
  "ge-vernova": {
   "name": "GE Vernova",
   "lastSeen": "2026-09-02",
-  "roles": 29
+  "roles": 28
  },
  "american-fidelity": {
   "name": "American Fidelity",
@@ -1032,7 +1032,7 @@
  "raytheon": {
   "name": "Raytheon",
   "lastSeen": "2026-09-02",
-  "roles": 20
+  "roles": 21
  },
  "sel": {
   "name": "SEL",
@@ -1672,7 +1672,7 @@
  "michelin": {
   "name": "Michelin",
   "lastSeen": "2026-09-02",
-  "roles": 8
+  "roles": 19
  },
  "menasha-corporation": {
   "name": "Menasha Corporation",
@@ -2147,7 +2147,7 @@
  "eight-sleep": {
   "name": "Eight Sleep",
   "lastSeen": "2026-09-02",
-  "roles": 2
+  "roles": 3
  },
  "eragon": {
   "name": "Eragon",
@@ -2262,7 +2262,7 @@
  "rocket-lab-usa": {
   "name": "Rocket Lab USA",
   "lastSeen": "2026-09-02",
-  "roles": 34
+  "roles": 35
  },
  "didi-global": {
   "name": "DiDi Global",
@@ -2712,7 +2712,7 @@
  "johnson-and-johnson": {
   "name": "Johnson & Johnson",
   "lastSeen": "2026-09-02",
-  "roles": 9
+  "roles": 8
  },
  "ksm": {
   "name": "KSM",
@@ -2917,7 +2917,7 @@
  "general-matter": {
   "name": "General Matter",
   "lastSeen": "2026-09-02",
-  "roles": 10
+  "roles": 11
  },
  "regions-bank": {
   "name": "Regions Bank",
@@ -3861,7 +3861,7 @@
  },
  "panasonic-holdings": {
   "name": "Panasonic Holdings",
-  "lastSeen": "2026-09-01",
+  "lastSeen": "2026-09-02",
   "roles": 1
  },
  "merchants-bank-of-indiana": {
@@ -3902,7 +3902,7 @@
  "first-national-bank": {
   "name": "First National Bank",
   "lastSeen": "2026-09-02",
-  "roles": 47
+  "roles": 48
  },
  "edwards-lifesciences": {
   "name": "Edwards Lifesciences",
@@ -4042,7 +4042,7 @@
  "aerovironment": {
   "name": "AeroVironment",
   "lastSeen": "2026-09-02",
-  "roles": 8
+  "roles": 9
  },
  "rapdev": {
   "name": "RapDev",
@@ -4067,12 +4067,12 @@
  "united-airlines": {
   "name": "United Airlines",
   "lastSeen": "2026-09-02",
-  "roles": 3
+  "roles": 2
  },
  "corning": {
   "name": "Corning",
   "lastSeen": "2026-09-02",
-  "roles": 5
+  "roles": 6
  },
  "post-holdings": {
   "name": "Post Holdings",
@@ -4157,10 +4157,25 @@
  "john-deere": {
   "name": "John Deere",
   "lastSeen": "2026-09-02",
-  "roles": 1
+  "roles": 2
  },
  "poet": {
   "name": "POET",
+  "lastSeen": "2026-09-02",
+  "roles": 1
+ },
+ "boston-scientific": {
+  "name": "Boston Scientific",
+  "lastSeen": "2026-09-02",
+  "roles": 2
+ },
+ "ingredion": {
+  "name": "Ingredion",
+  "lastSeen": "2026-09-02",
+  "roles": 1
+ },
+ "njm-insurance-group": {
+  "name": "NJM Insurance Group",
   "lastSeen": "2026-09-02",
   "roles": 1
  }
