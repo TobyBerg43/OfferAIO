@@ -115,6 +115,11 @@
     "slug": "architect"
   },
   {
+    "name": "Armadin",
+    "ats": "ashby",
+    "slug": "armadin"
+  },
+  {
     "name": "Astera",
     "ats": "ashby",
     "slug": "astera"
@@ -175,11 +180,6 @@
     "slug": "bland"
   },
   {
-    "name": "Blockhouse",
-    "ats": "ashby",
-    "slug": "blockhouse"
-  },
-  {
     "name": "Bloxd",
     "ats": "ashby",
     "slug": "bloxd"
@@ -208,6 +208,11 @@
     "name": "Charge Robotics",
     "ats": "ashby",
     "slug": "charge-robotics"
+  },
+  {
+    "name": "Cheiron",
+    "ats": "ashby",
+    "slug": "cheiron"
   },
   {
     "name": "Circleback",
@@ -265,6 +270,11 @@
     "slug": "context"
   },
   {
+    "name": "Contoro",
+    "ats": "ashby",
+    "slug": "contoro"
+  },
+  {
     "name": "Coverdash",
     "ats": "ashby",
     "slug": "coverdash"
@@ -318,6 +328,11 @@
     "name": "Deepgram",
     "ats": "ashby",
     "slug": "deepgram"
+  },
+  {
+    "name": "Deft AI",
+    "ats": "ashby",
+    "slug": "deft-ai"
   },
   {
     "name": "Delinea",
@@ -810,6 +825,11 @@
     "slug": "meshy"
   },
   {
+    "name": "Mind Robotics",
+    "ats": "ashby",
+    "slug": "mindrobotics"
+  },
+  {
     "name": "Mistral AI",
     "ats": "ashby",
     "slug": "mistral.ai"
@@ -870,6 +890,11 @@
     "slug": "newlantern"
   },
   {
+    "name": "Niantic Spatial",
+    "ats": "ashby",
+    "slug": "niantic-spatial"
+  },
+  {
     "name": "Niural",
     "ats": "ashby",
     "slug": "niural"
@@ -915,9 +940,19 @@
     "slug": "obvious"
   },
   {
+    "name": "Oceanus Marine Technologies",
+    "ats": "ashby",
+    "slug": "oceanus"
+  },
+  {
     "name": "Odin Dynamics, Inc",
     "ats": "ashby",
     "slug": "odin-dynamics"
+  },
+  {
+    "name": "Odys Aviation",
+    "ats": "ashby",
+    "slug": "odys-aviation"
   },
   {
     "name": "Odyssey",
@@ -1090,6 +1125,11 @@
     "slug": "PrimeIntellect"
   },
   {
+    "name": "Primer",
+    "ats": "ashby",
+    "slug": "primer"
+  },
+  {
     "name": "Prior Labs",
     "ats": "ashby",
     "slug": "prior-labs"
@@ -1108,6 +1148,16 @@
     "name": "Quadrillion",
     "ats": "ashby",
     "slug": "quadrillion-labs"
+  },
+  {
+    "name": "Qualified Health",
+    "ats": "ashby",
+    "slug": "qualified-health-pbc"
+  },
+  {
+    "name": "Ramiel Capital",
+    "ats": "ashby",
+    "slug": "ramielcapital"
   },
   {
     "name": "RapDev",
@@ -1325,6 +1375,11 @@
     "slug": "tessera-labs"
   },
   {
+    "name": "The Exploration Company",
+    "ats": "ashby",
+    "slug": "the-exploration-company"
+  },
+  {
     "name": "The Voleon Group",
     "ats": "ashby",
     "slug": "voleon"
@@ -1375,6 +1430,11 @@
     "slug": "unify"
   },
   {
+    "name": "UnitX",
+    "ats": "ashby",
+    "slug": "unitxlabs"
+  },
+  {
     "name": "Unlikely AI",
     "ats": "ashby",
     "slug": "unlikelyai"
@@ -1388,6 +1448,11 @@
     "name": "Upvest",
     "ats": "ashby",
     "slug": "upvest"
+  },
+  {
+    "name": "Valon",
+    "ats": "ashby",
+    "slug": "Valon"
   },
   {
     "name": "Valstad",
@@ -1598,6 +1663,11 @@
     "name": "Alarm.com",
     "ats": "greenhouse",
     "slug": "alarmcom"
+  },
+  {
+    "name": "Albedo",
+    "ats": "greenhouse",
+    "slug": "albedo"
   },
   {
     "name": "ALKU",
@@ -2115,6 +2185,11 @@
     "slug": "detroitlions"
   },
   {
+    "name": "Dev Technology Group",
+    "ats": "greenhouse",
+    "slug": "devtechnology"
+  },
+  {
     "name": "DevRev",
     "ats": "greenhouse",
     "slug": "devrev"
@@ -2300,9 +2375,19 @@
     "slug": "fairlife"
   },
   {
+    "name": "Faraday Future",
+    "ats": "greenhouse",
+    "slug": "faradayfuture"
+  },
+  {
     "name": "Fever Up",
     "ats": "greenhouse",
     "slug": "feverup"
+  },
+  {
+    "name": "FGS Global",
+    "ats": "greenhouse",
+    "slug": "fgsglobal"
   },
   {
     "name": "Figma",
@@ -2453,6 +2538,11 @@
     "name": "Geotab",
     "ats": "greenhouse",
     "slug": "geotab"
+  },
+  {
+    "name": "Geotab",
+    "ats": "greenhouse",
+    "slug": "internshiplist2000"
   },
   {
     "name": "Ginkgo Bioworks",
@@ -2995,6 +3085,11 @@
     "slug": "metoxinternationalinc"
   },
   {
+    "name": "Mill",
+    "ats": "greenhouse",
+    "slug": "mill"
+  },
+  {
     "name": "Minitab",
     "ats": "greenhouse",
     "slug": "minitab"
@@ -3285,6 +3380,11 @@
     "slug": "planetscale"
   },
   {
+    "name": "PlayStation",
+    "ats": "greenhouse",
+    "slug": "waterloocoop"
+  },
+  {
     "name": "PLS",
     "ats": "greenhouse",
     "slug": "plscareers"
@@ -3440,6 +3540,11 @@
     "slug": "rise8"
   },
   {
+    "name": "Riverside Natural Foods",
+    "ats": "greenhouse",
+    "slug": "riversidenaturalfoodsltd"
+  },
+  {
     "name": "Robinhood",
     "ats": "greenhouse",
     "slug": "robinhood"
@@ -3588,6 +3693,11 @@
     "name": "SK Hynix Memory Solution",
     "ats": "greenhouse",
     "slug": "skhynixmemorysolutionsamericainc"
+  },
+  {
+    "name": "skillz",
+    "ats": "greenhouse",
+    "slug": "skillzinc"
   },
   {
     "name": "Skyryse",
@@ -3910,6 +4020,11 @@
     "slug": "vardaspace"
   },
   {
+    "name": "Vaxcyte",
+    "ats": "greenhouse",
+    "slug": "vaxcyte"
+  },
+  {
     "name": "Veeam Software",
     "ats": "greenhouse",
     "slug": "veeamsoftware"
@@ -4150,6 +4265,11 @@
     "slug": "altaml"
   },
   {
+    "name": "Ambi Robotics",
+    "ats": "lever",
+    "slug": "ambirobotics"
+  },
+  {
     "name": "Analytic Partners",
     "ats": "lever",
     "slug": "analyticpartners"
@@ -4285,6 +4405,11 @@
     "slug": "drivemode"
   },
   {
+    "name": "Dynamic Catholic",
+    "ats": "lever",
+    "slug": "dynamiccatholic"
+  },
+  {
     "name": "E-Space",
     "ats": "lever",
     "slug": "espace"
@@ -4368,6 +4493,11 @@
     "name": "Fluxergy",
     "ats": "lever",
     "slug": "fluxergy-2"
+  },
+  {
+    "name": "FOTH",
+    "ats": "lever",
+    "slug": "foth"
   },
   {
     "name": "Fullscript",
@@ -4510,9 +4640,19 @@
     "slug": "magnetforensics"
   },
   {
+    "name": "Major League Baseball",
+    "ats": "lever",
+    "slug": "redsox"
+  },
+  {
     "name": "Mercedes-Benz",
     "ats": "lever",
     "slug": "MBRDNA"
+  },
+  {
+    "name": "Mirego",
+    "ats": "lever",
+    "slug": "mirego"
   },
   {
     "name": "Multiply Labs",
@@ -4573,6 +4713,11 @@
     "name": "Parallel Wireless",
     "ats": "lever",
     "slug": "parallelwireless"
+  },
+  {
+    "name": "Parkdepot",
+    "ats": "lever",
+    "slug": "salesdemo-jr"
   },
   {
     "name": "Pelmorex",
@@ -4745,11 +4890,6 @@
     "slug": "syntax"
   },
   {
-    "name": "Synthego",
-    "ats": "lever",
-    "slug": "synthego"
-  },
-  {
     "name": "Tahoe Therapeutics",
     "ats": "lever",
     "slug": "tahoebio-ai"
@@ -4795,6 +4935,11 @@
     "slug": "traackr"
   },
   {
+    "name": "Tutor Intelligence",
+    "ats": "lever",
+    "slug": "tutorintelligence"
+  },
+  {
     "name": "UntilLabs",
     "ats": "lever",
     "slug": "until"
@@ -4838,6 +4983,11 @@
     "name": "WeRide",
     "ats": "lever",
     "slug": "weride"
+  },
+  {
+    "name": "Western Aircraft",
+    "ats": "lever",
+    "slug": "westair"
   },
   {
     "name": "Woven",
@@ -5003,6 +5153,20 @@
     "host": "agilent.wd5.myworkdayjobs.com",
     "tenant": "agilent",
     "site": "Agilent_Student_Careers"
+  },
+  {
+    "name": "AIG",
+    "ats": "workday",
+    "host": "aig.wd1.myworkdayjobs.com",
+    "tenant": "aig",
+    "site": "aig"
+  },
+  {
+    "name": "AIG",
+    "ats": "workday",
+    "host": "aig.wd1.myworkdayjobs.com",
+    "tenant": "aig",
+    "site": "early_careers"
   },
   {
     "name": "Air Liquide",
@@ -5290,6 +5454,13 @@
     "host": "ancestry.wd501.myworkdayjobs.com",
     "tenant": "ancestry",
     "site": "Careers"
+  },
+  {
+    "name": "Andersen Corporation",
+    "ats": "workday",
+    "host": "andersen.wd12.myworkdayjobs.com",
+    "tenant": "andersen",
+    "site": "Andersen_External_Career_Site"
   },
   {
     "name": "Anglian Water",
@@ -6657,6 +6828,13 @@
     "site": "olatheks"
   },
   {
+    "name": "City of Vancouver",
+    "ats": "workday",
+    "host": "cityofvancouver.wd5.myworkdayjobs.com",
+    "tenant": "cityofvancouver",
+    "site": "COV"
+  },
+  {
     "name": "Clarios",
     "ats": "workday",
     "host": "clarios.wd5.myworkdayjobs.com",
@@ -6928,6 +7106,13 @@
     "host": "creditacceptance.wd5.myworkdayjobs.com",
     "tenant": "creditacceptance",
     "site": "Credit_Acceptance"
+  },
+  {
+    "name": "Crest Nicholson",
+    "ats": "workday",
+    "host": "crestnicholson.wd103.myworkdayjobs.com",
+    "tenant": "crestnicholson",
+    "site": "CN"
   },
   {
     "name": "Criteo",
@@ -8225,6 +8410,13 @@
     "site": "HCSC_External"
   },
   {
+    "name": "HD Supply",
+    "ats": "workday",
+    "host": "hdsupply.wd1.myworkdayjobs.com",
+    "tenant": "hdsupply",
+    "site": "External"
+  },
+  {
     "name": "Health Research",
     "ats": "workday",
     "host": "healthresearch.wd1.myworkdayjobs.com",
@@ -8393,6 +8585,13 @@
     "site": "huroncareers"
   },
   {
+    "name": "IAT Insurance Group",
+    "ats": "workday",
+    "host": "iatinsurancegroup.wd1.myworkdayjobs.com",
+    "tenant": "iatinsurancegroup",
+    "site": "iat"
+  },
+  {
     "name": "Iberdrola Group",
     "ats": "workday",
     "host": "iberdrola.wd3.myworkdayjobs.com",
@@ -8468,6 +8667,13 @@
     "host": "ingrammicro.wd5.myworkdayjobs.com",
     "tenant": "ingrammicro",
     "site": "IngramMicro"
+  },
+  {
+    "name": "Ingredion",
+    "ats": "workday",
+    "host": "ingredion.wd1.myworkdayjobs.com",
+    "tenant": "ingredion",
+    "site": "IngredionCareers"
   },
   {
     "name": "Inmar Intelligence",
@@ -8876,6 +9082,13 @@
     "site": "Kobo"
   },
   {
+    "name": "Kokosing",
+    "ats": "workday",
+    "host": "kokosing.wd5.myworkdayjobs.com",
+    "tenant": "kokosing",
+    "site": "Kokosing_External_Career_Site"
+  },
+  {
     "name": "Koppers",
     "ats": "workday",
     "host": "koppers.wd5.myworkdayjobs.com",
@@ -8937,6 +9150,13 @@
     "host": "lambweston.wd1.myworkdayjobs.com",
     "tenant": "lambweston",
     "site": "lamb_external"
+  },
+  {
+    "name": "Land O'Lakes",
+    "ats": "workday",
+    "host": "landolakes.wd1.myworkdayjobs.com",
+    "tenant": "landolakes",
+    "site": "landolakes"
   },
   {
     "name": "Las Vegas Valley Water District",
@@ -9667,6 +9887,13 @@
     "site": "New_York_Post_Careers"
   },
   {
+    "name": "Newrez",
+    "ats": "workday",
+    "host": "newrez.wd1.myworkdayjobs.com",
+    "tenant": "newrez",
+    "site": "NRZ"
+  },
+  {
     "name": "NewYork-Presbyterian",
     "ats": "workday",
     "host": "nyp.wd1.myworkdayjobs.com",
@@ -9721,6 +9948,13 @@
     "host": "alliance.wd3.myworkdayjobs.com",
     "tenant": "alliance",
     "site": "nissanjobs"
+  },
+  {
+    "name": "NJM Insurance Group",
+    "ats": "workday",
+    "host": "njm.wd1.myworkdayjobs.com",
+    "tenant": "njm",
+    "site": "njm"
   },
   {
     "name": "Nordson",
@@ -9882,6 +10116,13 @@
     "host": "omers.wd3.myworkdayjobs.com",
     "tenant": "omers",
     "site": "omers_external"
+  },
+  {
+    "name": "Omnicom Group",
+    "ats": "workday",
+    "host": "interpublic.wd5.myworkdayjobs.com",
+    "tenant": "interpublic",
+    "site": "omc"
   },
   {
     "name": "OneMain Financial",
@@ -10113,6 +10354,13 @@
     "tenant": "pnc",
     "host": "pnc.wd5.myworkdayjobs.com",
     "site": "External"
+  },
+  {
+    "name": "POET",
+    "ats": "workday",
+    "host": "poet.wd1.myworkdayjobs.com",
+    "tenant": "poet",
+    "site": "POET"
   },
   {
     "name": "Polaris",
@@ -11249,6 +11497,13 @@
     "site": "targetcareers"
   },
   {
+    "name": "Tarrant Regional Water District",
+    "ats": "workday",
+    "host": "trwd.wd1.myworkdayjobs.com",
+    "tenant": "trwd",
+    "site": "TRWDCareers"
+  },
+  {
     "name": "Taylor Corporation",
     "ats": "workday",
     "host": "taylor.wd1.myworkdayjobs.com",
@@ -11872,6 +12127,13 @@
     "site": "US_Bank_Careers"
   },
   {
+    "name": "US Foods",
+    "ats": "workday",
+    "host": "usfoods.wd1.myworkdayjobs.com",
+    "tenant": "usfoods",
+    "site": "usfoodscareersExternal"
+  },
+  {
     "name": "USAA",
     "ats": "workday",
     "host": "usaa.wd1.myworkdayjobs.com",
@@ -11947,6 +12209,13 @@
     "host": "velera.wd5.myworkdayjobs.com",
     "tenant": "velera",
     "site": "VeleraCareers"
+  },
+  {
+    "name": "Venerable",
+    "ats": "workday",
+    "host": "venerable.wd5.myworkdayjobs.com",
+    "tenant": "venerable",
+    "site": "venerablecareers"
   },
   {
     "name": "Vera Bradley",
@@ -12082,6 +12351,13 @@
     "site": "careers"
   },
   {
+    "name": "Walmart",
+    "ats": "workday",
+    "host": "walmart.wd504.myworkdayjobs.com",
+    "tenant": "walmart",
+    "site": "WalmartExternal"
+  },
+  {
     "name": "Warner Bros.",
     "ats": "workday",
     "host": "warnerbros.wd5.myworkdayjobs.com",
@@ -12199,6 +12475,13 @@
     "host": "winlandfoods.wd1.myworkdayjobs.com",
     "tenant": "winlandfoods",
     "site": "external"
+  },
+  {
+    "name": "Wonder",
+    "ats": "workday",
+    "host": "wonder.wd1.myworkdayjobs.com",
+    "tenant": "wonder",
+    "site": "WG"
   },
   {
     "name": "Woodward Governor",
