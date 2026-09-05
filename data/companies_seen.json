@@ -727,7 +727,7 @@
  "medtronic": {
   "name": "Medtronic",
   "lastSeen": "2026-09-05",
-  "roles": 10
+  "roles": 9
  },
  "postman": {
   "name": "Postman",
@@ -747,7 +747,7 @@
  "microsoft": {
   "name": "Microsoft",
   "lastSeen": "2026-09-05",
-  "roles": 10
+  "roles": 11
  },
  "dv-trading": {
   "name": "DV Trading",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-09-05",
-  "roles": 11
+  "roles": 10
  },
  "bytedance": {
   "name": "ByteDance",
@@ -847,7 +847,7 @@
  "mastercard": {
   "name": "Mastercard",
   "lastSeen": "2026-09-05",
-  "roles": 13
+  "roles": 12
  },
  "blackstone": {
   "name": "Blackstone",
@@ -912,7 +912,7 @@
  "hntb": {
   "name": "HNTB",
   "lastSeen": "2026-09-05",
-  "roles": 53
+  "roles": 56
  },
  "keybank": {
   "name": "KeyBank",
@@ -1012,7 +1012,7 @@
  "teledyne": {
   "name": "Teledyne",
   "lastSeen": "2026-09-05",
-  "roles": 5
+  "roles": 4
  },
  "bosch": {
   "name": "Bosch",
@@ -1087,7 +1087,7 @@
  "microchip": {
   "name": "Microchip",
   "lastSeen": "2026-09-05",
-  "roles": 1
+  "roles": 2
  },
  "two-six-technologies": {
   "name": "Two Six Technologies",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-09-05",
-  "roles": 10
+  "roles": 12
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1657,7 +1657,7 @@
  "mosaic": {
   "name": "Mosaic",
   "lastSeen": "2026-09-05",
-  "roles": 14
+  "roles": 13
  },
  "monolithic-power-systems": {
   "name": "Monolithic Power Systems",
@@ -2272,7 +2272,7 @@
  "neuralink": {
   "name": "Neuralink",
   "lastSeen": "2026-09-05",
-  "roles": 18
+  "roles": 19
  },
  "genscript": {
   "name": "GenScript",
@@ -2727,7 +2727,7 @@
  "brunswick": {
   "name": "Brunswick",
   "lastSeen": "2026-09-05",
-  "roles": 32
+  "roles": 31
  },
  "abbott": {
   "name": "Abbott",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-09-05",
-  "roles": 15
+  "roles": 13
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -3127,7 +3127,7 @@
  "the-walt-disney-company": {
   "name": "The Walt Disney Company",
   "lastSeen": "2026-09-05",
-  "roles": 14
+  "roles": 12
  },
  "impact-com": {
   "name": "impact.com",
@@ -3462,7 +3462,7 @@
  "cesiumastro": {
   "name": "CesiumAstro",
   "lastSeen": "2026-09-05",
-  "roles": 1
+  "roles": 2
  },
  "shein": {
   "name": "SHEIN",
@@ -3637,7 +3637,7 @@
  "charles-schwab": {
   "name": "Charles Schwab",
   "lastSeen": "2026-09-05",
-  "roles": 2
+  "roles": 4
  },
  "xaira-therapeutics": {
   "name": "Xaira Therapeutics",
@@ -4002,7 +4002,7 @@
  "apex": {
   "name": "Apex",
   "lastSeen": "2026-09-05",
-  "roles": 9
+  "roles": 8
  },
  "iat-insurance-group": {
   "name": "IAT Insurance Group",
@@ -4207,7 +4207,7 @@
  "clearwater-analytics": {
   "name": "Clearwater Analytics",
   "lastSeen": "2026-09-05",
-  "roles": 3
+  "roles": 2
  },
  "gpc": {
   "name": "GPC",
@@ -4332,12 +4332,12 @@
  "oceanus-marine-technologies": {
   "name": "Oceanus Marine Technologies",
   "lastSeen": "2026-09-05",
-  "roles": 2
+  "roles": 1
  },
  "apex-technology": {
   "name": "Apex Technology",
   "lastSeen": "2026-09-05",
-  "roles": 3
+  "roles": 4
  },
  "crum-and-forster-insurance": {
   "name": "Crum & Forster Insurance",
@@ -4357,7 +4357,7 @@
  "shure": {
   "name": "Shure",
   "lastSeen": "2026-09-05",
-  "roles": 30
+  "roles": 29
  },
  "hd-supply": {
   "name": "HD Supply",
@@ -4632,12 +4632,12 @@
  "paypal": {
   "name": "PayPal",
   "lastSeen": "2026-09-05",
-  "roles": 2
+  "roles": 3
  },
  "marvell": {
   "name": "Marvell",
   "lastSeen": "2026-09-05",
-  "roles": 11
+  "roles": 12
  },
  "massmutual-ascend": {
   "name": "MassMutual Ascend",
@@ -4692,11 +4692,31 @@
  "cox": {
   "name": "Cox",
   "lastSeen": "2026-09-05",
-  "roles": 1
+  "roles": 2
  },
  "hy-vee": {
   "name": "Hy-Vee",
   "lastSeen": "2026-09-05",
   "roles": 4
+ },
+ "garner-health": {
+  "name": "Garner Health",
+  "lastSeen": "2026-09-05",
+  "roles": 1
+ },
+ "juicebox": {
+  "name": "Juicebox",
+  "lastSeen": "2026-09-05",
+  "roles": 1
+ },
+ "cna-insurance": {
+  "name": "CNA Insurance",
+  "lastSeen": "2026-09-05",
+  "roles": 1
+ },
+ "simon-property-group": {
+  "name": "Simon Property Group",
+  "lastSeen": "2026-09-05",
+  "roles": 1
  }
 }
