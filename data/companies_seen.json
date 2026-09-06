@@ -1012,7 +1012,7 @@
  "teledyne": {
   "name": "Teledyne",
   "lastSeen": "2026-09-06",
-  "roles": 4
+  "roles": 5
  },
  "bosch": {
   "name": "Bosch",
@@ -1032,7 +1032,7 @@
  "raytheon": {
   "name": "Raytheon",
   "lastSeen": "2026-09-06",
-  "roles": 18
+  "roles": 17
  },
  "sel": {
   "name": "SEL",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-09-06",
-  "roles": 16
+  "roles": 19
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1882,7 +1882,7 @@
  "booz-allen": {
   "name": "Booz Allen",
   "lastSeen": "2026-09-06",
-  "roles": 49
+  "roles": 46
  },
  "bdo": {
   "name": "BDO",
@@ -2262,7 +2262,7 @@
  "rocket-lab-usa": {
   "name": "Rocket Lab USA",
   "lastSeen": "2026-09-06",
-  "roles": 35
+  "roles": 32
  },
  "didi-global": {
   "name": "DiDi Global",
@@ -2542,7 +2542,7 @@
  "harbinger-motors": {
   "name": "Harbinger Motors",
   "lastSeen": "2026-09-06",
-  "roles": 5
+  "roles": 6
  },
  "xtx-markets": {
   "name": "XTX Markets",
@@ -2727,7 +2727,7 @@
  "brunswick": {
   "name": "Brunswick",
   "lastSeen": "2026-09-06",
-  "roles": 31
+  "roles": 32
  },
  "abbott": {
   "name": "Abbott",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-09-06",
-  "roles": 12
+  "roles": 10
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -4112,7 +4112,7 @@
  "aig": {
   "name": "AIG",
   "lastSeen": "2026-09-06",
-  "roles": 17
+  "roles": 18
  },
  "allegion": {
   "name": "Allegion",
@@ -4207,7 +4207,7 @@
  "clearwater-analytics": {
   "name": "Clearwater Analytics",
   "lastSeen": "2026-09-06",
-  "roles": 2
+  "roles": 3
  },
  "gpc": {
   "name": "GPC",
@@ -4357,7 +4357,7 @@
  "shure": {
   "name": "Shure",
   "lastSeen": "2026-09-06",
-  "roles": 29
+  "roles": 30
  },
  "hd-supply": {
   "name": "HD Supply",
@@ -4716,6 +4716,16 @@
  },
  "simon-property-group": {
   "name": "Simon Property Group",
+  "lastSeen": "2026-09-06",
+  "roles": 1
+ },
+ "aarete": {
+  "name": "AArete",
+  "lastSeen": "2026-09-06",
+  "roles": 1
+ },
+ "stokespacetechnologies": {
+  "name": "Stokespacetechnologies",
   "lastSeen": "2026-09-06",
   "roles": 1
  }
