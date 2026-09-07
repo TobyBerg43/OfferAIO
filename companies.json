@@ -425,11 +425,6 @@
     "slug": "ether.fi"
   },
   {
-    "name": "ETHGlobal",
-    "ats": "ashby",
-    "slug": "ethglobal"
-  },
-  {
     "name": "Exa Labs",
     "ats": "ashby",
     "slug": "exa"
@@ -1950,6 +1945,11 @@
     "slug": "bracebridgecapital"
   },
   {
+    "name": "Brave",
+    "ats": "greenhouse",
+    "slug": "brave"
+  },
+  {
     "name": "Brevium",
     "ats": "greenhouse",
     "slug": "brevium"
@@ -2495,6 +2495,11 @@
     "slug": "gardacp"
   },
   {
+    "name": "Garner Health",
+    "ats": "greenhouse",
+    "slug": "garnerhealth"
+  },
+  {
     "name": "GCM Grosvenor",
     "ats": "greenhouse",
     "slug": "gcmgrosvenor"
@@ -2688,6 +2693,11 @@
     "name": "HumanSignal",
     "ats": "greenhouse",
     "slug": "humansignal"
+  },
+  {
+    "name": "ID.me",
+    "ats": "greenhouse",
+    "slug": "idmeuniversityrecruiting"
   },
   {
     "name": "IEM",
@@ -2995,14 +3005,9 @@
     "slug": "philliesbaseballoperations"
   },
   {
-    "name": "Marqeta",
+    "name": "Man Group",
     "ats": "greenhouse",
-    "slug": "marqeta"
-  },
-  {
-    "name": "Marqeta",
-    "ats": "greenhouse",
-    "slug": "mqreferrals"
+    "slug": "mangroup"
   },
   {
     "name": "Marshall Wace",
@@ -3798,6 +3803,11 @@
     "name": "StockX",
     "ats": "greenhouse",
     "slug": "stockx"
+  },
+  {
+    "name": "Stokespacetechnologies",
+    "ats": "greenhouse",
+    "slug": "stokespacetechnologies"
   },
   {
     "name": "STR",
@@ -6898,6 +6908,13 @@
     "site": "cme_careers"
   },
   {
+    "name": "CNA Insurance",
+    "ats": "workday",
+    "host": "cna.wd1.myworkdayjobs.com",
+    "tenant": "cna",
+    "site": "CNA_Careers"
+  },
+  {
     "name": "CNO Financial Group",
     "ats": "workday",
     "host": "cnoinc.wd5.myworkdayjobs.com",
@@ -7337,6 +7354,13 @@
     "host": "directsupply.wd501.myworkdayjobs.com",
     "tenant": "directsupply",
     "site": "direct-supply-careers"
+  },
+  {
+    "name": "DIRECTV",
+    "ats": "workday",
+    "host": "directv.wd1.myworkdayjobs.com",
+    "tenant": "directv",
+    "site": "careers"
   },
   {
     "name": "Dollar Tree",
@@ -8585,6 +8609,13 @@
     "site": "huroncareers"
   },
   {
+    "name": "Hy-Vee",
+    "ats": "workday",
+    "host": "hyvee.wd1.myworkdayjobs.com",
+    "tenant": "hyvee",
+    "site": "HyVeeCareers"
+  },
+  {
     "name": "IAT Insurance Group",
     "ats": "workday",
     "host": "iatinsurancegroup.wd1.myworkdayjobs.com",
@@ -9479,6 +9510,13 @@
     "host": "marvell.wd1.myworkdayjobs.com",
     "tenant": "marvell",
     "site": "MarvellCareers2"
+  },
+  {
+    "name": "Mary Free Bed Rehabilitation Hospital",
+    "ats": "workday",
+    "host": "maryfreebed.wd12.myworkdayjobs.com",
+    "tenant": "maryfreebed",
+    "site": "mfb"
   },
   {
     "name": "Masco",
@@ -11112,6 +11150,13 @@
     "site": "SimmonsCareers"
   },
   {
+    "name": "Simon Property Group",
+    "ats": "workday",
+    "host": "simon.wd1.myworkdayjobs.com",
+    "tenant": "simon",
+    "site": "Simon"
+  },
+  {
     "name": "Simons Foundation",
     "ats": "workday",
     "host": "simonsfoundation.wd1.myworkdayjobs.com",
@@ -12398,13 +12443,6 @@
     "host": "waystar.wd1.myworkdayjobs.com",
     "tenant": "waystar",
     "site": "Waystar"
-  },
-  {
-    "name": "Webster Bank",
-    "ats": "workday",
-    "host": "websteronline.wd12.myworkdayjobs.com",
-    "tenant": "websteronline",
-    "site": "WebsterExternalCareerSite"
   },
   {
     "name": "Wells Fargo",
