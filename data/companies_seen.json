@@ -2,7 +2,7 @@
  "marsh-mclennan": {
   "name": "Marsh McLennan",
   "lastSeen": "2026-09-07",
-  "roles": 8
+  "roles": 9
  },
  "travelers": {
   "name": "Travelers",
@@ -262,7 +262,7 @@
  "tesla": {
   "name": "Tesla",
   "lastSeen": "2026-09-07",
-  "roles": 66
+  "roles": 67
  },
  "apex-technology-inc": {
   "name": "Apex Technology, Inc.",
@@ -327,7 +327,7 @@
  "tiktok": {
   "name": "TikTok",
   "lastSeen": "2026-09-07",
-  "roles": 124
+  "roles": 123
  },
  "notion": {
   "name": "Notion",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-09-07",
-  "roles": 10
+  "roles": 9
  },
  "bytedance": {
   "name": "ByteDance",
@@ -807,7 +807,7 @@
  "hp": {
   "name": "HP",
   "lastSeen": "2026-09-07",
-  "roles": 12
+  "roles": 13
  },
  "roblox": {
   "name": "Roblox",
@@ -937,7 +937,7 @@
  "bp": {
   "name": "BP",
   "lastSeen": "2026-09-07",
-  "roles": 24
+  "roles": 21
  },
  "uhy": {
   "name": "UHY",
@@ -1012,7 +1012,7 @@
  "teledyne": {
   "name": "Teledyne",
   "lastSeen": "2026-09-07",
-  "roles": 5
+  "roles": 4
  },
  "bosch": {
   "name": "Bosch",
@@ -1032,7 +1032,7 @@
  "raytheon": {
   "name": "Raytheon",
   "lastSeen": "2026-09-07",
-  "roles": 17
+  "roles": 16
  },
  "sel": {
   "name": "SEL",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-09-07",
-  "roles": 16
+  "roles": 19
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1587,7 +1587,7 @@
  "roche": {
   "name": "Roche",
   "lastSeen": "2026-09-07",
-  "roles": 11
+  "roles": 12
  },
  "pricewaterhousecoopers-pwc": {
   "name": "PricewaterhouseCoopers (PwC)",
@@ -1647,7 +1647,7 @@
  "nxp-semiconductors": {
   "name": "NXP Semiconductors",
   "lastSeen": "2026-09-07",
-  "roles": 5
+  "roles": 45
  },
  "novogradac": {
   "name": "Novogradac",
@@ -2192,7 +2192,7 @@
  "clera": {
   "name": "Clera",
   "lastSeen": "2026-09-07",
-  "roles": 3
+  "roles": 2
  },
  "constellation-space": {
   "name": "Constellation Space",
@@ -2262,7 +2262,7 @@
  "rocket-lab-usa": {
   "name": "Rocket Lab USA",
   "lastSeen": "2026-09-07",
-  "roles": 32
+  "roles": 31
  },
  "didi-global": {
   "name": "DiDi Global",
@@ -2337,7 +2337,7 @@
  "celonis": {
   "name": "Celonis",
   "lastSeen": "2026-09-07",
-  "roles": 3
+  "roles": 2
  },
  "alku": {
   "name": "ALKU",
@@ -2722,7 +2722,7 @@
  "general-motors": {
   "name": "General Motors",
   "lastSeen": "2026-09-07",
-  "roles": 21
+  "roles": 22
  },
  "brunswick": {
   "name": "Brunswick",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-09-07",
-  "roles": 10
+  "roles": 9
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -2937,7 +2937,7 @@
  "rsm": {
   "name": "RSM",
   "lastSeen": "2026-09-07",
-  "roles": 71
+  "roles": 76
  },
  "metecs": {
   "name": "METECS",
@@ -3092,7 +3092,7 @@
  "cigna-group": {
   "name": "Cigna Group",
   "lastSeen": "2026-09-07",
-  "roles": 8
+  "roles": 9
  },
  "brg": {
   "name": "BRG",
@@ -3127,7 +3127,7 @@
  "the-walt-disney-company": {
   "name": "The Walt Disney Company",
   "lastSeen": "2026-09-07",
-  "roles": 12
+  "roles": 10
  },
  "impact-com": {
   "name": "impact.com",
@@ -3747,7 +3747,7 @@
  "ameriprise-financial": {
   "name": "Ameriprise Financial",
   "lastSeen": "2026-09-07",
-  "roles": 5
+  "roles": 6
  },
  "3m": {
   "name": "3M",
@@ -4181,8 +4181,8 @@
  },
  "xcel-energy": {
   "name": "Xcel Energy",
-  "lastSeen": "2026-09-03",
-  "roles": 7
+  "lastSeen": "2026-09-07",
+  "roles": 94
  },
  "national-interstate-insurance": {
   "name": "National Interstate Insurance",
@@ -4407,7 +4407,7 @@
  "merck": {
   "name": "Merck",
   "lastSeen": "2026-09-07",
-  "roles": 2
+  "roles": 4
  },
  "cibc": {
   "name": "CIBC",
@@ -4582,7 +4582,7 @@
  "ernst-and-young": {
   "name": "Ernst & Young",
   "lastSeen": "2026-09-07",
-  "roles": 3
+  "roles": 4
  },
  "directv": {
   "name": "DIRECTV",
@@ -4697,7 +4697,7 @@
  "hy-vee": {
   "name": "Hy-Vee",
   "lastSeen": "2026-09-07",
-  "roles": 4
+  "roles": 21
  },
  "garner-health": {
   "name": "Garner Health",
@@ -4712,7 +4712,7 @@
  "cna-insurance": {
   "name": "CNA Insurance",
   "lastSeen": "2026-09-07",
-  "roles": 1
+  "roles": 2
  },
  "simon-property-group": {
   "name": "Simon Property Group",
@@ -4727,10 +4727,35 @@
  "stokespacetechnologies": {
   "name": "Stokespacetechnologies",
   "lastSeen": "2026-09-07",
-  "roles": 1
+  "roles": 3
  },
  "icf-international": {
   "name": "ICF International",
+  "lastSeen": "2026-09-07",
+  "roles": 2
+ },
+ "tokyo-electron": {
+  "name": "Tokyo Electron",
+  "lastSeen": "2026-09-07",
+  "roles": 7
+ },
+ "atkinsr-alis": {
+  "name": "AtkinsRéalis",
+  "lastSeen": "2026-09-07",
+  "roles": 1
+ },
+ "astera-labs": {
+  "name": "Astera Labs",
+  "lastSeen": "2026-09-07",
+  "roles": 1
+ },
+ "dropbox": {
+  "name": "Dropbox",
+  "lastSeen": "2026-09-07",
+  "roles": 1
+ },
+ "brevan-howard": {
+  "name": "Brevan Howard",
   "lastSeen": "2026-09-07",
   "roles": 1
  }
