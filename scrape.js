@@ -473,8 +473,14 @@ const CHECKABLE_HOST =
  * ~2,900 checkable rows (600x4 = 2,400/day already short, audit issue #3), and update.yml
  * moved from every 6h to twice daily, halving runs. 1800x2 = 3,600/day covers ~2,900 with
  * room for the board to keep growing. If the cron changes again, change runsPerDay in
- * audit-listings.mjs and the x2 in listings-integrity.test.mjs WITH it. */
-const CHECK_BUDGET = 1800;
+ * audit-listings.mjs and the x2 in listings-integrity.test.mjs WITH it.
+ * ⚠️ Raised 1800 -> 5000 on 2026-09-06 (audit issue #4). The 2026-09-01 headroom lasted five
+ * days: fall posting season took the board from ~2,900 to ~4,040 checkable rows at roughly
+ * 190/day, so 3,600/day was short again. The budget is only a CAP — a run checks what is
+ * due (about half the board, since RECHECK_MS is 20h on two runs a day) and 1,800 checks
+ * cost ~2.5 minutes at CHECK_CONCURRENCY 6, so a high cap is free until the board actually
+ * grows into it. 5000x2 = 10,000/day covers ~2.5x today's board, i.e. a month of this growth. */
+const CHECK_BUDGET = 5000;
 /* Under 24h on purpose: at 48h a "daily" check was a promise the code did not keep. */
 const RECHECK_MS = 20 * 60 * 60 * 1000;
 const CHECK_CONCURRENCY = 6;
