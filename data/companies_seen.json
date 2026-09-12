@@ -562,7 +562,7 @@
  "micron": {
   "name": "Micron",
   "lastSeen": "2026-09-12",
-  "roles": 32
+  "roles": 33
  },
  "pdt-partners": {
   "name": "PDT Partners",
@@ -747,7 +747,7 @@
  "microsoft": {
   "name": "Microsoft",
   "lastSeen": "2026-09-12",
-  "roles": 3
+  "roles": 5
  },
  "dv-trading": {
   "name": "DV Trading",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-09-12",
-  "roles": 16
+  "roles": 14
  },
  "bytedance": {
   "name": "ByteDance",
@@ -807,7 +807,7 @@
  "hp": {
   "name": "HP",
   "lastSeen": "2026-09-12",
-  "roles": 15
+  "roles": 16
  },
  "roblox": {
   "name": "Roblox",
@@ -847,7 +847,7 @@
  "mastercard": {
   "name": "Mastercard",
   "lastSeen": "2026-09-12",
-  "roles": 13
+  "roles": 12
  },
  "blackstone": {
   "name": "Blackstone",
@@ -952,7 +952,7 @@
  "motorola-solutions": {
   "name": "Motorola Solutions",
   "lastSeen": "2026-09-12",
-  "roles": 10
+  "roles": 12
  },
  "crowe": {
   "name": "Crowe",
@@ -1032,7 +1032,7 @@
  "raytheon": {
   "name": "Raytheon",
   "lastSeen": "2026-09-12",
-  "roles": 38
+  "roles": 35
  },
  "sel": {
   "name": "SEL",
@@ -1882,7 +1882,7 @@
  "booz-allen": {
   "name": "Booz Allen",
   "lastSeen": "2026-09-12",
-  "roles": 49
+  "roles": 50
  },
  "bdo": {
   "name": "BDO",
@@ -2212,7 +2212,7 @@
  "afterquery": {
   "name": "AfterQuery",
   "lastSeen": "2026-09-12",
-  "roles": 1
+  "roles": 2
  },
  "1x": {
   "name": "1X",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-09-12",
-  "roles": 7
+  "roles": 6
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -2937,7 +2937,7 @@
  "rsm": {
   "name": "RSM",
   "lastSeen": "2026-09-12",
-  "roles": 117
+  "roles": 118
  },
  "metecs": {
   "name": "METECS",
@@ -3127,7 +3127,7 @@
  "the-walt-disney-company": {
   "name": "The Walt Disney Company",
   "lastSeen": "2026-09-12",
-  "roles": 7
+  "roles": 6
  },
  "impact-com": {
   "name": "impact.com",
@@ -3557,7 +3557,7 @@
  "amgen": {
   "name": "Amgen",
   "lastSeen": "2026-09-12",
-  "roles": 19
+  "roles": 20
  },
  "american-electric-power": {
   "name": "American Electric Power",
@@ -3637,7 +3637,7 @@
  "charles-schwab": {
   "name": "Charles Schwab",
   "lastSeen": "2026-09-12",
-  "roles": 3
+  "roles": 4
  },
  "xaira-therapeutics": {
   "name": "Xaira Therapeutics",
@@ -3852,7 +3852,7 @@
  "johns-hopkins-applied-physics-laboratory": {
   "name": "Johns Hopkins Applied Physics Laboratory",
   "lastSeen": "2026-09-12",
-  "roles": 12
+  "roles": 13
  },
  "cvent": {
   "name": "Cvent",
@@ -4112,7 +4112,7 @@
  "aig": {
   "name": "AIG",
   "lastSeen": "2026-09-12",
-  "roles": 18
+  "roles": 17
  },
  "allegion": {
   "name": "Allegion",
@@ -4357,7 +4357,7 @@
  "shure": {
   "name": "Shure",
   "lastSeen": "2026-09-12",
-  "roles": 30
+  "roles": 33
  },
  "hd-supply": {
   "name": "HD Supply",
@@ -4372,7 +4372,7 @@
  "stryten": {
   "name": "Stryten",
   "lastSeen": "2026-09-12",
-  "roles": 3
+  "roles": 2
  },
  "v2x": {
   "name": "V2X",
@@ -4812,7 +4812,7 @@
  "c-h-robinson": {
   "name": "C.H. Robinson",
   "lastSeen": "2026-09-12",
-  "roles": 14
+  "roles": 15
  },
  "bj-s-wholesale-club": {
   "name": "BJ's Wholesale Club",
@@ -5072,7 +5072,7 @@
  "usaa": {
   "name": "USAA",
   "lastSeen": "2026-09-12",
-  "roles": 19
+  "roles": 20
  },
  "ovintiv": {
   "name": "Ovintiv",
@@ -5107,7 +5107,7 @@
  "tradeweb": {
   "name": "Tradeweb",
   "lastSeen": "2026-09-12",
-  "roles": 7
+  "roles": 6
  },
  "dell-technologies": {
   "name": "Dell Technologies",
@@ -5237,7 +5237,7 @@
  "constellation-energy": {
   "name": "Constellation Energy",
   "lastSeen": "2026-09-12",
-  "roles": 1
+  "roles": 3
  },
  "businessolver": {
   "name": "Businessolver",
@@ -5471,6 +5471,21 @@
  },
  "emc-insurance": {
   "name": "EMC Insurance",
+  "lastSeen": "2026-09-12",
+  "roles": 1
+ },
+ "quantinuum": {
+  "name": "Quantinuum",
+  "lastSeen": "2026-09-12",
+  "roles": 2
+ },
+ "klaviyo": {
+  "name": "Klaviyo",
+  "lastSeen": "2026-09-12",
+  "roles": 1
+ },
+ "stand-together": {
+  "name": "Stand Together",
   "lastSeen": "2026-09-12",
   "roles": 1
  }
