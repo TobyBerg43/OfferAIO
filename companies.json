@@ -260,6 +260,11 @@
     "slug": "colonist"
   },
   {
+    "name": "Commure",
+    "ats": "ashby",
+    "slug": "Commure"
+  },
+  {
     "name": "Compa",
     "ats": "ashby",
     "slug": "compa"
@@ -448,6 +453,11 @@
     "name": "Exa Labs",
     "ats": "ashby",
     "slug": "exa"
+  },
+  {
+    "name": "Exegy",
+    "ats": "ashby",
+    "slug": "exegy"
   },
   {
     "name": "Eyebot",
@@ -660,6 +670,11 @@
     "slug": "hypercubic"
   },
   {
+    "name": "ibotta",
+    "ats": "ashby",
+    "slug": "ibotta"
+  },
+  {
     "name": "Illumio",
     "ats": "ashby",
     "slug": "illumio"
@@ -668,6 +683,11 @@
     "name": "incident.io",
     "ats": "ashby",
     "slug": "incident"
+  },
+  {
+    "name": "Inferact",
+    "ats": "ashby",
+    "slug": "inferact"
   },
   {
     "name": "Inherent",
@@ -818,6 +838,11 @@
     "name": "Medra",
     "ats": "ashby",
     "slug": "medraai"
+  },
+  {
+    "name": "MegazoneCloud",
+    "ats": "ashby",
+    "slug": "megazone"
   },
   {
     "name": "Melius",
@@ -1368,6 +1393,11 @@
     "name": "Super",
     "ats": "ashby",
     "slug": "super.com"
+  },
+  {
+    "name": "Swarm Aero",
+    "ats": "ashby",
+    "slug": "swarmaero"
   },
   {
     "name": "Sweatpals",
@@ -1930,6 +1960,11 @@
     "slug": "babelstreet"
   },
   {
+    "name": "Baidu USA",
+    "ats": "greenhouse",
+    "slug": "baidu"
+  },
+  {
     "name": "BambooHR",
     "ats": "greenhouse",
     "slug": "bamboohr17"
@@ -2265,6 +2300,11 @@
     "slug": "didi"
   },
   {
+    "name": "Digs",
+    "ats": "greenhouse",
+    "slug": "digs"
+  },
+  {
     "name": "Diligent Corporation",
     "ats": "greenhouse",
     "slug": "diligentcorporation"
@@ -2298,11 +2338,6 @@
     "name": "Double Good",
     "ats": "greenhouse",
     "slug": "doublegood"
-  },
-  {
-    "name": "DoubleVerify",
-    "ats": "greenhouse",
-    "slug": "doubleverify"
   },
   {
     "name": "Doximity",
@@ -2930,6 +2965,11 @@
     "slug": "klaviyo"
   },
   {
+    "name": "Klaviyo",
+    "ats": "greenhouse",
+    "slug": "klaviyocampus"
+  },
+  {
     "name": "KnowBe4",
     "ats": "greenhouse",
     "slug": "knowbe4"
@@ -3335,6 +3375,11 @@
     "slug": "optiverus"
   },
   {
+    "name": "Optiver",
+    "ats": "greenhouse",
+    "slug": "tradingacademy2025"
+  },
+  {
     "name": "Orennia",
     "ats": "greenhouse",
     "slug": "orennia"
@@ -3600,6 +3645,11 @@
     "slug": "rhombuspower"
   },
   {
+    "name": "Ridgeline",
+    "ats": "greenhouse",
+    "slug": "ridgeline"
+  },
+  {
     "name": "Riot Games",
     "ats": "greenhouse",
     "slug": "riotgames"
@@ -3755,6 +3805,11 @@
     "slug": "silananotechnologies"
   },
   {
+    "name": "Simple Technology Solutions",
+    "ats": "greenhouse",
+    "slug": "simpletechnologysolutions"
+  },
+  {
     "name": "SK hynix",
     "ats": "greenhouse",
     "slug": "skhynixamerica"
@@ -3905,6 +3960,11 @@
     "slug": "syskahennessy"
   },
   {
+    "name": "Tanium",
+    "ats": "greenhouse",
+    "slug": "tanium"
+  },
+  {
     "name": "Tastylive",
     "ats": "greenhouse",
     "slug": "tastylive"
@@ -3953,6 +4013,11 @@
     "name": "The Health Management Academy",
     "ats": "greenhouse",
     "slug": "thehealthmanagementacademy"
+  },
+  {
+    "name": "The MJ Companies",
+    "ats": "greenhouse",
+    "slug": "themjcos"
   },
   {
     "name": "The New York Times",
@@ -5100,6 +5165,11 @@
     "slug": "woven-by-toyota"
   },
   {
+    "name": "Xcimer Energy",
+    "ats": "lever",
+    "slug": "xcimer"
+  },
+  {
     "name": "Xsolla",
     "ats": "lever",
     "slug": "xsolla"
@@ -5323,6 +5393,13 @@
     "site": "AIMCoCareers"
   },
   {
+    "name": "Alcoa",
+    "ats": "workday",
+    "host": "alcoa.wd5.myworkdayjobs.com",
+    "tenant": "alcoa",
+    "site": "Careers"
+  },
+  {
     "name": "Alcon",
     "ats": "workday",
     "host": "alcon.wd5.myworkdayjobs.com",
@@ -5356,6 +5433,13 @@
     "host": "allegromicro.wd5.myworkdayjobs.com",
     "tenant": "allegromicro",
     "site": "allegrocareers"
+  },
+  {
+    "name": "AllianceBernstein",
+    "ats": "workday",
+    "host": "abglobal.wd1.myworkdayjobs.com",
+    "tenant": "abglobal",
+    "site": "abcampuscareers"
   },
   {
     "name": "Allied Solutions",
@@ -5489,6 +5573,13 @@
     "host": "aep.wd1.myworkdayjobs.com",
     "tenant": "aep",
     "site": "AEPCareerSite"
+  },
+  {
+    "name": "American Family Insurance Group",
+    "ats": "workday",
+    "host": "amfam.wd1.myworkdayjobs.com",
+    "tenant": "amfam",
+    "site": "AmFamGroupInternCareers"
   },
   {
     "name": "American Fidelity",
@@ -5862,6 +5953,13 @@
     "site": "External"
   },
   {
+    "name": "Austin Community College District",
+    "ats": "workday",
+    "host": "austincc.wd1.myworkdayjobs.com",
+    "tenant": "austincc",
+    "site": "external"
+  },
+  {
     "name": "Auto Club Group",
     "ats": "workday",
     "host": "acg.wd1.myworkdayjobs.com",
@@ -6084,6 +6182,13 @@
     "host": "bcbst.wd1.myworkdayjobs.com",
     "tenant": "bcbst",
     "site": "external"
+  },
+  {
+    "name": "BDC Venture Capital",
+    "ats": "workday",
+    "host": "bdc.wd10.myworkdayjobs.com",
+    "tenant": "bdc",
+    "site": "BDC_Careers"
   },
   {
     "name": "BDO",
@@ -6378,6 +6483,13 @@
     "host": "bpinternational.wd3.myworkdayjobs.com",
     "tenant": "bpinternational",
     "site": "bpPrivateExternalCareersSite"
+  },
+  {
+    "name": "Bracco",
+    "ats": "workday",
+    "host": "bracco.wd103.myworkdayjobs.com",
+    "tenant": "bracco",
+    "site": "braccocareers"
   },
   {
     "name": "Brandeis University",
@@ -6758,6 +6870,13 @@
     "site": "Centific_Global"
   },
   {
+    "name": "Central Hudson",
+    "ats": "workday",
+    "host": "cenhud.wd5.myworkdayjobs.com",
+    "tenant": "cenhud",
+    "site": "cenhud"
+  },
+  {
     "name": "Centrica",
     "ats": "workday",
     "host": "centrica.wd3.myworkdayjobs.com",
@@ -7094,6 +7213,13 @@
     "site": "Careers_US"
   },
   {
+    "name": "Cone Health",
+    "ats": "workday",
+    "host": "conehealth.wd12.myworkdayjobs.com",
+    "tenant": "conehealth",
+    "site": "cone_health-careers"
+  },
+  {
     "name": "ConocoPhillips",
     "ats": "workday",
     "host": "conocophillips.wd1.myworkdayjobs.com",
@@ -7409,6 +7535,13 @@
     "site": "delta_dental_of_michigan"
   },
   {
+    "name": "Delta Faucet",
+    "ats": "workday",
+    "host": "masco.wd1.myworkdayjobs.com",
+    "tenant": "masco",
+    "site": "deltafaucet"
+  },
+  {
     "name": "Deluxe",
     "ats": "workday",
     "host": "deluxe.wd5.myworkdayjobs.com",
@@ -7640,6 +7773,13 @@
     "site": "ElsevierJobs"
   },
   {
+    "name": "EMC Insurance",
+    "ats": "workday",
+    "host": "emcins.wd5.myworkdayjobs.com",
+    "tenant": "emcins",
+    "site": "EMC_Careers"
+  },
+  {
     "name": "Empower",
     "ats": "workday",
     "host": "empower.wd12.myworkdayjobs.com",
@@ -7799,6 +7939,13 @@
     "host": "eversource.wd1.myworkdayjobs.com",
     "tenant": "eversource",
     "site": "ExternalSite"
+  },
+  {
+    "name": "Evolito",
+    "ats": "workday",
+    "host": "evolito.wd3.myworkdayjobs.com",
+    "tenant": "evolito",
+    "site": "Evolito_Career_Site"
   },
   {
     "name": "Evonik",
@@ -8191,6 +8338,13 @@
     "host": "gresearch.wd103.myworkdayjobs.com",
     "tenant": "gresearch",
     "site": "G-Research"
+  },
+  {
+    "name": "Gables Residential",
+    "ats": "workday",
+    "host": "gables.wd5.myworkdayjobs.com",
+    "tenant": "gables",
+    "site": "Gables_Careers"
   },
   {
     "name": "GAF",
@@ -8753,6 +8907,13 @@
     "site": "HyVeeCareers"
   },
   {
+    "name": "Hypertherm",
+    "ats": "workday",
+    "host": "hypertherm.wd503.myworkdayjobs.com",
+    "tenant": "hypertherm",
+    "site": "hypertherm-careers"
+  },
+  {
     "name": "IAT Insurance Group",
     "ats": "workday",
     "host": "iatinsurancegroup.wd1.myworkdayjobs.com",
@@ -9040,6 +9201,13 @@
     "site": "ivy_tech_careers"
   },
   {
+    "name": "J.M. Smucker",
+    "ats": "workday",
+    "host": "smucker.wd5.myworkdayjobs.com",
+    "tenant": "smucker",
+    "site": "US_External_Careers"
+  },
+  {
     "name": "Jabil",
     "ats": "workday",
     "host": "jabil.wd5.myworkdayjobs.com",
@@ -9201,6 +9369,13 @@
     "site": "Kensho_Careers"
   },
   {
+    "name": "Ketjen",
+    "ats": "workday",
+    "host": "albemarle.wd5.myworkdayjobs.com",
+    "tenant": "albemarle",
+    "site": "ketjenexternal"
+  },
+  {
     "name": "KeyBank",
     "ats": "workday",
     "host": "keybank.wd5.myworkdayjobs.com",
@@ -9339,6 +9514,13 @@
     "host": "lvvwd.wd1.myworkdayjobs.com",
     "tenant": "lvvwd",
     "site": "lvvwdwaterjobs"
+  },
+  {
+    "name": "LEGO",
+    "ats": "workday",
+    "host": "lego.wd103.myworkdayjobs.com",
+    "tenant": "lego",
+    "site": "LEGO_External"
   },
   {
     "name": "Leidos",
@@ -11168,6 +11350,13 @@
     "site": "External_Careers"
   },
   {
+    "name": "Securian Financial Group",
+    "ats": "workday",
+    "host": "hq.wd12.myworkdayjobs.com",
+    "tenant": "hq",
+    "site": "Securian_External"
+  },
+  {
     "name": "Sedgwick Claims Management Services",
     "ats": "workday",
     "host": "sedgwick.wd1.myworkdayjobs.com",
@@ -12594,6 +12783,13 @@
     "host": "waystar.wd1.myworkdayjobs.com",
     "tenant": "waystar",
     "site": "Waystar"
+  },
+  {
+    "name": "Wellington Management",
+    "ats": "workday",
+    "host": "wellington.wd5.myworkdayjobs.com",
+    "tenant": "wellington",
+    "site": "Campus"
   },
   {
     "name": "Wells Fargo",
