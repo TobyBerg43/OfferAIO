@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-09-15",
-  "roles": 21
+  "roles": 22
  },
  "capital-one": {
   "name": "Capital One",
@@ -77,7 +77,7 @@
  "caci": {
   "name": "CACI",
   "lastSeen": "2026-09-15",
-  "roles": 18
+  "roles": 19
  },
  "abb": {
   "name": "ABB",
@@ -207,7 +207,7 @@
  "etched": {
   "name": "Etched",
   "lastSeen": "2026-09-15",
-  "roles": 15
+  "roles": 16
  },
  "susquehanna": {
   "name": "Susquehanna",
@@ -262,7 +262,7 @@
  "tesla": {
   "name": "Tesla",
   "lastSeen": "2026-09-15",
-  "roles": 81
+  "roles": 82
  },
  "apex-technology-inc": {
   "name": "Apex Technology, Inc.",
@@ -682,7 +682,7 @@
  "general-dynamics-information-technology": {
   "name": "General Dynamics Information Technology",
   "lastSeen": "2026-09-15",
-  "roles": 4
+  "roles": 5
  },
  "cirrus-logic": {
   "name": "Cirrus Logic",
@@ -847,7 +847,7 @@
  "mastercard": {
   "name": "Mastercard",
   "lastSeen": "2026-09-15",
-  "roles": 11
+  "roles": 12
  },
  "blackstone": {
   "name": "Blackstone",
@@ -882,7 +882,7 @@
  "genworth-financial": {
   "name": "Genworth Financial",
   "lastSeen": "2026-09-15",
-  "roles": 15
+  "roles": 14
  },
  "chamberlain-group": {
   "name": "Chamberlain Group",
@@ -892,7 +892,7 @@
  "lpl-financial-holdings": {
   "name": "LPL Financial Holdings",
   "lastSeen": "2026-09-15",
-  "roles": 11
+  "roles": 10
  },
  "conocophillips": {
   "name": "ConocoPhillips",
@@ -912,7 +912,7 @@
  "hntb": {
   "name": "HNTB",
   "lastSeen": "2026-09-15",
-  "roles": 78
+  "roles": 79
  },
  "keybank": {
   "name": "KeyBank",
@@ -937,7 +937,7 @@
  "bp": {
   "name": "BP",
   "lastSeen": "2026-09-15",
-  "roles": 23
+  "roles": 20
  },
  "uhy": {
   "name": "UHY",
@@ -952,7 +952,7 @@
  "motorola-solutions": {
   "name": "Motorola Solutions",
   "lastSeen": "2026-09-15",
-  "roles": 13
+  "roles": 12
  },
  "crowe": {
   "name": "Crowe",
@@ -1032,7 +1032,7 @@
  "raytheon": {
   "name": "Raytheon",
   "lastSeen": "2026-09-15",
-  "roles": 49
+  "roles": 52
  },
  "sel": {
   "name": "SEL",
@@ -1172,7 +1172,7 @@
  "reply": {
   "name": "Reply",
   "lastSeen": "2026-09-15",
-  "roles": 2
+  "roles": 1
  },
  "kos-ai": {
   "name": "kos.ai",
@@ -1476,8 +1476,8 @@
  },
  "goldman-sachs": {
   "name": "Goldman Sachs",
-  "lastSeen": "2026-09-14",
-  "roles": 19
+  "lastSeen": "2026-09-15",
+  "roles": 15
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1552,7 +1552,7 @@
  "royal-bank-of-canada": {
   "name": "Royal Bank of Canada",
   "lastSeen": "2026-09-15",
-  "roles": 5
+  "roles": 6
  },
  "schnucks": {
   "name": "Schnucks",
@@ -1592,7 +1592,7 @@
  "pricewaterhousecoopers-pwc": {
   "name": "PricewaterhouseCoopers (PwC)",
   "lastSeen": "2026-09-15",
-  "roles": 138
+  "roles": 139
  },
  "procter-and-gamble-pandg": {
   "name": "Procter & Gamble (P&G)",
@@ -1632,7 +1632,7 @@
  "oshkosh": {
   "name": "Oshkosh",
   "lastSeen": "2026-09-15",
-  "roles": 62
+  "roles": 63
  },
  "parsons": {
   "name": "Parsons",
@@ -1667,7 +1667,7 @@
  "mks-instruments": {
   "name": "MKS Instruments",
   "lastSeen": "2026-09-15",
-  "roles": 1
+  "roles": 2
  },
  "michelin": {
   "name": "Michelin",
@@ -1682,7 +1682,7 @@
  "mercer-university": {
   "name": "Mercer University",
   "lastSeen": "2026-09-15",
-  "roles": 4
+  "roles": 3
  },
  "mars": {
   "name": "Mars",
@@ -1742,7 +1742,7 @@
  "hitachi": {
   "name": "Hitachi",
   "lastSeen": "2026-09-15",
-  "roles": 16
+  "roles": 18
  },
  "guidehouse": {
   "name": "Guidehouse",
@@ -1751,13 +1751,13 @@
  },
  "harris-central-appraisal-district": {
   "name": "Harris Central Appraisal District",
-  "lastSeen": "2026-08-17",
+  "lastSeen": "2026-09-15",
   "roles": 1
  },
  "great-american-insurance-company": {
   "name": "Great American Insurance Company",
   "lastSeen": "2026-09-15",
-  "roles": 8
+  "roles": 9
  },
  "globalfoundries": {
   "name": "GlobalFoundries",
@@ -1767,7 +1767,7 @@
  "ge-aerospace": {
   "name": "GE Aerospace",
   "lastSeen": "2026-09-15",
-  "roles": 19
+  "roles": 20
  },
  "ge-healthcare": {
   "name": "GE Healthcare",
@@ -1807,7 +1807,7 @@
  "cvs-health": {
   "name": "CVS Health",
   "lastSeen": "2026-09-15",
-  "roles": 37
+  "roles": 38
  },
  "dxc-technology": {
   "name": "DXC Technology",
@@ -1842,7 +1842,7 @@
  "corebridge-financial": {
   "name": "Corebridge Financial",
   "lastSeen": "2026-09-15",
-  "roles": 1
+  "roles": 2
  },
  "conagra-brands": {
   "name": "Conagra Brands",
@@ -1852,7 +1852,7 @@
  "clarios": {
   "name": "Clarios",
   "lastSeen": "2026-09-15",
-  "roles": 11
+  "roles": 12
  },
  "cisco": {
   "name": "Cisco",
@@ -1892,7 +1892,7 @@
  "blackrock": {
   "name": "BlackRock",
   "lastSeen": "2026-09-15",
-  "roles": 5
+  "roles": 11
  },
  "barclays": {
   "name": "Barclays",
@@ -1902,12 +1902,12 @@
  "baird": {
   "name": "Baird",
   "lastSeen": "2026-09-15",
-  "roles": 30
+  "roles": 29
  },
  "avis-budget-group": {
   "name": "Avis Budget Group",
   "lastSeen": "2026-09-15",
-  "roles": 5
+  "roles": 6
  },
  "astrazeneca": {
   "name": "AstraZeneca",
@@ -2232,7 +2232,7 @@
  "base-power": {
   "name": "Base Power",
   "lastSeen": "2026-09-15",
-  "roles": 17
+  "roles": 22
  },
  "auctor": {
   "name": "Auctor",
@@ -2727,7 +2727,7 @@
  "brunswick": {
   "name": "Brunswick",
   "lastSeen": "2026-09-15",
-  "roles": 34
+  "roles": 35
  },
  "abbott": {
   "name": "Abbott",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-09-15",
-  "roles": 8
+  "roles": 11
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -2937,7 +2937,7 @@
  "rsm": {
   "name": "RSM",
   "lastSeen": "2026-09-15",
-  "roles": 116
+  "roles": 114
  },
  "metecs": {
   "name": "METECS",
@@ -3117,7 +3117,7 @@
  "springs-window-fashions": {
   "name": "Springs Window Fashions",
   "lastSeen": "2026-09-15",
-  "roles": 9
+  "roles": 8
  },
  "roboforce": {
   "name": "RoboForce",
@@ -3157,7 +3157,7 @@
  "johns-manville-jm": {
   "name": "Johns Manville (JM)",
   "lastSeen": "2026-09-15",
-  "roles": 8
+  "roles": 9
  },
  "ducharme-mcmillen-and-associates": {
   "name": "DuCharme, McMillen & Associates",
@@ -3182,7 +3182,7 @@
  "gulfstream": {
   "name": "Gulfstream",
   "lastSeen": "2026-09-15",
-  "roles": 5
+  "roles": 7
  },
  "procter-and-gamble": {
   "name": "Procter & Gamble",
@@ -3352,22 +3352,22 @@
  "tjx": {
   "name": "TJX",
   "lastSeen": "2026-09-15",
-  "roles": 24
+  "roles": 26
  },
  "repsol": {
   "name": "Repsol",
   "lastSeen": "2026-09-15",
-  "roles": 32
+  "roles": 33
  },
  "qts": {
   "name": "QTS",
   "lastSeen": "2026-09-15",
-  "roles": 21
+  "roles": 22
  },
  "manulife-financial": {
   "name": "Manulife Financial",
   "lastSeen": "2026-09-15",
-  "roles": 12
+  "roles": 11
  },
  "iron-mountain": {
   "name": "Iron Mountain",
@@ -3536,8 +3536,8 @@
  },
  "empower": {
   "name": "Empower",
-  "lastSeen": "2026-08-28",
-  "roles": 1
+  "lastSeen": "2026-09-15",
+  "roles": 2
  },
  "customers-bank": {
   "name": "Customers Bank",
@@ -3697,7 +3697,7 @@
  "trumpf": {
   "name": "TRUMPF",
   "lastSeen": "2026-09-15",
-  "roles": 20
+  "roles": 21
  },
  "transamerica": {
   "name": "Transamerica",
@@ -3747,12 +3747,12 @@
  "ameriprise-financial": {
   "name": "Ameriprise Financial",
   "lastSeen": "2026-09-15",
-  "roles": 16
+  "roles": 15
  },
  "3m": {
   "name": "3M",
   "lastSeen": "2026-09-15",
-  "roles": 8
+  "roles": 10
  },
  "sierra": {
   "name": "Sierra",
@@ -4002,7 +4002,7 @@
  "apex": {
   "name": "Apex",
   "lastSeen": "2026-09-15",
-  "roles": 9
+  "roles": 8
  },
  "iat-insurance-group": {
   "name": "IAT Insurance Group",
@@ -4027,7 +4027,7 @@
  "northern-trust": {
   "name": "Northern Trust",
   "lastSeen": "2026-09-15",
-  "roles": 21
+  "roles": 20
  },
  "frost": {
   "name": "Frost",
@@ -4272,7 +4272,7 @@
  "mandt-bank": {
   "name": "M&T Bank",
   "lastSeen": "2026-09-15",
-  "roles": 3
+  "roles": 5
  },
  "echo-global-logistics": {
   "name": "Echo Global Logistics",
@@ -4347,7 +4347,7 @@
  "wade-trim": {
   "name": "Wade Trim",
   "lastSeen": "2026-09-15",
-  "roles": 28
+  "roles": 32
  },
  "national-information-solutions-cooperative": {
   "name": "National Information Solutions Cooperative",
@@ -4407,7 +4407,7 @@
  "merck": {
   "name": "Merck",
   "lastSeen": "2026-09-15",
-  "roles": 156
+  "roles": 157
  },
  "cibc": {
   "name": "CIBC",
@@ -4482,7 +4482,7 @@
  "five-rings-capital": {
   "name": "Five Rings Capital",
   "lastSeen": "2026-09-15",
-  "roles": 3
+  "roles": 4
  },
  "akuna-capital-university": {
   "name": "Akuna Capital University",
@@ -4592,7 +4592,7 @@
  "dynamic-catholic": {
   "name": "Dynamic Catholic",
   "lastSeen": "2026-09-15",
-  "roles": 10
+  "roles": 11
  },
  "metropolitan-transportation-authority": {
   "name": "Metropolitan Transportation Authority",
@@ -4647,7 +4647,7 @@
  "fnbo": {
   "name": "FNBO",
   "lastSeen": "2026-09-15",
-  "roles": 3
+  "roles": 2
  },
  "solidigm": {
   "name": "Solidigm",
@@ -4772,7 +4772,7 @@
  "us-bank": {
   "name": "US Bank",
   "lastSeen": "2026-09-15",
-  "roles": 12
+  "roles": 13
  },
  "trimble": {
   "name": "Trimble",
@@ -4792,7 +4792,7 @@
  "onemain-financial": {
   "name": "OneMain Financial",
   "lastSeen": "2026-09-15",
-  "roles": 2
+  "roles": 1
  },
  "intact": {
   "name": "Intact",
@@ -4877,7 +4877,7 @@
  "acxiom": {
   "name": "Acxiom",
   "lastSeen": "2026-09-15",
-  "roles": 8
+  "roles": 7
  },
  "gallup": {
   "name": "Gallup",
@@ -5012,7 +5012,7 @@
  "ankura-consulting-group": {
   "name": "Ankura Consulting Group",
   "lastSeen": "2026-09-15",
-  "roles": 20
+  "roles": 21
  },
  "american-cancer-society": {
   "name": "American Cancer Society",
@@ -5067,12 +5067,12 @@
  "verizon-communications": {
   "name": "Verizon Communications",
   "lastSeen": "2026-09-15",
-  "roles": 4
+  "roles": 5
  },
  "usaa": {
   "name": "USAA",
   "lastSeen": "2026-09-15",
-  "roles": 23
+  "roles": 22
  },
  "ovintiv": {
   "name": "Ovintiv",
@@ -5082,7 +5082,7 @@
  "howden": {
   "name": "Howden",
   "lastSeen": "2026-09-15",
-  "roles": 8
+  "roles": 4
  },
  "eversource-energy": {
   "name": "Eversource Energy",
@@ -5112,7 +5112,7 @@
  "dell-technologies": {
   "name": "Dell Technologies",
   "lastSeen": "2026-09-15",
-  "roles": 3
+  "roles": 2
  },
  "barnes-and-thornburg": {
   "name": "Barnes & Thornburg",
@@ -5167,7 +5167,7 @@
  "smartly-io": {
   "name": "Smartly.io",
   "lastSeen": "2026-09-15",
-  "roles": 8
+  "roles": 11
  },
  "kroll-bond-rating-agency": {
   "name": "Kroll Bond Rating Agency",
@@ -5387,7 +5387,7 @@
  "alliancebernstein": {
   "name": "AllianceBernstein",
   "lastSeen": "2026-09-15",
-  "roles": 15
+  "roles": 16
  },
  "bracco": {
   "name": "Bracco",
@@ -5517,7 +5517,7 @@
  "dow-jones": {
   "name": "Dow Jones",
   "lastSeen": "2026-09-15",
-  "roles": 26
+  "roles": 28
  },
  "bracebridge-capital": {
   "name": "Bracebridge Capital",
@@ -5562,7 +5562,7 @@
  "sentry-insurance": {
   "name": "Sentry Insurance",
   "lastSeen": "2026-09-15",
-  "roles": 1
+  "roles": 2
  },
  "lowe-s": {
   "name": "Lowe's",
@@ -5642,7 +5642,7 @@
  "enact-mortgage-insurance": {
   "name": "Enact Mortgage Insurance",
   "lastSeen": "2026-09-15",
-  "roles": 4
+  "roles": 3
  },
  "chemours": {
   "name": "Chemours",
@@ -5658,5 +5658,50 @@
   "name": "Demco Products",
   "lastSeen": "2026-09-15",
   "roles": 1
+ },
+ "tiaa": {
+  "name": "TIAA",
+  "lastSeen": "2026-09-15",
+  "roles": 1
+ },
+ "gentex-corporation": {
+  "name": "Gentex Corporation",
+  "lastSeen": "2026-09-15",
+  "roles": 1
+ },
+ "gecko-robotics": {
+  "name": "Gecko Robotics",
+  "lastSeen": "2026-09-15",
+  "roles": 1
+ },
+ "apex-analytix": {
+  "name": "APEX Analytix",
+  "lastSeen": "2026-09-15",
+  "roles": 2
+ },
+ "accuweather": {
+  "name": "AccuWeather",
+  "lastSeen": "2026-09-15",
+  "roles": 1
+ },
+ "hf-sinclair": {
+  "name": "HF Sinclair",
+  "lastSeen": "2026-09-15",
+  "roles": 2
+ },
+ "huntington-ingalls-industries": {
+  "name": "Huntington Ingalls Industries",
+  "lastSeen": "2026-09-15",
+  "roles": 1
+ },
+ "tighe-and-bond": {
+  "name": "Tighe & Bond",
+  "lastSeen": "2026-09-15",
+  "roles": 1
+ },
+ "cai": {
+  "name": "CAI",
+  "lastSeen": "2026-09-15",
+  "roles": 4
  }
 }
