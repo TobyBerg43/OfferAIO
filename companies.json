@@ -90,6 +90,11 @@
     "slug": "ami"
   },
   {
+    "name": "Antares Nuclear",
+    "ats": "ashby",
+    "slug": "Antares"
+  },
+  {
     "name": "Anterior",
     "ats": "ashby",
     "slug": "anterior"
@@ -350,6 +355,16 @@
     "slug": "d-Matrix"
   },
   {
+    "name": "DatologyAI",
+    "ats": "ashby",
+    "slug": "DatologyAI"
+  },
+  {
+    "name": "Decagon",
+    "ats": "ashby",
+    "slug": "decagon"
+  },
+  {
     "name": "Dedalus Labs",
     "ats": "ashby",
     "slug": "dedalus-labs"
@@ -473,6 +488,11 @@
     "name": "Fab2",
     "ats": "ashby",
     "slug": "fab2"
+  },
+  {
+    "name": "Fable",
+    "ats": "ashby",
+    "slug": "fable"
   },
   {
     "name": "Faculte",
@@ -1720,6 +1740,11 @@
     "slug": "advancedspace"
   },
   {
+    "name": "AEG",
+    "ats": "greenhouse",
+    "slug": "aegworldwide"
+  },
+  {
     "name": "Aevex Aerospace",
     "ats": "greenhouse",
     "slug": "aevexaerospace"
@@ -2255,11 +2280,6 @@
     "slug": "correlationone"
   },
   {
-    "name": "Correlation One",
-    "ats": "greenhouse",
-    "slug": "expertnetwork"
-  },
-  {
     "name": "Cortland",
     "ats": "greenhouse",
     "slug": "cortland"
@@ -2268,6 +2288,11 @@
     "name": "Coursera",
     "ats": "greenhouse",
     "slug": "coursera"
+  },
+  {
+    "name": "CoVar",
+    "ats": "greenhouse",
+    "slug": "covar"
   },
   {
     "name": "Cresta",
@@ -2450,6 +2475,11 @@
     "slug": "elevationscreditunion"
   },
   {
+    "name": "Emergent Labs",
+    "ats": "greenhouse",
+    "slug": "emergentlabsinc"
+  },
+  {
     "name": "EnergyHub",
     "ats": "greenhouse",
     "slug": "energyhub"
@@ -2463,6 +2493,11 @@
     "name": "Epic Games",
     "ats": "greenhouse",
     "slug": "epicgames"
+  },
+  {
+    "name": "EQT Corporation",
+    "ats": "greenhouse",
+    "slug": "eqtcorporation"
   },
   {
     "name": "Eudia",
@@ -2755,6 +2790,11 @@
     "slug": "gusto"
   },
   {
+    "name": "Haize Labs",
+    "ats": "greenhouse",
+    "slug": "haizelabs"
+  },
+  {
     "name": "Harbinger Motors",
     "ats": "greenhouse",
     "slug": "harbingermotors"
@@ -2913,6 +2953,11 @@
     "name": "Integra FEC",
     "ats": "greenhouse",
     "slug": "integrainterns"
+  },
+  {
+    "name": "InterSystems",
+    "ats": "greenhouse",
+    "slug": "intersystems"
   },
   {
     "name": "Intrinsic",
@@ -3275,6 +3320,11 @@
     "slug": "muonspace"
   },
   {
+    "name": "Nanopath",
+    "ats": "greenhouse",
+    "slug": "nanopathinc"
+  },
+  {
     "name": "National Information Solutions Cooperative (NISC)",
     "ats": "greenhouse",
     "slug": "nisc"
@@ -3635,6 +3685,11 @@
     "slug": "qgenda"
   },
   {
+    "name": "Quantiq",
+    "ats": "greenhouse",
+    "slug": "quantiq"
+  },
+  {
     "name": "QuEra Computing",
     "ats": "greenhouse",
     "slug": "queracomputinginc"
@@ -3743,6 +3798,11 @@
     "name": "Rocket Lawyer",
     "ats": "greenhouse",
     "slug": "rocketlawyer"
+  },
+  {
+    "name": "Rothesay",
+    "ats": "greenhouse",
+    "slug": "rothesaygraduates"
   },
   {
     "name": "RTW Investments",
@@ -4068,6 +4128,11 @@
     "name": "The Allen Institute for AI",
     "ats": "greenhouse",
     "slug": "thealleninstitute"
+  },
+  {
+    "name": "The Brattle Group",
+    "ats": "greenhouse",
+    "slug": "thebrattlegroup"
   },
   {
     "name": "The Health Management Academy",
@@ -4535,11 +4600,6 @@
     "slug": "belvederetrading"
   },
   {
-    "name": "BenchSci",
-    "ats": "lever",
-    "slug": "benchsci"
-  },
-  {
     "name": "Best Egg",
     "ats": "lever",
     "slug": "BestEgg"
@@ -4813,6 +4873,11 @@
     "name": "Kepler Communications",
     "ats": "lever",
     "slug": "kepler"
+  },
+  {
+    "name": "Kitware",
+    "ats": "lever",
+    "slug": "kitware"
   },
   {
     "name": "Kpler",
@@ -6007,11 +6072,25 @@
     "site": "ATTCollege"
   },
   {
+    "name": "ATC",
+    "ats": "workday",
+    "host": "atcllc.wd5.myworkdayjobs.com",
+    "tenant": "atcllc",
+    "site": "atcllc"
+  },
+  {
     "name": "Athena Health",
     "ats": "workday",
     "host": "athenahealth.wd1.myworkdayjobs.com",
     "tenant": "athenahealth",
     "site": "External"
+  },
+  {
+    "name": "Athene",
+    "ats": "workday",
+    "host": "athene.wd5.myworkdayjobs.com",
+    "tenant": "athene",
+    "site": "athene_careers"
   },
   {
     "name": "AtkinsRéalis",
@@ -6133,6 +6212,13 @@
     "site": "Grad_Careers"
   },
   {
+    "name": "Axcelis Technologies",
+    "ats": "workday",
+    "host": "axcelis.wd1.myworkdayjobs.com",
+    "tenant": "axcelis",
+    "site": "axcelis"
+  },
+  {
     "name": "Axiom Space",
     "ats": "workday",
     "host": "axiomspace.wd5.myworkdayjobs.com",
@@ -6250,6 +6336,13 @@
     "host": "barrywehmiller.wd1.myworkdayjobs.com",
     "tenant": "barrywehmiller",
     "site": "BWConfidential"
+  },
+  {
+    "name": "Bass Pro Shops",
+    "ats": "workday",
+    "host": "basspro.wd1.myworkdayjobs.com",
+    "tenant": "basspro",
+    "site": "careers"
   },
   {
     "name": "Baxter International",
@@ -6805,6 +6898,13 @@
     "site": "Handshake"
   },
   {
+    "name": "Cambridge Investment Research",
+    "ats": "workday",
+    "host": "cir.wd108.myworkdayjobs.com",
+    "tenant": "cir",
+    "site": "CIR_External_Career_Site"
+  },
+  {
     "name": "Camping World",
     "ats": "workday",
     "host": "campingworld.wd5.myworkdayjobs.com",
@@ -6980,6 +7080,13 @@
     "site": "Cerence"
   },
   {
+    "name": "Cerity Partners",
+    "ats": "workday",
+    "host": "ceritypartners.wd12.myworkdayjobs.com",
+    "tenant": "ceritypartners",
+    "site": "ceritypartnerscareers"
+  },
+  {
     "name": "Chamberlain Group",
     "ats": "workday",
     "host": "chamberlain.wd1.myworkdayjobs.com",
@@ -7027,6 +7134,13 @@
     "host": "chipotle.wd5.myworkdayjobs.com",
     "tenant": "chipotle",
     "site": "ChipotleCareers"
+  },
+  {
+    "name": "Church & Dwight",
+    "ats": "workday",
+    "host": "churchdwight.wd1.myworkdayjobs.com",
+    "tenant": "churchdwight",
+    "site": "chdcareers"
   },
   {
     "name": "CIBC",
@@ -7953,6 +8067,13 @@
     "site": "ebadcareers"
   },
   {
+    "name": "Ensign-Bickford Industries",
+    "ats": "workday",
+    "host": "ebi.wd5.myworkdayjobs.com",
+    "tenant": "ebi",
+    "site": "ebicareers"
+  },
+  {
     "name": "Ensora Health",
     "ats": "workday",
     "host": "therapybrands.wd1.myworkdayjobs.com",
@@ -8142,6 +8263,13 @@
     "site": "FannieMaeCareers"
   },
   {
+    "name": "Farm Credit Canada",
+    "ats": "workday",
+    "host": "fccfac.wd3.myworkdayjobs.com",
+    "tenant": "fccfac",
+    "site": "careers-carrieres"
+  },
+  {
     "name": "Federal Home Loan Bank of Indianapolis",
     "ats": "workday",
     "host": "fhlbi.wd1.myworkdayjobs.com",
@@ -8210,6 +8338,13 @@
     "host": "fmr.wd1.myworkdayjobs.com",
     "tenant": "fmr",
     "site": "targeted"
+  },
+  {
+    "name": "Fidelity National Information Services",
+    "ats": "workday",
+    "host": "fis.wd5.myworkdayjobs.com",
+    "tenant": "fis",
+    "site": "searchjobs"
   },
   {
     "name": "Fifth Third Bank",
@@ -9885,6 +10020,13 @@
     "site": "MLSE"
   },
   {
+    "name": "Marathon Petroleum",
+    "ats": "workday",
+    "host": "mpc.wd1.myworkdayjobs.com",
+    "tenant": "mpc",
+    "site": "MPCCareers"
+  },
+  {
     "name": "Maricopa County",
     "ats": "workday",
     "host": "maricopa.wd1.myworkdayjobs.com",
@@ -11166,6 +11308,13 @@
     "site": "Repsol"
   },
   {
+    "name": "Republic Airways",
+    "ats": "workday",
+    "host": "rjet.wd108.myworkdayjobs.com",
+    "tenant": "rjet",
+    "site": "External_Career_Site"
+  },
+  {
     "name": "Resmed",
     "ats": "workday",
     "host": "resmed.wd3.myworkdayjobs.com",
@@ -11220,6 +11369,13 @@
     "host": "richemont.wd3.myworkdayjobs.com",
     "tenant": "richemont",
     "site": "richemont"
+  },
+  {
+    "name": "Risepoint",
+    "ats": "workday",
+    "host": "risepoint.wd503.myworkdayjobs.com",
+    "tenant": "risepoint",
+    "site": "Risepoint"
   },
   {
     "name": "Rite Hite",
@@ -11964,6 +12120,13 @@
     "site": "Campus"
   },
   {
+    "name": "Sun Life",
+    "ats": "workday",
+    "host": "sunlife.wd3.myworkdayjobs.com",
+    "tenant": "sunlife",
+    "site": "Experienced-Jobs"
+  },
+  {
     "name": "Suncor",
     "ats": "workday",
     "host": "suncor.wd1.myworkdayjobs.com",
@@ -12321,6 +12484,13 @@
     "site": "External_Career_Site"
   },
   {
+    "name": "Thrivent",
+    "ats": "workday",
+    "host": "thrivent.wd5.myworkdayjobs.com",
+    "tenant": "thrivent",
+    "site": "external"
+  },
+  {
     "name": "thyssenkrupp",
     "ats": "workday",
     "host": "thyssenkruppmaterialsna.wd12.myworkdayjobs.com",
@@ -12382,6 +12552,13 @@
     "host": "tel.wd3.myworkdayjobs.com",
     "tenant": "tel",
     "site": "tel-careers"
+  },
+  {
+    "name": "TOPPAN Packaging Americas",
+    "ats": "workday",
+    "host": "toppan.wd108.myworkdayjobs.com",
+    "tenant": "toppan",
+    "site": "TOPPAN-Packaging"
   },
   {
     "name": "Torch Technologies",
@@ -12963,6 +13140,13 @@
     "host": "wellington.wd5.myworkdayjobs.com",
     "tenant": "wellington",
     "site": "Campus"
+  },
+  {
+    "name": "Wellington Management",
+    "ats": "workday",
+    "host": "wellington.wd5.myworkdayjobs.com",
+    "tenant": "wellington",
+    "site": "external"
   },
   {
     "name": "Wells Fargo",
