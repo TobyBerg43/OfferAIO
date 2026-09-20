@@ -17,7 +17,7 @@
  "wells-fargo": {
   "name": "Wells Fargo",
   "lastSeen": "2026-09-20",
-  "roles": 20
+  "roles": 19
  },
  "capital-one": {
   "name": "Capital One",
@@ -92,7 +92,7 @@
  "nvidia": {
   "name": "Nvidia",
   "lastSeen": "2026-09-20",
-  "roles": 19
+  "roles": 20
  },
  "jump-trading": {
   "name": "Jump Trading",
@@ -747,7 +747,7 @@
  "microsoft": {
   "name": "Microsoft",
   "lastSeen": "2026-09-20",
-  "roles": 9
+  "roles": 8
  },
  "dv-trading": {
   "name": "DV Trading",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-09-20",
-  "roles": 16
+  "roles": 17
  },
  "bytedance": {
   "name": "ByteDance",
@@ -867,7 +867,7 @@
  "university-of-texas-at-austin": {
   "name": "University of Texas at Austin",
   "lastSeen": "2026-09-20",
-  "roles": 9
+  "roles": 8
  },
  "uline": {
   "name": "Uline",
@@ -1012,7 +1012,7 @@
  "teledyne": {
   "name": "Teledyne",
   "lastSeen": "2026-09-20",
-  "roles": 5
+  "roles": 6
  },
  "bosch": {
   "name": "Bosch",
@@ -1032,7 +1032,7 @@
  "raytheon": {
   "name": "Raytheon",
   "lastSeen": "2026-09-20",
-  "roles": 41
+  "roles": 40
  },
  "sel": {
   "name": "SEL",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-09-20",
-  "roles": 12
+  "roles": 19
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1722,7 +1722,7 @@
  "invesco": {
   "name": "Invesco",
   "lastSeen": "2026-09-20",
-  "roles": 7
+  "roles": 9
  },
  "hub": {
   "name": "HUB",
@@ -1787,7 +1787,7 @@
  "fidelity-investments": {
   "name": "Fidelity Investments",
   "lastSeen": "2026-09-20",
-  "roles": 8
+  "roles": 7
  },
  "fifth-third-bank": {
   "name": "Fifth Third Bank",
@@ -2262,7 +2262,7 @@
  "rocket-lab-usa": {
   "name": "Rocket Lab USA",
   "lastSeen": "2026-09-20",
-  "roles": 55
+  "roles": 54
  },
  "didi-global": {
   "name": "DiDi Global",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-09-20",
-  "roles": 7
+  "roles": 6
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -3667,7 +3667,7 @@
  "stryker": {
   "name": "Stryker",
   "lastSeen": "2026-09-20",
-  "roles": 101
+  "roles": 100
  },
  "qorvo": {
   "name": "Qorvo",
@@ -3677,7 +3677,7 @@
  "wex": {
   "name": "WEX",
   "lastSeen": "2026-09-20",
-  "roles": 6
+  "roles": 7
  },
  "varian": {
   "name": "Varian",
@@ -4207,7 +4207,7 @@
  "clearwater-analytics": {
   "name": "Clearwater Analytics",
   "lastSeen": "2026-09-20",
-  "roles": 3
+  "roles": 4
  },
  "gpc": {
   "name": "GPC",
@@ -4762,7 +4762,7 @@
  "the-aerospace-corporation": {
   "name": "The Aerospace Corporation",
   "lastSeen": "2026-09-20",
-  "roles": 9
+  "roles": 10
  },
  "piper-sandler": {
   "name": "Piper Sandler",
@@ -5012,7 +5012,7 @@
  "ankura-consulting-group": {
   "name": "Ankura Consulting Group",
   "lastSeen": "2026-09-20",
-  "roles": 26
+  "roles": 24
  },
  "american-cancer-society": {
   "name": "American Cancer Society",
@@ -5947,7 +5947,7 @@
  "visa": {
   "name": "Visa",
   "lastSeen": "2026-09-20",
-  "roles": 18
+  "roles": 20
  },
  "ryan-specialty": {
   "name": "Ryan Specialty",
@@ -6072,7 +6072,7 @@
  "occ": {
   "name": "OCC",
   "lastSeen": "2026-09-20",
-  "roles": 31
+  "roles": 30
  },
  "first-quality": {
   "name": "First Quality",
