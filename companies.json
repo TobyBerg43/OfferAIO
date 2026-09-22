@@ -265,6 +265,11 @@
     "slug": "cohere"
   },
   {
+    "name": "Collinear AI",
+    "ats": "ashby",
+    "slug": "collinear-ai"
+  },
+  {
     "name": "Colonist",
     "ats": "ashby",
     "slug": "colonist"
@@ -313,6 +318,11 @@
     "name": "Coverdash",
     "ats": "ashby",
     "slug": "coverdash"
+  },
+  {
+    "name": "Cowboy Space",
+    "ats": "ashby",
+    "slug": "cowboyspace"
   },
   {
     "name": "Creatify",
@@ -2280,6 +2290,11 @@
     "slug": "correlationone"
   },
   {
+    "name": "Correlation One",
+    "ats": "greenhouse",
+    "slug": "expertnetwork"
+  },
+  {
     "name": "Cortland",
     "ats": "greenhouse",
     "slug": "cortland"
@@ -2803,6 +2818,11 @@
     "name": "Haven Studios",
     "ats": "greenhouse",
     "slug": "haven"
+  },
+  {
+    "name": "Headlands Tech Holdings",
+    "ats": "greenhouse",
+    "slug": "headlandstechnologiesllc"
   },
   {
     "name": "Health-E Commerce",
@@ -4620,11 +4640,6 @@
     "slug": "brooksrunning"
   },
   {
-    "name": "CALSTART",
-    "ats": "lever",
-    "slug": "calstart"
-  },
-  {
     "name": "Catalist",
     "ats": "lever",
     "slug": "catalist"
@@ -4663,6 +4678,11 @@
     "name": "Crest Industries",
     "ats": "lever",
     "slug": "crestoperations"
+  },
+  {
+    "name": "CSC Generation",
+    "ats": "lever",
+    "slug": "cscgeneration-2"
   },
   {
     "name": "Daniels Health",
@@ -5405,6 +5425,13 @@
     "host": "accuray.wd5.myworkdayjobs.com",
     "tenant": "accuray",
     "site": "external"
+  },
+  {
+    "name": "Acima",
+    "ats": "workday",
+    "host": "upbound.wd501.myworkdayjobs.com",
+    "tenant": "upbound",
+    "site": "Acima"
   },
   {
     "name": "Acushnet Holdings",
@@ -6464,6 +6491,13 @@
     "site": "blackberry"
   },
   {
+    "name": "Blackberry",
+    "ats": "workday",
+    "host": "bb.wd3.myworkdayjobs.com",
+    "tenant": "bb",
+    "site": "Student"
+  },
+  {
     "name": "BlackRock",
     "ats": "workday",
     "host": "blackrock.wd1.myworkdayjobs.com",
@@ -6749,6 +6783,13 @@
     "host": "bbinsurance.wd1.myworkdayjobs.com",
     "tenant": "bbinsurance",
     "site": "careers"
+  },
+  {
+    "name": "Brown Brothers Harriman",
+    "ats": "workday",
+    "host": "bbh.wd5.myworkdayjobs.com",
+    "tenant": "bbh",
+    "site": "BBH"
   },
   {
     "name": "Brunswick",
@@ -8009,6 +8050,13 @@
     "host": "emcins.wd5.myworkdayjobs.com",
     "tenant": "emcins",
     "site": "EMC_Careers"
+  },
+  {
+    "name": "EMC Insurance",
+    "ats": "workday",
+    "host": "emcins.wd5.myworkdayjobs.com",
+    "tenant": "emcins",
+    "site": "EMC_Internships"
   },
   {
     "name": "Empower",
@@ -10496,6 +10544,13 @@
     "site": "ext_non_us"
   },
   {
+    "name": "Nebraska Medicine",
+    "ats": "workday",
+    "host": "nebraskamed.wd5.myworkdayjobs.com",
+    "tenant": "nebraskamed",
+    "site": "nm"
+  },
+  {
     "name": "Neighborly",
     "ats": "workday",
     "host": "neighborlybrands.wd1.myworkdayjobs.com",
@@ -10585,13 +10640,6 @@
     "host": "nike.wd1.myworkdayjobs.com",
     "tenant": "nike",
     "site": "nke"
-  },
-  {
-    "name": "Nio",
-    "ats": "workday",
-    "host": "nio.wd3.myworkdayjobs.com",
-    "tenant": "nio",
-    "site": "NIO_Careers"
   },
   {
     "name": "NiSource",
@@ -12841,6 +12889,13 @@
     "site": "Careers"
   },
   {
+    "name": "Upbound Group",
+    "ats": "workday",
+    "host": "upbound.wd501.myworkdayjobs.com",
+    "tenant": "upbound",
+    "site": "Upbound"
+  },
+  {
     "name": "US Acute Care Solutions",
     "ats": "workday",
     "host": "usacs.wd1.myworkdayjobs.com",
@@ -13002,6 +13057,13 @@
     "site": "vfc_careers"
   },
   {
+    "name": "Vialto Partners",
+    "ats": "workday",
+    "host": "vialto.wd107.myworkdayjobs.com",
+    "tenant": "vialto",
+    "site": "vialtoexternalcareers"
+  },
+  {
     "name": "Viatris",
     "ats": "workday",
     "host": "viatris.wd5.myworkdayjobs.com",
@@ -13035,6 +13097,13 @@
     "host": "visa.wd5.myworkdayjobs.com",
     "tenant": "visa",
     "site": "Visa"
+  },
+  {
+    "name": "Visa",
+    "ats": "workday",
+    "host": "visa.wd5.myworkdayjobs.com",
+    "tenant": "visa",
+    "site": "visa_early_careers"
   },
   {
     "name": "Vishay Intertechnology",
