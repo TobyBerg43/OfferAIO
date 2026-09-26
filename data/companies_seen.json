@@ -92,7 +92,7 @@
  "nvidia": {
   "name": "Nvidia",
   "lastSeen": "2026-09-26",
-  "roles": 28
+  "roles": 27
  },
  "jump-trading": {
   "name": "Jump Trading",
@@ -142,7 +142,7 @@
  "citadel": {
   "name": "Citadel",
   "lastSeen": "2026-09-26",
-  "roles": 2
+  "roles": 1
  },
  "tower-research": {
   "name": "Tower Research",
@@ -682,7 +682,7 @@
  "general-dynamics-information-technology": {
   "name": "General Dynamics Information Technology",
   "lastSeen": "2026-09-26",
-  "roles": 10
+  "roles": 13
  },
  "cirrus-logic": {
   "name": "Cirrus Logic",
@@ -762,7 +762,7 @@
  "rtx": {
   "name": "RTX",
   "lastSeen": "2026-09-26",
-  "roles": 17
+  "roles": 15
  },
  "bytedance": {
   "name": "ByteDance",
@@ -937,7 +937,7 @@
  "bp": {
   "name": "BP",
   "lastSeen": "2026-09-26",
-  "roles": 15
+  "roles": 13
  },
  "uhy": {
   "name": "UHY",
@@ -1032,7 +1032,7 @@
  "raytheon": {
   "name": "Raytheon",
   "lastSeen": "2026-09-26",
-  "roles": 50
+  "roles": 42
  },
  "sel": {
   "name": "SEL",
@@ -1352,7 +1352,7 @@
  "jp-morgan-chase": {
   "name": "JP Morgan Chase",
   "lastSeen": "2026-09-26",
-  "roles": 5
+  "roles": 3
  },
  "the-boeing-company": {
   "name": "The Boeing Company",
@@ -1477,7 +1477,7 @@
  "goldman-sachs": {
   "name": "Goldman Sachs",
   "lastSeen": "2026-09-26",
-  "roles": 12
+  "roles": 16
  },
  "vanguard": {
   "name": "Vanguard",
@@ -1592,7 +1592,7 @@
  "pricewaterhousecoopers-pwc": {
   "name": "PricewaterhouseCoopers (PwC)",
   "lastSeen": "2026-09-26",
-  "roles": 94
+  "roles": 17
  },
  "procter-and-gamble-pandg": {
   "name": "Procter & Gamble (P&G)",
@@ -1787,7 +1787,7 @@
  "fidelity-investments": {
   "name": "Fidelity Investments",
   "lastSeen": "2026-09-26",
-  "roles": 137
+  "roles": 132
  },
  "fifth-third-bank": {
   "name": "Fifth Third Bank",
@@ -1882,7 +1882,7 @@
  "booz-allen": {
   "name": "Booz Allen",
   "lastSeen": "2026-09-26",
-  "roles": 57
+  "roles": 56
  },
  "bdo": {
   "name": "BDO",
@@ -2797,7 +2797,7 @@
  "northrop-grumman": {
   "name": "Northrop Grumman",
   "lastSeen": "2026-09-26",
-  "roles": 24
+  "roles": 19
  },
  "cleveland-clinic": {
   "name": "Cleveland Clinic",
@@ -2937,7 +2937,7 @@
  "rsm": {
   "name": "RSM",
   "lastSeen": "2026-09-26",
-  "roles": 109
+  "roles": 111
  },
  "metecs": {
   "name": "METECS",
@@ -3462,7 +3462,7 @@
  "cesiumastro": {
   "name": "CesiumAstro",
   "lastSeen": "2026-09-26",
-  "roles": 25
+  "roles": 24
  },
  "shein": {
   "name": "SHEIN",
@@ -3747,7 +3747,7 @@
  "ameriprise-financial": {
   "name": "Ameriprise Financial",
   "lastSeen": "2026-09-26",
-  "roles": 18
+  "roles": 14
  },
  "3m": {
   "name": "3M",
@@ -3912,7 +3912,7 @@
  "bluecross-blueshield-of-nebraska": {
   "name": "BlueCross BlueShield of Nebraska",
   "lastSeen": "2026-09-26",
-  "roles": 7
+  "roles": 6
  },
  "accenture": {
   "name": "Accenture",
@@ -4027,7 +4027,7 @@
  "northern-trust": {
   "name": "Northern Trust",
   "lastSeen": "2026-09-26",
-  "roles": 14
+  "roles": 13
  },
  "frost": {
   "name": "Frost",
@@ -4397,7 +4397,7 @@
  "t-rowe-price": {
   "name": "T. Rowe Price",
   "lastSeen": "2026-09-26",
-  "roles": 2
+  "roles": 1
  },
  "sierra-nevada-corporation": {
   "name": "Sierra Nevada Corporation",
@@ -4697,7 +4697,7 @@
  "hy-vee": {
   "name": "Hy-Vee",
   "lastSeen": "2026-09-26",
-  "roles": 33
+  "roles": 30
  },
  "garner-health": {
   "name": "Garner Health",
@@ -4767,7 +4767,7 @@
  "piper-sandler": {
   "name": "Piper Sandler",
   "lastSeen": "2026-09-26",
-  "roles": 5
+  "roles": 4
  },
  "us-bank": {
   "name": "US Bank",
@@ -5072,7 +5072,7 @@
  "usaa": {
   "name": "USAA",
   "lastSeen": "2026-09-26",
-  "roles": 26
+  "roles": 25
  },
  "ovintiv": {
   "name": "Ovintiv",
@@ -5097,7 +5097,7 @@
  "saronic": {
   "name": "Saronic",
   "lastSeen": "2026-09-26",
-  "roles": 9
+  "roles": 10
  },
  "internship": {
   "name": "Internship",
@@ -5777,7 +5777,7 @@
  "tyler-technologies": {
   "name": "Tyler Technologies",
   "lastSeen": "2026-09-26",
-  "roles": 3
+  "roles": 4
  },
  "lunar-outpost": {
   "name": "Lunar Outpost",
@@ -5947,7 +5947,7 @@
  "visa": {
   "name": "Visa",
   "lastSeen": "2026-09-26",
-  "roles": 16
+  "roles": 15
  },
  "ryan-specialty": {
   "name": "Ryan Specialty",
@@ -6292,7 +6292,7 @@
  "athene": {
   "name": "Athene",
   "lastSeen": "2026-09-26",
-  "roles": 14
+  "roles": 13
  },
  "marathon-petroleum": {
   "name": "Marathon Petroleum",
@@ -6821,6 +6821,16 @@
  },
  "bioagilytix": {
   "name": "BioAgilytix",
+  "lastSeen": "2026-09-26",
+  "roles": 1
+ },
+ "flint": {
+  "name": "Flint",
+  "lastSeen": "2026-09-26",
+  "roles": 1
+ },
+ "jpmorgan-chase": {
+  "name": "JPMorgan Chase",
   "lastSeen": "2026-09-26",
   "roles": 1
  }
